@@ -1,0 +1,9 @@
+# About the Author {-}
+
+J&uuml;rgen Symanzik is a Professor in the Department of Mathematics and Statistics at
+Utah State University in Logan, Utah, USA.
+
+I need to check with CRC Press how to introduce all the chapter authors, 
+e.g., via a few lines of text or by listing them by name and indicating
+the affiliations (and e-mail addresses).
+

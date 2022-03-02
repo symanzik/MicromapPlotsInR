@@ -1,0 +1,15 @@
+_bookdown_files/
+_book/
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+bookdown-crc.Rproj
+Ch1-micromap4-external.jpeg
+*.aux
+*.idx
+*.lof
+*.lot
+*.toc
+*.xml
+*~

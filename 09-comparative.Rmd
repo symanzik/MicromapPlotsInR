@@ -1,0 +1,89 @@
+# Comparative Micromaps {#Ch9}
+
+
+\chapterauthor{Brent D. Mast}
+
+
+Comparative micromaps are the third of the three main variations of micromap visualizations. 
+They allow a comparison of two groups in a geographic setting or the assessment 
+of a time series of map visualizations. The main focus of these maps is to emphasize 
+the spatial differences of the two groups or visualize the 
+geographic changes (increases and decreases) over time, rather than leaving it 
+to the reader to identify these changes on its own. 
+The reader will learn how to create several variants of comparative micromaps and how to interpret them.
+
+
+## Introduction {#Ch9-Introduction}
+
+
+As a reminder, see Chapter \@ref(Ch1) for general style requirements
+for our `Micromap Plots in R` book. In particular, please do the following:
+
+- Introduce meaningful labels for the sections, figures, and tables in your chapter.
+
+- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
+and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
+that are used in your chapter.
+
+- Include references for R packages and publications related to your chapter,
+such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
+**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
+and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
+
+- Also create index entries for main topics such as
+linked micromap plots,\index{Linked micromap plot}
+conditioned choropleth maps,\index{Conditioned choropleth map}
+perceptual group,\index{Perceptual group}
+color blindness,\index{Color blindness},
+and quantile-quantile plot.\index{Quantile-quantile plot}
+
+
+## Main {#Ch9-Main}
+
+
+Here goes the main content of your chapter. Introduce additional sections as needed.
+
+For convenience, Figure \@ref(fig:Ch9-micromap1) shows one linked micromap plot\index{Linked micromap plot}
+(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+
+
+```{r Ch9-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
+library(micromap)
+
+# initial example
+
+data(USstates)
+statePolys <- create_map_table(USstates, "ST")
+data(edPov)
+
+# basic figure 1
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  panel.types = c("labels", "dot", "dot", "map"),
+  panel.data = list("state", "pov", "ed", NA),
+  ord.by = "pov",   
+  grouping = 5, 
+  median.row = TRUE,
+  plot.width = 2, 
+  plot.height = 6,
+  map.link = c("StateAb", "ID")
+)
+```
+
+
+## Further Reading {#Ch9-FurtherReading}
+
+
+Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
+where related work and further examples can be found in this book that match the content of this
+chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
+
+Also, do some scientific literature review here that is specific to your chapter.
+Where has this R package been introduced and used before, where have other plot types
+or different countries been used in micromaps, what were other applications 
+of micromaps that are related to the title and content of your chapter, etc.?
+
+
+\printbibliography[segment=\therefsegment,heading=subbibliography]
+

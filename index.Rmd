@@ -1,0 +1,106 @@
+--- 
+title: "Micromap Plots in R"
+subtitle: "A Step-By-Step Approach to Visualize Spatial Data via Linked Micromaps, Conditioned Micromaps, and Comparative Micromaps in R"
+author: "J&uuml;rgen Symanzik"
+date: "`r Sys.Date()`"
+output:
+  pdf_book:
+    keep_tex: yes
+    latex_engine: xelatex
+  pdf_document: default
+  html_document:
+    df_print: paged
+knit: "bookdown::render_book"
+bibliography:
+- book.bib
+- packages.bib
+- references.bib
+biblio-style: apa
+biblatexoptions: [refsegment=chapter]
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+site: bookdown::bookdown_site
+description: A book example for a Chapman & Hall book.
+graphics: yes
+documentclass: krantz
+header-includes:
+  - \usepackage{lipsum}
+  - \usepackage{suffix}
+---
+
+\renewcommand\chapterauthor[1]{\authortoc{#1}\printchapterauthor{#1}}
+
+\makeatletter
+\newcommand{\printchapterauthor}[1]{%
+  {\parindent0pt\vspace*{-25pt}%
+  \linespread{1.1}\large\scshape#1%
+  \par\nobreak\vspace*{35pt}}}
+\newcommand{\authortoc}[1]{%
+  \addtocontents{toc}{\vskip-10pt}%
+  \addtocontents{toc}{%
+    \protect\contentsline{chapter}%
+    {\hskip1.3em\mdseries\scshape\protect\scriptsize#1}{}{}}
+  \addtocontents{toc}{\vskip5pt}%
+}
+\makeatother
+
+
+```{r Setup2, include=FALSE}
+options(
+  htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
+)
+
+# install the packages needed by this book; you fill out c(), e.g. c('ggplot2', 'dplyr')
+lapply(c('xfun'), function(pkg) {
+  if (system.file(package = pkg) == '') install.packages(pkg)
+})
+
+# hide messages and warnings from all code chunks
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+# Preface {-}
+
+This is the preface for the `Micromap Plots in R` book.
+
+
+## Why read this book {-}
+
+You will learn a lot about all types of micromap plots.
+
+
+## Structure of the book {-}
+
+Chapter \@ref(Ch1) provides a general overview on all types of micromap plots and provides
+an overview of the following chapters of the book.
+
+Chapter \@ref(Ch2) introduces the **micromap**\index{R Packages!micromap} R package.
+Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R package.
+
+
+## Software information and conventions {-}
+
+I used the **knitr**\index{R Packages!knitr} R package [@R-knitr] and 
+the **bookdown**\index{R Packages!bookdown} R package [@R-bookdown] to compile the book. 
+Also see the [@xie2015] book.
+
+My R session information is shown below:
+
+```{r SessionInfo}
+xfun::session_info()
+```
+
+Package names are in bold text (e.g., **rmarkdown**), and inline code and filenames are formatted in a typewriter font (e.g., `knitr::knit('foo.Rmd')`). Function names are followed by parentheses (e.g., `bookdown::render_book()`).
+
+
+## Acknowledgments {-}
+
+A lot of people helped me when I was writing the book. More to come later.
+
+```{block2, type = 'flushright', html.tag = 'p'}
+J&uuml;rgen Symanzik  
+Logan, Utah, USA
+```
+

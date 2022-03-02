@@ -1,0 +1,421 @@
+\mainmatter
+
+
+# Introduction {#Ch1}
+
+
+\chapterauthor{J{\"u}rgen Symanzik}
+
+
+Please look at the source code for this chapter (i.e., the file `01-introduction.Rmd`) carefully. 
+It provides an overview how to label and reference other chapters, sections, figures, and tables in your chapter.
+It also outlines how and what to index and how to include citations in your chapter.
+
+Eventually, this chapter will become the real introduction for our `Micromap Plots in R` book.
+Minimal templates for actual chapters can be found in the files `02-micromap.Rmd`, `03-micromapST.Rmd`, etc.
+
+The ultimate summary for this chapter will be based on the following text:
+
+This chapter will provide a brief overview of the history of micromap plots, 
+main application areas, and existing software for the creation of micromaps. 
+A summary of the following eleven chapters of this book will also be provided.
+
+
+## Use of Bookdown {#Ch1-Bookdown}
+
+
+This section contains some basic information related to bookdown. For further details, see
+https://bookdown.org/
+and specifically
+https://bookdown.org/yihui/bookdown/.
+
+For an overview how to use bookdown for CRC Press / Taylor & Francis books, see
+https://yihui.org/en/2018/08/bookdown-crc/
+and
+https://www.routledge.com/bookdown-Authoring-Books-and-Technical-Documents-with-R-Markdown/Xie/p/book/9781138700109.
+
+
+## Creating Figures and Tables {#Ch1-FigsAndTables}
+
+
+Here are some basic examples how to create figures and tables in bookdown.
+We have a figure in Figure \@ref(fig:Ch1-CarsScatterplot) that makes
+use of the _cars_\index{Datasets!cars} dataset
+and also a table in Table \@ref(tab:Ch1-IrisTable) that makes
+use of the _iris_\index{Datasets!iris} dataset.
+See these examples how to create automatic figure and table numbers in your R code chunks 
+and how to reference them in the main text. Also, please cite all data sets that
+are used in your chapter.
+
+Use meaningful identifiers that start with the letters **Ch**, 
+followed by the number of your chapter and a dash (such as Ch1-, Ch2-, etc.) so that we
+can eventually cross-reference figures across chapters (and also avoid that the 
+same identifier is used more than once in different chapters).
+
+
+```{r Ch1-CarsScatterplot, out.width = '90%', fig.cap = 'A trivial scatterplot of the cars data set.'}
+par(mar = c(4, 4, 1, 0.1))
+plot(cars, pch = 19)
+```
+
+
+```{r Ch1-IrisTable}
+knitr::kable(
+  head(iris), 
+  caption = "A table of the iris data.",
+  booktabs = TRUE
+)
+```
+
+
+## Indexing {#Ch1-Indexing}
+
+
+As already done in the previous sections, index all R packages such as
+**ggplot2**\index{R Packages!ggplot2} and
+**ggmap**\index{R Packages!ggmap} R packages.
+
+Also provide an index entry for all datasets, such as the
+_cars_\index{Datasets!cars} and the _iris_\index{Datasets!iris} datasets.
+
+For R packages and datasets, use the actual R spelling. Do not change the capitalization.
+
+One final word on indexing: Please capitalize the first word of the index entry in a sequence of words, e.g.,
+perceptual group,\index{Perceptual group}
+color blindness,\index{Color blindness},
+and quantile-quantile plot.\index{Quantile-quantile plot}
+
+In case you want to use abbreviations, please introduce them first, e.g.,
+linked micromap plots\index{Linked micromap plot} (LMplots\index{LMplot|see {Linked micromap plot}}) and
+conditioned choropleth maps\index{Conditioned choropleth map} (CCmaps\index{CCmap|see {Conditioned choropleth map}}).
+
+Introduce a cross-reference index entry for the abbreviation (see the examples above),
+but always list the full length-index entry for the index.
+
+See https://en.wikibooks.org/wiki/LaTeX/Indexing
+for other indexing options.
+
+
+## Citations and References {#Ch1-CitationsReferences}
+
+
+Here are some examples for citations: @R-bookdown and @xie2015 are references from the preface.
+These citations appear as nouns in the text.
+
+These are some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
+These are references for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
+**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages.
+All of these citations appear in parentheses. 
+**Note the use of the semicolon in the first set of articles, book chapters, and books.**
+Also note that three different bib files have been used here to create the final bibliography.
+
+See here for further details on citations in bookdown:
+https://bookdown.org/yihui/bookdown/citations.html.
+
+**I will provide an updated bib file with a large number of micromap-related references in the near future and I will make most of those references available to all chapter authors, likely via a Box folder.**
+
+
+## Micromap Examples {#Ch1-MicromapExamples}
+
+
+While Section \@ref(Ch1-FigsAndTables) discussed general figure and table creation, this section focuses on micromaps.
+
+The following examples have been taken from the `lmplot()` help page of the **micromap**\index{R Packages!micromap} R package.
+Figure \@ref(fig:Ch1-micromap1) shows the first basic linked micromap plot\index{Linked micromap plot}
+that makes use of the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets.
+
+Overall, write and format your R code according to the tidyverse R style, summarized at
+https://style.tidyverse.org/index.html.
+As many of our function calls for micromaps require a large number arguments, see Section 2.5 called `Long Lines'
+(https://style.tidyverse.org/syntax.html#long-lines)
+how to format such function calls.
+
+
+```{r Ch1-micromap1, out.width = '90%', fig.cap = 'Here is a first micromap example. Note that it occupies 90 percent of the page width. The rows are far too much condensed.'}
+library(micromap)
+
+# initial example
+
+data(USstates)
+head(USstates@data)
+statePolys <- create_map_table(USstates, "ST")
+head(statePolys)
+
+data(edPov)
+
+# basic figure 1
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  panel.types = c("labels", "dot", "dot", "map"),
+  panel.data = list("state", "pov", "ed", NA),
+  ord.by = "pov",   
+  grouping = 5, 
+  median.row = TRUE,
+  plot.width = 2, 
+  plot.height = 6,
+  map.link = c("StateAb", "ID")
+)
+```
+
+
+This gets further refined now. Figure \@ref(fig:Ch1-micromap2) shows the resulting second micromap plot.
+
+
+```{r Ch1-micromap2, fig.cap = 'And here is a second micromap example. This uses the default output settings. This still looks very bad.'}
+# publication figure 1a
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys ,
+  panel.types = c("labels", "dot", "dot", "map"),
+  panel.data = list("state", "pov", "ed", NA),
+  ord.by = "pov",  
+  grouping = 5,
+  median.row = TRUE,
+  map.link = c("StateAb", "ID"),
+  
+  plot.height = 9,
+  
+  colors = c("red", "orange", "green", "blue", "purple"), 
+  map.color2 = "lightgray",
+  
+  panel.att = list(
+    list(1, header = "States", 
+         panel.width = 0.8, 
+         align = "left", 
+         text.size = 0.9),
+    list(2, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 15, 20), 
+         xaxis.labels = list(10, 15, 20),
+         xaxis.title = "Percent"),
+    list(3, header = "Percent Adults With\n4+ Years of College",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 20, 30, 40), 
+         xaxis.labels = list(10, 20, 30, 40),
+         xaxis.title = "Percent"),
+    list(4, header = "Light Gray Means\nHighlighted Above",  
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 2,	
+         panel.width = 0.8)
+  )
+)
+```
+
+
+Some more refinements, resulting in Figure \@ref(fig:Ch1-micromap3).
+
+
+```{r Ch1-micromap3, fig.cap = 'And now the third (revised) micromap example. Note that this specifies a width and height for the figure. This may be the best solution to scale the micromap plots.', fig.width = 7, fig.height = 9}
+edPov$points <- 0	
+
+# publication figure 1b
+lmplot(
+  stat.data = edPov, 
+  map.data = statePolys,
+  panel.types = c("dot", "labels", "dot", "dot", "map"),
+  panel.data = list("points", "state", "pov", "ed", NA),
+  map.link = c("StateAb", "ID"),
+  ord.by = "pov", 
+  grouping = 5, 
+  median.row = TRUE, 
+  
+  plot.height = 9, 
+  
+  colors = c("red", "orange", "green", "blue", "purple"),
+  map.color2 = "lightgray", 
+  
+  panel.att = list(
+    list(1, panel.width = 0.15, 
+         point.type = 20,
+         graph.border.color = "white",
+         xaxis.text.display = FALSE, 
+         xaxis.line.display = FALSE,
+         graph.grid.major = FALSE),
+    
+    list(2, header = "States", 
+         panel.width = 0.8, 
+         align = "left", 
+         text.size = 0.9),
+    
+    list(3, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 15, 20), 
+         xaxis.labels = list(10, 15, 20),
+         xaxis.title = "Percent"),
+    
+    list(4, header = "Percent Adults With\n4+ Years of College",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(20, 30, 40), 
+         xaxis.labels = list(20, 30, 40), 
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Light Gray Means\nHighlighted Above", 
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 2, 
+         panel.width = 0.8)
+  )
+)
+```
+
+
+## Alternative Creation and Inclusion of Figures {#Ch1-AlternativeMicromapExample}
+
+
+Final refinements. Here, the code is run separately. The figure is not shown directly.
+Rather, an external figure (jpeg or pdf) is created. Eventually, 
+in Figure \@ref(fig:Ch1-micromap5), this externally created figure is included into the text.
+
+**Even though this works, I would suggest to always use the approach from the previous section, i.e.,
+Section \@ref(Ch1-MicromapExamples), whenever possible.** Exceptions are externally created files
+or sceenshots, e.g., from a **Shiny**\index{R Packages!Shiny} app, that could be included this way.
+
+
+```{r Ch1-micromap4}
+# publication figure 1c
+lmplot(
+  stat.data = edPov, 
+  map.data = statePolys,
+  panel.types = c("map", "dot",  "labels", "dot", "dot"),
+  panel.data = list(NA, "points", "state", "pov", "ed"),
+  map.link = c("StateAb", "ID"),
+  ord.by = "pov", 
+  grouping = 5, 
+  median.row = TRUE,
+  
+  plot.height = 9, 
+  
+  colors = c("red", "orange", "green", "blue", "purple"),
+  map.color2 = "lightgray", 
+  
+  print.file = "Ch1-micromap4-external.jpeg",
+  
+  panel.att = list(
+    list(2, panel.width = 0.15, 
+         point.type = 20,
+         graph.border.color = "white",
+         xaxis.text.display = FALSE, 
+         xaxis.line.display = FALSE,
+         graph.grid.major = FALSE),
+    
+    list(3, header = "States", 
+         panel.width = 0.8, 
+         align = "left", 
+         text.size = 0.9),
+    
+    list(4, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 15, 20), 
+         xaxis.labels = list(10, 15, 20),
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Percent Adults With\n4+ Years of College",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(20, 30, 40), 
+         xaxis.labels = list(20, 30, 40), 
+         xaxis.title = "Percent"),
+    
+    list(1, header = "Light Gray Means\nHighlighted Above", 
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 2, 
+         panel.width = 0.8)
+  )
+)
+```
+
+
+```{r Ch1-micromap5, fig.cap = 'And now the fourth (and final) micromap example.', out.width = '90%', echo = FALSE}
+#options(knitr.graphics.auto_pdf = TRUE)
+
+knitr::include_graphics("Ch1-micromap4-external.jpeg")
+```
+
+
+## Translating the Book Chapters to pdf and html Output {#Ch1-Translating}
+
+
+Bookdown assumes that all files with extension .Rmd in a directory belong to the same book project.
+The file `index.Rmd` always is the main document. All additional Rmd files are read in sequential
+alpha-numerical order. For this book, you can speed up the translation process if you copy files
+`02...Rmd`, `03...Rmd`, etc. (except your own chapter) into a different directory so they do not
+get translated each time. Keep all other files in the same directory structure as provided by me.
+
+Within RStudio, always translate the main file `index.Rmd` by clicking on _Knit_, even if you
+did not modify this Rmd file at all. In fact, do not modify this Rmd file on your side at all. If something needs
+to be changed, it likely needs to be changed for all chapters. So, please let me know about such
+necessary changes for the `index.Rmd` file. You should be fine if you just edit
+the Rmd file for your chapter, i,e., `02...Rmd`, `03...Rmd`, etc.
+
+Note that the short chapter summary at the start of a chapter 
+has been adapted from my original book proposal for CRC Press.
+Adjust as needed when your chapter is being written.
+Also adjust your names, e.g., insert missing middle initials,
+and change the author order as desired for your chapter.
+
+With the current settings, a pdf output file will be produced. Do not worry about 
+any formatting issues, placement of figures, etc. at this time. These will be addressed only
+once all chapter content has been finalized.
+
+You can switch to html output by renaming `_output_orig.yml` to `_output.yml`.
+Note that some of the pdf features of the book do not appear in the html output,
+e.g., there are no chapter authors listed, no list of figures and no list of tables is produced,
+no index is created, there is a different appearance of the references, and others. 
+As the final delivery to CRC Press are the source files for the pdf output,
+we do not have to focus on the html format at this time. If you are aware
+how to modify the code (Rmd, yml, or other) to obtain matching html output
+for some of the missing / different features, please let me know. As far as I could see,
+some of these features do not even exist for html output at this time,
+but of course, might be implemented while we are working on the book.
+
+You can switch back to pdf output by renaming `_output_pdf.yml` to `_output.yml`.
+
+
+## Open Bookdown Questions {#Ch1-OpenBookdownQuestions}
+
+
+I have to resolve a few open bookdown questions on my side:
+
+- How to quickly toggle between html and pdf output without renaming the `_output.yml` file each time?
+Currently, I have to rename `_output_orig.yml` and `_output_pdf.yml` to `_output.yml`
+to obtain html and pdf output, respectively.
+
+- How to modify the appearance of R code chunks, e.g., reduced font size and reduced spacing? See
+https://bookdown.org/yihui/rmarkdown-cookbook/chunk-styling.html
+and
+https://stackoverflow.com/questions/25646333/code-chunk-font-size-in-rmarkdown-with-knitr-and-latex
+and
+https://github.com/rstudio/rmarkdown/issues/388.
+I need to look at some more examples and consult with CRC Press what they want for their books.
+
+- How to add chapter authors to the header of each chapter and to the table of content? See
+https://github.com/admindatahandbook/book/issues/4,
+https://tex.stackexchange.com/questions/156862/displaying-author-for-each-chapter-in-book,
+and
+https://stackoverflow.com/questions/41655383/r-markdown-similar-feature-to-newcommand-in-latex/41664105.
+This works for the pdf output, but needs some fine-tuning and consultation with CRC Press.
+
+- How to create chapter-specific biliographies at the end of each chapter, rather than a single
+bibliography at the end of the book? See
+https://stackoverflow.com/questions/45028623/is-there-a-way-to-add-chapter-bibliographies-using-bookdown,
+https://tex.stackexchange.com/questions/525778/multiple-bibliographies-using-natbib-and-chapterbib-bibtex-illegal-error,
+https://community.rstudio.com/t/one-bibliography-per-chapter-when-using-pandoc-for-citations/117105/2,
+https://github.com/rstub/bookdown-chapterbib,
+and
+https://tex.stackexchange.com/questions/25701/bibtex-vs-biber-and-biblatex-vs-natbib.
+
+Note that `apa` and `authoryear` settings for `biblio-style` are not exactly the same as `apalike`, 
+but they come close. For example, the address field is ignored for books and book chapters. 
+I need to check with CRC Press what is needed on their side.
+
+Also, there may not be a need for a comprehensive bibliography at the end of the book. 
+I need to check this with CRC Press as well.
+
+
+\printbibliography[segment=\therefsegment,heading=subbibliography]
+
