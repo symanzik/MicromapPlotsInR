@@ -14,7 +14,7 @@ knit: "bookdown::render_book"
 bibliography:
 - book.bib
 - packages.bib
-- references.bib
+- referencesMicromaps.bib
 biblio-style: apa
 biblatexoptions: [refsegment=chapter]
 link-citations: yes
