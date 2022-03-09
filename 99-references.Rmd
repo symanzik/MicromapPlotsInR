@@ -11,3 +11,47 @@ knitr::write_bib(c(
 ), 'packages.bib')
 ```
 
+
+## Micromap Reference Overview {#Ch99-MicromapReferenceOverview}
+
+
+List of micromap references. **More to come.** I plan to make the underlying articles,
+book chapters, posters, etc. available via a Box folder in the near future.
+
+
+- Carr et al.:
+@CCBPZ2002,
+@CP2010,
+
+
+- Mast et al.:
+@Mast2013LinkedMicromaps,
+@Mast2013CCmaps,
+@Mast2014SpatialMismatch,
+@Mast2014CompMMHomeownership,
+@Mast2014CompMMTemporalDifferences,
+@Mast2015,
+@Mast2018,
+@Mast2020,
+
+
+- Pickle et al.:
+@PPC2015JSS,
+
+
+- Symanzik et al.:
+@SC2013,
+
+
+- Others:
+@Ahn2013,
+@BHPW2006,
+@BFLR2011,
+@MPRG2016,
+@PMWOK2015JSS,
+@Zhang2012,
+
+
+
+\printbibliography[segment=\therefsegment,heading=subbibliography]
+
