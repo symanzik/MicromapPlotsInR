@@ -1,4 +1,4 @@
-# Back to the Roots: Non-traditional Micromaps (for Viewing Patterns of Scientific Posters {#Ch10}
+# Back to the Roots: Non-traditional Micromaps (for Viewing Patterns of Scientific Posters) {#Ch10}
 
 
 \chapterauthor{Chunyang Li}
