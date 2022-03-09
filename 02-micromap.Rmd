@@ -71,6 +71,246 @@ lmplot(
 ```
 
 
+## Code Chunks {#Ch2-CodeChunks}
+
+
+Example code chunks from Mike's workshop materials. Reduce some of the figures.
+
+
+```{r Ch2-micromap2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+#I. Overview of Four Steps to Make a Linked Micromap
+
+### I. A. Geoprocessing of Spatial Data
+library(micromap)
+sessionInfo()
+getwd()
+
+library(labeling)
+
+data("USstates")
+#Here is the spatial data
+plot(USstates)
+head(USstates@data)
+```
+
+
+
+```{r Ch2-micromap3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. B. Structure:  Create a Map Table to Link to the Statistical Data
+statePolys <- create_map_table(USstates, 'ST')
+#The spatial data is now in a simpler form that the micromap package can use
+head(statePolys)
+
+data("edPov")
+#Here is the statistical data.
+head(edPov)
+#The spatial and statistical data frames must have a common linking variable.
+hist(1:100)
+```
+
+
+
+```{r Ch2-micromap4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. C. Draft Micromap Plot
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
+       panel.data=list(NA, 'state', 'pov', 'ed', NA),
+       ord.by='pov',   
+       grouping=5, median.row=TRUE)
+```
+
+
+
+```{r Ch2-micromap5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. Basic Modification Exercises of Draft Micromap Plot
+
+### I. D. a) Reorder the previous plot in decreasing order of poverty
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
+       panel.data=list(NA, 'state', 'pov', 'ed', NA),
+       ord.by='pov',   
+       rev.ord=TRUE,
+       grouping=5, median.row=TRUE)
+```
+
+
+
+```{r Ch2-micromap6, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. b) Change the order of the education and poverty panels and sort by decreasing education
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
+       panel.data=list(NA, 'state', 'ed', 'pov', NA),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=5, median.row=TRUE)
+```
+
+
+
+```{r Ch2-micromap7, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. c) Place the maps on the left side
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
+       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=5, median.row=TRUE)
+```
+
+
+
+```{r Ch2-micromap8, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. d) Try some different groupings, such as 6, 6, 6, 6, 3, 6, 6, 6, 6 (and no median.row)
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
+       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE)
+```
+
+
+
+```{r Ch2-micromap9, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. e) Align the state names to the left, see panel.att page 5-6 User guide
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
+       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
+       panel.att=list(list(3, align='left')))
+```
+
+
+
+```{r Ch2-micromap10, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. f) Vertically align the state names to the center, see vertical.align page 17 User guide
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
+       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
+       vertical.align='center',
+       panel.att=list(list(3, align='left')))
+```
+
+
+
+```{r Ch2-micromap11, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. D. g) Use a divergent 6-class BrBG color scheme from RColorBrewer (which is colorblind safe)
+mmplot(stat.data=edPov,
+       map.data=statePolys,
+       map.link=c('StateAb', 'ID'),
+       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
+       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
+       ord.by='ed',   
+       rev.ord=TRUE,
+       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
+       vertical.align='center',
+       colors=brewer.pal(6, "BrBG"),
+       panel.att=list(list(3, align='left')))
+```
+
+
+```{r Ch2-micromap12, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. E. Refine the Micromap Plot
+mmplot(stat.data=edPov, map.data=statePolys,
+        panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
+        panel.data=list(NA, 'state', 'pov', 'ed', NA),
+        map.link=c('StateAb', 'ID'),
+        ord.by='pov', 
+        grouping=5, 
+        median.row=TRUE, 
+        
+        plot.height=9, 
+        
+        colors=c('red', 'orange', 'green', 'blue', 'purple'),
+        
+        panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
+                       
+                       list(2, header='States', panel.width=.8, 
+                            align='left', text.size=.9),
+                       
+                       list(3, header='Percent Living Below\nPoverty Level',
+                            graph.bgcolor='lightgray', point.size=1.5,
+                            xaxis.ticks=list(10, 15, 20), xaxis.labels=list(10, 15, 20),
+                            xaxis.title='Percent'),
+                       
+                       list(4, header='Percent Adults With\n4+ Years of College',
+                            graph.bgcolor='lightgray', point.size=1.5,
+                            xaxis.ticks=list(20, 30, 40), xaxis.labels=list(20, 30, 40), 
+                            xaxis.title='Percent'),
+                       
+                       list(5, header='Light Gray Means\nPreviously Displayed',
+                            map.all=TRUE, fill.regions='aggregate',
+                            active.border.color='black', active.border.size=1.5,
+                            inactive.border.color=gray(.7), inactive.border.size=1, 
+                            panel.width=.8)))
+```
+
+
+
+```{r Ch2-micromap13, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### I. F. Refine the Micromap Plot with adjusted ticmarks & ticmark labels
+mmplot(stat.data=edPov, map.data=statePolys,
+       panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
+       panel.data=list(NA, 'state', 'pov', 'ed', NA),
+       map.link=c('StateAb', 'ID'),
+       ord.by='pov', 
+       grouping=5, 
+       median.row=TRUE, 
+       
+       plot.height=9, 
+       
+       colors=c('red', 'orange', 'green', 'blue', 'purple'),
+       
+       panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
+                      
+                      list(2, header='States', panel.width=.8, 
+                           align='left', text.size=.9),
+                      
+                      list(3, header='Percent Living Below\nPoverty Level',
+                           graph.bgcolor='lightgray', point.size=1.5,
+                           xaxis.ticks=as.list(extended(min(edPov$pov), max(edPov$pov), 3)), 
+                           xaxis.labels=as.list(extended(min(edPov$pov), max(edPov$pov), 3)),
+                           xaxis.title='Percent'),
+                      
+                      list(4, header='Percent Adults With\n4+ Years of College',
+                           graph.bgcolor='lightgray', point.size=1.5,
+                           xaxis.ticks=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
+                           xaxis.labels=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
+                           xaxis.title='Percent'),
+                      
+                      list(5, header='Light Gray Means\nPreviously Displayed',
+                           map.all=TRUE, fill.regions='aggregate',
+                           active.border.color='black', active.border.size=1.5,
+                           inactive.border.color=gray(.7), inactive.border.size=1, 
+                           panel.width=.8)))
+```
+
+
+
+```{r Ch2-micromap14, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+hist(1:100)
+```
+
+
 ## Further Reading {#Ch2-FurtherReading}
 
 
