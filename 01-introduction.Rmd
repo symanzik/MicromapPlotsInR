@@ -337,6 +337,9 @@ knitr::include_graphics("Ch1-micromap4-external.jpeg")
 ```
 
 
+\newpage
+
+
 ## Translating the Book Chapters to pdf and html Output {#Ch1-Translating}
 
 
@@ -347,6 +350,17 @@ to directly collaborate and interact with other chapter authors
 who will be using git and github. The use of git and github is optional.
 If you do not want to use these, you can always provide me with your Rmd
 and other source files.**
+
+Our book lives on
+https://github.com/symanzik/MicromapPlotsInR.
+This is a public directory. Everyone will be able to see the advancement
+of our book and provide feedback. I plan to provide stable updates on
+a regular basis. If you are familiar with git and github, simply pull
+new versions from the archive.
+
+If you do not want to use git and github at this time, please do the following:
+Select `Code -> Download ZIP` on the github page above.
+Unzip the ZIP file where you want to host these files locally on your computer.
 
 Open the R project file `MicromapPlotsinR.Rproj` in RStudio by double clicking on it.
 Ideally, always work in the framework of this R project while working on your book chapter.
@@ -363,7 +377,7 @@ alpha-numerical order. For this book, you can initially speed up the translation
 get translated each time. However, this means that cross-references to different chapters will
 not work. So, when you are about to finalize your chapter, please translate with all currently
 provided Rmd files in place (i.e., copy these files back into your local directory).
-Keep all other files and directories in the same directory structure as provided by me.
+Keep all other files and directories in the same directory structure as provided by me!
 These are needed to produce the book, but it is unlikely that you have to edit them at all.
 You likely will run into errors when trying to translate to pdf or html if some
 of these files are missing.
@@ -388,12 +402,59 @@ You now should see the menu **Build Book**.
 Select **bookdown::pdf_book** to create the pdf version of the book.
 Alternatively, select **bookdown::gitbook** to create the html version of the book.
 
-The html version will be visually more appealing. The pdf version will be more complete.
+If your translation to html or pdf does not work immediately, try the following:
+
+- Check that you have all necessary R packages installed, in particular **bookdown**, **micromap**,
+**micromapST**, and all their dependencies. 
+Chapter \@ref(Ch2) also needs the **labeling**, **rgeos**, **rgdal**, and **maptools** R packages.
+If necessary, install missing R packages (and their dependencies) via 
+`Tools -> Install Packages` in RStudio.
+
+- Do you have recent versions (from 2022) of RStudio and R itself? If not, update them.
+Updating R can be done most easiest via the `installr` R package and its `updateR()` function.
+One recommendation: Do not delete the R packages from your current installation of R
+until you are sure that they have been successfully transferred into the new installation of R.
+
+- Are all R packages up to date? Check via `Tools -> Check for Package Updates`
+in RStudio. Mismatching packages may be incompatible.
+If packages still do not match, enforce an update of all R packages via 
+the following. This is also a good idea when you updated to a new version of R,
+but copied all your currently installed R packages to the new location:
+```{r Ch1-UpdateRPackages, eval = FALSE}
+update.packages(checkBuilt = TRUE, ask = FALSE)
+```
+
+At this time, you should be able to translate to html. Translation to pdf
+may still require a few additional steps:
+
+- Do you have some LaTeX version installed? If not, I would suggest
+to install the full 6GB `texLive` version from 
+https://www.tug.org/texlive/.
+Alternatives are ` MiKTeX` (https://miktex.org/) or
+`TinyTeX` (https://yihui.org/tinytex/).
+After the installation, you should restart your computer.
+
+- If you have a current installation of `MiKTeX` or `TinyTex`, but still
+get errors when you try to translate to pdf, update your current installation
+(including the used LaTeX packages).
+Google for help how to do this for a certain installation of `MiKTeX` or `TinyTex`
+for your operating system.
+
+- If all of the above still do not work for you (but you can create the html version),
+there are two options: 
+(i) Just create the html version. But, this may require some more
+back and forth later on during the review process of your chapter. 
+(ii) Uninstall your current LaTeX installation, and install 
+the full 6GB `texLive` version from 
+https://www.tug.org/texlive/. This usually resolves all problems.
+ 
+The html version of the book will be visually more appealing. The pdf version will be more complete.
 Note that some of the pdf features of the book do not appear in the html version,
 e.g., there are no chapter authors listed, no list of figures and no list of tables is produced,
 no index is created, there is a different appearance of the references, and others. 
 As the final delivery to CRC Press are the source files for the pdf version,
-we do not have to focus on the html version at this time. If you are aware
+we do not have to focus on the html version at this time (but create the html
+version if you don't get the translation to pdf to work on your side). If you are aware
 how to modify the code (Rmd, yml, or other) to obtain a matching html version
 for some of the missing / different features, please let me know. As far as I could see,
 some of these features do not even exist for the html version at this time,
@@ -401,6 +462,40 @@ but of course, might be implemented while we are working on the book.
 
 At this time, do not worry about any formatting issues, placement of figures, etc. 
 in the pdf version. These will be addressed only once all chapter content has been finalized.
+
+
+## External Data Files and Additional R Code {#Ch1-DataFilesRCode}
+
+
+Likely, several of the book chapters are based on external data files and/or 
+additional R code. Eventually, these have to be made available to our readers
+in a meaningful way. This could be done via additional (new) R packages,
+e.g., `MPIRdata` or `micromapExtra`. The underlying R code for some of the chapters 
+itself could result in new R packages on CRAN or github. There are numerous
+options. We do not have to decide at this time, but only later in the year
+once we know how much additional material (data and R code) there will be.
+
+For now, let's just deposit any external data and additional R code that is 
+not directly part of a chapter into the `data` directory at 
+https://github.com/symanzik/MicromapPlotsInR/data.
+Please send your data and additional R files to me, best as a zip file, so
+I can upload them to github. 
+
+Overall, this will allow us to share data and additional R code among multiple
+chapters. Someone may want to use a modified shapefile, a new plot type,
+or create a different type of a Shiny app based on a micromap plot
+introduced elsewhere in the book.
+
+Assuming that the data directory is at the same directory level as the Rmd file
+of a chapter, data can be read in as follows:
+
+```{r Ch1-Data, eval = FALSE}
+data <- read.csv("data/file.csv")
+load(file = "data/file.RData")
+```
+
+See Section \@ref(Ch2-CodeChunksChina) how I read in shapefiles and data for Chinese micromaps.
+Note that this chapter is still highly experimental at this time!!!
 
 
 ## Open Bookdown Questions {#Ch1-OpenBookdownQuestions}
