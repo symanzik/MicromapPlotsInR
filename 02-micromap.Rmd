@@ -311,6 +311,218 @@ hist(1:100)
 ```
 
 
+## Code Chunks China {#Ch2-CodeChunksChina}
+
+
+```{r Ch2-micromaChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+#VI. Use of external shapefiles
+
+library(rgeos)
+library(rgdal)
+library(maptools)
+
+library(micromap)
+
+### Read in the shapefile and simplify the polygons (run this part of the code only once!)
+
+ChinaShapefile <- readOGR("data/China_Shapefiles", "export", verbose = TRUE)
+plot(ChinaShapefile)
+summary(ChinaShapefile)
+```
+
+
+```{r Ch2-micromaChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+gIsValid(ChinaShapefile, byid = TRUE, reason = TRUE)
+ChinaShapefileThin <- thinnedSpatialPoly(ChinaShapefile, 
+                                         tolerance = 300, # try 100, 300, 3000, 30000
+                                         minarea = 10000000000,
+                                         topologyPreserve = TRUE, 
+                                         avoidGEOS = TRUE)
+ChinaShapefileThin <- gBuffer(ChinaShapefileThin, width = 0, byid = TRUE)
+gIsValid(ChinaShapefileThin, byid = TRUE, reason = TRUE)
+plot(ChinaShapefileThin)
+
+### Change tolerance to 100, 3000, and 30000 and run the the entire code again, starting with readOGR.
+### Which of these is the best choice for tolerance? You may have to enlarge the map.
+
+### If you plan to use LM plots for a research project, you may also want to 
+### enlarge small regions or shift far-away regions closer to the main region.
+### Talk to me for further information.
+```
+
+
+```{r Ch2-micromaChina3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### Read in the data
+
+religion <- read.csv("data/China_ReligionData.csv", header = TRUE)
+
+ChinaPolys <- create_map_table(ChinaShapefileThin, "ename")
+
+### Basic micromap plot
+
+ChinaPlot <- mmplot(stat.data = religion,
+                    map.data = ChinaPolys,
+                    panel.types = c("labels", "dot", "map"),
+                    panel.data = list("Province", "Christianity", NA),
+                    ord.by = "Christianity",
+                    grouping = 5,
+                    median.row = TRUE, 
+                    map.link = c("Province", "ID"))
+```
+
+
+```{r Ch2-micromaChina4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### Advanced micromap plot
+
+ChinaReligion <- mmplot(stat.data = religion, 
+                        map.data = ChinaPolys,
+                        panel.types = c("map", "dot_legend", "labels", 
+                                        "dot", "dot", "dot", "dot"),
+                        panel.data = list(NA, NA, "Province", 
+                                          "Christianity", "Buddhism", "Daoism", "Islam"),
+                        map.link = c("Province", "ID"),
+                        ord.by = "Christianity",
+                        rev.ord = TRUE,
+                        
+                        grouping = 5,
+                        median.row = TRUE,
+                        plot.height = 9,
+                        plot.width = 9,
+                        colors = c("red", "orange", "green", "blue", "purple"),
+                        two.ended.maps = TRUE,
+                        map.all = TRUE,
+                        map.color2 = "lightgray",
+                        
+                        plot.header = "Religion in China",
+                        plot.header.size = 2,
+                        plot.header.color = "black",
+                        
+                        plot.panel.spacing = 0,
+                        panel.att = list(
+                          list(1, header = "Two-ended\nCumulative Maps",
+                               inactive.border.color = gray(.7), 
+                               inactive.border.size = 1,
+                               panel.width = 1.2),
+                          list(2, point.type = 20,
+                               point.size = 1.4),
+                          list(3, header = "Provinces", 
+                               panel.width = .9,
+                               align = "left", 
+                               text.size = .8),
+                          list(4, header = "Christianity",
+                               header.color = "red",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               xaxis.ticks = seq(0, 3000, by = 1000), 
+                               xaxis.labels = seq(0, 3, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(5, header = "Buddhism",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               xaxis.ticks = seq(0, 3000, by = 1000), 
+                               xaxis.labels = seq(0, 3, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(6, header = "Daoism",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               xaxis.ticks = seq(0, 2000, by = 1000), 
+                               xaxis.labels = seq(0, 2, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(7, header = "Islam",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               xaxis.ticks = seq(0, 25000, by = 12500), 
+                               xaxis.labels = seq(0, 25, by = 12.5),
+                               xaxis.title = "Number (Thousand)"
+                          )
+                        )
+)
+```
+
+
+```{r Ch2-micromaChina5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+### Final advanced micromap plot with reduced margins
+
+ChinaReligion <- mmplot(stat.data = religion, 
+                        map.data = ChinaPolys,
+                        panel.types = c("map", "dot_legend", "labels", 
+                                        "dot", "dot", "dot", "dot"),
+                        panel.data = list(NA, NA, "Province", 
+                                          "Christianity", "Buddhism", "Daoism", "Islam"),
+                        map.link = c("Province", "ID"),
+                        ord.by = "Christianity",
+                        rev.ord = TRUE,
+                        
+                        grouping = 5,
+                        median.row = TRUE,
+                        plot.height = 9,
+                        plot.width = 9,
+                        colors = c("red", "orange", "green", "blue", "purple"),
+                        two.ended.maps = TRUE,
+                        map.all = TRUE,
+                        map.color2 = "lightgray",
+                        
+                        plot.header = "Religion in China",
+                        plot.header.size = 2,
+                        plot.header.color = "black",
+                        
+                        plot.panel.spacing = 0,
+                        panel.att = list(
+                          list(1, header = "Two-ended\nCumulative Maps",
+                               inactive.border.color = gray(.7), 
+                               inactive.border.size = 1,
+                               panel.width = 1.2),
+                          list(2, point.type = 20,
+                               point.size = 1.4),
+                          list(3, header = "Provinces", 
+                               panel.width = .9,
+                               align = "left", 
+                               text.size = .8),
+                          list(4, header = "Christianity",
+                               header.color = "red",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               right.margin = 0, 
+                               left.margin = -0.5,
+                               xaxis.ticks = seq(0, 3000, by = 1000), 
+                               xaxis.labels = seq(0, 3, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(5, header = "Buddhism",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               right.margin = 0, 
+                               left.margin = -0.5,
+                               xaxis.ticks = seq(0, 3000, by = 1000), 
+                               xaxis.labels = seq(0, 3, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(6, header = "Daoism",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               right.margin = 0, 
+                               left.margin = -0.5,
+                               xaxis.ticks = seq(0, 2000, by = 1000), 
+                               xaxis.labels = seq(0, 2, by = 1),
+                               xaxis.title = "Number (Thousand)"
+                          ),
+                          list(7, header = "Islam",
+                               graph.bgcolor = "lightgray", 
+                               point.size = 1,
+                               right.margin = 0.25, 
+                               left.margin = -0.5,
+                               xaxis.ticks = seq(0, 25000, by = 12500), 
+                               xaxis.labels = seq(0, 25, by = 12.5),
+                               xaxis.title = "Number (Thousand)"
+                          )
+                        )
+)
+```
+
+
 ## Further Reading {#Ch2-FurtherReading}
 
 
