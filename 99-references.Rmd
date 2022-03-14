@@ -19,9 +19,30 @@ List of micromap references. **More to come.** I plan to make the underlying art
 book chapters, posters, etc. available via a Box folder in the near future.
 
 
-- Carr et al.:
+-Ahn, Park, et al.:
+@Ahn2013,
+@Ahn2015,
+@Ahn2016,
+@AhPa2016,
+@CHPA2014,
+@Park2016,
+@PaAh2013,
+@PaAh2014,
+@PaAh2015Mortality,
+@PaAh2015Climate,
+
+
+- Carr, Pickle, Bell, et al.:
+@BHPW2006,
+@CWC2000,
+@Carr2001,
 @CCBPZ2002,
+@CBPZL2003,
+@CWM2005,
 @CP2010,
+@Matthews2013,
+@PPC2015JSS,
+@WCCBP2002,
 
 
 - Mast et al.:
@@ -35,20 +56,36 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @Mast2020,
 
 
-- Pickle et al.:
-@PPC2015JSS,
+- McManus, Payton, Weber, et al.:
+@MPRG2016,
+@PWMO2012,
+@PWMKO2013,
+@PMWOK2015JSS,
+@PaOl2015,
+@PaOl2021,
 
 
 - Symanzik et al.:
+@GGMS2008,
+@GDSMGD2015,
+@JS2001,
+@SWWCWA98,
+@SACWWW99,
+@SCAWWW99,
+@SC2008,
 @SC2013,
+@VS2011,
 
 
 - Others:
-@Ahn2013,
-@BHPW2006,
+@Blunt2006,
 @BFLR2011,
-@MPRG2016,
-@PMWOK2015JSS,
+@Kolb2015,
+
+
+- MS Theses and Dissertations:
+@Heim2014,
+@Thapliyal2009,
 @Zhang2012,
 
 
