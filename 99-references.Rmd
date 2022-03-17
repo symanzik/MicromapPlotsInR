@@ -25,6 +25,7 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @Ahn2016,
 @AhPa2016,
 @CHPA2014,
+@Kim2015,
 @Park2016,
 @PaAh2013,
 @PaAh2014,
@@ -34,16 +35,28 @@ book chapters, posters, etc. available via a Box folder in the near future.
 
 - Carr, Pickle, Bell, et al.:
 @BHPW2006,
+@OCCP1996 (Create scan from JSM 1996 Abstract Book),
+@CaPi1996,
+@COCPC1998,
+@COPC1998,
+@COPC2000,
 @CWC2000,
 @Carr2001,
+@Carr2002 (pdf requested),
+@CZL2002,
 @CCBPZ2002,
 @CBPZL2003,
+@Carr2005,
 @CWM2005,
 @CP2010,
+@CP2015CRAN,
 @Matthews2013,
+@Heim2014,
+@PeCa2016CRAN,
 @PiCa2010,
 @PPC2015JSS,
 @WCCBP2002,
+@Zhang2012,
 
 
 - Mast et al.:
@@ -58,6 +71,7 @@ book chapters, posters, etc. available via a Box folder in the near future.
 
 
 - McManus, Payton, Weber, et al.:
+@Griffith2014,
 @MPRG2016,
 @PWMO2012,
 @PWMKO2013,
@@ -67,35 +81,44 @@ book chapters, posters, etc. available via a Box folder in the near future.
 
 
 - Symanzik et al.:
+@Chapala2005 (Locate printed MS Report),
 @GGMS2008,
 @GDSMGD2015,
-@JS2001,
-@SWWCWA98,
-@SACWWW99,
-@SCAWWW99,
+@HPMCSGA2014,
+@JoSy2001,
+@LiSy2016ASA,
+@LiSy2017ASA,
+@MPS2019ASA,
+@PrSy2019,
+@SWWCWA1998,
+@SACWWW1999,
+@SCAWWW1999,
+@SyJo2001ASA,
+@SHG2002ASA,
+@SGGW2003ASA,
+@Symanzik2004,
 @SC2008,
+@Symanzik2012,
 @SC2013,
 @Symanzik2014,
 @SDWPM2014,
 @SBDSS2016,
 @SCMW2017,
+@SLZSM2017ASA,
 @Symanzik2021,
-@VS2011,
+@Thapliyal2009,
+@VoSy2011,
 
+Work from Li, Medri, Probst, Voge, Eye-Tracking Postures
 
 - Others:
 @Blunt2006,
 @BFLR2011,
 @DrJo2011,
-@Griffith2014,
-@Kim2015,
+@FoWo2000,
 @Kolb2015,
 
 
-- MS Theses and Dissertations:
-@Heim2014,
-@Thapliyal2009,
-@Zhang2012,
 
 
 
