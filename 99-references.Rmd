@@ -41,6 +41,7 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @CWM2005,
 @CP2010,
 @Matthews2013,
+@PiCa2010,
 @PPC2015JSS,
 @WCCBP2002,
 
@@ -74,12 +75,20 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @SCAWWW99,
 @SC2008,
 @SC2013,
+@Symanzik2014,
+@SDWPM2014,
+@SBDSS2016,
+@SCMW2017,
+@Symanzik2021,
 @VS2011,
 
 
 - Others:
 @Blunt2006,
 @BFLR2011,
+@DrJo2011,
+@Griffith2014,
+@Kim2015,
 @Kolb2015,
 
 
