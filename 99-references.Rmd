@@ -26,11 +26,11 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @AhPa2016,
 @CHPA2014,
 @Kim2015,
-@Park2016,
 @PaAh2013,
 @PaAh2014,
 @PaAh2015Mortality,
 @PaAh2015Climate,
+@Park2016,
 
 
 - Carr, Pickle, Bell, et al.:
@@ -42,7 +42,8 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @COPC2000,
 @CWC2000,
 @Carr2001,
-@Carr2002 (pdf requested),
+@Carr2002,
+@CaZh2002,
 @CZL2002,
 @CCBPZ2002,
 @CBPZL2003,
@@ -52,11 +53,14 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @CP2015CRAN,
 @Matthews2013,
 @Heim2014,
+@LPC2017,
 @PeCa2016CRAN,
 @PiCa2010,
 @PPC2015JSS,
+@Ugarte2012,
 @WCCBP2002,
 @Zhang2012,
+@ZPP2016,
 
 
 - Mast et al.:
@@ -85,11 +89,15 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @GGMS2008,
 @GDSMGD2015,
 @HPMCSGA2014,
+@HPSCA2016,
 @JoSy2001,
 @LiSy2016ASA,
+@Li2017,
 @LiSy2017ASA,
 @MPS2019ASA,
+@Medri2021,
 @PrSy2019,
+@Probst2020,
 @SWWCWA1998,
 @SACWWW1999,
 @SCAWWW1999,
@@ -108,15 +116,23 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @Symanzik2021,
 @Thapliyal2009,
 @VoSy2011,
+@Voge2012,
 
-Work from Li, Medri, Probst, Voge, Eye-Tracking Postures
 
 - Others:
 @Blunt2006,
 @BFLR2011,
+@DaWo2021,
 @DrJo2011,
 @FoWo2000,
+@KIT2015,
 @Kolb2015,
+@NPNA2019,
+@SFSHGSB2019,
+@SWSCSS2018,
+@SSK2007,
+@TaSt2019,
+@Wartenberg2009,
 
 
 
