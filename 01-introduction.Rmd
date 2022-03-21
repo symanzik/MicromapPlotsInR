@@ -112,7 +112,13 @@ Also note that three different bib files have been used here to create the final
 See here for further details on citations in bookdown:
 https://bookdown.org/yihui/bookdown/citations.html.
 
-**I will provide an updated bib file with a large number of micromap-related references in the near future and I will make most of those references available to all chapter authors, likely via a Box folder.**
+**I have provided an updated bibtex file with a large number of micromap-related references,
+called `referencesMicromaps.bib` - see 
+https://github.com/symanzik/MicromapPlotsInR/blob/master/referencesMicromaps.bib.
+See Appendix \@ref(Ch99-MicromapReferenceOverview) for the references that are already listed
+in the bibtex file.
+Most of the underlying articles, book chapters, posters, etc. will be made available via a Box folder
+within the next few days. Look for my e-mail.**
 
 
 ## Micromap Examples {#Ch1-MicromapExamples}
@@ -499,6 +505,9 @@ load(file = "data/file.RData")
 
 See Section \@ref(Ch2-CodeChunksChina) how I read in shapefiles and data for Chinese micromaps.
 Note that this chapter is still highly experimental at this time!!!
+
+
+\newpage
 
 
 ## Open Bookdown Questions {#Ch1-OpenBookdownQuestions}

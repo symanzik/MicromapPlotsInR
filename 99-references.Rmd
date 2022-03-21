@@ -15,8 +15,20 @@ knitr::write_bib(c(
 ## Micromap Reference Overview {#Ch99-MicromapReferenceOverview}
 
 
-List of micromap references. **More to come.** I plan to make the underlying articles,
-book chapters, posters, etc. available via a Box folder in the near future.
+Here is an extended list of micromap references. A few more to come over the next few weeks.
+Most of the underlying articles, book chapters, posters, etc. will be made available via a Box folder
+within the next few days. Look for my e-mail.
+
+This list should serve as a basic overview of what could be cited in various chapters of our book.
+You have to decide yourselves what is most suitable for your chapter. Of course, bring in
+additional references that are not listed yet. 
+
+If possible work with the bibtex file `referencesMicromaps.bib` as the basis for your citations. 
+Revisit Section \@ref(Ch1-CitationsReferences) how to do so (and see the examples below).
+
+If you want to cite additional references, provide me with an initial bibtex entry,
+provide me with the DOI of the article or book chapter, point me to the web page,
+or provide me with any other way to construct a related bibtex entry.
 
 
 -Ahn, Park, et al.:
@@ -87,6 +99,7 @@ book chapters, posters, etc. available via a Box folder in the near future.
 - Symanzik et al.:
 @Chapala2005 (Locate printed MS Report),
 @GGMS2008,
+@Gebreab2010,
 @GDSMGD2015,
 @HPMCSGA2014,
 @HPSCA2016,
@@ -122,8 +135,10 @@ book chapters, posters, etc. available via a Box folder in the near future.
 - Others:
 @Blunt2006,
 @BFLR2011,
+@Cairo2013,
 @DaWo2021,
 @DrJo2011,
+@Everitt2021,
 @FoWo2000,
 @KIT2015,
 @Kolb2015,
@@ -132,6 +147,7 @@ book chapters, posters, etc. available via a Box folder in the near future.
 @SWSCSS2018,
 @SSK2007,
 @TaSt2019,
+@UtMo2010,
 @Wartenberg2009,
 
 
