@@ -42,7 +42,7 @@ or provide me with any other way to construct a related bibtex entry.
 @PaAh2014,
 @PaAh2015Mortality,
 @PaAh2015Climate,
-@Park2016,
+@Park2016 (App at https://s2c-maps.shinyapps.io/home),
 
 
 - Carr, Pickle, Bell, et al.:
@@ -133,15 +133,19 @@ or provide me with any other way to construct a related bibtex entry.
 
 
 - Others:
+@Asado2014,
+@Baulier2011,
 @Blunt2006,
 @BFLR2011,
 @Cairo2013,
 @DaWo2021,
 @DrJo2011,
+@Ellis2017,
 @Everitt2021,
 @FoWo2000,
 @KIT2015,
 @Kolb2015,
+@LMV2017 (App at https://mandiluo.shinyapps.io/The_Indian_Story/),
 @NPNA2019,
 @SFSHGSB2019,
 @SWSCSS2018,
@@ -149,6 +153,7 @@ or provide me with any other way to construct a related bibtex entry.
 @TaSt2019,
 @UtMo2010,
 @Wartenberg2009,
+@Yu2021,
 
 
 
