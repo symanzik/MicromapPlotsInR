@@ -63,6 +63,7 @@ or provide me with any other way to construct a related bibtex entry.
 @CWM2005,
 @CP2010,
 @CP2015CRAN,
+@CCWS2006,
 @Matthews2013,
 @Heim2014,
 @LPC2017,
@@ -147,6 +148,7 @@ or provide me with any other way to construct a related bibtex entry.
 @Kolb2015,
 @LMV2017 (App at https://mandiluo.shinyapps.io/The_Indian_Story/),
 @NPNA2019,
+@SeSa2013,
 @SFSHGSB2019,
 @SWSCSS2018,
 @SSK2007,
@@ -156,7 +158,10 @@ or provide me with any other way to construct a related bibtex entry.
 @Yu2021,
 
 
-
+Note: 126 micromap references found on Semantic Scholar on 3/23/2022 - see
+https://www.semanticscholar.org/search?q=micromap&sort=relevance.
+However, some of these references are related to
+MicroMAPS (Microprocessor-based Measurement of Air Pollution from Satellite).
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
