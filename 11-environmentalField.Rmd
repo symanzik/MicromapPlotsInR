@@ -1,7 +1,7 @@
 # Applications for the Environmental Field {#Ch11}
 
 
-\chapterauthor{Marcus W. Beck, Michael McManus, J{\"u}rgen Symanzik}
+\chapterauthor{Michael G. McManus, Marcus W. Beck, J{\"u}rgen Symanzik}
 
 
 This chapter will focus on micromap applications from the environmental field. 
