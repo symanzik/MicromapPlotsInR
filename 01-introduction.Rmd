@@ -67,7 +67,6 @@ knitr::kable(
 )
 ```
 
-
 ## Indexing {#Ch1-Indexing}
 
 
@@ -278,7 +277,7 @@ in Figure \@ref(fig:Ch1-micromap5), this externally created figure is included i
 
 **Even though this works, I would suggest to always use the approach from the previous section, i.e.,
 Section \@ref(Ch1-MicromapExamples), whenever possible.** Exceptions are externally created files
-or sceenshots, e.g., from a **Shiny**\index{R Packages!Shiny} app, that could be included this way.
+or sceenshots, e.g., from a **Shiny**\index{R Packages!Shiny} app, that could be included this way.  Note that the external figures should be placed in the `img` folder and should be jpeg format.
 
 
 ```{r Ch1-micromap4}
@@ -298,7 +297,7 @@ lmplot(
   colors = c("red", "orange", "green", "blue", "purple"),
   map.color2 = "lightgray", 
   
-  print.file = "Ch1-micromap4-external.jpeg",
+  print.file = "img/Ch1-micromap4-external.jpeg",
   
   panel.att = list(
     list(2, panel.width = 0.15, 
@@ -339,9 +338,8 @@ lmplot(
 ```{r Ch1-micromap5, fig.cap = 'And now the fourth (and final) micromap example.', out.width = '90%', echo = FALSE}
 #options(knitr.graphics.auto_pdf = TRUE)
 
-knitr::include_graphics("Ch1-micromap4-external.jpeg")
+knitr::include_graphics("img/Ch1-micromap4-external.jpeg")
 ```
-
 
 \newpage
 
