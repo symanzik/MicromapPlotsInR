@@ -4,11 +4,9 @@
 \chapterauthor{Michael G. McManus, Marcus W. Beck, J{\"u}rgen Symanzik}
 
 
-This chapter will focus on micromap applications from the environmental field. 
-Components from several of the previous chapters are revisited here, e.g., 
-how to include non-standard geographic boundaries, e.g., watersheds, ecoregions, 
-and climate zones, and deal with non-standard graph types 
-such as arrow plots to visualize changes over time.
+This chapter will give the purpose and description of linked micromaps as applied to environmental data using the R package **micromap**\index{R Packages!micromap}.  We will ask what types of environmental data are most suited for summarizing and displaying as linked micromaps.  Additionally, we will show how linked micromaps can be used in spatial data analysis.  Our linked micromap examples are drawn from federal and state environmental agencies in the United States.
+
+The purpose of a linked micromap is to show spatial locations corresponding to statistical estimates [@COCPC1998].  Linked micromaps simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries of polygons, or areal units, to a series of small maps [@PMWOK2015JSS].  Implicit with this purpose and description is that space, defined as spatial contiguity of polygons, provides some context to the statistical estimates, and that the statistical estimates are representative of the polygons. That spatial context to statistical estimates can be one of three patterns:  spatial similarity among neighbors, spatial dissimilarity among neighbors, or no spatial pattern among neighbors.  
 
 
 ## Introduction {#Ch11-Introduction}
