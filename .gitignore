@@ -5,7 +5,6 @@ _book/
 .RData
 .Ruserdata
 bookdown-crc.Rproj
-Ch1-micromap4-external.jpeg
 *.aux
 *.idx
 *.lof

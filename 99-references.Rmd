@@ -31,7 +31,7 @@ provide me with the DOI of the article or book chapter, point me to the web page
 or provide me with any other way to construct a related bibtex entry.
 
 
--Ahn, Park, et al.:
+- Ahn, Park, et al.:
 @Ahn2013,
 @Ahn2015,
 @Ahn2016,
@@ -64,15 +64,18 @@ or provide me with any other way to construct a related bibtex entry.
 @CP2010,
 @CP2015CRAN,
 @CCWS2006,
-@Matthews2013,
+@Matthews2013 (Book Review),
 @Heim2014,
+@Kolvoord2010 (Book Review),
 @LPC2017,
 @PeCa2016CRAN,
 @PiCa2010,
 @PPC2015JSS,
-@Ugarte2012,
+@Ugarte2012 (Book Review),
+@Unwin2011 (Book Review),
 @WCCBP2002,
 @Zhang2012,
+@ZhCa2014,
 @ZPP2016,
 
 
@@ -88,6 +91,8 @@ or provide me with any other way to construct a related bibtex entry.
 
 
 - McManus, Payton, Weber, et al.:
+@Beck2016 (Code at https://github.com/fawda123/micromap_app/tree/v1.0.1,
+App at https://beckmw.shinyapps.io/micromap_app/),
 @Griffith2014,
 @MPRG2016,
 @PWMO2012,
@@ -154,6 +159,8 @@ or provide me with any other way to construct a related bibtex entry.
 @SSK2007,
 @TaSt2019,
 @UtMo2010,
+@VirginiaDEQ2020 (Code at https://github.com/EmmaVJones/ProbDash/tree/master/app,
+App at https://evjones.shinyapps.io/FreshwaterProbMonEDA/),
 @Wartenberg2009,
 @Yu2021,
 
