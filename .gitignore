@@ -6,6 +6,7 @@ _book/
 .Ruserdata
 bookdown-crc.Rproj
 *.aux
+*.bbl
 *.idx
 *.lof
 *.lot
