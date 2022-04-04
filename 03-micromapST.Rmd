@@ -1,15 +1,17 @@
 # Linked Micromap Plots via the **micromapST** R Package {#Ch3}
 
 
-\chapterauthor{Daniel B. Carr, James Blackwood Pearson, Jr., Linda Williams Pickle}
+\chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr., Daniel B. Carr}
 
 
 Similar to Chapter \@ref(Ch2), the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN],
 accessible at https://cran.r-project.org/web/packages/micromapST/index.html,
 will be introduced in this chapter. The reader will learn how to create a 
 basic linked micromap plot\index{Linked micromap plot} via this R package. 
-Details will be provided how to optimize and fine-tune such a basic plot 
-into a publication-worthy final linked micromap plot.
+Although the default parameter settings give publication-ready output,
+details will be provided on setting up additional labels and optional cumulative shading
+which displays the growing geographic shading as one moves from the top to bottom
+of the full plot.
 
 
 ## Introduction {#Ch3-Introduction}
