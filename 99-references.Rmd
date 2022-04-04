@@ -16,8 +16,10 @@ knitr::write_bib(c(
 
 
 Here is an extended list of micromap references. A few more to come over the next few weeks.
-Most of the underlying articles, book chapters, posters, etc. will be made available via a Box folder
-within the next few days. Look for my e-mail.
+Most of the underlying articles, book chapters, posters, etc. have been made available via a Box folder now.
+You should have received an e-mail invitation to this Box folder on 3/25/2022.
+If you did not receive such an invitation or cannot access the files,
+please let me know.
 
 This list should serve as a basic overview of what could be cited in various chapters of our book.
 You have to decide yourselves what is most suitable for your chapter. Of course, bring in
@@ -136,6 +138,7 @@ App at https://beckmw.shinyapps.io/micromap_app/),
 @Thapliyal2009,
 @VoSy2011,
 @Voge2012,
+@Yarra2010,
 
 
 - Others:

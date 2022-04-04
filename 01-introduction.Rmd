@@ -116,8 +116,10 @@ called `referencesMicromaps.bib` - see
 https://github.com/symanzik/MicromapPlotsInR/blob/master/referencesMicromaps.bib.
 See Appendix \@ref(Ch99-MicromapReferenceOverview) for the references that are already listed
 in the bibtex file.
-Most of the underlying articles, book chapters, posters, etc. will be made available via a Box folder
-within the next few days. Look for my e-mail.**
+Most of the underlying articles, book chapters, posters, etc. have been made available via a Box folder now.
+You should have received an e-mail invitation to this Box folder on 3/25/2022.
+If you did not receive such an invitation or cannot access the files,
+please let me know.**
 
 
 ## Micromap Examples {#Ch1-MicromapExamples}
