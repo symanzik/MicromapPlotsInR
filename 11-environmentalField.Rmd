@@ -8,6 +8,65 @@ This chapter will give the purpose and description of linked micromaps as applie
 
 The purpose of a linked micromap is to show spatial locations corresponding to statistical estimates [@COCPC1998].  Linked micromaps simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries of polygons, or areal units, to a series of small maps [@PMWOK2015JSS].  Implicit with this purpose and description is that space, defined as spatial contiguity of polygons, provides some context to the statistical estimates, and that the statistical estimates are representative of the polygons. That spatial context to statistical estimates can be one of three patterns:  spatial similarity among neighbors, spatial dissimilarity among neighbors, or no spatial pattern among neighbors. @MPRG2016 illustrated that first pattern, while the examples below by the Virginia Department of Environmental Quality (VDEQ) and Florida Department of Environmental Protection (FDEP) illustrate the second and third patterns, respectively [@SWSCSS2018]. All three of those examples also addressed the issue of obtaining statistical estimates of environmental data that were representative of watersheds, the polygons, used in the analysis. 
 
+```{r Ch11-micromap1Mike, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.'}
+library(micromap)
+
+# initial example
+Land4_Imida_NA <- readRDS("data/Land4_Imida_NA.rds")
+FL_Basins <- readRDS("data/Florida_Basins.rds")
+
+mmplot(stat.data=Land4_Imida_NA, 
+                 map.data=FL_Basins,
+                 panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map'),
+                 panel.data=list(NA,'GROUP_NAME','Sum_PNT_COUNT','Imidacloprid','Percent_Ag_Ur_Tr',
+                                 list('Imida_Min','Imida_25','Imida_Med','Imida_75','Imida_Max'),
+                                 NA),       
+                 map.link=c('GROUP_NAME','ID'),
+                 ord.by='Imidacloprid',
+                 rev.ord = TRUE,
+                 grouping=c(6,6,5,6,6), ##median.row=F,
+                 vertical.align = 'center',
+                 plot.panel.spacing = 2,
+                 plot.height=6, 
+                 plot.width = 9,
+                 colors=c('red','orange','yellow', 'green','blue','purple'),
+                 print.res = 900,
+                 
+                 panel.att=list(list(1, point.type=20, point.border=TRUE, panel.width=1, point.size=2),
+                                
+                                list(2, header='Basin\nName', panel.width=.9, 
+                                     align='left', left.margin=-1.6, text.size=.65), 
+                                
+                                list(3, header='Sample\nSize',panel.width=.1,
+                                     align='right', left.margin=-1.6, text.size=.65),
+                                
+                                list(4, header='Imidacloprid\nDetected',
+                                     graph.bgcolor='lightgray', point.size=1,
+                                     xaxis.ticks=list(0,25,50,75), xaxis.labels=list(0,25,50,75),
+                                     xaxis.title='Percent', left.margin=-1.6,
+                                     panel.width=.4),
+                                
+                                list(5, header='Ag + Urban\nLand Use',
+                                     graph.bgcolor='lightgray', point.size=1,
+                                     xaxis.ticks=list(0,25,50,75), xaxis.labels=list(0,25,50,75), 
+                                     xaxis.title='Percent', left.margin=-1.6,
+                                     panel.width=.4),
+                                
+                                list(6, header='Imidacloprid Median          \nmin, 25th, 75th, & max',
+                                     graph.bgcolor='lightgray',
+                                     xaxis.ticks=list(-3,-2.5,-2,-1.5,-1,-0.5,0), xaxis.labels=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
+                                     xaxis.title='Log micrograms per liter', 
+                                     graph.bar.size = 0.4, left.margin=-1.6,
+                                     panel.width=.75),
+                                
+                                list(7, header='Gray Means            \n  Previously Displayed',
+                                     map.all=TRUE, fill.regions='aggregate',
+                                     active.border.color='black', active.border.size=1, left.margin=-1.6,
+                                     panel.width=.6)))
+
+
+```
+
 
 ## Introduction {#Ch11-Introduction}
 
