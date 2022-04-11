@@ -10,7 +10,46 @@ The purpose of a linked micromap is to show spatial locations corresponding to s
 
 Public health statistics are often reported by administrative boundaries, such as counties, states, or countries, whereas environmental statistics are often reported by boundaries of natural features, such as watersheds, estuaries, or ecoregions. A census of environmental characteristics from such natural features is not possible.  Consequently, environmental statisticians have recommended probability-based surveys or sampling to obtain representative estimates of natural resources [@PUW1999]. Probability-based surveys have three steps:  1) Identify the total or target population of interest (e.g.  all wadeable streams in Virginia), 2) Select a random sample to ensure representativeness with the known probability of including any member of the target population, and 3) apply the sample weight, the inverse of the probability, to the environmental measurements so that inferences can be made to the target populations based on the samples [@PUW1999]. @SO2004 introduced spatially balanced probabilistic surveys as having sample sites distributed evenly over the extent of the natural resource is more efficient than a random sample of sites, in which clumping of sites may occur.  The design and analysis of spatially balanced probabilistic surveys is done using the R package Spatial Sampling Design and Analysis, spsurvey (@DKOW2022; @OKP2012).  Statistical estimates of natural resources have been made from spatially balanced probabilistic surveys of ecoregions of the conterminous United States as part US EPA’s National Aquatic Resource Surveys to watersheds within a state.
 
-```{r Ch11-micromap1Mike, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.'}
+```{r Ch11-micromap1Mike, fig.width = 7, fig.height = 9, fig.cap = 'A Virginia Linked Micromap.'}
+
+library(micromap)
+
+# initial example
+stats <- readRDS("data/stats.RDS")
+map.table <- readRDS("data/map.table.RDS")
+
+ mmplot(stat.data=stats,
+         map.data=map.table,
+         map.link=c("Basin", "ID"),
+         panel.types=c('dot_legend', 'labels','labels', 'dot_cl', 'map'),
+         panel.data=list(NA,'Basin','n',list('x50', 'x25', 'x75'),NA),
+         ord.by='x50',
+         grouping=c(4,3,4),
+         vertical.align = "center",
+         median.row=F,
+         plot.height=7,
+         plot.width=8,
+         colors=brewer.pal(3, "Spectral"),
+         rev.ord=T,
+         panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
+                        list(2, header='Basin', panel.width=.5, 
+                             align='left', text.size=.9),
+                        list(3,header='n',panel.width=.2,align='left',text.size=.9),
+                        list(4, header='Estimated Median VSCI/VCPMI Score and \nAssociated Interquartile Range',
+                             graph.bgcolor='lightgray', point.size=1.5,
+                             xaxis.ticks=list(40,50,60,70,80), xaxis.labels=list(40,50,60,70,80)
+                             ,add.line=60,add.line.col='black',add.line.typ='dashed',
+                             xaxis.title='VSCI Score'),
+                        list(5, header='Light Gray Means\nPreviously Displayed',
+                             map.all=TRUE, fill.regions='aggregate',
+                             active.border.color='black', active.border.size=1.0,
+                             inactive.border.color=gray(.7), inactive.border.size=1, 
+                             panel.width=1.0)))
+
+```
+
+
+```{r Ch11-micromap2Mike, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.'}
 library(micromap)
 
 # initial example
