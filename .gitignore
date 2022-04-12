@@ -4,6 +4,7 @@ _book/
 .Rhistory
 .RData
 .Ruserdata
+bookdown.Rmd
 bookdown-crc.Rproj
 *.aux
 *.bbl
