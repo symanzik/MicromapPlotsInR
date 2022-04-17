@@ -1,90 +1,73 @@
 # Web-based Linked Micromap Plots (via Shiny) {#Ch7}
 
-
 \chapterauthor{Marcus W. Beck}
 
+Web-based interactive linked micromaps were first developed in the late 1990s. Early examples included visualizing hazardous air pollutant data with micromaps using the Graphics Production Library [@SACWWW1999] and a web page maintained by the National Cancer Institute to visualize long-term cancer data with micromaps [@Bell06]. These early attempts primarily used Java-based web technologies to demonstrate the value of combining micromap visualization tools with online functionality.  Since then, the development of R packages to create web-based applications has allowed new opportunities for sharing micromaps online. This chapter will introduce the reader to the creation of linked micromap plots via the R **shiny**\index{R packages!shiny} package [@Chang21]. Core concepts of creating shiny applications will be discussed, including an example that demonstrates a minimal working shiny application with the the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2016].   
 
-Creating web-based interactive linked micromaps dates far back into the late 1990s. 
-Early attempts were made via the Graphics Production Library (GPS). 
-The National Cancer Institute (NCI) maintained a web page with interactive linked micromaps 
-for its cancer data for more than ten years. Java versions also exist. 
-This chapter will introduce the reader to the creation of linked micromap plots 
-via the Shiny R package (https://shiny.rstudio.com/). 
-A preliminary example of such a Shiny-based linked micromap plot can be 
-accessed at https://beckmw.shinyapps.io/micromap_app/.
+## The Need for Web Applications {#Ch7-Introduction}
 
+The ability to develop and host content in an online framework has obvious benefits for research applications.  Reaching new audiences and creating a more immersive experience with interactive functionality can improve understanding beyond text descriptions that are often found in dense technical reports or research articles.  This is especially important when research products have intended applications for non-technical audiences or to simply facilitate sharing of ideas among colleagues, such as for applied environmental (e.g., Chapter \@ref(Ch11)) or medical (e.g., Chapter \@ref(Ch12)) fields.  Web-based applications can greatly improve technology transfer from the research community to practitioners, collaborators, or other stakeholders that may not need to fully understand the tehnical details of an underlying application but require robust tools built on quality science to make informed decisions.
 
-## Introduction {#Ch7-Introduction}
+In this context, web-based applications (web app or dashboard, hereafter) can have two fundamental roles, where the primary goal of each is to increase understanding of concepts or results from research products.  The first and most common use is creating a web app to support an existing or otherwise finalized research product.  Simple examples include developing an application to share results as supplemental information from a research article, creating a web page to synthesize and distill large, publicly available datasets, or using a web application for prioritizing how decisions are made with limited resources.  In the latter case, these may also be generically called decision support tools.  The second, and more under-appreciated role of web apps is as intermediate tools that can enhance the research process.  For many of the reasons that web apps can improve delivery of science to decision-makers or to inform the public, web apps can also benefit the research community by improving collaboration among colleagues.  We encourage readers to appreciate and understand how web apps can have benefits at different stages of the research process, not just as a final product. 
 
+The concepts and tools presented in this chapter can apply equally well to the two use cases above.  In addition to understanding the theory of building web apps with micromaps, additional considerations include how the application is hosted online for access by others and what steps are made to ensure the application is maintained into the future.  A detailed discussion of these concepts is beyond the scope of this chapter, but examples and resources are provided to allow the reader to understand their importance and how to further build on the concepts presented herein.   
 
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
+## Existing Examples of Micromap Web Applications {#Ch7-ExistingWebApps}
 
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
+* Graphics Production Library [@SACWWW1999]: Figure
+* National Cancer Institute [@Bell06], discussed in @Pickle15; Figure
+* https://evjones.shinyapps.io/FreshwaterProbMonEDA/
+     * This is a shiny app to support an annual report from Virginia DEQ for their freshwater probabilistic monitoring program, see email from 3/9/22	
+     * Repo: https://github.com/EmmaVJones/ProbDash/tree/master/app
+     * Integrated report driving the app (2022, not published yet): https://github.com/EmmaVJones/FreshwaterProbMonIntegratedReports/tree/main/2022ProbChapter
+     * 2020 chapter here: https://www.deq.virginia.gov/home/showpublisheddocument/4309/637461491336170000
+See email from Emma on 3/15 explaining why the app was developed - it helped them explore their data (emphasis on second sub-bullet for first bullet above)
+* Another example from one of Juergen’s students, currently not hosted online: https://github.com/asa-stat-computing-and-graphics/COST-DataExpo-2019/tree/master/HousingAffordability
 
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
+## Shiny as an Open Source Tool for Web Applications {#Ch7-Shiny}
 
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
+### What is Shiny?
 
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
+The R **shiny**\index{R Packages!shiny} package [@Chang21;@Wickham21] allows you to create web applications entirely in the R framework. Shiny lets you take an existing R script and expose it using a web browser so that you or anybody else can use it outside of R. Shiny is commonly used to 1) communicate complex workflows to a non-technical audience with informative visualizations and interactive components, 2) Share your analysis easily with colleagues without having to walk them through details of your script, 3) Help inform your understanding of an analysis by creating a user interface to quickly evaluate data.  Because linked micromaps can be easily created in R using the **micromap**\index{R Packages!micromap} or **micromapST**\index{R Packages!micromapST} packages, creating web apps with shiny is a simple extension that can greatly improve understanding of your data.   
 
+There are many advantages to using Shiny over other platforms for creating web applications. As R users, the value of Shiny is that you only need to know how to use R. You do not need to have a detailed understanding of web programming, such as HTML, CSS, or JavaScript. On the other hand, Shiny gives you the power to tap into the broader suite of web programming tools when you’re ready to or have a need to expand your application. More simply, Shiny lets you create a web interface for any R workflow. This means that any custom analysis or graphic you have made can be fully integrated into your web app, unlike other platforms that may have rigid and less customizable templates designed for ease of use.
 
-## Main {#Ch7-Main}
+Understanding shiny can be challenging at first because it introduces a new way of thinking about code. "Simple" R scripts are run linearly, being read from top to bottom. The script is written, the code is sourced to the R console, and some results or objects are created after running the script.  A shiny app runs from an R script, but instead of executing code linearly, it uses reactive programming that detects when an input is changed on the application, runs the minimal amount of code that uses that input, then updates the output as needed. So, rather than being strictly linear, the script has interconnected components that share pieces of information to produce the results.
 
+Reactivity can be daunting at first because it requires you think about which pieces of your code require inputs from other pieces and how that information is used to create output. Reactivity can be conceptualized by the building blocks of a Shiny app. Every Shiny app has the following:
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
+* User interface (UI): Includes all inputs and outputs, as well as the appearance of the dashboard. Here, when we say "output" we mean the final product (e.g. a plot, table, etc.) that is placed on the ui, but created by processing inputs sent to the server. In web-speak, this is the front end.
+* Server: The guts or engine of how the inputs are used to create the outputs, this is where the working parts of your analysis live. It can be as simple or as complicated as you like. In web-speak, this is the back end.
 
-For convenience, Figure \@ref(fig:Ch7-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+* Principles of reactivity: Figure
+* Server vs UI
+* Layout options: fluidPage, sidebar, flexdashboard, runtime Shiny with Rmarkdown
+* Extension via additional web-based tools: htmlwidgets, plotly, leaflet, etc.
 
+### Minimal Micromap Example 
 
-```{r Ch7-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
+* Basic example using the _USstates_\index{Datasets!USstates} dataset and the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2016]
+* General structure via GitHub page: Figure
+* Dependencies and data I/O
+* UI elements: Figure
+* Server backend: Figure
 
-# initial example
+### Getting Shiny Online
 
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
+* Local vs online
+* Use of GitHub for app code and permanency via Zenodo
+* Shinyapps.io/RStudio Connect
+* Open source Shiny Server 
+* Docker containers
+* Choosing a license
 
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
-```
+## Summary and Further Reading {#Ch7-Summary}
 
-
-## Further Reading {#Ch7-FurtherReading}
-
-
-Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
-where related work and further examples can be found in this book that match the content of this
-chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
-
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
-
+* Fundamentals of user interface design, out of scope but why they’re important to consider, engaging end users in design
+* Shiny best practices [@Saia22]: modularity [@Fay21], functions, profiling/performance, etc.
+* Shiny pros/cons, alternative web platforms
+* Revisit value of web-based applications
+* Changing landscape of web platforms
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
 
