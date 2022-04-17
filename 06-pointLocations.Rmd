@@ -39,14 +39,13 @@ and quantile-quantile plot.\index{Quantile-quantile plot}
 
 ## Main {#Ch6-Main}
 
-
 Here goes the main content of your chapter. Introduce additional sections as needed.
 
 For convenience, Figure \@ref(fig:Ch6-micromap1) shows one linked micromap plot\index{Linked micromap plot}
 (which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
 
 
-```{r Ch6-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
+```{r Ch6-micromap0, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
 library(micromap)
 
 # initial example
@@ -69,6 +68,181 @@ lmplot(
   map.link = c("StateAb", "ID")
 )
 ```
+
+## The challenge of displaying point data using micromaps
+
+The main challenge is that the user must create polygons to represent the 
+point locations. The more standard use of micromaps is  That is, individual point locations will be displayed on the 
+map as a circles. The center of a  circle are the coordinates of a given point location.
+Once the polygons are created, maps and accompanying data can be visualized 
+using the  **micromap**\index{R Packages!micromap} [@PaOl2015] package, 
+which requires that each entity for which data
+is displayed is a polygon on the map.
+
+Specific challenges when creating the polygons (circles) that will eventually be shown
+on the linked-micromap, is that they
+need to be appropriately sized and should not overlap too much. 
+Lastly these circles need to be integrated into a base map that shows geographic
+boundaries of interest. 
+
+## Outline of steps that need to be accomplished to create micromaps of point locations
+
+Broadly the following steps need be followed to display point locations
+on linked-micromaps.
+
+\begin{enumerate}
+   \item Obtain coordinates of the point locations of interest along with 
+  the corresponding data.
+  \item Obtain geographic data for underlying map that the user wishes
+  to display 
+  (as described in Chapter X [link to appropriate chapter]).
+  \item If needed, repel points that are close to each other, to limit
+  overlap in the final map. \textit{This step could be achieved by a provided function
+  where the user inputs the size (radius, as percent of range in x) of the
+  eventual circles, and this would define how far points should be repelled
+  from each other.}
+  \item Generate buffer polygons (circles) around points, based on user defined
+  radius. \textit{The `sf` package has a function to do this, and a wrapper could be
+  built around that. The main challenge will be how to create an `sf` object
+  if users start with an object that is not easily coerced to the needed class.}
+  \item Make sure both underlying map and polygons have same projection (and
+  re-project if needed).
+  \item Combine underlying map and polygons into a single object 
+  (e.g. class of `sf`). \textit{A function could be built to help facilitate this,
+  for an `rbind` to work both the underlying map and the circles need to have the same
+  columns, but the `ID` column will be filled with `NA` for the features that 
+  just outline the underlying map.}
+  \item Flatten the combined object into a dataframe that can be used by 
+  `micromap`.
+  \item Create linked-micromap.
+  \item Iterate such that size of the circles and their level of overlap
+  is adequate.
+\end{enumerate}
+
+*I need to think further about which of these steps should be automated 
+using functions, which type of spatial objects those functions should be able
+to handle, and whether those functions can be added to an existing package 
+(e.g. `micromap`). The challenge will be to make the workflow as simple as
+possible while still flexible, especially given the wide variety of object
+classes people may want to be able to start with.*
+
+Once the main hurdles have been outlined (above), the remainder of the chapter
+should provide examples using real data. 
+
+My current thought is to first walk the reader through the most simple
+example problem possible, where each of the steps is achieved with minimal code.
+This first example should be as simple as possible
+
+This could be followed by one or two more complex examples at different
+spatial scales that highlight different complexities.
+
+## Example 1: Plot large cities in Asia
+
+Here we will be visualizing the locations of the 10 largest cities
+in Asia, and their associated populations. 
+
+Loading necessary R packages
+
+```{r message = FALSE, warning=FALSE}
+library(micromap)
+library(maptools)
+library(sf)
+```
+
+
+Load the point locations of the cities
+
+```{r}
+cities <- readRDS("data/Ch6-data/asian_cities.RDS")
+
+cities$population <- cities$population/10^6 # convert to population in millions
+head(cities)
+```
+
+Note, that when examining the locations of the cities, none of the 
+the cities are very close together, so when we draw circles around the point
+locations we won't need to be worried about undo overlap in the final maps. 
+
+```{r}
+plot(cities$long, cities$lat, xlab = "Longitude", ylab = 'Latitude')
+```
+
+
+### Generate polygons from points
+
+The next step is to draw polygons around the points. 
+
+[For now doing this by creating a buffer around each point.]
+
+To limit the size of the final object the `nQuadSegs` argument should be
+given a low value such that the circle is drawn using few lines 
+(`nQuadSegs = 1` creates a square).
+
+[For this example just define radius of the circle, without using
+an algorithm--later examples can automate that step]
+
+
+```{r}
+points_sf <- st_as_sf(cities, coords = c("long", "lat"))
+dist <- 4 
+# create buffer around the points (i.e. circular polygons)
+circles_sf <- st_buffer(points_sf,dist = dist, nQuadSegs = 4)
+```
+
+Because this work flow currently relies on `create_map_table`, the 
+`sf` objects first converted to a `Spatial` object (from the `sp` package),
+before it is then converted into a dataframe for use by micromap.
+
+```{r}
+circles_sp <- as(circles_sf, 'Spatial')
+
+circles_df <- create_map_table(circles_sp, IDcolumn = "city")
+
+```
+
+### Create micromap
+
+This first example shows the locations of the cities, but doesn't have a base map.
+The next step is join the point locations with a basemap. 
+
+```{r Ch6-micromap1, fig.cap = 'Micromap showing the 10 largest cities in asia. Note that locations of cities are shown, but there are no country polygons to indicate the location of cities', fig.width = 4, fig.height = 3}
+mmplot(stat.data=cities,
+       map.data=circles_df,
+        panel.types=c("labels", "dot", "map"),
+       panel.data=list("city","population", NA),
+       ord.by="population", grouping=5,
+       map.link=c("city","ID"))
+```
+
+
+Next step--recreate figure but including asian polygon in the background. 
+
+
+## Example 2
+
+Additionally, the more complex example could also include map and point data that
+have different projections, and different object classes to start with 
+
+This example could be all county seats within a state
+* state with 20-30 counties (so figure doesn't take up entire map)
+* don't want move location that are already separate. 
+* don't want to move locations outside of their county.
+
+## Example 3: Premier league football stadiums
+
+For this example we will be using using locations of premier league football 
+stadiums. A challenge with this data set is being able to properly visualize multiple
+locations that are within London. This is likely to be a common issue that
+user will run into, where locations are clustered around, for example, urban areas.
+
+This example, could also include a more refined micromap where more parameters
+are used to make the final product publication quality.
+
+
+### Acquire the underlying map
+
+
+### Obtain point locations
 
 
 ## Further Reading {#Ch6-FurtherReading}
