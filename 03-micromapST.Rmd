@@ -39,39 +39,55 @@ color blindness,\index{Color blindness},
 and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
-## Main {#Ch3-Main}
+## Basic plot layout and function call {#Ch3-Basics}
 
 
 Here goes the main content of your chapter. Introduce additional sections as needed.
 
-For convenience, Figure \@ref(fig:Ch3-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+## Display options {#Ch3-DisplayOpt}
+
+In this section we illustrate some optional display options, such as cumultative shading, color choices,
+enhanced labels and a vertical reference line. A reference is made to changing the number of rows per
+perceptual group, to be illustrated in the next section.
+
+## Using other built-in boundary files {#Ch3-OtherBoundaries}
+
+In this section we plot the percent of residents with a bachelor's degree and residents living under 150%
+of the federal poverty line in the state of Maryland by county.
+First we show how to specify this boundary file (border group), then discuss the geographic patterns by county
+and how poverty and education are negatively correlated, as expected. The default perceptual grouping for
+Maryland's 24 counties (including Baltimore City) is 5-5-4-5-5.
+Then we modify the plot to show how to specify the number of rows per perceptual group (e.g., 5-4-3-3-4-5) 
+and discuss the suggested symmetric partitionings by Symanzik and Carr (2008; see book p.152 for full ref)
+and comment on the practical limits of the display with respect to the number of perceptual groups and rows.
+
+```{r Ch3-micromap1, fig.cap = 'Prevalence of covid-19 cases by U.S. state on 11/9/2020, as measured by the percentage of residents who knew someone with covid', fig.width = 7, fig.height = 9}
+
+library(micromapST)
+
+# Input data files.
+# Data Set # 1
+MDPovEd = read.csv('data/MDPovEducACSData20162020.csv',row.names=3)
+head(MDPovEd)
+panelDesc = data.frame(
+  type=c('mapcum','id','dot','dot'),  
+  lab1=c('','','% College','% Pov'),		
+#  lab2=c('','','#','%'),
+#  lab3=c('','','#','%'),
+  col1=c(NA,NA,'PctBachDegree','PctLess150Pov')
+ )
 
 
-```{r Ch3-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
+# ### sort by % college
+#pdf(file='h://juergenmicromapbook//MDExamples//MDCollPov.pdf',width=7.5,height=10)
+micromapST(MDPovEd,rowNames='id',panelDesc,sortVar='PctBachDegree',ascend=F,bordGrp='MarylandBG',
+            plotNames='full',
+            title=c('Maryland counties: % Living < 150% of Poverty Level and % with 4+ Years of College'))  
+#dev.off()
 ```
 
+## Discussion {#Ch3-Discussion}
+Purposes and uses of the micromapST package to date
 
 ## Further Reading {#Ch3-FurtherReading}
 
