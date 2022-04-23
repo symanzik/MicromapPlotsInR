@@ -42,12 +42,40 @@ and quantile-quantile plot.\index{Quantile-quantile plot}
 ## Basic plot layout and function call {#Ch3-Basics}
 
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
+```{r Ch3-micromap1, fig.cap = 'Prevalence of covid-19 cases by U.S. state on Jan. 19, 2021', fig.width = 7, fig.height = 9}
+
+library(micromapST)
+
+# Input data files.
+# Data Set # 1
+STcovidcaserates = read.csv('data/STCaseRatesFeb242020Apr142022.csv',row.names=2)
+head(STcovidcaserates)
+panelDesc = data.frame(
+  type=c('map','id','dot'),  
+  lab1=c('','','Cases/100,000'),		
+  col1=c(NA,NA,'Jan_19_2021')
+ )
+
+
+# default = alphabetic state name sort
+micromapST(STcovidcaserates,panelDesc,
+            title=c('US State Covid Case Rates, Jan. 19, 2021'))  
+```
+
+- text about sorting to bring out geographic patterns
+- reuse last paneldesc
+- sort by case rate
+
+```{r Ch3-micromap2, fig.cap = 'Prevalence of covid-19 cases by U.S. state on Jan. 19, 2021', fig.width = 7, fig.height = 9}
+micromapST(STcovidcaserates,panelDesc,
+            sortVar='Jan_19_2021',ascend=F,
+            title=c('US State Covid Case Rates, Jan. 19, 2021'))  
+```
 
 ## Display options {#Ch3-DisplayOpt}
 
-In this section we illustrate some optional display options, such as cumultative shading, color choices,
-enhanced labels and a vertical reference line. A reference is made to changing the number of rows per
+In this section we illustrate some optional display options, such as full name labels, cumulative shading, color
+choices, enhanced labels and a vertical reference line. A reference is made to changing the number of rows per
 perceptual group, to be illustrated in the next section.
 
 ## Using other built-in boundary files {#Ch3-OtherBoundaries}
@@ -61,7 +89,7 @@ Then we modify the plot to show how to specify the number of rows per perceptual
 and discuss the suggested symmetric partitionings by Symanzik and Carr (2008; see book p.152 for full ref)
 and comment on the practical limits of the display with respect to the number of perceptual groups and rows.
 
-```{r Ch3-micromap1, fig.cap = 'Prevalence of covid-19 cases by U.S. state on 11/9/2020, as measured by the percentage of residents who knew someone with covid', fig.width = 7, fig.height = 9}
+```{r Ch3-micromap3, fig.cap = 'Prevalence of covid-19 cases by U.S. state on 11/9/2020, as measured by the percentage of residents who knew someone with covid', fig.width = 7, fig.height = 9}
 
 library(micromapST)
 
@@ -78,7 +106,7 @@ panelDesc = data.frame(
  )
 
 
-# ### sort by % college
+# sort by % college
 #pdf(file='h://juergenmicromapbook//MDExamples//MDCollPov.pdf',width=7.5,height=10)
 micromapST(MDPovEd,rowNames='id',panelDesc,sortVar='PctBachDegree',ascend=F,bordGrp='MarylandBG',
             plotNames='full',
