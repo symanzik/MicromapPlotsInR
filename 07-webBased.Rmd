@@ -39,8 +39,80 @@ Reactivity can be daunting at first because it requires the developer to think a
 * User interface (UI): Includes all inputs and outputs, as well as the appearance of the dashboard. In this context, "output" means the final product (e.g. a plot, table, etc.) that is placed in the user interface, but created by processing inputs sent to the server. In web-speak, this is the front end.
 * Server: The guts or engine of how the inputs are used to create the outputs. This is where the working parts of the analysis are contained. The server can be as simple or as complicated as needed for an application. In web-speak, this is the back end.
 
-* Principles of reactivity: Figure
-* Server vs UI
+The `ui` and `server` components can be contained in an R script, as follows:
+
+```{r, eval = FALSE}
+library(shiny)
+ui <- fluidPage()
+server <- function(input, output){}
+shinyApp(ui = ui, server = server)
+```
+
+In RStudio, the application can be run clicking the "Run App" button at the top right of the source window or sending the code to the R console (Figure \@ref(fig:Ch8-shiny-code)).  
+
+```{r Ch8-shiny-code, fig.cap = 'A minimal working shiny application in RStudio showing code for the user interface and server.  The application can be run in RStudio by selecting "Run App".', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch8-shiny-code.PNG')
+```
+
+The above application will open locally, either through a local port opened by RStudio or in a web browser depending on the user options in `shinyApp()`.  In this example, an empty screen appears because the application currently does nothing and it is only accessible to the user in the current R session.  Building a more functional shiny application only requires adding code to the server and user interface.  Making the application accessible to others is described in section \@ref(Ch7-shiny-online).  
+
+The example above can be expanded to demonstrate how code within the server and user interface might look in practice.  The application below takes random samples from a normal distribution and creates a histogram using base R (Figure \@ref(fig:Ch8-shiny-histogram)).  The user interface determines how many random samples are used to create the plot. To make a shiny app, the components required for inputs and outputs must be identified by the developer to determine where they are placed in the code. The input is what a user can modify (the sample size) and the output is the plot. Inputs/outputs go in the `ui` object. The `server` takes the inputs, produces the content for the output, and then sends the results back to the `ui`. Placing these components into the template is as follows: 
+
+```{r, eval = FALSE}
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = 'n', label = 'Sample size', value = 50),
+  plotOutput('myplot')
+)
+
+server <- function(input, output){
+  output$myplot <- renderPlot({
+    dat <- rnorm(input$n)
+    hist(dat)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+```{r Ch8-shiny-histogram, fig.cap = 'A minimal working shiny application with additional components in the server and user interface that produces a histogram and options to select the sample size.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch8-shiny-histogram.PNG')
+```
+
+Understanding what happens in the application each time a different sample size is selected by a user is useful to understand reactivity and how the application is coded.  The reactivity of the running application follows these steps (Figure \@ref(fig:Ch8-shiny-flow)):
+
+1. The `input` value `n` (chosen by the developer) from the `ui` is sent to the `server`, seen as `input$n`. 
+1. The `dat` object is created as a random sample with size `n` and then a histogram is created as reactive output with `renderPlot`
+1. The plot output named `myplot` (chosen by the developer) is appended to the `output` list of objects
+1. The plot is then rendered on the `ui` side using `plotOutput` by referencing the `myplot` name from the `output` object. 
+
+```{r Ch8-shiny-flow, fig.cap = 'A representation of reactivity each time the user input is changed to select a different sample size for the histogram.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch8-shiny-flow.png')
+```
+
+There are some general rules and concepts about Shiny reactivity that are shown here that apply to most Shiny applications.  
+
+* All input objects are defined in the `ui` object, given a name inside the input function and then referenced in the `server` file by `input$name` (`input$n` in this case). 
+    ```{r, eval = F}
+    numericInput(inputId = 'n', label = 'Sample size', value = 50)
+    ```
+* All output objects to use in the `ui` object are created in the `server` object by assigning a "rendered" object to the `output` object by `output$name` (`output$myplot` in this case).
+    ```{r, eval = F}
+    output$myplot <- renderPlot({
+      dat <- rnorm(input$n)
+      hist(dat)
+    })
+    ```
+* The `ui` file controls where and when the output is rendered, typically using a function named `fooOutput()` (`foo` meaning generic, e.g., `plot`, `table`, etc.) that has a complementary reactive function named `renderFoo()` in the `server` file.
+    ```{r, eval = F}
+    plotOutput('myplot')
+    ```
+* The `ui` file can be declared with a function (`fluidPage()` here as one type of layout) with at least two inputs (one input, one output) separated by commas. 
+* The `server` file can be declared with the `server()` function, where the input is evaluated as a standalone group of operations with the curly braces `{}`.
+
+All shiny applications use these concepts to create rich, interactive content that is accessible in a web browser.  Expanding on these concepts allows a developer to create more involved and useful applications, such as creating custom micromap plots and options to allow a user to explore patterns more easily than writing custom R code in a conventional script.     
+
 * Layout options: fluidPage, sidebar, flexdashboard, runtime Shiny with Rmarkdown
 * Extension via additional web-based tools: htmlwidgets, plotly, leaflet, etc.
 
@@ -56,7 +128,7 @@ Reactivity can be daunting at first because it requires the developer to think a
 knitr::include_graphics('img/Ch8-shiny-example.PNG')
 ```
 
-### Getting Shiny Online
+### Getting Shiny Online {#Ch7-shiny-online}
 
 * Local vs online
 * Use of GitHub for app code and permanency via Zenodo
