@@ -48,15 +48,15 @@ server <- function(input, output){}
 shinyApp(ui = ui, server = server)
 ```
 
-In RStudio, the application can be run clicking the "Run App" button at the top right of the source window or sending the code to the R console (Figure \@ref(fig:Ch8-shiny-code)).  
+In RStudio, the application can be run clicking the "Run App" button at the top right of the source window or sending the code to the R console (Figure \@ref(fig:Ch7-shiny-code)).  
 
-```{r Ch8-shiny-code, fig.cap = 'A minimal working shiny application in RStudio showing code for the user interface and server.  The application can be run in RStudio by selecting "Run App".', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch8-shiny-code.PNG')
+```{r Ch7-shiny-code, fig.cap = 'A minimal working shiny application in RStudio showing code for the user interface and server.  The application can be run in RStudio by selecting "Run App".', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-code.PNG')
 ```
 
 The above application will open locally, either through a local port opened by RStudio or in a web browser depending on the user options in `shinyApp()`.  In this example, an empty screen appears because the application currently does nothing and it is only accessible to the user in the current R session.  Building a more functional shiny application only requires adding code to the server and user interface.  Making the application accessible to others is described in section \@ref(Ch7-shiny-online).  
 
-The example above can be expanded to demonstrate how code within the server and user interface might look in practice.  The application below takes random samples from a normal distribution and creates a histogram using base R (Figure \@ref(fig:Ch8-shiny-histogram)).  The user interface determines how many random samples are used to create the plot. To make a shiny app, the components required for inputs and outputs must be identified by the developer to determine where they are placed in the code. The input is what a user can modify (the sample size) and the output is the plot. Inputs/outputs go in the `ui` object. The `server` takes the inputs, produces the content for the output, and then sends the results back to the `ui`. Placing these components into the template is as follows: 
+The example above can be expanded to demonstrate how code within the server and user interface might look in practice.  The application below takes random samples from a normal distribution and creates a histogram using base R (Figure \@ref(fig:Ch7-shiny-histogram)).  The user interface determines how many random samples are used to create the plot. To make a shiny app, the components required for inputs and outputs must be identified by the developer to determine where they are placed in the code. The input is what a user can modify (the sample size) and the output is the plot. Inputs/outputs go in the `ui` object. The `server` takes the inputs, produces the content for the output, and then sends the results back to the `ui`. Placing these components into the template is as follows: 
 
 ```{r, eval = FALSE}
 library(shiny)
@@ -76,19 +76,19 @@ server <- function(input, output){
 shinyApp(ui = ui, server = server)
 ```
 
-```{r Ch8-shiny-histogram, fig.cap = 'A minimal working shiny application with additional components in the server and user interface that produces a histogram and options to select the sample size.', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch8-shiny-histogram.PNG')
+```{r Ch7-shiny-histogram, fig.cap = 'A minimal working shiny application with additional components in the server and user interface that produces a histogram and options to select the sample size.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-histogram.PNG')
 ```
 
-Understanding what happens in the application each time a different sample size is selected by a user is useful to understand reactivity and how the application is coded.  The reactivity of the running application follows these steps (Figure \@ref(fig:Ch8-shiny-flow)):
+Understanding what happens in the application each time a different sample size is selected by a user is useful to understand reactivity and how the application is coded.  The reactivity of the running application follows these steps (Figure \@ref(fig:Ch7-shiny-flow)):
 
 1. The `input` value `n` (chosen by the developer) from the `ui` is sent to the `server`, seen as `input$n`. 
 1. The `dat` object is created as a random sample with size `n` and then a histogram is created as reactive output with `renderPlot`
 1. The plot output named `myplot` (chosen by the developer) is appended to the `output` list of objects
 1. The plot is then rendered on the `ui` side using `plotOutput` by referencing the `myplot` name from the `output` object. 
 
-```{r Ch8-shiny-flow, fig.cap = 'A representation of reactivity each time the user input is changed to select a different sample size for the histogram.', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch8-shiny-flow.png')
+```{r Ch7-shiny-flow, fig.cap = 'A representation of reactivity each time the user input is changed to select a different sample size for the histogram.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-flow.png')
 ```
 
 There are some general rules and concepts about Shiny reactivity that are shown here that apply to most Shiny applications.  
@@ -124,8 +124,8 @@ All shiny applications use these concepts to create rich, interactive content th
 * UI elements: Figure
 * Server backend: Figure
 
-```{r Ch8-shiny-example, fig.cap = 'A minimal working shiny application using the micromap package.', out.width = '100%', echo = FALSE}
-knitr::include_graphics('img/Ch8-shiny-example.PNG')
+```{r Ch7-shiny-example, fig.cap = 'A minimal working shiny application using the micromap package.', out.width = '100%', echo = FALSE}
+knitr::include_graphics('img/Ch7-shiny-example.PNG')
 ```
 
 ### Getting Shiny Online {#Ch7-shiny-online}
