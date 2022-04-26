@@ -71,6 +71,128 @@ lmplot(
 ```
 
 
+## Chapter Outline {#Ch2-Outline}
+
+
+Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
+and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
+(or no) association in statistical panels of dot plots.
+
+
+-	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
+    - Identifying and Geoprocessing of Spatial Boundary Data
+    - Linking Spatial Boundary Data and Statistical Data
+    - Creating a Draft Linked Micromap Plot
+    - Refining the Linked Micromap Plot
+    
+-	Spatial Polygons in R and micromap Package Updates (**Juergen**: How much of this do we need here in Chapter \@ref(Ch2)? Would it make more sense to mention this in Chapter \@ref(Ch4)?)
+    - Spatial objects and simple feature objects
+    - Updates
+    
+-	Identifying and Geoprocessing of Spatial Boundary Data (**Marcus**: I think this is a good topic to discuss, but may be tricky to balance specificity with brevity.  I'm no expert on it, but I know there are a few different methods one could use.  Maybe just hit on the why and how, and briefly present tradeoffs of the different methods?  I think for MM, the goal is just to increase render time w/o sacrificing spatial specificity, so maybe the exact method is not important? -- **Juergen**: In fact, let's keep it simple here and work with ready-to-use shapefiles that are already available in some R packages; refer to Chapter \@ref(Ch4) how to bring in external shapefiles and modify them for use in micromaps)
+    - Keep this brief as Chapter \@ref(Ch4) might cover this in detail?
+    - Example of generalizing polygons Figure  (Use same figures as Chapter \@ref(Ch4)?)
+
+-	Linking Spatial Boundary Data and Statistical Data
+    - Explicit link to spatial object
+    - Under the hood link to simple features object
+
+-	Creating a Draft Linked Micromap Plot
+    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+
+-	Refining the Linked Micromap Plot
+    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+
+- **Juergen**: Introducing a second basic example for a different geographic region, e.g., state level or environmental, and use of a different built-in plot type (e.g., boxplot). Similar four steps as before, but more condensed.
+
+-	Challenges to Visualizing Data with Linked Micromap Plots (**Marcus**: Not sure this is the right place for it, but maybe it's worth providing a brief contrast with micromapST?  Maybe include this in the overview at the top?  I think it would be useful for the reader to understand succinctly how the two differ and why there are two packages, though I'm sure these themes will be present throughout the book.  Perhaps the latter point is not that interesting, i.e., it's common to have "competing" software in an open source environment? -- **Juergen**: Yes, we need some discussions at the end of Chapters \@ref(Ch2) and \@ref(Ch3) that outline advantages and limitations of each of the two main micromap packages. Alternatively, there could be some table in Chapter \@ref(Ch1) that lists features (and limitations) of the two packages when they are first introduced to the reader. Overall, this last point may be a subsection in the Introduction, or become a final chapter at the end of the book which research is necessary in the future.)
+    - Problem of many polygons (**Juergen**: There are other problems, e.g., many islands as in the Philippines, narrow shapes as for Chile, subregions of considerably different sizes as for Russia)
+    - Automating linked micromap plot production for reports and interactive visualizations (Check with Emma Jones at VA DEQ)
+    - (**Marcus**: Related, a disadvantage of both packages is their lack of tighter integration with ggplot.  Not sure we want to go there though. -- **Juergen**: I wouldn't go there as these are the packages that currently exist and have to be used.)
+
+
+## Steps to Create a Linked Micromap Plot with the **micromap**\index{R Packages!micromap} R Package {#Ch2-Steps}
+
+
+Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create a 
+linked micromap plot\index{Linked micromap plot} 
+with the **micromap**\index{R Packages!micromap} R package:
+
+1. **Identifying and Geoprocessing of Spatial Boundary Data**: In addition to a data frame that contains the statistical data,
+the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
+to be colored in the graph. This spatial boundary data typically comes in the form of a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
+boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
+provided as external shapefiles\index{Shapefiles}. We will also see in Chapter \@ref(Ch4) how
+to simplify complex boundaries, enlarge small subareas in the maps, and move subareas that are far away closer
+to the main area. Eventually, the SpatialPolygonsDataFrame has to be transformed into a regular data frame
+via the `micromap::create_map_table()` function.
+
+2. **Linking Spatial Boundary Data and Statistical Data**: Next, we have to identify variables from the statistical data frame
+and the newly created data frame with the boundary information that that allow us to link statistical data and boundary data
+for each subregion.
+
+3. **Creating a Draft Linked Micromap Plot**: While not necessary, it is always a good idea to create a minimal
+linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
+are matching and a correct linked micromap plot\index{Linked micromap plot} is created. Skipping this
+step and trying to create a complex linked micromap plot\index{Linked micromap plot} may make it hard
+to find possible errors in the R code.
+
+4. **Refining the Linked Micromap Plot**: Once a draft linked micromap plot\index{Linked micromap plot} has been
+created, it usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
+layouts, and groups of areas, addition of labels and legends, and possibly the additional of additional
+statistical variables or change to a different graph type.
+
+
+```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package).', fig.width = 5, fig.height = 5, echo = FALSE}
+library(DiagrammeR)
+
+grViz(diagram = "digraph flowchart {
+  node [fontname = arial, shape = oval, color = grey, style = filled]
+  tab1 [label = '@@1']
+  tab2 [label = '@@2']
+  tab3 [label = '@@3']
+  tab4 [label = '@@4']
+
+  tab1 -> tab2 -> tab3 -> tab4;
+}
+
+  [1]: '1. Identifying and Geoprocessing of Spatial Boundary Data'
+  [2]: '2. Linking Spatial Boundary Data and Statistical Data'
+  [3]: '3. Creating a Draft Linked Micromap Plot'
+  [4]: '4. Refining the Linked Micromap Plot'
+")
+```
+
+
+
+### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-Identifying}
+
+In this first example, we work with the
+_USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets
+from the **micromap**\index{R Packages!micromap} R package.
+_USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
+the 50 states (and Washington, D.C.) of the United States (U.S.) 
+that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
+of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
+contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
+main map and has been placed to the east (and also has been enlarged).
+_edPov_\index{Datasets!edPov} is a data frame that contains
+education and poverty level data for the 50 states (and Washington, D.C.).
+
+
+
+### Linking Spatial Boundary Data and Statistical Data {#Ch2-Linking}
+
+
+### Creating a Draft Linked Micromap Plot {#Ch2-Creating}
+
+
+### Refining the Linked Micromap Plot {#Ch2-Refining}
+
+
+
+
 ## Code Chunks {#Ch2-CodeChunks}
 
 
