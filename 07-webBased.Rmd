@@ -16,7 +16,7 @@ The concepts and tools presented in this chapter can apply equally well to the t
 
 The first web apps that used micromaps to explore spatial patterns in data were created the late 1990s.  Although R has been in use since this time, the functionality to create web apps with shiny was not available until 2012 (the first version on CRAN was uploaded in December 2012). These early applications are similar to shiny in that they utilized functional programming and text markup languages to allow exploration of data within a web browser.  Shiny at its core uses similar tools, but within an R framework, i.e., it uses functions to create HTML and Java-based graphics, whereas early micromap apps were coded directly with these core tools.  This required detailed knowledge of fundamental concepts of web programming that most R users currently do not have. Thus, there are few early examples of micromap web apps.       
 
-One such example is provided by @SACWWW1999 that employed the Graphics Production Library
+One such example is provided by @SACWWW1999 that used the Graphics Production Library to visualize hazardous air pollutant data from the US Environmental Protection Agency with micromaps in a web browser.   
 
 * National Cancer Institute [@BHPW2006], discussed in @PPC2015JSS; Figure
 * https://evjones.shinyapps.io/FreshwaterProbMonEDA/
