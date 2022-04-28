@@ -281,7 +281,7 @@ functional R code has been obtained in the previous step.
 
 First, we get rid of the eleventh perceptual group (with just one subarea) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subareas is odd such as for the 51 states (and DC) here.
+number of subareas is odd such as for the 51 states (and D.C.) here.
 Here, Wyoming is the state shown in the median row. It has the 
 26$^th$ highest (or lowest) value for the sorting variable, i.e., `pov`.
 It does not appear in a map by itself, but rather is added to the perceptual
@@ -377,28 +377,68 @@ lmplot(
   vertical.align = "center",
   panel.att = list(
     list(3, align = "left")
-    )
+  )
 )
 ```
 
 
-Next: Change of color scheme
+After this experiment with a different grouping, we revert back to the more traditional grouping
+of ten perceptual groups with five rows each and a median row that is frequently used
+for the 50 US states (and D.C.). What we want to discuss next is the choice of colors
+for the subareas in each map (and thus for the `dot\_legend` appearance in the
+`panel.type` argument as well). The default setting for the `colors` argument
+makes use of `max(grouping)` different colors from a spectral color scheme.
+Thus, when `grouping = 5` as in Figures \@ref(fig:Ch2-creatingdraft)-\@ref(fig:Ch2-refining2),
+the first five spectral colors are selected, whereas the first six spectral colors are
+selected when `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` as in Figure \@ref(fig:Ch2-refining3).
+Historically, many linked micromap plots,\index{Linked micromap plot} 
+e.g., in @COCPC1998 and @WCCBP2002,
+made use of rainbow colors that could be obtained 
+via the `colors = c("red", "orange", "green", "blue", "purple")` setting of the
+`colors` argument. While these colors work well for readers with normal color vision,
+they may not work well for readers with certain types of color vision deficiencies.
+Instead, some color schemes that are colorblind safe are better suited for such readers.
+Options are single-hue or multi-hue sequential color schemes or selected 
+divergent color schemes.
+Such color schemes can be obtained from the 
+**RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022].
+The reader is encouraged to read more about the theoretical background
+of these color schemes in @BHH2003 and @HaBr2003 and experiment with different settings
+at the supporting web page at https://colorbrewer2.org/.
+@SDWPM2014 used a greyscale color scheme from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
+the darkest grey color comes first) for publication in a greyscale publication,
+obtained via `colors = brewer.pal(5, "Greys")[5:1]`.
+@SBDSS2016 used a divergent red-yellow-blue (RdYlBu) color scheme from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is colorblind safe and print friendly,
+obtained via `colors = brewer.pal(5, "RdYlBu")`.
+In the linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining4), we use a
+brown-blue-green (BrBG) color scheme from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is also colorblind safe and print friendly,
+obtained via `colors = brewer.pal(5, "BrBG")`.
 
 
-```{r Ch2-micromap11, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. g) Use a divergent 6-class BrBG color scheme from RColorBrewer (which is colorblind safe)
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
-       vertical.align='center',
-       colors=brewer.pal(6, "BrBG"),
-       panel.att=list(list(3, align='left')))
+```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme and the conversion back to the traditional grouping for 51 subareas.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  panel.att = list(
+    list(3, align = "left")
+  )
+)
 ```
+
+
+
+CONTINUE HERE
 
 
 ```{r Ch2-micromap12, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
