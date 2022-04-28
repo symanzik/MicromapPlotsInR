@@ -8,7 +8,7 @@ This chapter will give the purpose and description of linked micromaps as applie
 
 The purpose of a linked micromap is to show spatial locations corresponding to statistical estimates [@COCPC1998]. Linked micromaps simultaneously summarize and display both statistical and geographic distributions by linking statistical summaries of polygons, or areal units, to a series of small maps [@PMWOK2015JSS]. Implicit with this purpose and description is that space, defined as spatial contiguity of polygons, provides some context to the statistical estimates, and that the statistical estimates are representative of the polygons. That spatial context to statistical estimates can be one of three patterns:  spatial similarity among neighbors, spatial dissimilarity among neighbors, or no spatial pattern among neighbors. @MPRG2016 illustrated that first pattern, while the examples below by the Virginia Department of Environmental Quality (VDEQ) and Florida Department of Environmental Protection (FDEP) illustrate the second and third patterns, respectively [@SWSCSS2018;@VirginiaDEQ2020]. All three of those examples also addressed the issue of obtaining statistical estimates of environmental data that were representative of watersheds, the polygons, used in the analysis. 
 
-Public health statistics are often reported by administrative boundaries, such as counties, states, or countries, whereas environmental statistics are often reported by boundaries of natural features, such as watersheds, estuaries, or ecoregions. A census of environmental characteristics from such natural features is not possible. Consequently, environmental statisticians have recommended probability-based surveys or sampling to obtain representative estimates of natural resources [@PUW1999]. Probability-based surveys have three steps:  1) Identify the total or target population of interest (e.g. all wadeable streams in Virginia), 2) Select a random sample to ensure representativeness with the known probability of including any member of the target population, and 3) apply the sample weight, the inverse of the probability, to the environmental measurements so that inferences can be made to the target populations based on the samples [@PUW1999]. @SO2004 introduced spatially balanced probabilistic surveys as having sample sites distributed evenly over the extent of the natural resource is more efficient than a random sample of sites, in which clumping of sites may occur. The design and analysis of spatially balanced probabilistic surveys is done using the R package Spatial Sampling Design and Analysis, **spsurvey**\index{R Packages!spsurvey} [@DKOW2022; @OKP2012]. Statistical estimates of natural resources have been made from spatially balanced probabilistic surveys of ecoregions of the conterminous United States as part US EPA’s National Aquatic Resource Surveys to watersheds within a state.
+Public health statistics are often reported by administrative boundaries, such as counties, states, or countries, whereas environmental statistics are often reported by boundaries of natural features, such as watersheds, estuaries, or ecoregions. A census of environmental characteristics from such natural features is not possible. Consequently, environmental statisticians have recommended probability-based surveys or sampling to obtain representative estimates of natural resources [@PUW1999]. Probability-based surveys have three steps:  1) Identify the total or target population of interest (e.g. all wadeable streams in Virginia), 2) Select a random sample to ensure representativeness with the known probability of including any member of the target population, and 3) apply the sample weight, the inverse of the probability, to the environmental measurements so that inferences can be made to the target populations based on the samples [@PUW1999]. @SO2004 introduced spatially balanced probabilistic surveys as having sample sites distributed evenly over the extent of the natural resource is more efficient than a random sample of sites, in which clumping of sites may occur. The design and analysis of spatially balanced probabilistic surveys is done using the R package Spatial Sampling Design and Analysis, **spsurvey**\index{R Packages!spsurvey} [@DKOW2022; @OKP2012]. Statistical estimates of aquatic natural resources have been made from spatially balanced probabilistic surveys of ecoregions of the conterminous United States as part US EPA’s National Aquatic Resource Surveys to watersheds within a state.
 
 ## Recent Geovisualizations with Environmental Data {#Ch11-Geovisualizations}
 
@@ -51,22 +51,23 @@ map.table <- readRDS("data/map.table.RDS")
  
 ```
 
-Unlike a choropleth map, the SCI linked micromap produced by VDEQ displays *both* a measure of central tendency and a measure of variation for each of the 11 major river basins (Fig. 11-1). Specifically, the statistical panel of the linked micromap shows the estimated median SCI score and the interquartile range (IQR), as the estimated 25th and 75th percentiles, with the basin ranked by their medians. Those statistics are compared to a statewide threshold SCI of 60. Close inspection of the linked micromap reveals an interesting spatial dissimilarity for the southwestern basins of Holston, Clinch-Powel, and Big Sandy, all of which are part of the Tennessee River drainage, as Holston has excellent condition based on its SCI score, Clinch-Powell has good condition, and Big Sandy has severe stress. Also, worth noting, is that the 75th percentile of the poorest scoring basin, Rappahannock, extends past the statewide threshold indicates that some sites might benefit from conservation efforts as opposed to poorer scoring sites, which might need remediation to improve their condition. The Integrated Report included additional linked micromaps having two statistical panels, with one panel having the basin estimates of a water quality stressor and that was paired with another panel of the SCI [@VirginiaDEQ2020]. That pairing of a potential stressor with the SCI response provided a visualization of stressors that might have a larger impact on aquatic macroinvertebrates relative to other basins [@VirginiaDEQ2020]. The VDEQ linked micromap provided a means to show measures of variation, along with comparison to a reference value. 
+Unlike a choropleth map, the SCI linked micromap produced by VDEQ displays *both* a measure of central tendency and a measure of variation for each of the 11 major river basins Figure \@ref(fig:Ch11-micromapVDEQ). Specifically, the statistical panel of the linked micromap shows the estimated median SCI score and the interquartile range (IQR), as the estimated 25th and 75th percentiles, with the basins ranked by their medians. Those statistics are compared to a statewide threshold SCI of 60. Close inspection of the linked micromap reveals an interesting spatial dissimilarity for the southwestern basins of Holston, Clinch-Powel, and Big Sandy, all of which are part of the Tennessee River drainage, as Holston has excellent condition based on its SCI score, Clinch-Powell has good condition, and Big Sandy has severe stress. Also, worth noting, is that the 75th percentile of the poorest scoring basin, Rappahannock, extends past the statewide threshold indicates that some sites might benefit from conservation efforts as opposed to poorer scoring sites, which might need remediation to improve their condition. The Integrated Report included additional linked micromaps having two statistical panels, with one panel having the basin estimates of a water quality stressor and that was paired with another panel of the SCI [@VirginiaDEQ2020]. That pairing of a potential stressor with the SCI response provided a visualization of stressors that might have a larger impact on aquatic macroinvertebrates relative to other basins [@VirginiaDEQ2020]. The VDEQ linked micromap provided a means to show measures of variation, along with comparison to a reference value. 
 
 While the VDEQ R code builds off Chapter \@ref(Ch2), some distinct arguments and layouts are worth mentioning. The VDEQ linked micromap feature asymmetrical perceptual grouping as specified by `grouping=c(4,3,4)`, followed by `vertical.align = "center"`. That argument aligns the rows within a perceptual group, rather than the default alignment of "top". The center alignment is helpful when perceptual groups contain different number of rows. This is a five panel linked micromap showing a unique aspect of two label panels by using this syntax: `panel.types=c('dot_legend', 'labels','labels', 'dot_cl', 'map')`. The first label specification corresponds to Basin in the `panel.data`, while the second label specification corresponds to n.  From both of those calls, the linked micromap displays the names of basin and their sample size. The VDEQ ecologists cleverly recognized that they could report a three-number summary of estimates of the median, first quartile, and third quartile in their linked micromap simply by using dot_cl.  The dot_cl argument is typically use to report a central tendency estimate, such as a mean or median, and then the lower and upper confidence limits, as @MPRG2016 did. Finally, in that same statistical panel, the overall statewide median estimate of SCI was displayed by using these arguments:
 `add.line=60,add.line.col='black',add.line.typ='dashed'`.
 
-Finally, here is the R code that was used to create Figure \@ref(fig:Ch11-micromapVDEQ).
+Finally, here is the R code that was used to create Figure \@ref(fig:Ch11-micromapVDEQ). That code 
+uses of the _stats_\index{Datasets!stats} dataset and the _map.table_\index{Datasets!map.table}
 
 ```{r Ch11-micromapVDEQ, eval = FALSE}
 ```
 
-This is the next example:
+The next example is from FDEP. Studies of freshwater aquatic ecosystems often need to summarize water quality results from watersheds, as VDEQ did, along with land cover in those watersheds, which is how FDEP used linked micromaps.  Spatially balanced probabilistic surveys were done by FDEP to study emerging contaminants from different types of waterbodies, canals, rivers, streams, small and large lakes, and unconfined aquifers, in 29 drainage basins [@SWSCSS2018]. The results for one of the contaminants, the widely used pesticide imidacloprid, were pooled across waterbody types and summarized with a 4-statistical panel linked micromap of the 29 drainage basins  displaying:  number of surveyed sites, percentage of surveyed sites having detections of imidacloprid, percentage of urban and agricultural land cover in a basin, and a five-number summary, minimum, first quartile, median, third quartile, and maximum, of imidacloprid concentrations shown as a box plot [@SWSCSS2018]. As an exploratory spatial data analysis tool, @SWSCSS2018 noted from the linked micromap that neighboring drainage basins showed no geographic patterning in percentages of detections, and this was confirmed by a no significant spatial autocorrelation detected using Moran’s Index.  This application of linked micromaps was novel in two regards, first, by summarizing different types of data for the polygons of interest, and second, by formally testing if there was geographic patterning in the results.
 
-```{r Ch11-micromap2Mike, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.'}
+```{r Ch11-micromapFDEP, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.',eval = TRUE, echo = FALSE}
 library(micromap)
 
-# initial example
+# data frames
 Land4_Imida_NA <- readRDS("data/Land4_Imida_NA.rds")
 FL_Basins <- readRDS("data/Florida_Basins.rds")
 
@@ -122,63 +123,12 @@ mmplot(stat.data=Land4_Imida_NA,
 
 ```
 
+In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the sixth statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. Here is the R code that was used to create Figure \@ref(fig:Ch11-micromapFDEP). A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
 
-
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
-
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
-
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
-
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
-
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
-
-
-## Main {#Ch11-Main}
-
-
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch11-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
-
-
-```{r Ch11-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
+```{r Ch11-micromapFDEP, eval = FALSE}
 ```
 
+## Spatial Surveys and Linked Micromaps {#Ch11-Spatial_Surveys}
 
 ## Further Reading {#Ch11-FurtherReading}
 
