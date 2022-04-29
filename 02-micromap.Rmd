@@ -23,7 +23,7 @@ Write chapter introduction here.
 
 Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
 and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
-(or no) association in statistical panels of dot plots.
+(or no) association in statistical panels of dot plots.\index{Dot plot}
 
 
 -	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
@@ -225,7 +225,7 @@ Changing the order of these two variable names typically results in an error.
 The `panel.types` and `panel.data` are closely related. As the name suggests, `panel.types` is a vector
 that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
 Here, we have the `dot_legend` in the first column, `labels` in the second column,
-two columns with statistical data represented as dotplots\index{Dotplot} (`dot`),
+two columns with statistical data represented as dot plots\index{Dot plot} (`dot`),
 and the micromaps in the fifth and final (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 A list is necessary for this argument as some of the data itself can be lists as we will
@@ -385,40 +385,44 @@ lmplot(
 After this experiment with a different grouping, we revert back to the more traditional grouping
 of ten perceptual groups with five rows each and a median row that is frequently used
 for the 50 US states (and D.C.). What we want to discuss next is the choice of colors
-for the subareas in each map (and thus for the `dot\_legend` appearance in the
+for the subareas in each map (and thus for the `dot_legend` appearance in the
 `panel.type` argument as well). The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
 Thus, when `grouping = 5` as in Figures \@ref(fig:Ch2-creatingdraft)-\@ref(fig:Ch2-refining2),
-the first five spectral colors are selected, whereas the first six spectral colors are
+a five-class spectral color scheme\index{Color scheme!Spectral} is selected, 
+whereas a six-class spectral color scheme\index{Color scheme!Spectral} is
 selected when `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` as in Figure \@ref(fig:Ch2-refining3).
 Historically, many linked micromap plots,\index{Linked micromap plot} 
 e.g., in @COCPC1998 and @WCCBP2002,
-made use of rainbow colors that could be obtained 
+made use of rainbow colors\index{Color scheme!Rainbow colors} that could be obtained 
 via the `colors = c("red", "orange", "green", "blue", "purple")` setting of the
 `colors` argument. While these colors work well for readers with normal color vision,
 they may not work well for readers with certain types of color vision deficiencies.
 Instead, some color schemes that are colorblind safe are better suited for such readers.
-Options are single-hue or multi-hue sequential color schemes or selected 
-divergent color schemes.
+Options are single-hue or multi-hue sequential color schemes\index{Color scheme!Sequential} 
+or selected divergent color schemes\index{Color scheme!Divergent}.
 Such color schemes can be obtained from the 
 **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022].
 The reader is encouraged to read more about the theoretical background
 of these color schemes in @BHH2003 and @HaBr2003 and experiment with different settings
 at the supporting web page at https://colorbrewer2.org/.
-@SDWPM2014 used a greyscale color scheme from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
-the darkest grey color comes first) for publication in a greyscale publication,
+@SDWPM2014 used a greyscale sequential color scheme\index{Color scheme!Sequential}
+from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
+the darkest grey color comes first) for publication in a greyscale publication,\index{Colors!Greyscale publication}
 obtained via `colors = brewer.pal(5, "Greys")[5:1]`.
-@SBDSS2016 used a divergent red-yellow-blue (RdYlBu) color scheme from **RColorBrewer**\index{R Packages!RColorBrewer}
-that is colorblind safe and print friendly,
+@SBDSS2016 used a divergent red-yellow-blue (RdYlBu) color scheme\index{Color scheme!Divergent}
+from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
 obtained via `colors = brewer.pal(5, "RdYlBu")`.
 In the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining4), we use a
-brown-blue-green (BrBG) color scheme from **RColorBrewer**\index{R Packages!RColorBrewer}
-that is also colorblind safe and print friendly,
+divergent brown-blue-green (BrBG) color scheme\index{Color scheme!Divergent}
+from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is also colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
 obtained via `colors = brewer.pal(5, "BrBG")`.
 
 
-```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme and the conversion back to the traditional grouping for 51 subareas.', fig.width = 7, fig.height = 9}
+```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subareas.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
   map.data = statePolys,
@@ -437,88 +441,186 @@ lmplot(
 ```
 
 
+So far, there are no labels for the columns and no titles for the statistical columns shown.
+Tic marks and tic mark labels, in particular in the second statistical column, could be improved,
+background colors in the statistical columns and maps could be modified, 
+font and symbol sizes could be modified, and the widths of the columns could be adjusted.
+All of this is done via the `panel.att` argument that controls the panel specific attributes of
+each column in the linked micromap plot.\index{Linked micromap plot}
+The content of this argument typically is a list of lists where the attributes
+for each column of the linked micromap plot\index{Linked micromap plot} are modified via a separate list.
+These inner lists are numbered from 1 to the number of elements in the `panel.types` vector
+where `1` is related to `map`, `2` to `dot_legend`, `3` to `labels`, and `4` and `5` to `dot`, i.e.,
+the dot plots\index{Dot plot} in the two statistical columns,
+in the linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining5).
 
-CONTINUE HERE
+We leave it to the reader to experiment with the different elements in these list.
+If the purpose of a certain element is not immediately obvious, it might be a good idea
+to considerably increase or decrease the numeric value of that element or change the color to
+`red` or `yellow` to highlight that element. 
+
+Here, we only want to explain the purpose of the `fill.regions` element with the matching `header` element
+in the list for column `1`, i.e., the `map` column:
+The setting `fill.regions = "aggregate"` (which in fact is the default setting)
+fills in the subareas from all previous perceptual groups in the
+subsequent perceptual groups. This filing proceeds from
+the top perceptual group to the bottom perceptual group by sequentially
+filling the subareas that have already been displayed.
+Thus, in the map for teh final perceptual group at the bottom, all subareas have been filled.
+The text in the `header` is used to communicate this information to the reader.
+Alternatively, the setting `fill.regions = "with data"` only fills those subareas
+in a map that actually show data in that perceptual group. 
+No additional subareas are filled in any of the maps.
+Another setting for `fill.regions` is discussed in the next refinement step.
 
 
-```{r Ch2-micromap12, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. E. Refine the Micromap Plot
-mmplot(stat.data=edPov, map.data=statePolys,
-        panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
-        panel.data=list(NA, 'state', 'pov', 'ed', NA),
-        map.link=c('StateAb', 'ID'),
-        ord.by='pov', 
-        grouping=5, 
-        median.row=TRUE, 
-        
-        plot.height=9, 
-        
-        colors=c('red', 'orange', 'green', 'blue', 'purple'),
-        
-        panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                       
-                       list(2, header='States', panel.width=.8, 
-                            align='left', text.size=.9),
-                       
-                       list(3, header='Percent Living Below\nPoverty Level',
-                            graph.bgcolor='lightgray', point.size=1.5,
-                            xaxis.ticks=list(10, 15, 20), xaxis.labels=list(10, 15, 20),
-                            xaxis.title='Percent'),
-                       
-                       list(4, header='Percent Adults With\n4+ Years of College',
-                            graph.bgcolor='lightgray', point.size=1.5,
-                            xaxis.ticks=list(20, 30, 40), xaxis.labels=list(20, 30, 40), 
-                            xaxis.title='Percent'),
-                       
-                       list(5, header='Light Gray Means\nPreviously Displayed',
-                            map.all=TRUE, fill.regions='aggregate',
-                            active.border.color='black', active.border.size=1.5,
-                            inactive.border.color=gray(.7), inactive.border.size=1, 
-                            panel.width=.8)))
+```{r Ch2-refining5, fig.cap = 'Fifth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the panel specific attributes.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  
+  panel.att = list(
+    list(1, header = "Light Gray Means\nPreviously Displayed",
+         map.all = TRUE, 
+         fill.regions = "aggregate",
+         active.border.color = "black", 
+         active.border.size = 1.2,
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 1, 
+         panel.width = 0.8),
+    
+    list(2, point.type = 20, 
+         point.border = TRUE, 
+         point.size = 2,
+         panel.width = 0.9),
+    
+    list(3, header = "States", 
+         align = "left", 
+         text.size = 0.9,
+         panel.width = 0.7),
+    
+    list(4, header = 'Percent Adults With\n4+ Years of College',
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 20, 30, 40), 
+         xaxis.labels = list(10, 20, 30, 40), 
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(5, 10, 15, 20), 
+         xaxis.labels = list(5, 10, 15, 20),
+         xaxis.title = "Percent")
+  )
+)
 ```
 
 
+In the final revised linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
+First, we make use of the `labeling::extended()` function of the **labeling**\index{R Packages!labeling} R package.
+This function is provided with the minimum and maximum of a variable and the tentative
+number of tic marks and tic marks labels for that variable and then creates a vector with
+near-optimal axis labels. The argument `m` is used as a guideline for the number of axis labels,
+but the actual number of near-optimal axis labels may differ slightly. The reader is encouraged to experiment with
+`m = 2` to `m = 6` in the R code below.
 
-```{r Ch2-micromap13, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+Second, we use the setting `fill.regions = "two ended"`. This setting makes most sense when
+`median.row = TRUE` (as is the case here) and the focus of the maps is to 
+indicate which subareas are above or below the median value
+of the variable specified in the `ord.by` argument (here `ed`).
+Similar to the setting `fill.regions = "aggregate"`,
+the subareas from all previous perceptual groups are filled in the
+subsequent perceptual groups. This filing proceeds from
+the top perceptual group to the median row 
+and from the bottom perceptual group to the median row
+by sequentially
+filling the subareas that have already been displayed on the more extreme ends.
+The text in the `header` has been updated to communicate this information to the reader.
+
+Third, we reduce the margin space between some of the columns via the
+`right.margin` and `left.margin` settings. Negative values are allowed.
+Fine-tuning the margin spacing and the widths of the columns can require
+a few iterations. The reader always should check carefully that no identifiers
+are truncated or overprinted, in particular that no letters
+from the longest identifier (here `Washington D.C.`) are cut off.
+
+
+```{r Ch2-refining6, fig.cap = 'Sixth (and final) refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to labeling, the coloring of perceptual groups above and below the median row, and the column spacing.', fig.width = 7, fig.height = 9}
 library(labeling)
 
-### I. F. Refine the Micromap Plot with adjusted ticmarks & ticmark labels
-mmplot(stat.data=edPov, map.data=statePolys,
-       panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
-       panel.data=list(NA, 'state', 'pov', 'ed', NA),
-       map.link=c('StateAb', 'ID'),
-       ord.by='pov', 
-       grouping=5, 
-       median.row=TRUE, 
-       
-       plot.height=9, 
-       
-       colors=c('red', 'orange', 'green', 'blue', 'purple'),
-       
-       panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                      
-                      list(2, header='States', panel.width=.8, 
-                           align='left', text.size=.9),
-                      
-                      list(3, header='Percent Living Below\nPoverty Level',
-                           graph.bgcolor='lightgray', point.size=1.5,
-                           xaxis.ticks=as.list(extended(min(edPov$pov), max(edPov$pov), 3)), 
-                           xaxis.labels=as.list(extended(min(edPov$pov), max(edPov$pov), 3)),
-                           xaxis.title='Percent'),
-                      
-                      list(4, header='Percent Adults With\n4+ Years of College',
-                           graph.bgcolor='lightgray', point.size=1.5,
-                           xaxis.ticks=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
-                           xaxis.labels=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
-                           xaxis.title='Percent'),
-                      
-                      list(5, header='Light Gray Means\nPreviously Displayed',
-                           map.all=TRUE, fill.regions='aggregate',
-                           active.border.color='black', active.border.size=1.5,
-                           inactive.border.color=gray(.7), inactive.border.size=1, 
-                           panel.width=.8)))
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  
+  panel.att = list(
+    list(1, header = "Two-ended\nCumulative Maps",
+         map.all = TRUE, 
+         fill.regions = "two ended",
+         active.border.color = "black", 
+         active.border.size = 1.2,
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 1, 
+         panel.width = 0.8),
+    
+    list(2, point.type = 20, 
+         point.border = TRUE, 
+         point.size = 2,
+         panel.width = 0.9),
+    
+    list(3, header = "States", 
+         align = "left",
+         right.margin = 0,
+         left.margin = -1,
+         text.size = 0.9,
+         panel.width = 0.6),
+    
+    list(4, header = 'Percent Adults With\n4+ Years of College',
+         graph.bgcolor = "lightgray",
+         right.margin = 0, 
+         left.margin = -0.6,
+         point.size = 1.5,
+         xaxis.ticks = as.list(extended(dmin = min(edPov$ed), 
+                                        dmax = max(edPov$ed), 
+                                        m = 5)),
+         xaxis.labels = as.list(extended(dmin = min(edPov$ed), 
+                                         dmax = max(edPov$ed), 
+                                         m = 5)),
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray",
+         right.margin = 0.25, 
+         left.margin = -0.6,
+         point.size = 1.5,
+         xaxis.ticks = as.list(extended(dmin = min(edPov$pov), 
+                                        dmax = max(edPov$pov), 
+                                        m = 4)), 
+         xaxis.labels = as.list(extended(dmin = min(edPov$pov), 
+                                         dmax = max(edPov$pov), 
+                                         m = 4)), 
+         xaxis.title = "Percent")
+  )
+)
 ```
-
 
 
 ## Code Chunks China {#Ch2-CodeChunksChina}
