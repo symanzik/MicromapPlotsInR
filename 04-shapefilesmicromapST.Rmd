@@ -39,6 +39,39 @@ color blindness,\index{Color blindness},
 and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
+## Modifying the US shapefile {#Ch4b-USshapefile}
+
+
+```{r Ch4b-modifiedUSshapefile, fig.cap = 'Shapefile modification of the US shapefile in 4 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
+knitr::include_graphics(c("img/USBorderGrp_p1.pdf", "img/USBorderGrp_p2.pdf"))
+knitr::include_graphics(c("img/USBorderGrp_p3.pdf", "img/USBorderGrp_p4.pdf"))
+```
+
+
+## Modifying the Kentucky Shapefile {#Ch4b-Kentucky}
+
+
+Here are the steps used to create the multiple maps in each PDF:
+
+1. For KY only: the original 120 counties. Code will be shown to aggregate these into 15 Area Development Districts, used by many parts of the KY state government.
+
+2. Next map is the file that first goes into the smoothing process.
+
+3. Next map is after borders are smoothed and thinned by RMapShaper (we set the parameters to leave 2% of original polygon points).
+
+4. Next map is after any user changes requested, e.g., moving and scaling (see Alaska) and rotating.
+
+5. The final step builds the border file, rounding the (X,Y) coordinates which provides further smoothing (only slightly in these examples). This file is now ready for use in micromapST.
+
+
+```{r Ch4b-modifiedKYshapefile, fig.cap = 'Shapefile modification of the KY shapefile in 5 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
+knitr::include_graphics(c("img/KYBorderGrp1_p1.pdf", "img/KYBorderGrp1_p2.pdf"))
+knitr::include_graphics(c("img/KYBorderGrp1_p3.pdf", "img/KYBorderGrp1_p4.pdf"))
+knitr::include_graphics("img/KYBorderGrp1_p5.pdf")
+```
+
+
+
 ## Main {#Ch4b-Main}
 
 
