@@ -12,75 +12,20 @@ overview of necessary steps to produce linked micromap plots for point locations
 to create areas of suitable sizes and to avoid overplotting of nearby point locations.
 
 
-## Introduction {#Ch6-Introduction}
-
-
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
-
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
-
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
-
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
-
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
-
-
-## Main {#Ch6-Main}
-
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch6-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
-
-
-```{r Ch6-micromap0, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
-```
-
-## The challenge of displaying point data using micromaps
+## Introduction: The challenge of displaying point data using micromaps
 
 The main challenge is that the user must create polygons to represent the 
-point locations. The more standard use of micromaps is  That is, individual point locations will be displayed on the 
-map as a circles. The center of a  circle are the coordinates of a given point location.
+point locations. The more standard use of micromaps displays data associated 
+with polygons (e.g., countries, states, etc.). In the case of point locations,
+individual point locations need to displayed on the 
+map as a circles (or other shape). The center of a  circle are the coordinates of a given point location.
 Once the polygons are created, maps and accompanying data can be visualized 
 using the  **micromap**\index{R Packages!micromap} [@PaOl2015] package, 
 which requires that each entity for which data
 is displayed is a polygon on the map.
 
-Specific challenges when creating the polygons (circles) that will eventually be shown
-on the linked-micromap, is that they
+Specific challenges when creating the polygons (circles) that that are displayed on the 
+micromap, is that they
 need to be appropriately sized and should not overlap too much. 
 Lastly these circles need to be integrated into a base map that shows geographic
 boundaries of interest. 
@@ -129,14 +74,10 @@ classes people may want to be able to start with.*
 Once the main hurdles have been outlined (above), the remainder of the chapter
 should provide examples using real data. 
 
-My current thought is to first walk the reader through the most simple
-example problem possible, where each of the steps is achieved with minimal code.
-This first example should be as simple as possible
-
-This could be followed by one or two more complex examples at different
-spatial scales that highlight different complexities.
 
 ## Example 1: Plot large cities in Asia
+
+[This should be the simplest example]
 
 Here we will be visualizing the locations of the 10 largest cities
 in Asia, and their associated populations. 
@@ -147,6 +88,7 @@ Loading necessary R packages
 library(micromap)
 library(maptools)
 library(sf)
+library(dplyr)
 ```
 
 
@@ -156,6 +98,9 @@ Load the point locations of the cities
 cities <- readRDS("data/Ch6-data/asian_cities.RDS")
 
 cities$population <- cities$population/10^6 # convert to population in millions
+cities <- cities %>% 
+  # the 'id' column will be the city name
+  rename(ID = city)
 head(cities)
 ```
 
@@ -170,9 +115,7 @@ plot(cities$long, cities$lat, xlab = "Longitude", ylab = 'Latitude')
 
 ### Generate polygons from points
 
-The next step is to draw polygons around the points. 
-
-[For now doing this by creating a buffer around each point.]
+The next step is to draw polygons (circles) around the points. 
 
 To limit the size of the final object the `nQuadSegs` argument should be
 given a low value such that the circle is drawn using few lines 
@@ -183,10 +126,12 @@ an algorithm--later examples can automate that step]
 
 
 ```{r}
-points_sf <- st_as_sf(cities, coords = c("long", "lat"))
-dist <- 4 
+points_sf <- st_as_sf(cities, coords = c("long", "lat"),
+                      crs = "EPSG:4326")
 # create buffer around the points (i.e. circular polygons)
-circles_sf <- st_buffer(points_sf,dist = dist, nQuadSegs = 4)
+circles_sf <- st_buffer(points_sf,dist = 400000, nQuadSegs = 4)
+
+
 ```
 
 Because this work flow currently relies on `create_map_table`, the 
@@ -194,28 +139,108 @@ Because this work flow currently relies on `create_map_table`, the
 before it is then converted into a dataframe for use by micromap.
 
 ```{r}
-circles_sp <- as(circles_sf, 'Spatial')
-
-circles_df <- create_map_table(circles_sp, IDcolumn = "city")
+circles_df <- create_map_table(as(circles_sf, 'Spatial'), 
+                               IDcolumn = "ID")
 
 ```
 
 ### Create micromap
 
 This first example shows the locations of the cities, but doesn't have a base map.
-The next step is join the point locations with a basemap. 
+The next step is join the point locations with a base map. 
 
 ```{r Ch6-micromap1, fig.cap = 'Micromap showing the 10 largest cities in asia. Note that locations of cities are shown, but there are no country polygons to indicate the location of cities', fig.width = 4, fig.height = 3}
 mmplot(stat.data=cities,
        map.data=circles_df,
         panel.types=c("labels", "dot", "map"),
-       panel.data=list("city","population", NA),
+       panel.data=list("ID","population", NA),
        ord.by="population", grouping=5,
-       map.link=c("city","ID"))
+       map.link=c("ID","ID"))
+```
+
+### Combine point locations and background map
+
+To make a better micromap the polygons of the point locations need to be combined
+with a background map.
+
+[**NOTE--I'll need to determine what part of this workflow will be put
+into functions**]
+
+First we're cropping the world map so that only the region of interest is shown.
+
+**Note this code will need to be updated so that it uses newer tools so it doesn't throw
+a warning (e.g., don't use wrld_simpl from maptools and don't rely on raster
+package?, see note here: https://cran.r-project.org/web/packages/rgeos/index.html
+regarding the fact that `rgeos` is being retired in 2023)**
+
+```{r warning = FALSE, message = FALSE}
+data('wrld_simpl')
+# note this throws a warning: https://gis.stackexchange.com/questions/379693/crop-wrld-simpl-gives-error-after-r-update
+asia <- raster::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
+
+asia_sf <- st_as_sf(asia) # convert to simple feature
+
+```
+
+Note, the circles around
+the cities and the underlying map need to have the same projection.
+
+
+```{r}
+asia_sf$ID <- NA # empty ID column (i.e. these polygons don't have a 'city' name
+# associated with them)
+comb_sf <- rbind(asia_sf['ID'], circles_sf['ID'])
+
+```
+
+The next step is to flatten the spatial object into a dataframe so that it can be used
+in the `mmplot()` function.
+
+Because this work flow currently relies on `create_map_table`, the 
+`sf` objects first converted to a `Spatial` object (from the `sp` package),
+before it is then converted into a dataframe for use by micromap.
+
+*Consider alternative work flows.*
+
+```{r, fig.height=8, fig.width=5}
+
+comb_sp <- as(comb_sf, 'Spatial')
+
+comb_df <- create_map_table(comb_sp, IDcolumn = "ID")
 ```
 
 
-Next step--recreate figure but including asian polygon in the background. 
+### Create micromap showing basemap
+
+```{r Ch6-micromap2, fig.cap = 'Micromap showing the 10 largest cities in asia', fig.width = 5, fig.height = 3}
+mmplot(stat.data=cities,
+       map.data=comb_df,
+        panel.types=c("labels", "dot", "map"),
+       panel.data=list("ID","population", NA),
+       ord.by="population", grouping=5,
+       map.link=c("ID","ID"),
+       panel.att = list(
+         list(2, panel.width = 0.5),
+         list(2, panel.width = 0.75),
+         list(3,
+              # the 'ID' column is null for polygons of the underlying basemap
+              # so to show those (and therefore show the underlying basemap),
+              # map.all needs to be TRUE, otherwise only the circles showing
+              # the point locations will appear
+              map.all = TRUE,
+              active.border.color = 'black', 
+              active.border.size = 0.3,
+              inactive.border.color = "gray", 
+              inactive.border.size = 0.3, 
+              panel.width = 1, 
+              outer.hull =  FALSE, # shows outside of map
+              # this is required to see all map borders:
+              nodata.border.color = "black", 
+              nodata.border.size = 0.5,
+              outer.hull.size = 0.5))
+)
+```
+
 
 
 ## Example 2
@@ -232,21 +257,84 @@ This example could be all county seats within a state
 
 For this example we will be using using locations of premier league football 
 stadiums. A challenge with this data set is being able to properly visualize multiple
-locations that are within London. This is likely to be a common issue that
+locations that are very close together, such as the several stadiums located
+in London. This is likely to be a common issue that a
 user will run into, where locations are clustered around, for example, urban areas.
 
-This example, could also include a more refined micromap where more parameters
-are used to make the final product publication quality.
+Here we will need to jitter the locations of stadiums that are too close together so that
+they remain visible in the final micromap. 
 
-
-### Acquire the underlying map
-
+[This example, should also include a more refined micromap where more parameters
+are used to make the final product publication quality.]
 
 ### Obtain point locations
 
+Note the overlap between points
+
+```{r}
+stadiums <- readRDS("data/Ch6-data/stadiums.RDS")
+head(stadiums)
+
+stadium_circles <- st_buffer(stadiums, dist = 40000, nQuadSegs = 4)
+```
+
+### Acquire the underlying map
+
+```{r}
+uk_map <- wrld_simpl[wrld_simpl@data$NAME == "United Kingdom", ]
+uk_map_crop <- raster::crop(uk_map, raster::extent(-5, 50, 0, 56))
+uk_map_sf <- st_as_sf(uk_map_crop)
+uk_map_sf$ID <- NA
+```
+
+### Combine with points
+
+```{r}
+stadium_circles$ID <- stadiums$stadium
+stadiums_map1 <- rbind(uk_map_sf['ID'], stadium_circles['ID'])
+
+stadiums_map_df <- create_map_table(as(stadiums_map1, 'Spatial'), 
+                                    IDcolumn = "ID")
+```
+
+### Create initial map
+
+This is an example of the micromap with point locations not jittered (i.e. overlapping),
+the next section will show how to properly jitter those points
+
+```{r Ch6-micromap4, fig.cap = 'Micromap showing stadium locations, note that these maps aren not very readable due to the overlap in locations', fig.width = 5, fig.height = 7}
+mmplot(stat.data=st_drop_geometry(stadiums),
+       map.data=stadiums_map_df,
+      panel.types=c("labels", "dot", "map"),
+       panel.data=list("stadium","capacity", NA),
+       ord.by="capacity", grouping=5,
+       map.link=c('stadium', "ID"),
+       panel.att = list(
+         list(1, panel.width = 1.8),
+         list(3,
+              # the 'ID' column is null for polygons of the underlying basemap
+              # so to show those (and therefore show the underlying basemap),
+              # map.all needs to be TRUE, otherwise only the circles showing
+              # the point locations will appear
+              map.all = TRUE,
+              active.border.color = 'black', 
+              active.border.size = 0.3,
+              inactive.border.color = "gray", 
+              inactive.border.size = 0.3, 
+              panel.width = 0.6, 
+              outer.hull =  FALSE, # shows outside of map
+              # this is required to see all map borders:
+              nodata.border.color = "black", 
+              nodata.border.size = 0.5,
+              outer.hull.size = 0.5))
+)
+```
+
+### Jitter stadium locations
+
+Walk through jittering the stadium locations and make a better, final map
 
 ## Further Reading {#Ch6-FurtherReading}
-
 
 Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
 where related work and further examples can be found in this book that match the content of this
