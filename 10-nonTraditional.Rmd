@@ -1,75 +1,268 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Back to the Roots: Non-traditional Micromaps (for Viewing Patterns of Scientific Posters) {#Ch10}
 
 
 \chapterauthor{Chunyang Li}
 
 
-This chapter will introduce the reader how to create linked micromap plots from scratch 
-without using any of the existing R packages. This may become necessary when the 
-underlying areas are not supported by any shapefile or other boundary file, 
-e.g., positions on a baseball field or locations of stores in a shopping mall, 
-or when non-standard visualizations are required, e.g., the in-flow or out-flow 
-of a spatial area. This chapter will focus on linked microposter plots, i.e., 
-linked micromap plots where the areas of interest are the main viewing areas of a scientific poster.
+This chapter will introduce the reader how to create linked micromap plots from scratch without using any of the existing micromap R packages. This may become necessary when the underlying areas are not supported by any shapefile or other boundary file, e.g., positions on a baseball field or locations of stores in a shopping mall, or when non-standard visualizations are required, e.g., the in-flow or out-flow of a spatial area. This chapter will focus on linked microposter plots, i.e., linked micromap plots where the areas of interest are the main viewing areas of a scientific poster.
 
 
 ## Introduction {#Ch10-Introduction}
 
+The linked micromap plot was first introduced in 1996 to highlight geographic patterns and associations among the variables in a spatial dataset [@CaPi1996]. It has been widely used to display geospatially-indexed summary statistics. For some in-depth discussion of linked micromap plots, the reader is referred to @SC2008, @CP2010, @SDWPM2014	, @SCMW2017, and the other chapters of this book.  
 
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
+According to @CP2010, the linked micromap plots can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the Area Of Interests (AOIs) of the poster as the different countries or states. Linked microposter plot is able to more effectively presenting eye tracking data compared to the commonly used eye tracking visualizations. @LiSy2017ASA proposed EyeTrackR, an R package for eye tracking data visualizations including linked microposter plot, and @SLZSM2017ASA applied EyeTrackR to create linked microposter plot to visualize how people look at posters of yoga postures.
 
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
 
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
+The following sections will illustrate how to create linked micromap plots from scratch using the creation of linked microposter plot as an example. The creation of linked microposter is based on the raw code from @LiSy2017ASA before compiling the R package.
 
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
 
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
 ## Main {#Ch10-Main}
 
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
+### Data processing and preparation {#Ch10-Data}
 
-For convenience, Figure \@ref(fig:Ch10-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+#### Eye tracking data
+Eye tracking data is obtained from measuring where people are looking at with an eye tracking device, either a mobile eye tracker or a static eye tracker. Static eye trackers are based on a desktop, hence they are often used to study eye motion on a computer screen. Mobile eye trackers are fixed on a user's head, so they are not limited within a restricted area and can be used for a variety of activities, such as playing soccer, driving, etc. The example data we use to demonstrate are from a 30 Hz mobile eye tracker that records 30 images per second. The two co-authors of this book chapter looked at a series of statistical and other scientific posters. The original data is a video record indicating where people are looking at. The video data is processed with matlab and we are able to obtain a dataframe with x and y coordinates transformed to the same coordinate system in terms of the poster we defined. The details of processing the raw video data is described in @Li2017. We are also able to obtain time series pupil radius data from the eye tracker.
+
+The eye tracking data for the poster we use to demonstrate here is based on a controlled experiment where the participant was given instructions to look at the poster. 
 
 
-```{r Ch10-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
+#### AOI definition
 
-# initial example
+The areas of interest (AOIs) for the poster were defined in advance, such as the title, logos, multiple text areas, images, and tables. The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package. The rectangles that represent the AOIs are drawn by mouse clicking two vertices and they are named by the analyst. The \textit{DrawAOIs} function used \textit{locator} function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \ref{aoi_data} (TODO: load table) shows the output of the AOIs considered as the shapefile for the poster and will be used for the microposter plot creation. The code for **EyeTrackR**\index{R Packages!EyeTrackR} R package is shared on Github (will do). 
 
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
+The user can create self-defined shapefile based on their own needs. The output similar to the AOIs from Figure \ref{aoi_data} (TODO: load image) can be directly used to generate the micromap plot. According to @CP2010 and @PMWOK2015JSS, ''the polygons displayed in the maps of micromaps only need to be detailed enough to convey shape and relative position of the areas and provide a spatial framework by identifying neighboring polygons''. If the polygons one is interested to create are all rectangles, the \textit{DrawAOIs} function can be used to create the shape file. Here is the code we used to create poster shape files for eye tracking data. Twelve AOIs are defined on the poster image and the shape data is saved as``AOIName''.
 
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
+
+
+Figure~\ref{poster1} (TODO: load image) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames.
+
+#### Eye tracking data summarization
+
+
+### Linked microposter plot creation
+
+After the eye tracking video data is processed and AOI shapefile is created, we can now start to create linked microposter plot following the steps below. 
+
+\begin{enumerate}
+    \item \textbf{Panel design specification.}
+    
+First, the user needs to figure out a few questions: how many panels are there in the plot? i.e. how many variables does one want to visualize? What are the plot types one wants to use for the visualization? How to arrange the panels, such as which panel goes left and which panel goes right? How does one want to label the panels? 
+
+A vector of panel plot types are created to store the designed panel types. Then a list of column attributes are created to specify the order of the panels from left to right using a \textit{col.num}. For the poster panel, cumulate is an attribute that determines if one wants cumulative pattern or not. For each panel, one needs to specify the header of the panel, and the font of the labeling. For the data panels, the data needs to be specified. Below is the code how the linked microposter plot panels are specified. Here we are creating three data panels: two dot plot panels representing number of visits and visits, and one boxplot panel representing pupil data. The poster, legend and the data panels are presented from left to right. After the panel types and attributes are specified, a quick check is conducted to make sure that all the panel types one plans to plot are specified. 
+
+\begin{verbatim}
+panel.types = c("poster", "legend", "dot", "dot", "boxplot")
+
+columns.att = list(
+  list(col.num = 1, cumulate = TRUE),
+  list(col.num = 2, header = "Areas of Interest", header.size = 0.7, point.size = 0.96, text.size = 0.7, text.font = 1),
+  list(col.num = 3, panel.data = "visits.num", header = "Number of Visits", text.size = 0.7, point.size = 0.96, axis.ticks = NA, axis.labels = NA),
+  list(col.num = 4, panel.data = "visits", header = "Length of Visits (sec)", text.size = 0.7, point.size = 0.96, axis.ticks = NA, axis.labels = NA),
+  list(col.num = 5, panel.data = "pupildat", header = "Pupil Radius in Pixels", text.size = 0.7, axis.ticks = NA, axis.labels = NA)
 )
-```
+
+columns = length(columns.att)
+if (length(panel.types) < columns){
+  warning("Panel types are not completely specified.")
+}
+\end{verbatim}
+
+\item \textbf{Load images and data.}
+
+After specifying the panels, the image/poster and data needs to be loaded. Here we are using the grayscale version of the poster, therefore grayscale is set to be TRUE. We used \textbf{imager} R package for the poster image processing. The user can replace poster with other images and replace eye tracking data with other data types. 
+
+
+\begin{verbatim}
+
+data = posterdat.all
+grayscale = TRUE
+poster.loc = system.file("extdata", "poster_colored.jpg", package = "EyeTrackR")
+
+posterdat = data[[1]]
+names(columns.att) = panel.types
+poster = imager::load.image(poster.loc)
+
+if (grayscale){
+  poster = imager::grayscale(poster)
+}
+ 
+\end{verbatim}
+
+
+
+\item \textbf{Load shapefile for poster.}
+
+The data for the definitions of AOIs used as shape file is loaded. We added ``blank'' as another AOI that are not able to be specified through the rectangle drawing. The AOIs are like states for the map of the united states and the poster is like the nation. A polygon for the entire poster is created after the creation and loading the polygons for all the AOIs.   
+
+\begin{verbatim}
+
+posterVBorders = AOIName
+
+# create shape data for blank and add it to poster shapefile
+blank = as.data.frame(matrix(c(rep(0, 5 * 3), NA, NA, NA), nrow = 6, ncol = 3, byrow = TRUE))
+blank[, 1] = "Blank"
+colnames(blank) = colnames(posterVBorders)
+stateVBorders = rbind(posterVBorders, blank)
+
+# create the polygon for the entire poster
+nationVBorders = matrix(c(0, 0, imager::width(poster), 0, imager::width(poster), imager::height(poster), 0, imager::height(poster), 0, 0),
+                        nrow = 5, ncol = 2, byrow = TRUE)
+nationVBorders = as.data.frame(nationVBorders)
+colnames(nationVBorders) = c("x", "y")
+\end{verbatim}
+
+\item \textbf{Order rows by data columns.}
+
+The user can specify how they want the rows to be sorted by, i.e., which column to order by. In this case, we can choose from number of visits (visits.num), visits (visits) or pupil data (pupildat) to sort by. Here we chose ``visits'' to sort the rows for the plot.  
+
+\begin{verbatim}
+
+sortby = "visits"
+
+if (sortby == "pupildat"){
+  unordered.median = unlist(lapply(pupildat, stats::median))
+  ordered.median = order(unordered.median, decreasing = decreasing)
+  pupildat = pupildat[ordered.median]
+  posterdat = posterdat[ordered.median, ]
+} else if (sortby == "speed"){
+  unordered.median = unlist(lapply(speed, stats::median))
+  ordered.median = order(unordered.median, decreasing = decreasing)
+  speed = speed[ordered.median]
+  posterdat = posterdat[ordered.median, ]
+} else {
+  posterdat = posterdat[order(posterdat[, sortby], decreasing = decreasing), ]
+}
+
+stateDataId = row.names(posterdat)
+
+\end{verbatim}
+
+
+\item \textbf{Determine panel layouts.}
+
+The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here chose the automatic layout and set the partitioning to be 1. The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows.   
+
+\begin{verbatim}
+ 
+Layout = NA
+MedianRow = TRUE
+AutomaticLayout = TRUE
+partitioning = 1
+
+# determine the layouts
+ if (AutomaticLayout){
+   rows = ArrangePanels(posterdat = posterdat, partitioning)[[3]]
+   MedianRow = DetermineMedianRow(nrow(posterdat), partitioning)
+ } else {
+   rows = length(Layout)
+   if (length(hdColors) < max(Layout)){
+     hdColors = rep(hdColors, ceiling(max(Layout)/length(hdColors)))
+     warning('There are too few colors provided.')
+   }
+ }
+
+ if ((AutomaticLayout == FALSE) && MedianRow){
+   if ((rows %% 2 == 0) || (Layout[ceiling(length(Layout)/2)] != 1)){
+     MedianRow = FALSE
+     warning("There is no median row.")
+   }
+ }
+ 
+# determine the size of the rows    
+if (MedianRow == FALSE){
+
+  rowsize = rep(17.2/rows, rows)
+
+} else {
+
+  rowsize = c(rep(17.2/rows, floor(rows/2)), 17.2/(rows*3.2), rep(17.2/rows, floor(rows/2)))
+
+}
+  
+\end{verbatim}
+
+
+
+\item \textbf{Create panel layouts and plot indexes.}
+
+Details is a list structure that contains the variables and values for the detailed layout of the plot. \textit{ArrangePanels} function is able to automatically determine the start and end rows for each plot groups given the input. The code for the functions \textit{panelLayout} and \textit{ArrangePanels}, as well as the layout details list is in the SharedFunctions.R file.  
+
+\begin{verbatim}
+panel.width = c(2.9, 2.9, 2.9, 2.9, 2.9)
+panels = panelLayout(nrow = rows, ncol = columns, topMargin = details$top, bottomMargin = details$bot, leftMargin = details$left,
+                     rightMargin = details$right, rowSep = rep(0.01, rows + 1), rowSize = rowsize,
+                     colSize = panel.width, colSep = rep(0.05, (columns + 1)))
+
+
+
+iBegin = ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[1]]
+iEnd = ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[2]]
+nGroups = length(iEnd)
+\end{verbatim}
+
+
+
+\item \textbf{Plot posters}
+
+After all the settings are specified, we can now start to plot the linked microposter plot each column at a time, by starting from the leftmost column, i.e., the micro posters. The color series are selected from the \textbf{RColorBrewer} R package. Here 5 colors are used in the ``Accent'' color series, since we have five rows at most for each plot group. We modified the micromaps function provided by ?? to create the microposter plots.     
+
+\begin{verbatim}
+    
+hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
+
+if (sum(panel.types == "poster") >= 1){
+
+  posters = which(panel.types == "poster")
+
+  for (i in 1:length(posters)){
+
+    microposters(panel.col = columns.att[posters[i]]$poster$col.num,
+                 cumulate = columns.att[posters[i]]$poster$cumulate,
+                 posterdat = posterdat,
+                 stateVBorders,
+                 nationVBorders,
+                 poster,
+                 panels,
+                 nGroups,
+                 rows,
+                 MedianRow,
+                 iBegin,
+                 iEnd,
+                 hdColors)
+
+  }
+}
+
+\end{verbatim}
+
+
+\item \textbf{Plot labels}
+
+
+\item \textbf{Plot panels}
+
+
+\item \textbf{Add Title and Legend}
+
+
+\end{enumerate}
+
+For this section, show the code step by step and the immediate output of each step. (Steps 6, 7, 8, 9, 10 will make updates to the plot. Present them. 6 - 7 could be 4 small figures, 10 will finish a complete figure.) 
+
+
+
+### Conclusion and discussion
+
+Summarise what are covered in this chapter
 
 
 ## Further Reading {#Ch10-FurtherReading}
