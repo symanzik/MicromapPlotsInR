@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 # Back to the Roots: Non-traditional Micromaps (for Viewing Patterns of Scientific Posters) {#Ch10}
 
 
