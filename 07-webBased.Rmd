@@ -1,90 +1,155 @@
 # Web-based Linked Micromap Plots (via Shiny) {#Ch7}
 
-
 \chapterauthor{Marcus W. Beck}
 
+Web-based interactive linked micromaps were first developed in the late 1990s. Early examples included visualizing hazardous air pollutant data using the Graphics Production Library [@SACWWW1999] and use of micromaps by the National Cancer Institute to visualize long-term cancer data [@BHPW2006]. These early attempts primarily used Java-based web technologies to combine micromap visualization tools with online functionality.  Since then, the development of R packages to create web-based applications has allowed new opportunities to visualize and share micromaps online. This chapter will introduce the reader to the creation of linked micromap plots via the R **shiny**\index{R packages!shiny} package [@CCASSXAMDB2021]. Core concepts of creating shiny applications will be discussed, including an example that demonstrates a minimal working shiny application with the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2016].   
 
-Creating web-based interactive linked micromaps dates far back into the late 1990s. 
-Early attempts were made via the Graphics Production Library (GPS). 
-The National Cancer Institute (NCI) maintained a web page with interactive linked micromaps 
-for its cancer data for more than ten years. Java versions also exist. 
-This chapter will introduce the reader to the creation of linked micromap plots 
-via the Shiny R package (https://shiny.rstudio.com/). 
-A preliminary example of such a Shiny-based linked micromap plot can be 
-accessed at https://beckmw.shinyapps.io/micromap_app/.
+## The Need for Web Applications {#Ch7-Introduction}
 
+The ability to develop and host content in an online framework has obvious benefits for research and data-intensive applications.  Reaching new audiences and creating a more immersive experience with interactive functionality can improve understanding beyond text descriptions in technical reports or research articles.  This is especially important when research products have intended applications for non-technical audiences or to simply facilitate sharing of ideas among colleagues, such as for applied environmental (e.g., Chapter \@ref(Ch11)) or medical (e.g., Chapter \@ref(Ch12)) fields.  Web-based applications can greatly improve technology transfer from the research community to practitioners, collaborators, or other stakeholders that may not need to fully understand the technical details of an underlying application, but require robust tools built on quality science to make informed decisions.
 
-## Introduction {#Ch7-Introduction}
+In this context, a web-based application (web app or dashboard, hereafter) can have two fundamental roles, where the primary goal of each is to increase understanding of concepts or results from research products or data.  The first and most common use is creating a web app to support an existing or otherwise finalized research product.  Simple examples include developing an application to share results as supplemental information from a research article, creating a web page to synthesize and distill large, publicly available datasets, or using a web application for prioritizing how decisions are made with limited resources.  In the latter case, these may also be generically called decision support tools.  The second, and more under-utilized role of web apps is as intermediate tools that can enhance the research or exploratory analysis process.  For many of the reasons that web apps can improve delivery of science to decision-makers or to inform the public, web apps can also benefit the research community by improving collaboration among colleagues.  We encourage readers to appreciate and understand how web apps can have benefits at different stages of data analysis process, not just as a final product. 
 
+The concepts and tools presented in this chapter can apply equally well to the two use cases above.  In addition to understanding the theory of building web apps with micromaps, additional considerations include how the application is hosted online for access by others and what steps are made to ensure the application is maintained into the future.  A detailed discussion of these concepts is beyond the scope of this chapter, but examples and resources are provided to allow the reader to understand their importance and how to further build on the concepts presented herein.  We primarily cover the basics of developing a shiny application, but refer the reader specifically to @Wickham2021 and @Sievert2020 for a more comprehensive introduction to using shiny in a web-based framework.   
 
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
+## Existing Examples of Micromap Web Applications {#Ch7-ExistingWebApps}
 
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
+The first web apps that used micromaps to explore spatial patterns in data were created the late 1990s.  Although R has been in use since this time, the functionality to create web apps with shiny was not available until 2012 (the first version on CRAN was uploaded in December 2012). These early applications are similar to shiny in that they utilized functional programming and text markup languages to allow exploration of data within a web browser.  Shiny at its core uses similar tools, but within an R framework, i.e., it uses functions to create HTML and Java-based graphics, whereas early micromap apps were coded directly with these core tools.  This required detailed knowledge of fundamental concepts of web programming that most R users currently do not have. Thus, there are few early examples of micromap web apps.       
 
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
+One such example is provided by @SACWWW1999 that used the Graphics Production Library to visualize hazardous air pollutant data from the US Environmental Protection Agency with micromaps in a web browser.   
 
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
+* National Cancer Institute [@BHPW2006], discussed in @PPC2015JSS; Figure
+* https://evjones.shinyapps.io/FreshwaterProbMonEDA/
+     * This is a shiny app to support an annual report from Virginia DEQ for their freshwater probabilistic monitoring program, see email from 3/9/22	
+     * Repo: https://github.com/EmmaVJones/ProbDash/tree/master/app
+     * Integrated report driving the app (2022, not published yet): https://github.com/EmmaVJones/FreshwaterProbMonIntegratedReports/tree/main/2022ProbChapter
+     * 2020 chapter here: https://www.deq.virginia.gov/home/showpublisheddocument/4309/637461491336170000
+See email from Emma on 3/15 explaining why the app was developed - it helped them explore their data (emphasis on second sub-bullet for first bullet above)
+* Another example from one of Juergen’s students, currently not hosted online: https://github.com/asa-stat-computing-and-graphics/COST-DataExpo-2019/tree/master/HousingAffordability
 
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
+## Shiny as an Open Source Tool for Web Applications {#Ch7-Shiny}
 
+### What is Shiny?
 
-## Main {#Ch7-Main}
+The R **shiny**\index{R Packages!shiny} package [@CCASSXAMDB2021;@Wickham2021] allows a developer to create web applications entirely in the R framework. Shiny can exposes existing R scripts to a web browser to allow anybody to access underlying functionality outside of R and the local environment of a personal computer. Shiny is commonly used to 1) communicate complex workflows to a non-technical audience with informative visualizations and interactive components, 2) share analysis output easily with colleagues without having to walk them through details of a script, and 3) help inform understanding of an analysis by creating a user interface to quickly evaluate data.  Because linked micromaps can be easily created in R using the **micromap**\index{R Packages!micromap} or **micromapST**\index{R Packages!micromapST} packages, creating web apps with shiny is a simple extension that can greatly improve understanding of data.   
 
+There are many advantages to using shiny over other platforms for creating web applications. The primary advantage is the ability to create rich web content entirely using R.  There is no need to have a detailed understanding of web programming, such as HTML, CSS, or JavaScript. However, shiny leverages this broader suite of web programming tools so that they are available for use should a developer have the need to expand an application's utilities beyond the core features within shiny. More simply, shiny can be used as a web interface for any R workflow. This means that any custom analysis or graphic created by an R user can be can be fully integrated into a web app, unlike other platforms that may have rigid templates where functionality is sacrificed for ease of use.
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
+Understanding shiny can be challenging at first because it introduces a new way of thinking about code. "Simple" R scripts are run linearly, being read from top to bottom in a conventional analysis workflow. The script is written, the code is sourced to the R console, and results or objects are saved in the environment of the current R session after running the script.  A shiny app runs from an R script, but instead of executing code linearly, it uses **reactive** programming that detects when an input is changed on the application, runs the minimal amount of code that uses that input, then updates the output as needed. So, rather than running linearly, the script has interconnected components that share pieces of information that are executed as needed to produce the results.
 
-For convenience, Figure \@ref(fig:Ch7-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+Reactivity can be daunting at first because it requires the developer to think about which pieces of code require inputs from other pieces and how that information is used to create output. This is not fundamentally different from writing functions in R and creating a shiny application should be straightforward if a developer is comfortable with functional programming [@Wickham2019]. Reactivity can be conceptualized by the building blocks of a shiny app. Every shiny app has the following:
 
+* User interface (UI): Includes all inputs and outputs, as well as the appearance of the dashboard. In this context, "output" means the final product (e.g. a plot, table, etc.) that is placed in the user interface, but created by processing inputs sent to the server. In web-speak, this is the front end.
+* Server: The guts or engine of how the inputs are used to create the outputs. This is where the working parts of the analysis are contained. The server can be as simple or as complicated as needed for an application. In web-speak, this is the back end.
 
-```{r Ch7-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
+The `ui` and `server` components can be contained in an R script, as follows:
 
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
+```{r, eval = FALSE}
+library(shiny)
+ui <- fluidPage()
+server <- function(input, output){}
+shinyApp(ui = ui, server = server)
 ```
 
+In RStudio, the application can be run clicking the "Run App" button at the top right of the source window or sending the code to the R console (Figure \@ref(fig:Ch7-shiny-code)).  
 
-## Further Reading {#Ch7-FurtherReading}
+```{r Ch7-shiny-code, fig.cap = 'A minimal working shiny application in RStudio showing code for the user interface and server.  The application can be run in RStudio by selecting "Run App".', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-code.PNG')
+```
 
+The above application will open locally, either through a local port opened by RStudio or in a web browser depending on the user options in `shinyApp()`.  In this example, an empty screen appears because the application currently does nothing and it is only accessible to the user in the current R session.  Building a more functional shiny application only requires adding code to the server and user interface.  Making the application accessible to others is described in section \@ref(Ch7-shiny-online).  
 
-Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
-where related work and further examples can be found in this book that match the content of this
-chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
+The example above can be expanded to demonstrate how code within the server and user interface might look in practice.  The application below takes random samples from a normal distribution and creates a histogram showing the density using base R (Figure \@ref(fig:Ch7-shiny-histogram)).  The user interface determines how many random samples are used to create the plot. To make a shiny app, the components required for inputs and outputs must be identified by the developer to determine where they are placed in the code. The input is what a user can modify (the sample size) and the output is the plot. Inputs and outputs go in the `ui` object. The `server` takes the inputs, produces the content for the output, and then sends the results back to the `ui`. Placing these components into the template is as follows: 
 
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
+```{r, eval = FALSE}
+library(shiny)
 
+ui <- fluidPage(
+  numericInput(inputId = 'n', label = 'Sample size', value = 50),
+  plotOutput('myplot')
+)
+
+server <- function(input, output){
+  output$myplot <- renderPlot({
+    dat <- rnorm(input$n)
+    hist(dat)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+```{r Ch7-shiny-histogram, fig.cap = 'A minimal working shiny application with additional components in the server and user interface that produces a histogram and options to select the sample size.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-histogram.PNG')
+```
+
+Understanding what happens in the application each time a different sample size is selected by a user is useful to understand reactivity and how the application functions with the user interface and server components of the code.  The reactivity of the running application follows these steps (Figure \@ref(fig:Ch7-shiny-flow)) when the web app is initialized in the browser and when a user selects a new sample size:
+
+1. The `input` value `n` selected by the user from the `ui` is sent to the `server`, seen as `input$n`. 
+1. The `dat` object is created as a random sample with size `n` and then a histogram is created as reactive output with `renderPlot`
+1. The plot output named `myplot` (chosen by the developer) is appended to the `output` list of objects
+1. The plot is then rendered on the `ui` side using `plotOutput` by referencing the `myplot` name from the `output` object. 
+
+```{r Ch7-shiny-flow, fig.cap = 'A representation of reactivity each time the user input is changed to select a different sample size for the histogram.', echo = FALSE, out.width = '100%'}
+knitr::include_graphics('img/Ch7-shiny-flow.png')
+```
+
+From this simple workflow, some generalized rules and concepts about shiny reactivity can be described that apply to most shiny applications.  
+
+* All input objects are defined in the `ui` object, given a name inside the input function and then referenced in the `server` file by `input$name` (`input$n` in the example). 
+    ```{r, eval = F}
+    numericInput(inputId = 'n', label = 'Sample size', value = 50)
+    ```
+* All output objects to use in the `ui` object are created in the `server` object by assigning a "rendered" object to the `output` object by `output$name` (`output$myplot` in this case).
+    ```{r, eval = F}
+    output$myplot <- renderPlot({
+      dat <- rnorm(input$n)
+      hist(dat)
+    })
+    ```
+* The `ui` file controls where and when the output is rendered, typically using a function named `fooOutput()` (`foo` meaning generic, e.g., `plot`, `table`, etc.) that has a complementary reactive function named `renderFoo()` in the `server` file.
+    ```{r, eval = F}
+    plotOutput('myplot')
+    ```
+* The `ui` file can be declared with a function (`fluidPage()` here as one type of layout) with at least two inputs (one input, one output) separated by commas. 
+* The `server` file can be declared with the `server()` function, where the input is evaluated as a standalone group of operations with the curly braces `{}`.
+
+All shiny applications use these concepts to create rich, interactive content that is accessible in a web browser.  For example, the user interface can include different types of input selections, or "widgets", depending on how a developer intends a user to change inputs or interact with the data.  These widgets can be as simple as entering numeric input, i.e., `numericInput()` as from above, or can be more involved to select items from a predetermined list using a dropdown menu or radio buttons, use a slider to select values, choose date ranges, upload files, or even enter custom text.  A full description of the available input options included with the shiny package can be found at https://shiny.rstudio.com/gallery/widget-gallery.html.  The **shinyWidgets**\index{R Packages!shinyWidgets} package [@Perrier2021] also includes additional widgets beyond those provided with the shiny R package.  
+
+For shiny output, plots and tables can easily be created with `renderPlot()` and `renderTable()` and their corresponding output functions, `plotOutput()` and `tableOutput()`, respectively.  Additional output can include images (`renderImage()`, `imageOutput()`), text (`renderText()`, `textOutput()`), and even dynamic user interface options (`renderUI()`, `uiOutput()`), where the user selection depends on input from another component of the web app.  The output options in a shiny app can also be greatly expanded using the **htmlwidgets**\index{R Packages!htmlwidgets} package (in this context, "widget" does not refer to a `ui` selection).  The **htmlwidgets**\index{R Packages!htmlwidgets} package [@Vaidyanathan2021] creates R bindings for a shiny application to use existing JavaScript libraries, allowing the creation of additional interactive visualizations (e.g., plotly and leaflet).  As before, a shiny developer only needs to understand R to use these tools.  
+
+The layout of the dashboard as seen from the user's perspective can also be modified by the developer.  The template from above uses the standard `fluidPage()` design that can organize the user interface into a simple row/column format.  Although the simple histogram template does have any visual cues as to its organizaton on the web page, the `fluidPage()` layout has placed the numeric input selection and plot on separate rows defined automatically by standard HTML tags created by shiny.  The content is scaled in real time to fill the dimensions of the browser or mobile device of the user.  The **flexdashboard**\index{R Packages!flexdashboard} [@Iannone2020] and **shinydashboard**\index{R Packages!shinydashboard} [@Chang2021] packages can be used to create more flexible dashboard layouts with content placed in specific CSS elements, such as boxes or tabs that are organized logically to improve how a user engages with the web app.  The **flexdashboard**\index{R Packages!flexdashboard} package, in particular, uses RMarkdown, as compared to a regular R script used by most shiny apps.  In fact, any RMarkdown file can be rendered using shiny (with `runtime: shiny` in the YAML code at the top), allowing those already familiar with RMarkdown to easily embed shiny components in a rendered HTML document.  
+
+Using the above concepts and packages allows a developer to create more involved and useful applications, such as creating custom micromap plots and options to allow a user to explore patterns more easily than using a conventional R script. In the following section, a simple shiny application is described to demonstrate how it can be used with the **micromap**\index{R Packages!micromap} package. 
+
+### Minimal Micromap Example 
+
+* Basic example using the _USstates_\index{Datasets!USstates} dataset and the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2016]
+* General structure via GitHub page: Figure
+* Dependencies and data I/O
+* UI elements: Figure
+* Server backend: Figure
+
+```{r Ch7-shiny-example, fig.cap = 'A minimal working shiny application using the micromap package.', out.width = '100%', echo = FALSE}
+knitr::include_graphics('img/Ch7-shiny-example.PNG')
+```
+
+### Getting Shiny Online {#Ch7-shiny-online}
+
+* Local vs online
+* Use of GitHub for app code and permanency via Zenodo
+* Shinyapps.io/RStudio Connect
+* Open source Shiny Server 
+* Docker containers
+* Choosing a license
+
+## Summary and Further Reading {#Ch7-Summary}
+
+* Fundamentals of user interface design, out of scope but why they’re important to consider, engaging end users in design
+* Shiny best practices [@SNYPV2022]: modularity [@FRGG2022], functions, profiling/performance, etc.
+* Shiny pros/cons, alternative web platforms
+* Revisit value of web-based applications
+* Changing landscape of web platforms
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
 

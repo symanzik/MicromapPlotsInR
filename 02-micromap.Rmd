@@ -15,299 +15,611 @@ into a publication-worthy final linked micromap plot.
 ## Introduction {#Ch2-Introduction}
 
 
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
-
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
-
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
-
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
-
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
+Write chapter introduction here.
 
 
-## Main {#Ch2-Main}
+## Chapter Outline (Merge into Chapter Introduction at the End) {#Ch2-Outline}
 
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
+Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
+and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
+(or no) association in statistical panels of dot plots.\index{Dot plot}
 
-For convenience, Figure \@ref(fig:Ch2-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+
+-	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
+    - Identifying and Geoprocessing of Spatial Boundary Data
+    - Linking Spatial Boundary Data and Statistical Data
+    - Creating a Draft Linked Micromap Plot
+    - Refining the Linked Micromap Plot
+    
+-	Spatial Polygons in R and micromap Package Updates (**Juergen**: How much of this do we need here in Chapter \@ref(Ch2)? Would it make more sense to mention this in Chapter \@ref(Ch4)?)
+    - Spatial objects and simple feature objects
+    - Updates
+    
+-	Identifying and Geoprocessing of Spatial Boundary Data (**Marcus**: I think this is a good topic to discuss, but may be tricky to balance specificity with brevity.  I'm no expert on it, but I know there are a few different methods one could use.  Maybe just hit on the why and how, and briefly present tradeoffs of the different methods?  I think for MM, the goal is just to increase render time w/o sacrificing spatial specificity, so maybe the exact method is not important? -- **Juergen**: In fact, let's keep it simple here and work with ready-to-use shapefiles that are already available in some R packages; refer to Chapter \@ref(Ch4) how to bring in external shapefiles and modify them for use in micromaps)
+    - Keep this brief as Chapter \@ref(Ch4) might cover this in detail?
+    - Example of generalizing polygons Figure  (Use same figures as Chapter \@ref(Ch4)?)
+
+-	Linking Spatial Boundary Data and Statistical Data
+    - Explicit link to spatial object
+    - Under the hood link to simple features object
+
+-	Creating a Draft Linked Micromap Plot
+    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+
+-	Refining the Linked Micromap Plot
+    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+
+- **Juergen**: Introducing a second basic example for a different geographic region, e.g., state level or environmental, and use of a different built-in plot type (e.g., boxplot). Similar four steps as before, but more condensed.
+
+-	Challenges to Visualizing Data with Linked Micromap Plots (**Marcus**: Not sure this is the right place for it, but maybe it's worth providing a brief contrast with micromapST?  Maybe include this in the overview at the top?  I think it would be useful for the reader to understand succinctly how the two differ and why there are two packages, though I'm sure these themes will be present throughout the book.  Perhaps the latter point is not that interesting, i.e., it's common to have "competing" software in an open source environment? -- **Juergen**: Yes, we need some discussions at the end of Chapters \@ref(Ch2) and \@ref(Ch3) that outline advantages and limitations of each of the two main micromap packages. Alternatively, there could be some table in Chapter \@ref(Ch1) that lists features (and limitations) of the two packages when they are first introduced to the reader. Overall, this last point may be a subsection in the Introduction, or become a final chapter at the end of the book which research is necessary in the future.)
+    - Problem of many polygons (**Juergen**: There are other problems, e.g., many islands as in the Philippines, narrow shapes as for Chile, subregions of considerably different sizes as for Russia)
+    - Automating linked micromap plot production for reports and interactive visualizations (Check with Emma Jones at VA DEQ)
+    - (**Marcus**: Related, a disadvantage of both packages is their lack of tighter integration with ggplot.  Not sure we want to go there though. -- **Juergen**: I wouldn't go there as these are the packages that currently exist and have to be used.)
 
 
-```{r Ch2-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
+## Steps to Create a Linked Micromap Plot with the **micromap**\index{R Packages!micromap} R Package {#Ch2-Steps}
+
+
+Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create a 
+linked micromap plot\index{Linked micromap plot} 
+with the **micromap**\index{R Packages!micromap} R package:
+
+1. **Identifying and Geoprocessing of Spatial Boundary Data**: In addition to a data frame that contains the statistical data,
+the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
+to be colored in the maps. This spatial boundary data typically comes in the form of a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
+boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
+provided as external shapefiles\index{Shapefiles}. We will also see in Chapter \@ref(Ch4) how
+to simplify complex boundaries, enlarge small subareas in the maps, and move subareas that are far away closer
+to the main area of the map.
+
+2. **Linking Spatial Boundary Data and Statistical Data**: To link spatial boundary data and statistical data, 
+the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first has to be transformed into a regular data frame
+via the `micromap::create_map_table()` function.
+Next, we have to identify one variable from the statistical data frame
+and one variable from the newly created data frame with the boundary information that 
+allow us to link statistical data and boundary data for each subregion.
+
+3. **Creating a Draft Linked Micromap Plot**: While not necessary, it is always a good idea to first create a minimal
+linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
+are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
+step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
+to find possible errors in the R code.
+
+4. **Refining the Linked Micromap Plot**: Once a draft linked micromap plot\index{Linked micromap plot} has been
+created, this plot usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
+change of the layout and of perceptual groups, addition of labels and legends, and possibly the addition of additional
+statistical variables or changes to different graph types for some of the variables.
+
+
+```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package [@Iannone2022]).', fig.width = 5, fig.height = 5, echo = FALSE}
+library(DiagrammeR)
+
+grViz(diagram = "digraph flowchart {
+  node [fontname = arial, shape = oval, color = grey, style = filled]
+  tab1 [label = '@@1']
+  tab2 [label = '@@2']
+  tab3 [label = '@@3']
+  tab4 [label = '@@4']
+
+  tab1 -> tab2 -> tab3 -> tab4;
+}
+
+  [1]: '1. Identifying and Geoprocessing of Spatial Boundary Data'
+  [2]: '2. Linking Spatial Boundary Data and Statistical Data'
+  [3]: '3. Creating a Draft Linked Micromap Plot'
+  [4]: '4. Refining the Linked Micromap Plot'
+")
+```
+
+
+### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-Identifying}
+
+
+In this first linked micromap plot\index{Linked micromap plot}
+example created with the **micromap**\index{R Packages!micromap} R package, we work with the
+_USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets
+from the **micromap**\index{R Packages!micromap} R package.
+
+_USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
+the 50 states (and Washington, D.C.) of the United States (U.S.) 
+that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
+of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
+contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
+main map and has been placed further to the east (and also has been enlarged)
+as shown in \@ref(fig:Ch2-USstates). In the following R code,
+we first load the **micromap**\index{R Packages!micromap} R package and the
+_USstates_\index{Datasets!USstates} data set, verify that this object indeed is a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
+at some of the data in the `data` component of this object, and finally plot it.
+
+
+```{r Ch2-USstates, fig.cap = 'Spatial boundary data for the United States that frequently is used for linked micromap plots\\index{Linked micromap plot} created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
 library(micromap)
 
-# initial example
-
 data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
 
-# basic figure 1
+class(USstates)
+head(USstates@data)
+
+plot(USstates)
+```
+
+
+### Linking Spatial Boundary Data and Statistical Data {#Ch2-Linking}
+
+
+In this step, the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
+into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
+via the `micromap::create_map_table()` function. We have to indicate a variable from the `data`
+component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object that 
+can be used as an ID column. 
+A matching ID column has to be identified in the statistical dataset. These two ID columns
+have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
+this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for DC).
+The resulting `statePolys` is a regular data frame that can be used for creating a
+linked micromap plot\index{Linked micromap plot} in the next step.
+Note that there are typically more rows in this data frame than there are spatial subareas.
+This is because many spatial subareas consist of more than just one boundary, e.g., in the
+presence of islands or if a land mass is split into more than one area, e.g., as in Michigan in the US.
+
+
+```{r Ch2-linkingdataframesUSstates}
+head(USstates@data$ST)
+
+statePolys <- create_map_table(tmp.map = USstates, IDcolumn = "ST")
+class(statePolys)
+dim(statePolys)
+```
+
+
+_edPov_\index{Datasets!edPov} is a data frame that contains
+education and poverty level data for the 50 states (and Washington, D.C.).
+This data frame has 51 rows, one for each of the 50 states (and for DC).
+We have to identify one variable from this data frame that can be used for linking the
+two data sets. Here, this is the `StateAb` variable.
+
+The last expression in the following R code verifies that there is indeed at least one matching ID 
+in the `statePolys` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
+Mismatching or missing IDs in the statistical data frame may cause
+that data for some subareas do not appear
+on any of the maps later on or that some subareas shown on the maps do not get colored in any of the maps.
+While this often can be contributed to missing data in the statistical data frame, e.g., there is
+only data for the 50 states but not for Washington, D.C., mismatching identifiers also can be
+the underlying reason (e.g., if the statistical data frame uses `D.C.` as ID while
+the spatial data frame uses `DC`). Here, everything is matching.
+
+
+```{r Ch2-linkingdataframesedPov}
+data(edPov)
+dim(edPov)
+
+head(edPov)
+head(edPov$StateAb)
+
+all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
+
+```
+
+
+### Creating a Draft Linked Micromap Plot {#Ch2-Creating}
+
+
+Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
+`micromap::lmplot()` function, based on the previously created 
+`statePolys` data frame and the _edPov_\index{Datasets!edPov} dataset.
+In our function call, we only provide seven required arguments. None of these arguments has a default setting.
+For all other arguments of this function, the default settings will be used here. 
+The statistical data (_edPov_\index{Datasets!edPov}) is assigned to the `stat.data` argument
+and the spatial boundary data (in the `statePolys` data frame) is assigned to the `map.data` argument.
+
+The `map.link` argument is needed to tell the function how to link the statistical data
+and the spatial boundary data. A vector with the names of the two linking variables 
+identified in the previous step is needed for this argument.
+The first variable name (`StateAb`) must come from the statistical data (here _edPov_\index{Datasets!edPov})
+and the second variable name (`ID`) must come from the `statePolys` data frame that
+contains the spatial boundary information.
+Changing the order of these two variable names typically results in an error.
+
+The `panel.types` and `panel.data` are closely related. As the name suggests, `panel.types` is a vector
+that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
+Here, we have the `dot_legend` in the first column, `labels` in the second column,
+two columns with statistical data represented as dot plots\index{Dot plot} (`dot`),
+and the micromaps in the fifth and final (`map`) column.
+This is matched with a list of data that is used for each of the five columns.
+A list is necessary for this argument as some of the data itself can be lists as we will
+see in some examples XXXX later on.
+The `dot_legend` simply shows a plotting symbol in a certain color that represents that row in
+the linked micromap plot\index{Linked micromap plot}. Thus, no further data is needed and `NA`
+is assigned. `labels` requires some text argument, typically some identifiers of the subareas
+in the maps. Here `state` from _edPov_ is used. 
+The variables `pov` and `ed` from _edPov_ are used for the statistical displays in columns three and four.
+It should be noted that all data specified in `panel.data` by default is taken from the
+data frame specified in the `stat.data` argument.
+The fifth and final column contains the micromaps. Their boundaries are obtained from
+the `map.data` data frame. Thus, no further data has to be specified here. Instead, `NA` 
+is assigned here.
+
+Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
+rows in the linked micromap plot\index{Linked micromap plot}. Here, `pov` 
+from the `stat.data` argument is used. The sorting of the rows goes from smallest (on top) to
+largest (at the bottom). Finally, `grouping` specifies  the number of rows
+in each of the perceptual groups (here `5` rows). If a single integer value is provided, 
+that value is used for all perceptual groups. If a vector of integer values is provided,
+each perceptual group may have a different number of rows as 
+shown in some examples XXXX later on.
+
+The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
+overall --- ten with five subareas and one with just one subarea. This is due to the fact
+that there are 51 subareas overall: The 50 US states and Washington, D.C.
+We abstain from interpreting this figure at this stage, but we will provide some
+helpful interpretation once we have created the last refined version of this figure
+in the next step.
+
+
+```{r Ch2-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
   map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
+  map.link = c("StateAb", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
+  panel.data = list(NA, "state", "pov", "ed", NA),
+  ord.by = "pov",
+  grouping = 5
 )
 ```
 
 
-## Code Chunks {#Ch2-CodeChunks}
+### Refining the Linked Micromap Plot {#Ch2-Refining}
 
 
-Example code chunks from Mike's workshop materials. Reduce some of the figures.
+We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
+step and refine it in multiple small steps. The refinement should only be started once
+functional R code has been obtained in the previous step.
+
+First, we get rid of the eleventh perceptual group (with just one subarea) and introduce
+a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
+number of subareas is odd such as for the 51 states (and D.C.) here.
+Here, Wyoming is the state shown in the median row. It has the 
+26$^th$ highest (or lowest) value for the sorting variable, i.e., `pov`.
+It does not appear in a map by itself, but rather is added to the perceptual
+groups above and below the median row in a neutral color, 
+thus increasing the number of subareas shown in each of these two maps by one (i.e., six here)
+Also, we reverse the sorting order via `rev.ord = TRUE`. 
+Now the sorting of the rows goes from largest (on top) to
+smallest (at the bottom).
+The resulting linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-refining1).
+While we keep `pov` as the sorting variable in this first refined version,
+the reader is encouraged to use `ed` as sorting variables and see how
+the spatial patterns highlighted in the maps change. This can be done
+for the original sorting order or for the reversed sorting order.
+The rows can even be sorted by `region` or alphabetically 
+by `state` or `StateAb` even though such an alphabetical sorting
+in most cases is not very meaningful, at least not for this specific example.
 
 
-```{r Ch2-micromap2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-#I. Overview of Four Steps to Make a Linked Micromap
+```{r Ch2-refining1, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
+  panel.data = list(NA, "state", "pov", "ed", NA),
+  ord.by = "pov",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE
+)
+```
 
-### I. A. Geoprocessing of Spatial Data
-library(micromap)
-sessionInfo()
-getwd()
 
+We continue with this first refined linked micromap plot\index{Linked micromap plot}
+and make further modifications. Next, we change the order of the two statistical columns,
+i.e., we place `ed` to the left of `pov` and use `ed` as the sorting variable (in reverse order).
+While any column of the linked micromap plot\index{Linked micromap plot} or even
+variables not shown in it can be used as sorting variables, in most cases,
+the first (leftmost) statistical column is used for sorting purposes.
+Moreover, we place the maps on the left side. As previously stated,
+the `panel.types` and `panel.data` arguments of the `micromap::lmplot()` function
+are closely related. Thus, if we change the order of one, the order of the
+other one has to be changed accordingly. 
+The resulting linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-refining2).
+There is no strong recommendation where the column with the maps should be placed.
+This often depends on personal preferences of the authors.
+There exist examples in the literature where the maps are placed on the left,
+e.g., in @Mast2013LinkedMicromaps and @DaWo2021, 
+on the right, 
+e.g., in @Wartenberg2009,
+and even in the middle,
+e.g., in @TaSt2019.
+
+
+```{r Ch2-refining2, fig.cap = 'Second refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the order of the five columns in the plot. Most notable, the map column is shown on the left here.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE
+)
+```
+
+
+We continue making changes to the second refined linked micromap plot\index{Linked micromap plot}.
+We change the grouping to nine perceptual groups overall (and no median row)
+via `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` and `median.row = FALSE`
+and vertically align the rows in each perceptual block via `vertical.align = "center"`.
+Finally, we start making changes to individual columns of the plot via
+the `panel.att` argument. Here, the third column that shows the `labels` is aligned on the left.
+The resulting linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-refining3).
+
+
+```{r Ch2-refining3, fig.cap = 'Third refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to perceptual groups with different numbers of subareas and the vertical alignment of rows in the middle of the plot. Also, `labels` are aligned on the left.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6), 
+  median.row = FALSE,
+  vertical.align = "center",
+  panel.att = list(
+    list(3, align = "left")
+  )
+)
+```
+
+
+After this experiment with a different grouping, we revert back to the more traditional grouping
+of ten perceptual groups with five rows each and a median row that is frequently used
+for the 50 US states (and D.C.). What we want to discuss next is the choice of colors
+for the subareas in each map (and thus for the `dot_legend` appearance in the
+`panel.type` argument as well). The default setting for the `colors` argument
+makes use of `max(grouping)` different colors from a spectral color scheme.
+Thus, when `grouping = 5` as in Figures \@ref(fig:Ch2-creatingdraft)-\@ref(fig:Ch2-refining2),
+a five-class spectral color scheme\index{Color scheme!Spectral} is selected, 
+whereas a six-class spectral color scheme\index{Color scheme!Spectral} is
+selected when `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` as in Figure \@ref(fig:Ch2-refining3).
+Historically, many linked micromap plots,\index{Linked micromap plot} 
+e.g., in @COCPC1998 and @WCCBP2002,
+made use of rainbow colors\index{Color scheme!Rainbow colors} that could be obtained 
+via the `colors = c("red", "orange", "green", "blue", "purple")` setting of the
+`colors` argument. While these colors work well for readers with normal color vision,
+they may not work well for readers with certain types of color vision deficiencies.
+Instead, some color schemes that are colorblind safe are better suited for such readers.
+Options are single-hue or multi-hue sequential color schemes\index{Color scheme!Sequential} 
+or selected divergent color schemes\index{Color scheme!Divergent}.
+Such color schemes can be obtained from the 
+**RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022].
+The reader is encouraged to read more about the theoretical background
+of these color schemes in @BHH2003 and @HaBr2003 and experiment with different settings
+at the supporting web page at https://colorbrewer2.org/.
+@SDWPM2014 used a greyscale sequential color scheme\index{Color scheme!Sequential}
+from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
+the darkest grey color comes first) for publication in a greyscale publication,\index{Colors!Greyscale publication}
+obtained via `colors = brewer.pal(5, "Greys")[5:1]`.
+@SBDSS2016 used a divergent red-yellow-blue (RdYlBu) color scheme\index{Color scheme!Divergent}
+from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
+obtained via `colors = brewer.pal(5, "RdYlBu")`.
+In the linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining4), we use a
+divergent brown-blue-green (BrBG) color scheme\index{Color scheme!Divergent}
+from **RColorBrewer**\index{R Packages!RColorBrewer}
+that is also colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
+obtained via `colors = brewer.pal(5, "BrBG")`.
+
+
+```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subareas.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  panel.att = list(
+    list(3, align = "left")
+  )
+)
+```
+
+
+So far, there are no labels for the columns and no titles for the statistical columns shown.
+Tic marks and tic mark labels, in particular in the second statistical column, could be improved,
+background colors in the statistical columns and maps could be modified, 
+font and symbol sizes could be modified, and the widths of the columns could be adjusted.
+All of this is done via the `panel.att` argument that controls the panel specific attributes of
+each column in the linked micromap plot.\index{Linked micromap plot}
+The content of this argument typically is a list of lists where the attributes
+for each column of the linked micromap plot\index{Linked micromap plot} are modified via a separate list.
+These inner lists are numbered from 1 to the number of elements in the `panel.types` vector
+where `1` is related to `map`, `2` to `dot_legend`, `3` to `labels`, and `4` and `5` to `dot`, i.e.,
+the dot plots\index{Dot plot} in the two statistical columns,
+in the linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining5).
+
+We leave it to the reader to experiment with the different elements in these list.
+If the purpose of a certain element is not immediately obvious, it might be a good idea
+to considerably increase or decrease the numeric value of that element or change the color to
+`red` or `yellow` to highlight that element. 
+
+Here, we only want to explain the purpose of the `fill.regions` element with the matching `header` element
+in the list for column `1`, i.e., the `map` column:
+The setting `fill.regions = "aggregate"` (which in fact is the default setting)
+fills in the subareas from all previous perceptual groups in the
+subsequent perceptual groups. This filing proceeds from
+the top perceptual group to the bottom perceptual group by sequentially
+filling the subareas that have already been displayed.
+Thus, in the map for teh final perceptual group at the bottom, all subareas have been filled.
+The text in the `header` is used to communicate this information to the reader.
+Alternatively, the setting `fill.regions = "with data"` only fills those subareas
+in a map that actually show data in that perceptual group. 
+No additional subareas are filled in any of the maps.
+Another setting for `fill.regions` is discussed in the next refinement step.
+
+
+```{r Ch2-refining5, fig.cap = 'Fifth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the panel specific attributes.', fig.width = 7, fig.height = 9}
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  
+  panel.att = list(
+    list(1, header = "Light Gray Means\nPreviously Displayed",
+         map.all = TRUE, 
+         fill.regions = "aggregate",
+         active.border.color = "black", 
+         active.border.size = 1.2,
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 1, 
+         panel.width = 0.8),
+    
+    list(2, point.type = 20, 
+         point.border = TRUE, 
+         point.size = 2,
+         panel.width = 0.9),
+    
+    list(3, header = "States", 
+         align = "left", 
+         text.size = 0.9,
+         panel.width = 0.7),
+    
+    list(4, header = 'Percent Adults With\n4+ Years of College',
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(10, 20, 30, 40), 
+         xaxis.labels = list(10, 20, 30, 40), 
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray", 
+         point.size = 1.5,
+         xaxis.ticks = list(5, 10, 15, 20), 
+         xaxis.labels = list(5, 10, 15, 20),
+         xaxis.title = "Percent")
+  )
+)
+```
+
+
+In the final revised linked micromap plot\index{Linked micromap plot} shown in
+Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
+First, we make use of the `labeling::extended()` function of the **labeling**\index{R Packages!labeling} R package.
+This function is provided with the minimum and maximum of a variable and the tentative
+number of tic marks and tic marks labels for that variable and then creates a vector with
+near-optimal axis labels. The argument `m` is used as a guideline for the number of axis labels,
+but the actual number of near-optimal axis labels may differ slightly. The reader is encouraged to experiment with
+`m = 2` to `m = 6` in the R code below.
+
+Second, we use the setting `fill.regions = "two ended"`. This setting makes most sense when
+`median.row = TRUE` (as is the case here) and the focus of the maps is to 
+indicate which subareas are above or below the median value
+of the variable specified in the `ord.by` argument (here `ed`).
+Similar to the setting `fill.regions = "aggregate"`,
+the subareas from all previous perceptual groups are filled in the
+subsequent perceptual groups. This filing proceeds from
+the top perceptual group to the median row 
+and from the bottom perceptual group to the median row
+by sequentially
+filling the subareas that have already been displayed on the more extreme ends.
+The text in the `header` has been updated to communicate this information to the reader.
+
+Third, we reduce the margin space between some of the columns via the
+`right.margin` and `left.margin` settings. Negative values are allowed.
+Fine-tuning the margin spacing and the widths of the columns can require
+a few iterations. The reader always should check carefully that no identifiers
+are truncated or overprinted, in particular that no letters
+from the longest identifier (here `Washington D.C.`) are cut off.
+
+
+```{r Ch2-refining6, fig.cap = 'Sixth (and final) refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to labeling, the coloring of perceptual groups above and below the median row, and the column spacing.', fig.width = 7, fig.height = 9}
 library(labeling)
 
-data("USstates")
-#Here is the spatial data
-plot(USstates)
-head(USstates@data)
-```
-
-
-
-```{r Ch2-micromap3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. B. Structure:  Create a Map Table to Link to the Statistical Data
-statePolys <- create_map_table(USstates, 'ST')
-#The spatial data is now in a simpler form that the micromap package can use
-head(statePolys)
-
-data("edPov")
-#Here is the statistical data.
-head(edPov)
-#The spatial and statistical data frames must have a common linking variable.
-hist(1:100)
-```
-
-
-
-```{r Ch2-micromap4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. C. Draft Micromap Plot
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
-       panel.data=list(NA, 'state', 'pov', 'ed', NA),
-       ord.by='pov',   
-       grouping=5, median.row=TRUE)
-```
-
-
-
-```{r Ch2-micromap5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. Basic Modification Exercises of Draft Micromap Plot
-
-### I. D. a) Reorder the previous plot in decreasing order of poverty
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
-       panel.data=list(NA, 'state', 'pov', 'ed', NA),
-       ord.by='pov',   
-       rev.ord=TRUE,
-       grouping=5, median.row=TRUE)
-```
-
-
-
-```{r Ch2-micromap6, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. b) Change the order of the education and poverty panels and sort by decreasing education
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('dot_legend', 'labels', 'dot', 'dot', 'map'),
-       panel.data=list(NA, 'state', 'ed', 'pov', NA),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=5, median.row=TRUE)
-```
-
-
-
-```{r Ch2-micromap7, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. c) Place the maps on the left side
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=5, median.row=TRUE)
-```
-
-
-
-```{r Ch2-micromap8, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. d) Try some different groupings, such as 6, 6, 6, 6, 3, 6, 6, 6, 6 (and no median.row)
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE)
-```
-
-
-
-```{r Ch2-micromap9, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. e) Align the state names to the left, see panel.att page 5-6 User guide
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
-       panel.att=list(list(3, align='left')))
-```
-
-
-
-```{r Ch2-micromap10, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. f) Vertically align the state names to the center, see vertical.align page 17 User guide
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
-       vertical.align='center',
-       panel.att=list(list(3, align='left')))
-```
-
-
-
-```{r Ch2-micromap11, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. D. g) Use a divergent 6-class BrBG color scheme from RColorBrewer (which is colorblind safe)
-mmplot(stat.data=edPov,
-       map.data=statePolys,
-       map.link=c('StateAb', 'ID'),
-       panel.types=c('map', 'dot_legend', 'labels', 'dot', 'dot'),
-       panel.data=list(NA, NA, 'state', 'ed', 'pov'),
-       ord.by='ed',   
-       rev.ord=TRUE,
-       grouping=c(6, 6, 6, 6, 3, 6, 6, 6, 6), median.row=FALSE,
-       vertical.align='center',
-       colors=brewer.pal(6, "BrBG"),
-       panel.att=list(list(3, align='left')))
-```
-
-
-```{r Ch2-micromap12, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. E. Refine the Micromap Plot
-mmplot(stat.data=edPov, map.data=statePolys,
-        panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
-        panel.data=list(NA, 'state', 'pov', 'ed', NA),
-        map.link=c('StateAb', 'ID'),
-        ord.by='pov', 
-        grouping=5, 
-        median.row=TRUE, 
-        
-        plot.height=9, 
-        
-        colors=c('red', 'orange', 'green', 'blue', 'purple'),
-        
-        panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                       
-                       list(2, header='States', panel.width=.8, 
-                            align='left', text.size=.9),
-                       
-                       list(3, header='Percent Living Below\nPoverty Level',
-                            graph.bgcolor='lightgray', point.size=1.5,
-                            xaxis.ticks=list(10, 15, 20), xaxis.labels=list(10, 15, 20),
-                            xaxis.title='Percent'),
-                       
-                       list(4, header='Percent Adults With\n4+ Years of College',
-                            graph.bgcolor='lightgray', point.size=1.5,
-                            xaxis.ticks=list(20, 30, 40), xaxis.labels=list(20, 30, 40), 
-                            xaxis.title='Percent'),
-                       
-                       list(5, header='Light Gray Means\nPreviously Displayed',
-                            map.all=TRUE, fill.regions='aggregate',
-                            active.border.color='black', active.border.size=1.5,
-                            inactive.border.color=gray(.7), inactive.border.size=1, 
-                            panel.width=.8)))
-```
-
-
-
-```{r Ch2-micromap13, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### I. F. Refine the Micromap Plot with adjusted ticmarks & ticmark labels
-mmplot(stat.data=edPov, map.data=statePolys,
-       panel.types=c('dot_legend',  'labels', 'dot', 'dot', 'map'),
-       panel.data=list(NA, 'state', 'pov', 'ed', NA),
-       map.link=c('StateAb', 'ID'),
-       ord.by='pov', 
-       grouping=5, 
-       median.row=TRUE, 
-       
-       plot.height=9, 
-       
-       colors=c('red', 'orange', 'green', 'blue', 'purple'),
-       
-       panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                      
-                      list(2, header='States', panel.width=.8, 
-                           align='left', text.size=.9),
-                      
-                      list(3, header='Percent Living Below\nPoverty Level',
-                           graph.bgcolor='lightgray', point.size=1.5,
-                           xaxis.ticks=as.list(extended(min(edPov$pov), max(edPov$pov), 3)), 
-                           xaxis.labels=as.list(extended(min(edPov$pov), max(edPov$pov), 3)),
-                           xaxis.title='Percent'),
-                      
-                      list(4, header='Percent Adults With\n4+ Years of College',
-                           graph.bgcolor='lightgray', point.size=1.5,
-                           xaxis.ticks=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
-                           xaxis.labels=as.list(extended(min(edPov$ed), max(edPov$ed), 4)), 
-                           xaxis.title='Percent'),
-                      
-                      list(5, header='Light Gray Means\nPreviously Displayed',
-                           map.all=TRUE, fill.regions='aggregate',
-                           active.border.color='black', active.border.size=1.5,
-                           inactive.border.color=gray(.7), inactive.border.size=1, 
-                           panel.width=.8)))
-```
-
-
-
-```{r Ch2-micromap14, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-hist(1:100)
+lmplot(
+  stat.data = edPov,
+  map.data = statePolys,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, NA, "state", "ed", "pov"),
+  ord.by = "ed",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = brewer.pal(5, "BrBG"),
+  
+  panel.att = list(
+    list(1, header = "Two-ended\nCumulative Maps",
+         map.all = TRUE, 
+         fill.regions = "two ended",
+         active.border.color = "black", 
+         active.border.size = 1.2,
+         inactive.border.color = gray(0.7), 
+         inactive.border.size = 1, 
+         panel.width = 0.8),
+    
+    list(2, point.type = 20, 
+         point.border = TRUE, 
+         point.size = 2,
+         panel.width = 0.9),
+    
+    list(3, header = "States", 
+         align = "left",
+         right.margin = 0,
+         left.margin = -1,
+         text.size = 0.9,
+         panel.width = 0.6),
+    
+    list(4, header = 'Percent Adults With\n4+ Years of College',
+         graph.bgcolor = "lightgray",
+         right.margin = 0, 
+         left.margin = -0.6,
+         point.size = 1.5,
+         xaxis.ticks = as.list(extended(dmin = min(edPov$ed), 
+                                        dmax = max(edPov$ed), 
+                                        m = 5)),
+         xaxis.labels = as.list(extended(dmin = min(edPov$ed), 
+                                         dmax = max(edPov$ed), 
+                                         m = 5)),
+         xaxis.title = "Percent"),
+    
+    list(5, header = "Percent Living Below\nPoverty Level",
+         graph.bgcolor = "lightgray",
+         right.margin = 0.25, 
+         left.margin = -0.6,
+         point.size = 1.5,
+         xaxis.ticks = as.list(extended(dmin = min(edPov$pov), 
+                                        dmax = max(edPov$pov), 
+                                        m = 4)), 
+         xaxis.labels = as.list(extended(dmin = min(edPov$pov), 
+                                         dmax = max(edPov$pov), 
+                                         m = 4)), 
+         xaxis.title = "Percent")
+  )
+)
 ```
 
 

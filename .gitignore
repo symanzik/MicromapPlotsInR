@@ -5,6 +5,7 @@ _book/
 .RData
 .Ruserdata
 bookdown.Rmd
+bookdown.log
 bookdown-crc.Rproj
 *.aux
 *.bbl
