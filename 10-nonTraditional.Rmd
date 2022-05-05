@@ -32,13 +32,27 @@ The eye tracking data for the poster we use to demonstrate here is based on a co
 
 #### AOI definition
 
-The areas of interest (AOIs) for the poster were defined in advance, such as the title, logos, multiple text areas, images, and tables. The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package. The rectangles that represent the AOIs are drawn by mouse clicking two vertices and they are named by the analyst. The \textit{DrawAOIs} function used \textit{locator} function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \ref{aoi_data} (TODO: load table) shows the output of the AOIs considered as the shapefile for the poster and will be used for the microposter plot creation. The code for **EyeTrackR**\index{R Packages!EyeTrackR} R package is shared on Github (will do). 
+The areas of interest (AOIs) for the poster were defined in advance, such as the title, logos, multiple text areas, images, and tables. The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package. The rectangles that represent the AOIs are drawn by mouse clicking two vertices and they are named by the analyst. The \textit{DrawAOIs} function used \textit{locator} function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \@ref(Ch10-aoi-data) (TODO: load table) shows the output of the AOIs considered as the shapefile for the poster and will be used for the microposter plot creation. The code for **EyeTrackR**\index{R Packages!EyeTrackR} R package is shared on Github (will do). 
 
-The user can create self-defined shapefile based on their own needs. The output similar to the AOIs from Figure \ref{aoi_data} (TODO: load image) can be directly used to generate the micromap plot. According to @CP2010 and @PMWOK2015JSS, ''the polygons displayed in the maps of micromaps only need to be detailed enough to convey shape and relative position of the areas and provide a spatial framework by identifying neighboring polygons''. If the polygons one is interested to create are all rectangles, the \textit{DrawAOIs} function can be used to create the shape file. Here is the code we used to create poster shape files for eye tracking data. Twelve AOIs are defined on the poster image and the shape data is saved as``AOIName''.
+The user can create self-defined shapefile based on their own needs. The output similar to the AOIs from Figure \@ref(Ch10-aoi-data) (TODO: load image) can be directly used to generate the micromap plot. According to @CP2010 and @PMWOK2015JSS, ''the polygons displayed in the maps of micromaps only need to be detailed enough to convey shape and relative position of the areas and provide a spatial framework by identifying neighboring polygons''. If the polygons one is interested to create are all rectangles, the \textit{DrawAOIs} function can be used to create the shape file. Here is the code we used to create poster shape files for eye tracking data. Twelve AOIs are defined on the poster image and the shape data is saved as``AOIName''.
 
 
 
-Figure~\ref{poster1} (TODO: load image) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames.
+Figure \@ref(Ch10-poster1) (TODO: load image) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames.
+
+
+#### Temporary Fix of Missing aoi_data Reference {#Ch10-aoi-data}
+
+See Section \@ref(Ch1-FigsAndTables) how to create labels for figures and tables and how to refer to them.
+Please work with the prefix **Ch10** for all labels (sections, figures, tables, etc.) in your chapter.
+Note that underscores cause problems in labels -- so I used a dash instead.
+
+
+#### Temporary Fix of Missing poster1 Reference {#Ch10-poster1}
+
+See Section \@ref(Ch1-FigsAndTables) how to create labels for figures and tables and how to refer to them.
+Please work with the prefix **Ch10** for all labels (sections, figures, tables, etc.) in your chapter.
+
 
 #### Eye tracking data summarization
 
