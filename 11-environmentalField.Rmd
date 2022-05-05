@@ -130,6 +130,88 @@ In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend',
 
 ## Spatial Surveys and Linked Micromaps {#Ch11-Spatial_Surveys}
 
+As spatially balanced probabilistic surveys often report estimates for areal units, such as watersheds or ecoregions, we will illustrate the drawing of such a survey sample. For more details on the design and analysis of those surveys, the readers should consult [@SO2004; @OKP2012; @DKOW2022].  A spatially balanced probabilistic survey is connected to a linked micromap in that the survey provides the representative samples of the natural feature (lakes, rivers, streams, estuaries, ecoregions) from which estimates are made for the areal units.
+
+Three steps are required to draw a spatially balanced probabilistic survey using the R package **spsurvey**\index{R Packages!spsurvey}: 1) reading in the sample frame, which is a GIS file in the format of shapefile or an R simple feature, or sf, object, 2) specifying the design, and 3) selecting the sample [@OKP2012].  The example sample frame we will use contains points for 3,190 lakes in the state of Oregon in the U.S. and is the same sample frame used by @OKP2012, where readers can get more details on the Generalized Random Tessellation Stratified (GRTS) algorithm). Unlike other spatially balanced sampling algorithms, GRTS can draw samples from sample frames of points, such as lakes, linear networks, such as rivers and streams, or polygons, such as estuaries [@DKOW2022].  For the Oregon lakes, we will draw an equal probability sample of 50 lakes where each site has an equal inclusion probability .  
+
+We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon), and then points representing the lakes in Oregon Figure \@ref(fig:Ch11-micromap-lakes).  Before we can plot these two simple features together, we first have to check that they have the same coordinate reference system otherwise the two sf objects will not align.  We check that by submitting `st_crs(OR) == st_crs(OR_lakes)`, which returns FALSE.  Submitting `OR_lakes <- st_transform(OR_lakes, st_crs(OR))` transforms the lakes data frame so it now has the same coordinate reference system as the Oregon data frame.  Now, both the Oregon border and lakes can be plotted together Figure \@ref(Ch11-micromap-oregon-lakes).
+```{r, Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
+library(spsurvey)
+library(tidyverse)
+library(USAboundaries)
+
+state_names <- c("Oregon")
+OR<-us_states(resolution = "high", states = "Oregon") 
+
+plot(OR$geometry, main = "Oregon")
+```
+
+```{r, Ch11-micromap-lakes, eval = TRUE, fig.cap = 'Plot of Lakes in Oregon'}
+OR_lakes <- read_sf("OR_Lakes_points.shp")
+
+plot(OR_lakes$geometry, main='Oregon Lakes')
+```
+
+```{r, Ch11-micromap-crs-check1, eval = TRUE, echo = FALSE}
+# do the two sf objects have the same crs (coordinate reference system)?
+st_crs(OR) == st_crs(OR_lakes)
+
+# FALSE, which means an st_transform is needed so they have the same crs
+
+OR_lakes <- st_transform(OR_lakes, st_crs(OR))
+
+st_crs(OR) == st_crs(OR_lakes)
+# TRUE is now returned
+```
+
+```{r, Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
+ggplot() + 
+  geom_sf(data=OR_lakes,  color="blue") +
+  geom_sf(data=OR,  color="black", fill=NA) +
+  labs(title="Oregon Lakes") +
+  theme_bw() 
+```
+
+The _OR_lakes_\index{Datasets!OR_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in a projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates and then a spatially balanced sample can be drawn.
+
+```{r Ch11-micromap-spsurvey-error, eval = TRUE, echo = FALSE}
+# an equal probability sample draw of 50 lakes
+set.seed(20220502)
+eqprob <- grts(OR_lakes, n_base = 50)
+# look at error message
+stop_df
+# rm(eqprob)
+```
+
+```{r Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
+OR_lakes <- st_transform(OR_lakes, crs = 5070)
+OR_lakes
+```
+
+```{r, Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE, fig.show = 'hold', fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
+
+set.seed(20220502)
+eqprob <- grts(OR_lakes, n_base = 50)
+
+head(eqprob$sites_base)
+
+eqprob_base <- eqprob$sites_base
+
+OR <- st_transform(OR, st_crs(eqprob_base))
+
+OR_lakes <- st_transform(OR_lakes, st_crs(eqprob_base))
+
+ggplot() + 
+  geom_sf(data=OR_lakes, color = "blue") +
+  geom_sf(data=eqprob_base,  color="red") +
+  geom_sf(data=OR,  color="black", fill=NA) +
+  labs(title="Oregon Lakes Sample Frame & GRTS Equal Probability Sites") +
+  theme_bw() 
+
+```
+
+The survey designs by VDEQ and FDEP that led to the linked micromaps, Figure \@ref(fig:Ch11-micromapVDEQ) and Figure \@ref(fig:Ch11-micromapFDEP), were more sophisticated than the example of an equal probability draw.  Using a spatially balance probabilistic survey drawn from **spsurvey**\index{R Packages!spsurvey} has two advantages.  First, from a design perspective, one obtains a good spatial coverage of the features to be sampled.  As @OKP2012 noted, users designing a spatially balanced survey often underestimate the effort required to build a single GIS layer having all the attributes needed for such a design.  Second, from an analytical perspective, a local neighborhood variance estimator is used, which outperforms other alternatives, by providing smaller variances, and consequently confidence limits, around the estimated means, totals, percentiles, and cumulative distribution functions from the survey [@SO2004; @OKP2012]. This advantage of the local neighborhood variance estimator over an independent random sample variance estimator has been shown in a river and stream survey estimates of a fish community index of biotic integrity and a qualitative habitat evaluation index, and in a reservoir survey estimates of methane emission rates, which is a greenhouse gas [@SO2004; @BMN2016].  Consequently, in a linked micromap of spatially balanced probabilistic survey results one would have smaller confidence limits displayed around the means or percentiles because of this effect of the local neighborhood variance estimate.
+
 ## Further Reading {#Ch11-FurtherReading}
 
 

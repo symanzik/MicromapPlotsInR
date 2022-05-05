@@ -1,7 +1,7 @@
 # Linked Micromap Plots via the **micromap** R Package {#Ch2}
 
 
-\chapterauthor{J{\"u}rgen Symanzik, Marcus W. Beck, Michael McManus}
+\chapterauthor{J{\"u}rgen Symanzik, Marcus W. Beck, Michael G. McManus}
 
 
 The **micromap**\index{R Packages!micromap} R package [@PaOl2015],
