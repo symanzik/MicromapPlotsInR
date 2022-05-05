@@ -78,7 +78,7 @@ shinyApp(ui = ui, server = server)
 knitr::include_graphics('img/Ch7-shiny-histogram.PNG')
 ```
 
-Understanding what happens in the application each time a different sample size is selected by a user is useful to understand reactivity and how the application functions with the user interface and server components of the code.  The reactivity of the running application follows these steps (Figure \@ref(fig:Ch7-shiny-flow)) when the web app is initialized in the browser and when a user selects a new sample size:
+Evaluating what happens in the application each time a different sample size is selected by a user and how the application functions with the user interface and server components of the code is critical to understanding reactivity.  The running application follows these steps (Figure \@ref(fig:Ch7-shiny-flow)) when the web app is initialized in the browser and when a user selects a new sample size:
 
 1. The `input` value `n` selected by the user from the `ui` is sent to the `server`, seen as `input$n`. 
 1. The `dat` object is created as a random sample with size `n` and then a histogram is created as reactive output with `renderPlot`
@@ -119,22 +119,163 @@ Using the above concepts and packages allows a developer to create more involved
 
 ### Minimal Micromap Example 
 
-* Basic example using the _USstates_\index{Datasets!USstates} dataset and the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2016]
-* General structure via GitHub page: Figure
-* Dependencies and data I/O
-* UI elements: Figure
-* Server backend: Figure
+A simple example of a shiny application using the **micromap**\index{R Packages!micromap} package [@PaOl2015] is described in this section.  The application is accessible at [https://beckmw.shinyapps.io/micromap_app/](https://beckmw.shinyapps.io/micromap_app/) using the RStudio [shinyapps.io](https://www.shinyapps.io/) platform. The source code for the application is available on GitHub at [https://github.com/fawda123/micromap_app](https://github.com/fawda123/micromap_app) and archived through Zenodo at [https://doi.org/10.5281/zenodo.160579](https://doi.org/10.5281/zenodo.160579) [@Beck2016].  The services used to host and archive this application and reasons for their use are described in the next section. 
+
+The micromap web app is a simple extension of the `server()` and `ui()` format described in the previous section.  The structure is similar with a notable difference that the server and user interface components are in separate .R files, although they can also be placed in a single file as above. The separation into two scripts is a decision made by the developer based on personal preference, rather than a functional difference.  For example, a developer may prefer to use two files to reduce the amount of code in a script.  The application uses the _USstates_\index{Datasets!USstates} as the spatial polygon boundaries and the `state.x77` dataset from the **datasets**\index{R Packages!datasets} package that is included with the base R installation.  The simple micromap plots the chosen state level data (e.g., population, income) as two dot plots, with the state labels on the left and maps on the right using the `mmplot()` function.  The application allows a user to select with state data to show in the dot plots, the number of perceptual groups, whether a median value is shown, and which dot plot determines the ordering of the rows in the micromap (Figure \@ref(fig:Ch7-shiny-example)).
 
 ```{r Ch7-shiny-example, fig.cap = 'A minimal working shiny application using the micromap package.', out.width = '100%', echo = FALSE}
 knitr::include_graphics('img/Ch7-shiny-example.PNG')
 ```
 
-* More comprehensive micromap example with siny: https://evjones.shinyapps.io/FreshwaterProbMonEDA/
-     * This is a shiny app to support an annual report from Virginia DEQ for their freshwater probabilistic monitoring program, see email from 3/9/22	
-     * Repo: https://github.com/EmmaVJones/ProbDash/tree/master/app
-     * Integrated report driving the app (2022, not published yet): https://github.com/EmmaVJones/FreshwaterProbMonIntegratedReports/tree/main/2022ProbChapter
-     * 2020 chapter here: https://www.deq.virginia.gov/home/showpublisheddocument/4309/637461491336170000
-See email from Emma on 3/15 explaining why the app was developed - it helped them explore their data (emphasis on second sub-bullet for first bullet above)
+The server.R file is as follows:
+
+```{r eval = F}
+library(shiny)
+library(micromap)
+library(datasets)
+
+# data
+statdat <- state.x77
+
+# spatial data
+data(USstates)
+
+shinyServer(function(input, output) {
+   
+  output$p1 <- renderPlot({
+
+    # include median value, groupings
+    medval <- as.logical(input$medval)
+    grps <- input$grps
+
+    # input variables, dates, and order
+    vr1 <- input$vr1
+    vr2 <- input$vr2
+
+    ords <- input$ords
+    ords <- gsub('Variable\\s', 'vr', ords)
+    
+    # subset variables and dates, combine
+    toplo <- statdat[, c(vr1, vr2)]
+    toplo <- data.frame(toplo)  
+    names(toplo) <- c('vr1', 'vr2')
+    toplo$ST <- row.names(toplo)
+    
+    # create map table for polygons
+    polys <- create_map_table(USstates, 'ST_NAME')
+
+    # plot
+    mmplot(stat.data = toplo,
+      map.data = polys,
+      panel.types = c('labels', 'dot', 'dot', 'map'),
+      panel.data = list('ST', 'vr1', 'vr2', NA),
+      ord.by = ords,  
+      median.row = medval,
+      grouping = grps,
+      map.link = c('ST', 'ID'), 
+        panel.att = list(
+          list(2, header = vr1),
+          list(3, header = vr2)
+        ))
+
+  })
+  
+})
+```
+
+The server components begin by importing the dependencies for the file, specifically the **shiny**\index{R Packages!shiny}, **micromap**\index{R Packages!micromap}, and **datasets**\index{R Packages!datasets} packages.  The state data is then assigned to the `statdat` object and the _USstates_\index{Datasets!USstates} spatial polygons data frame are also imported from the **micromap**\index{R Packages!micromap} package.  Both of these data objects are used within the server code, which is the remainder of the script.  In this example, the `shinyServer` function is used, as compared to a `server` object created in the histogram example from above.  This convention is used if creating an application with separate server and user interface scripts, but the functionality is the same.  
+
+The code within `shinyServer()` creates a micromap plot object for output to the user interface using the `renderPlot()` function from shiny.  Within `renderPlot()`, the inputs from the user interface are used to define what data are plotted.  Specifically, `input$medval` is a logical argument that determines if the median value is shown in the micromap, `input$grps` is a numeric value for the number of perceptual groups, `input$ords` is used to create a character string that defines the ordering of the dot plot based on the variable name, and `input$vr1` and `input$vr2` are the user selections for which variables in `statdat` (the `state.x77` object) are used for the dot plots.  The `statdat` object is then subset and renamed based on the variable selection.  The rest of the code is the conventional setup for a linked micromap with `mmplot`, i.e., `create_map_table()` is used to create the input for the `map.data` argument in `mmplot` and then `mmplot` is used wiht the subsetted data to create the final plot.
+
+The ui.R file is as follows: 
+
+```{r eval = F}
+library(shiny)
+library(shinythemes)
+library(datasets)
+
+# data
+statdat <- state.x77
+
+# variables
+vrs <- colnames(statdat)
+
+# Define UI for application
+shinyUI(fluidPage(
+  
+  theme = shinytheme('journal'), 
+  
+  # main panel
+  mainPanel(width = 12,
+      
+    # spacing
+    fluidRow(HTML('<p><h3>Micromap Shiny Application</h3></p>')),
+    
+    #spacing
+    fluidRow(HTML('<p></p>')),
+      
+    # first row of plots
+    fluidRow(
+      
+      column(width = 2, 
+        selectInput(inputId = 'vr1', 
+          label = h4('Variable 1'),
+          choices = vrs,
+          selected = vrs[1]
+          )
+        ),
+      
+      column(width = 2, 
+        selectInput(inputId = 'vr2', 
+          label = h4('Variable 2'),
+          choices = vrs,
+          selected = vrs[2]
+          )
+        ),
+      
+      column(width = 2, 
+        numericInput("grps", 
+          label = h4("Groupings"), 
+          value = 10, 
+          min = 1, 
+          max = 50
+          )
+        ),
+      
+      column(width = 2,
+        radioButtons(inputId = 'medval', 
+          label = h4('Median value?'),
+          choices = c(TRUE, FALSE),
+          selected = c(FALSE), 
+          inline = TRUE
+          )
+        ),
+      
+      column(width = 3,
+        radioButtons(inputId = 'ords', 
+          label = h4('Order by'),
+          choices = c('Variable 1', 'Variable 2'),
+          selected = c('Variable 1'), 
+          inline = TRUE
+          )
+        ),
+      
+      column(width = 12, 
+        
+        plotOutput("p1", width = '1000px', height = '750px')
+        
+        )
+      
+      ) 
+    
+    )
+        
+))
+```
+
+The beginning of the ui.R file is similar to the server.R file by importing the relevant package dependencies and creating the input data objects for the user interface.  The `vrs` object is created as a list of options to use for selecting which variables can be chosen for the dot plots.  Again, the `shinyUI()` function is used to create the user interface rather than a separate `ui` object as in the histogram example above because a separate .R file is used for the web app.  Various components of the web app are created Within the `shinyUI()` function, specifically the `fluidPage()` layout, a custom CSS theme from the **shinythemes**\index{R Packages!shinythemes} package [@Chang2021], several user inputs that are sent to the server described above, and finally the micromap plot created in the server and defined as output in the user interface by `plotOutput()`.  The user inputs include options to select which variables to plot from a menu with `selectInput()`, numeric options for the number of perceptual groups with `numericInput()`, and radio buttons with `radioButtons()` for selecting whether the median is shown on the micromap and which variable in the dot plots is used for the ordering.  Other functions define the visual layout, notably the `column()` function to set a predetermined width for the inputs and plot.   
+
+The final web app is a proof of concept for how a micromap can be used in a shiny framework.  It is simple by design to expand on the concepts described earlier in this chapter.  In practice, shiny can be used to create more complex and rich web apps for micromaps to improve how users engage with spatial data in different contexts.  One contemporary example is provided by the Virginia Department of Environmental Quality (DEQ) and is available at [https://evjones.shinyapps.io/FreshwaterProbMonEDA/](https://evjones.shinyapps.io/FreshwaterProbMonEDA/).  The application is used by Virginia DEQ to support an annual report for their freshwater probabilistic monitoring program.  Readers are invited to explore this application to better understand the full potential of shiny as a platform for facilitating the delivery of scientific products in a web-based framework.
 
 ### Getting Shiny Online {#Ch7-shiny-online}
 
