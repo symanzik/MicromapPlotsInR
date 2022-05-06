@@ -96,7 +96,8 @@ statistical variables or changes to different graph types for some of the variab
 ```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package [@Iannone2022]).', fig.width = 5, fig.height = 5, echo = FALSE}
 library(DiagrammeR)
 
-grViz(diagram = "digraph flowchart {
+grViz(
+  diagram = "digraph flowchart {
   node [fontname = arial, shape = oval, color = grey, style = filled]
   tab1 [label = '@@1']
   tab2 [label = '@@2']
@@ -110,7 +111,8 @@ grViz(diagram = "digraph flowchart {
   [2]: '2. Linking Spatial Boundary Data and Statistical Data'
   [3]: '3. Creating a Draft Linked Micromap Plot'
   [4]: '4. Refining the Linked Micromap Plot'
-")
+"
+)
 ```
 
 
@@ -168,7 +170,11 @@ presence of islands or if a land mass is split into more than one area, e.g., as
 ```{r Ch2-linkingdataframesUSstates}
 head(USstates@data$ST)
 
-statePolys <- create_map_table(tmp.map = USstates, IDcolumn = "ST")
+statePolys <- create_map_table(
+  tmp.map = USstates,
+  IDcolumn = "ST"
+)
+
 class(statePolys)
 dim(statePolys)
 ```
@@ -199,7 +205,6 @@ head(edPov)
 head(edPov$StateAb)
 
 all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
-
 ```
 
 
@@ -372,12 +377,10 @@ lmplot(
   panel.data = list(NA, NA, "state", "ed", "pov"),
   ord.by = "ed",
   rev.ord = TRUE,
-  grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6), 
+  grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6),
   median.row = FALSE,
   vertical.align = "center",
-  panel.att = list(
-    list(3, align = "left")
-  )
+  panel.att = list(list(3, align = "left"))
 )
 ```
 
@@ -434,9 +437,7 @@ lmplot(
   grouping = 5,
   median.row = TRUE,
   colors = brewer.pal(5, "BrBG"),
-  panel.att = list(
-    list(3, align = "left")
-  )
+  panel.att = list(list(3, align = "left"))
 )
 ```
 
@@ -487,40 +488,50 @@ lmplot(
   grouping = 5,
   median.row = TRUE,
   colors = brewer.pal(5, "BrBG"),
-  
   panel.att = list(
-    list(1, header = "Light Gray Means\nPreviously Displayed",
-         map.all = TRUE, 
-         fill.regions = "aggregate",
-         active.border.color = "black", 
-         active.border.size = 1.2,
-         inactive.border.color = gray(0.7), 
-         inactive.border.size = 1, 
-         panel.width = 0.8),
-    
-    list(2, point.type = 20, 
-         point.border = TRUE, 
-         point.size = 2,
-         panel.width = 0.9),
-    
-    list(3, header = "States", 
-         align = "left", 
-         text.size = 0.9,
-         panel.width = 0.7),
-    
-    list(4, header = 'Percent Adults With\n4+ Years of College',
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(10, 20, 30, 40), 
-         xaxis.labels = list(10, 20, 30, 40), 
-         xaxis.title = "Percent"),
-    
-    list(5, header = "Percent Living Below\nPoverty Level",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(5, 10, 15, 20), 
-         xaxis.labels = list(5, 10, 15, 20),
-         xaxis.title = "Percent")
+    list(
+      1,
+      header = "Light Gray Means\nPreviously Displayed",
+      map.all = TRUE,
+      fill.regions = "aggregate",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 0.8
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 0.9
+    ),
+    list(
+      3,
+      header = "States",
+      align = "left",
+      text.size = 0.9,
+      panel.width = 0.7
+    ),
+    list(
+      4,
+      header = "Percent Adults With\n4+ Years of College",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(10, 20, 30, 40),
+      xaxis.labels = list(10, 20, 30, 40),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "Percent Living Below\nPoverty Level",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(5, 10, 15, 20),
+      xaxis.labels = list(5, 10, 15, 20),
+      xaxis.title = "Percent"
+    )
   )
 )
 ```
@@ -570,54 +581,72 @@ lmplot(
   grouping = 5,
   median.row = TRUE,
   colors = brewer.pal(5, "BrBG"),
-  
   panel.att = list(
-    list(1, header = "Two-ended\nCumulative Maps",
-         map.all = TRUE, 
-         fill.regions = "two ended",
-         active.border.color = "black", 
-         active.border.size = 1.2,
-         inactive.border.color = gray(0.7), 
-         inactive.border.size = 1, 
-         panel.width = 0.8),
-    
-    list(2, point.type = 20, 
-         point.border = TRUE, 
-         point.size = 2,
-         panel.width = 0.9),
-    
-    list(3, header = "States", 
-         align = "left",
-         right.margin = 0,
-         left.margin = -1,
-         text.size = 0.9,
-         panel.width = 0.6),
-    
-    list(4, header = 'Percent Adults With\n4+ Years of College',
-         graph.bgcolor = "lightgray",
-         right.margin = 0, 
-         left.margin = -0.6,
-         point.size = 1.5,
-         xaxis.ticks = as.list(extended(dmin = min(edPov$ed), 
-                                        dmax = max(edPov$ed), 
-                                        m = 5)),
-         xaxis.labels = as.list(extended(dmin = min(edPov$ed), 
-                                         dmax = max(edPov$ed), 
-                                         m = 5)),
-         xaxis.title = "Percent"),
-    
-    list(5, header = "Percent Living Below\nPoverty Level",
-         graph.bgcolor = "lightgray",
-         right.margin = 0.25, 
-         left.margin = -0.6,
-         point.size = 1.5,
-         xaxis.ticks = as.list(extended(dmin = min(edPov$pov), 
-                                        dmax = max(edPov$pov), 
-                                        m = 4)), 
-         xaxis.labels = as.list(extended(dmin = min(edPov$pov), 
-                                         dmax = max(edPov$pov), 
-                                         m = 4)), 
-         xaxis.title = "Percent")
+    list(
+      1,
+      header = "Two-ended\nCumulative Maps",
+      map.all = TRUE,
+      fill.regions = "two ended",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 0.8
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 0.9
+    ),
+    list(
+      3,
+      header = "States",
+      align = "left",
+      right.margin = 0,
+      left.margin = -1,
+      text.size = 0.9,
+      panel.width = 0.6
+    ),
+    list(
+      4,
+      header = "Percent Adults With\n4+ Years of College",
+      graph.bgcolor = "lightgray",
+      right.margin = 0,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = as.list(extended(
+        dmin = min(edPov$ed),
+        dmax = max(edPov$ed),
+        m = 5
+      )),
+      xaxis.labels = as.list(extended(
+        dmin = min(edPov$ed),
+        dmax = max(edPov$ed),
+        m = 5
+      )),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "Percent Living Below\nPoverty Level",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.25,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = as.list(extended(
+        dmin = min(edPov$pov),
+        dmax = max(edPov$pov),
+        m = 4
+      )),
+      xaxis.labels = as.list(extended(
+        dmin = min(edPov$pov),
+        dmax = max(edPov$pov),
+        m = 4
+      )),
+      xaxis.title = "Percent"
+    )
   )
 )
 ```
@@ -627,37 +656,51 @@ lmplot(
 
 
 ```{r Ch2-micromaChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-#VI. Use of external shapefiles
+# VI. Use of external shapefiles
 
 library(rgeos)
 library(rgdal)
 library(maptools)
-
 library(micromap)
 
 ### Read in the shapefile and simplify the polygons (run this part of the code only once!)
 
-ChinaShapefile <- readOGR("data/China_Shapefiles", "export", verbose = TRUE)
+ChinaShapefile <- readOGR(
+  dsn = "data/China_Shapefiles",
+  layer = "export",
+  verbose = TRUE
+)
+
 plot(ChinaShapefile)
 summary(ChinaShapefile)
 ```
 
 
 ```{r Ch2-micromaChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-gIsValid(ChinaShapefile, byid = TRUE, reason = TRUE)
-ChinaShapefileThin <- thinnedSpatialPoly(ChinaShapefile, 
-                                         tolerance = 300, # try 100, 300, 3000, 30000
-                                         minarea = 10000000000,
-                                         topologyPreserve = TRUE, 
-                                         avoidGEOS = TRUE)
-ChinaShapefileThin <- gBuffer(ChinaShapefileThin, width = 0, byid = TRUE)
-gIsValid(ChinaShapefileThin, byid = TRUE, reason = TRUE)
+gIsValid(spgeom = ChinaShapefile, byid = TRUE, reason = TRUE)
+
+ChinaShapefileThin <- thinnedSpatialPoly(
+  SP = ChinaShapefile,
+  tolerance = 300,
+  # try 100, 300, 3000, 30000
+  minarea = 10000000000,
+  topologyPreserve = TRUE,
+  avoidGEOS = TRUE
+)
+
+ChinaShapefileThin <- gBuffer(
+  spgeom = ChinaShapefileThin,
+  width = 0,
+  byid = TRUE
+)
+
+gIsValid(spgeom = ChinaShapefileThin, byid = TRUE, reason = TRUE)
 plot(ChinaShapefileThin)
 
 ### Change tolerance to 100, 3000, and 30000 and run the the entire code again, starting with readOGR.
 ### Which of these is the best choice for tolerance? You may have to enlarge the map.
 
-### If you plan to use LM plots for a research project, you may also want to 
+### If you plan to use LM plots for a research project, you may also want to
 ### enlarge small regions or shift far-away regions closer to the main region.
 ### Talk to me for further information.
 ```
@@ -666,91 +709,122 @@ plot(ChinaShapefileThin)
 ```{r Ch2-micromaChina3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Read in the data
 
-religion <- read.csv("data/China_ReligionData.csv", header = TRUE)
+religion <- read.csv(
+  file = "data/China_ReligionData.csv",
+  header = TRUE
+)
 
-ChinaPolys <- create_map_table(ChinaShapefileThin, "ename")
+ChinaPolys <- create_map_table(
+  tmp.map = ChinaShapefileThin,
+  IDcolumn = "ename"
+)
 
 ### Basic micromap plot
 
-ChinaPlot <- mmplot(stat.data = religion,
-                    map.data = ChinaPolys,
-                    panel.types = c("labels", "dot", "map"),
-                    panel.data = list("Province", "Christianity", NA),
-                    ord.by = "Christianity",
-                    grouping = 5,
-                    median.row = TRUE, 
-                    map.link = c("Province", "ID"))
+ChinaPlot <- mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c("labels", "dot", "map"),
+  panel.data = list("Province", "Christianity", NA),
+  ord.by = "Christianity",
+  grouping = 5,
+  median.row = TRUE,
+  map.link = c("Province", "ID")
+)
 ```
 
 
 ```{r Ch2-micromaChina4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Advanced micromap plot
 
-ChinaReligion <- mmplot(stat.data = religion, 
-                        map.data = ChinaPolys,
-                        panel.types = c("map", "dot_legend", "labels", 
-                                        "dot", "dot", "dot", "dot"),
-                        panel.data = list(NA, NA, "Province", 
-                                          "Christianity", "Buddhism", "Daoism", "Islam"),
-                        map.link = c("Province", "ID"),
-                        ord.by = "Christianity",
-                        rev.ord = TRUE,
-                        
-                        grouping = 5,
-                        median.row = TRUE,
-                        plot.height = 9,
-                        plot.width = 9,
-                        colors = c("red", "orange", "green", "blue", "purple"),
-                        two.ended.maps = TRUE,
-                        map.all = TRUE,
-                        map.color2 = "lightgray",
-                        
-                        plot.header = "Religion in China",
-                        plot.header.size = 2,
-                        plot.header.color = "black",
-                        
-                        plot.panel.spacing = 0,
-                        panel.att = list(
-                          list(1, header = "Two-ended\nCumulative Maps",
-                               inactive.border.color = gray(.7), 
-                               inactive.border.size = 1,
-                               panel.width = 1.2),
-                          list(2, point.type = 20,
-                               point.size = 1.4),
-                          list(3, header = "Provinces", 
-                               panel.width = .9,
-                               align = "left", 
-                               text.size = .8),
-                          list(4, header = "Christianity",
-                               header.color = "red",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               xaxis.ticks = seq(0, 3000, by = 1000), 
-                               xaxis.labels = seq(0, 3, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(5, header = "Buddhism",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               xaxis.ticks = seq(0, 3000, by = 1000), 
-                               xaxis.labels = seq(0, 3, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(6, header = "Daoism",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               xaxis.ticks = seq(0, 2000, by = 1000), 
-                               xaxis.labels = seq(0, 2, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(7, header = "Islam",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               xaxis.ticks = seq(0, 25000, by = 12500), 
-                               xaxis.labels = seq(0, 25, by = 12.5),
-                               xaxis.title = "Number (Thousand)"
-                          )
-                        )
+ChinaReligion <- mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c(
+    "map", "dot_legend", "labels",
+    "dot", "dot", "dot", "dot"
+  ),
+  panel.data = list(
+    NA,
+    NA,
+    "Province",
+    "Christianity",
+    "Buddhism",
+    "Daoism",
+    "Islam"
+  ),
+  map.link = c("Province", "ID"),
+  ord.by = "Christianity",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  plot.height = 9,
+  plot.width = 9,
+  colors = c("red", "orange", "green", "blue", "purple"),
+  two.ended.maps = TRUE,
+  map.all = TRUE,
+  map.color2 = "lightgray",
+  plot.header = "Religion in China",
+  plot.header.size = 2,
+  plot.header.color = "black",
+  plot.panel.spacing = 0,
+  panel.att = list(
+    list(
+      1,
+      header = "Two-ended\nCumulative Maps",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.2
+    ),
+    list(2,
+      point.type = 20,
+      point.size = 1.4
+    ),
+    list(
+      3,
+      header = "Provinces",
+      panel.width = .9,
+      align = "left",
+      text.size = .8
+    ),
+    list(
+      4,
+      header = "Christianity",
+      header.color = "red",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = seq(0, 3000, by = 1000),
+      xaxis.labels = seq(0, 3, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      5,
+      header = "Buddhism",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = seq(0, 3000, by = 1000),
+      xaxis.labels = seq(0, 3, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      6,
+      header = "Daoism",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = seq(0, 2000, by = 1000),
+      xaxis.labels = seq(0, 2, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      7,
+      header = "Islam",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = seq(0, 25000, by = 12500),
+      xaxis.labels = seq(0, 25, by = 12.5),
+      xaxis.title = "Number (Thousand)"
+    )
+  )
 )
 ```
 
@@ -758,79 +832,102 @@ ChinaReligion <- mmplot(stat.data = religion,
 ```{r Ch2-micromaChina5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Final advanced micromap plot with reduced margins
 
-ChinaReligion <- mmplot(stat.data = religion, 
-                        map.data = ChinaPolys,
-                        panel.types = c("map", "dot_legend", "labels", 
-                                        "dot", "dot", "dot", "dot"),
-                        panel.data = list(NA, NA, "Province", 
-                                          "Christianity", "Buddhism", "Daoism", "Islam"),
-                        map.link = c("Province", "ID"),
-                        ord.by = "Christianity",
-                        rev.ord = TRUE,
-                        
-                        grouping = 5,
-                        median.row = TRUE,
-                        plot.height = 9,
-                        plot.width = 9,
-                        colors = c("red", "orange", "green", "blue", "purple"),
-                        two.ended.maps = TRUE,
-                        map.all = TRUE,
-                        map.color2 = "lightgray",
-                        
-                        plot.header = "Religion in China",
-                        plot.header.size = 2,
-                        plot.header.color = "black",
-                        
-                        plot.panel.spacing = 0,
-                        panel.att = list(
-                          list(1, header = "Two-ended\nCumulative Maps",
-                               inactive.border.color = gray(.7), 
-                               inactive.border.size = 1,
-                               panel.width = 1.2),
-                          list(2, point.type = 20,
-                               point.size = 1.4),
-                          list(3, header = "Provinces", 
-                               panel.width = .9,
-                               align = "left", 
-                               text.size = .8),
-                          list(4, header = "Christianity",
-                               header.color = "red",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               right.margin = 0, 
-                               left.margin = -0.5,
-                               xaxis.ticks = seq(0, 3000, by = 1000), 
-                               xaxis.labels = seq(0, 3, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(5, header = "Buddhism",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               right.margin = 0, 
-                               left.margin = -0.5,
-                               xaxis.ticks = seq(0, 3000, by = 1000), 
-                               xaxis.labels = seq(0, 3, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(6, header = "Daoism",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               right.margin = 0, 
-                               left.margin = -0.5,
-                               xaxis.ticks = seq(0, 2000, by = 1000), 
-                               xaxis.labels = seq(0, 2, by = 1),
-                               xaxis.title = "Number (Thousand)"
-                          ),
-                          list(7, header = "Islam",
-                               graph.bgcolor = "lightgray", 
-                               point.size = 1,
-                               right.margin = 0.25, 
-                               left.margin = -0.5,
-                               xaxis.ticks = seq(0, 25000, by = 12500), 
-                               xaxis.labels = seq(0, 25, by = 12.5),
-                               xaxis.title = "Number (Thousand)"
-                          )
-                        )
+ChinaReligion <- mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c(
+    "map", "dot_legend", "labels",
+    "dot", "dot", "dot", "dot"
+  ),
+  panel.data = list(
+    NA,
+    NA,
+    "Province",
+    "Christianity",
+    "Buddhism",
+    "Daoism",
+    "Islam"
+  ),
+  map.link = c("Province", "ID"),
+  ord.by = "Christianity",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  plot.height = 9,
+  plot.width = 9,
+  colors = c("red", "orange", "green", "blue", "purple"),
+  two.ended.maps = TRUE,
+  map.all = TRUE,
+  map.color2 = "lightgray",
+  plot.header = "Religion in China",
+  plot.header.size = 2,
+  plot.header.color = "black",
+  plot.panel.spacing = 0,
+  panel.att = list(
+    list(
+      1,
+      header = "Two-ended\nCumulative Maps",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.2
+    ),
+    list(2,
+      point.type = 20,
+      point.size = 1.4
+    ),
+    list(
+      3,
+      header = "Provinces",
+      panel.width = .9,
+      align = "left",
+      text.size = .8
+    ),
+    list(
+      4,
+      header = "Christianity",
+      header.color = "red",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      right.margin = 0,
+      left.margin = -0.5,
+      xaxis.ticks = seq(0, 3000, by = 1000),
+      xaxis.labels = seq(0, 3, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      5,
+      header = "Buddhism",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      right.margin = 0,
+      left.margin = -0.5,
+      xaxis.ticks = seq(0, 3000, by = 1000),
+      xaxis.labels = seq(0, 3, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      6,
+      header = "Daoism",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      right.margin = 0,
+      left.margin = -0.5,
+      xaxis.ticks = seq(0, 2000, by = 1000),
+      xaxis.labels = seq(0, 2, by = 1),
+      xaxis.title = "Number (Thousand)"
+    ),
+    list(
+      7,
+      header = "Islam",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      right.margin = 0.25,
+      left.margin = -0.5,
+      xaxis.ticks = seq(0, 25000, by = 12500),
+      xaxis.labels = seq(0, 25, by = 12.5),
+      xaxis.title = "Number (Thousand)"
+    )
+  )
 )
 ```
 
@@ -849,4 +946,3 @@ of micromaps that are related to the title and content of your chapter, etc.?
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
