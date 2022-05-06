@@ -59,7 +59,8 @@ While the VDEQ R code builds off Chapter \@ref(Ch2), some distinct arguments and
 Finally, here is the R code that was used to create Figure \@ref(fig:Ch11-micromapVDEQ). That code 
 uses of the _stats_\index{Datasets!stats} dataset and the _map.table_\index{Datasets!map.table}
 
-```{r Ch11-micromapVDEQ, eval = FALSE}
+```{r Ch11-micromapVDEQ2, eval = FALSE}
+#
 ```
 
 The next example is from FDEP. Studies of freshwater aquatic ecosystems often need to summarize water quality results from watersheds, as VDEQ did, along with land cover in those watersheds, which is how FDEP used linked micromaps.  Spatially balanced probabilistic surveys were done by FDEP to study emerging contaminants from different types of waterbodies, canals, rivers, streams, small and large lakes, and unconfined aquifers, in 29 drainage basins [@SWSCSS2018]. The results for one of the contaminants, the widely used pesticide imidacloprid, were pooled across waterbody types and summarized with a 4-statistical panel linked micromap of the 29 drainage basins  displaying:  number of surveyed sites, percentage of surveyed sites having detections of imidacloprid, percentage of urban and agricultural land cover in a basin, and a five-number summary, minimum, first quartile, median, third quartile, and maximum, of imidacloprid concentrations shown as a box plot [@SWSCSS2018]. As an exploratory spatial data analysis tool, @SWSCSS2018 noted from the linked micromap that neighboring drainage basins showed no geographic patterning in percentages of detections, and this was confirmed by a no significant spatial autocorrelation detected using Moran’s Index.  This application of linked micromaps was novel in two regards, first, by summarizing different types of data for the polygons of interest, and second, by formally testing if there was geographic patterning in the results.
@@ -125,7 +126,8 @@ mmplot(stat.data=Land4_Imida_NA,
 
 In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the sixth statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. Here is the R code that was used to create Figure \@ref(fig:Ch11-micromapFDEP). A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
 
-```{r Ch11-micromapFDEP, eval = FALSE}
+```{r Ch11-micromapFDEP2, eval = FALSE}
+#
 ```
 
 ## Spatial Surveys and Linked Micromaps {#Ch11-Spatial_Surveys}
@@ -134,8 +136,9 @@ As spatially balanced probabilistic surveys often report estimates for areal uni
 
 Three steps are required to draw a spatially balanced probabilistic survey using the R package **spsurvey**\index{R Packages!spsurvey}: 1) reading in the sample frame, which is a GIS file in the format of shapefile or an R simple feature, or sf, object, 2) specifying the design, and 3) selecting the sample [@OKP2012].  The example sample frame we will use contains points for 3,190 lakes in the state of Oregon in the U.S. and is the same sample frame used by @OKP2012, where readers can get more details on the Generalized Random Tessellation Stratified (GRTS) algorithm). Unlike other spatially balanced sampling algorithms, GRTS can draw samples from sample frames of points, such as lakes, linear networks, such as rivers and streams, or polygons, such as estuaries [@DKOW2022].  For the Oregon lakes, we will draw an equal probability sample of 50 lakes where each site has an equal inclusion probability .  
 
-We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon), and then points representing the lakes in Oregon Figure \@ref(fig:Ch11-micromap-lakes).  Before we can plot these two simple features together, we first have to check that they have the same coordinate reference system otherwise the two sf objects will not align.  We check that by submitting `st_crs(OR) == st_crs(OR_lakes)`, which returns FALSE.  Submitting `OR_lakes <- st_transform(OR_lakes, st_crs(OR))` transforms the lakes data frame so it now has the same coordinate reference system as the Oregon data frame.  Now, both the Oregon border and lakes can be plotted together Figure \@ref(Ch11-micromap-oregon-lakes).
-```{r, Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
+We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon), and then points representing the lakes in Oregon Figure \@ref(fig:Ch11-micromap-lakes).  Before we can plot these two simple features together, we first have to check that they have the same coordinate reference system otherwise the two sf objects will not align.  We check that by submitting `st_crs(OR) == st_crs(OR_lakes)`, which returns FALSE.  Submitting `OR_lakes <- st_transform(OR_lakes, st_crs(OR))` transforms the lakes data frame so it now has the same coordinate reference system as the Oregon data frame.  Now, both the Oregon border and lakes can be plotted together Figure \@ref(fig:Ch11-micromap-oregon-lakes).
+
+```{r Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
 library(spsurvey)
 library(tidyverse)
 #install.packages("USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
@@ -148,14 +151,14 @@ OR<-us_states(resolution = "high", states = "Oregon")
 plot(OR$geometry, main = "Oregon")
 ```
 
-```{r, Ch11-micromap-lakes, eval = TRUE, fig.cap = 'Plot of Lakes in Oregon'}
+```{r Ch11-micromap-lakes, eval = TRUE, fig.cap = 'Plot of Lakes in Oregon'}
 
 OR_lakes <- readRDS("data/OR_lakes.rds")
 
 plot(OR_lakes$geometry, main='Oregon Lakes')
 ```
 
-```{r, Ch11-micromap-crs-check1, eval = TRUE, echo = FALSE}
+```{r Ch11-micromap-crs-check1, eval = TRUE, echo = FALSE}
 # do the two sf objects have the same crs (coordinate reference system)?
 st_crs(OR) == st_crs(OR_lakes)
 
@@ -167,7 +170,7 @@ st_crs(OR) == st_crs(OR_lakes)
 # TRUE is now returned
 ```
 
-```{r, Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
+```{r Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
 ggplot() + 
   geom_sf(data=OR_lakes,  color="blue") +
   geom_sf(data=OR,  color="black", fill=NA) +
@@ -177,7 +180,7 @@ ggplot() +
 
 The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in a projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates and then a spatially balanced sample can be drawn.
 
-```{r, Ch11-micromap-spsurvey-error, eval = TRUE, echo = FALSE}
+```{r Ch11-micromap-spsurvey-error, eval = FALSE, echo = FALSE}
 # an equal probability sample draw of 50 lakes
 set.seed(20220502)
 eqprob <- grts(OR_lakes, n_base = 50)
@@ -186,12 +189,12 @@ stop_df
 # rm(eqprob)
 ```
 
-```{r, Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
+```{r Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
 OR_lakes <- st_transform(OR_lakes, crs = 5070)
 OR_lakes
 ```
 
-```{r, Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
+```{r Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
 
 set.seed(20220502)
 eqprob <- grts(OR_lakes, n_base = 50)
