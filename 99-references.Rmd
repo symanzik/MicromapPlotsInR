@@ -71,6 +71,7 @@ or provide me with any other way to construct a related bibtex entry.
 @Kolvoord2010 (Book Review),
 @LPC2017,
 @PeCa2016CRAN,
+@PeCa2022CRAN,
 @PiCa2010,
 @PPC2015JSS,
 @Ugarte2012 (Book Review),
@@ -167,6 +168,8 @@ App at https://evjones.shinyapps.io/FreshwaterProbMonEDA/),
 @Wartenberg2009,
 @Yu2021,
 
+
+@RCore2022
 
 Note: 126 micromap references found on Semantic Scholar on 3/23/2022 - see
 https://www.semanticscholar.org/search?q=micromap&sort=relevance.

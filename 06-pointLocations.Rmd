@@ -305,12 +305,13 @@ the next section will show how to properly jitter those points
 ```{r Ch6-micromap4, fig.cap = 'Micromap showing stadium locations, note that these maps aren not very readable due to the overlap in locations', fig.width = 5, fig.height = 7}
 mmplot(stat.data=st_drop_geometry(stadiums),
        map.data=stadiums_map_df,
-      panel.types=c("labels", "dot", "map"),
-       panel.data=list("stadium","capacity", NA),
+      panel.types=c("labels", "dot", "map", "labels"),
+       panel.data=list("stadium","capacity", NA, "team"),
        ord.by="capacity", grouping=5,
        map.link=c('stadium', "ID"),
        panel.att = list(
          list(1, panel.width = 1.8),
+         list(4, panel.width = 2.2),
          list(3,
               # the 'ID' column is null for polygons of the underlying basemap
               # so to show those (and therefore show the underlying basemap),

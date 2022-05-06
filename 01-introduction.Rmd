@@ -279,7 +279,7 @@ in Figure \@ref(fig:Ch1-micromap5), this externally created figure is included i
 
 **Even though this works, I would suggest to always use the approach from the previous section, i.e.,
 Section \@ref(Ch1-MicromapExamples), whenever possible.** Exceptions are externally created files
-or sceenshots, e.g., from a **Shiny**\index{R Packages!Shiny} app, that could be included this way.  Note that the external figures should be placed in the `img` folder and should be jpeg format.
+or sceenshots, e.g., from a **Shiny**\index{R Packages!shiny} app, that could be included this way.  Note that the external figures should be placed in the `img` folder and should be jpeg format.
 
 
 ```{r Ch1-micromap4}
