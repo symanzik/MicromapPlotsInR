@@ -135,7 +135,7 @@ As spatially balanced probabilistic surveys often report estimates for areal uni
 Three steps are required to draw a spatially balanced probabilistic survey using the R package **spsurvey**\index{R Packages!spsurvey}: 1) reading in the sample frame, which is a GIS file in the format of shapefile or an R simple feature, or sf, object, 2) specifying the design, and 3) selecting the sample [@OKP2012].  The example sample frame we will use contains points for 3,190 lakes in the state of Oregon in the U.S. and is the same sample frame used by @OKP2012, where readers can get more details on the Generalized Random Tessellation Stratified (GRTS) algorithm). Unlike other spatially balanced sampling algorithms, GRTS can draw samples from sample frames of points, such as lakes, linear networks, such as rivers and streams, or polygons, such as estuaries [@DKOW2022].  For the Oregon lakes, we will draw an equal probability sample of 50 lakes where each site has an equal inclusion probability .  
 
 We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon), and then points representing the lakes in Oregon Figure \@ref(fig:Ch11-micromap-lakes).  Before we can plot these two simple features together, we first have to check that they have the same coordinate reference system otherwise the two sf objects will not align.  We check that by submitting `st_crs(OR) == st_crs(OR_lakes)`, which returns FALSE.  Submitting `OR_lakes <- st_transform(OR_lakes, st_crs(OR))` transforms the lakes data frame so it now has the same coordinate reference system as the Oregon data frame.  Now, both the Oregon border and lakes can be plotted together Figure \@ref(Ch11-micromap-oregon-lakes).
-```{r, Ch11-micromap-oregon, eval = FALSE, fig.cap = 'Plot of Oregon'}
+```{r, Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
 library(spsurvey)
 library(tidyverse)
 #install.packages("USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
@@ -148,13 +148,14 @@ OR<-us_states(resolution = "high", states = "Oregon")
 plot(OR$geometry, main = "Oregon")
 ```
 
-```{r, Ch11-micromap-lakes, eval = FALSE, fig.cap = 'Plot of Lakes in Oregon'}
-OR_lakes <- read_sf("OR_Lakes_points.shp")
+```{r, Ch11-micromap-lakes, eval = TRUE, fig.cap = 'Plot of Lakes in Oregon'}
+
+OR_lakes <- readRDS("data/OR_lakes.rds")
 
 plot(OR_lakes$geometry, main='Oregon Lakes')
 ```
 
-```{r, Ch11-micromap-crs-check1, eval = FALSE, echo = FALSE}
+```{r, Ch11-micromap-crs-check1, eval = TRUE, echo = FALSE}
 # do the two sf objects have the same crs (coordinate reference system)?
 st_crs(OR) == st_crs(OR_lakes)
 
@@ -166,7 +167,7 @@ st_crs(OR) == st_crs(OR_lakes)
 # TRUE is now returned
 ```
 
-```{r, Ch11-micromap-oregon-lakes, eval = FALSE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
+```{r, Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
 ggplot() + 
   geom_sf(data=OR_lakes,  color="blue") +
   geom_sf(data=OR,  color="black", fill=NA) +
@@ -176,7 +177,7 @@ ggplot() +
 
 The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in a projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates and then a spatially balanced sample can be drawn.
 
-```{r Ch11-micromap-spsurvey-error, eval = FALSE, echo = FALSE}
+```{r, Ch11-micromap-spsurvey-error, eval = TRUE, echo = FALSE}
 # an equal probability sample draw of 50 lakes
 set.seed(20220502)
 eqprob <- grts(OR_lakes, n_base = 50)
@@ -185,12 +186,12 @@ stop_df
 # rm(eqprob)
 ```
 
-```{r Ch11-micromap-crs-check2, eval = FALSE, echo = FALSE}
+```{r, Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
 OR_lakes <- st_transform(OR_lakes, crs = 5070)
 OR_lakes
 ```
 
-```{r, Ch11-micromap-spsurvey-correct, eval = FALSE, echo = FALSE, fig.show = 'hold', fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
+```{r, Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
 
 set.seed(20220502)
 eqprob <- grts(OR_lakes, n_base = 50)
