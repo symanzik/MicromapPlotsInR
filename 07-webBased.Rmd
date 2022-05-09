@@ -41,8 +41,9 @@ The `ui` and `server` components can be contained in an R script, as follows:
 
 ```{r, eval = FALSE}
 library(shiny)
+
 ui <- fluidPage()
-server <- function(input, output){}
+server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
 ```
 
@@ -64,7 +65,7 @@ ui <- fluidPage(
   plotOutput(outputId = "myplot")
 )
 
-server <- function(input, output){
+server <- function(input, output) {
   output$myplot <- renderPlot({
     dat <- rnorm(n = input$n)
     hist(x = dat)
@@ -92,19 +93,19 @@ knitr::include_graphics(path = "img/Ch7-shiny-flow.png")
 From this simple workflow, some generalized rules and concepts about shiny reactivity can be described that apply to most shiny applications.  
 
 * All input objects are defined in the `ui` object, given a name inside the input function and then referenced in the `server` file by `input$name` (`input$n` in the example). 
-    ```{r, eval = F}
-    numericInput(inputId = "n", label = "Sample size", value = 50)
+    ```{r, eval = FALSE}
+numericInput(inputId = "n", label = "Sample size", value = 50)
     ```
 * All output objects to use in the `ui` object are created in the `server` object by assigning a "rendered" object to the `output` object by `output$name` (`output$myplot` in this case).
-    ```{r, eval = F}
-    output$myplot <- renderPlot({
-      dat <- rnorm(n = input$n)
-      hist(x = dat)
-    })
+    ```{r, eval = FALSE}
+output$myplot <- renderPlot({
+  dat <- rnorm(n = input$n)
+  hist(x = dat)
+})
     ```
 * The `ui` object controls where and when the output is rendered, typically using a function named `fooOutput()` (`foo` meaning generic, e.g., `plot`, `table`, etc.) that has a complementary reactive function named `renderFoo()` in the `server` file.
-    ```{r, eval = F}
-    plotOutput(outputId = "myplot")
+    ```{r, eval = FALSE}
+plotOutput(outputId = "myplot")
     ```
 * The `ui` object can be created with a function (`fluidPage()` here as one type of layout) with at least two inputs (one input, one output) separated by commas. 
 * The `server` object can be created with the `server()` function, where the input from the `ui` and output to send back to the `ui` is evaluated as an expression inside the curly braces `{}`.
@@ -113,7 +114,7 @@ All shiny applications use these concepts to create rich, interactive content th
 
 For shiny output, plots and tables can easily be created with `renderPlot()` and `renderTable()` in the server and their corresponding output functions, `plotOutput()` and `tableOutput()` in the user interface, respectively.  Additional output can include images (`renderImage()` in the `server`, `imageOutput()` in the `ui`), text (`renderText()` in the `server`, `textOutput()` in the `ui`), and even dynamic user interface options (`renderUI()` in the `server`, `uiOutput()` in the `ui`), where the user selection depends on input from another component of the web app.  The output options in a shiny app can also be greatly expanded using the **htmlwidgets**\index{R Packages!htmlwidgets} package (in this context, "widget" does not refer to a `ui` selection).  The **htmlwidgets**\index{R Packages!htmlwidgets} package [@VXACSR2021] creates R bindings for a shiny application to use existing JavaScript libraries, allowing the creation of additional interactive visualizations (e.g., plotly and leaflet).  As before, a shiny developer only needs to understand R to use these tools.  
 
-The layout of the dashboard as seen from the user's perspective can also be modified by the developer.  The template from above uses the standard `fluidPage()` design that organizes the user interface into a simple row/column format.  Although the simple histogram template does not have any visual cues as to its organization on the web page, the `fluidPage()` layout has placed the numeric input selection and plot on separate rows defined by standard HTML tags created by shiny.  The content is scaled automatically to fill the dimensions of the browser or mobile device of the user.  The **flexdashboard**\index{R Packages!flexdashboard} [@IAB2020] and **shinydashboard**\index{R Packages!shinydashboard} [@ChaBor2021] packages can be used to create more flexible dashboard layouts with content placed in specific CSS elements, such as boxes or tabs that are organized logically to improve how a user engages with the web app.  The flexdashboard package uses **rmarkdown**\index{R Packages!rmarkdown} [@XDR2020], as compared to an R script used by most shiny apps.  In fact, any rmarkdown file can be rendered using shiny with `runtime: shiny` in the YAML code at the top, allowing those already familiar with rmarkdown to easily embed shiny components in a rendered HTML document.  
+The layout of the dashboard as seen from the user's perspective can also be modified by the developer.  The template from above uses the standard `fluidPage()` design that organizes the user interface into a simple row/column format.  Although the simple histogram template does not have any visual cues as to its organization on the web page, the `fluidPage()` layout has placed the numeric input selection and plot on separate rows defined by standard HTML tags created by shiny.  The content is scaled automatically to fill the dimensions of the browser or mobile device of the user.  The **flexdashboard**\index{R Packages!flexdashboard} [@IAB2020] and **shinydashboard**\index{R Packages!shinydashboard} [@ChaBor2021] packages can be used to create more flexible dashboard layouts with content placed in specific CSS elements, such as boxes or tabs that are organized logically to improve how a user engages with the web app.  The flexdashboard package uses **rmarkdown**\index{R Packages!rmarkdown} [@XDR2021], as compared to an R script used by most shiny apps.  In fact, any rmarkdown file can be rendered using shiny with `runtime: shiny` in the YAML code at the top, allowing those already familiar with rmarkdown to easily embed shiny components in a rendered HTML document.  
 
 Using the above concepts and packages allows a developer to create more involved and useful applications, such as creating custom micromap plots and options to allow a user to explore patterns more easily than using a conventional R script. In the following section, a simple shiny application is described to demonstrate how it can be used with the **micromap**\index{R Packages!micromap} package. 
 
@@ -129,7 +130,7 @@ knitr::include_graphics(path = "img/Ch7-shiny-example.PNG")
 
 The ui.R file is as follows: 
 
-```{r eval = F}
+```{r, eval = FALSE}
 library(shiny)
 library(shinythemes)
 library(datasets)
@@ -139,60 +140,53 @@ vrs <- colnames(x = state.x77)
 
 # define ui for application
 ui <- fluidPage(
-  
-  theme = shinytheme(theme = "journal"), 
-  
-  titlePanel(title = "Micromap Shiny Application"), 
-  
+  theme = shinytheme(theme = "journal"),
+  titlePanel(title = "Micromap Shiny Application"),
   sidebarLayout(
-    
+
     # side bar
-    sidebarPanel(width = 2,
-      
-      selectInput(inputId = "vr1", 
-                  label = h4("Variable 1"),
-                  choices = vrs,
-                  selected = vrs[1]
+    sidebarPanel(
+      width = 2,
+      selectInput(
+        inputId = "vr1",
+        label = h4("Variable 1"),
+        choices = vrs,
+        selected = vrs[1]
       ),
-      
-      selectInput(inputId = "vr2", 
-                  label = h4("Variable 2"),
-                  choices = vrs,
-                  selected = vrs[2]
+      selectInput(
+        inputId = "vr2",
+        label = h4("Variable 2"),
+        choices = vrs,
+        selected = vrs[2]
       ),
-      
-      numericInput(inputId = "grps", 
-                   label = h4("Groupings"), 
-                   value = 10, 
-                   min = 1, 
-                   max = 50
+      numericInput(
+        inputId = "grps",
+        label = h4("Groupings"),
+        value = 10,
+        min = 1,
+        max = 50
       ),
-      
-      radioButtons(inputId = "medval", 
-                   label = h4("Median value?"),
-                   choices = c(TRUE, FALSE),
-                   selected = c(FALSE), 
-                   inline = TRUE
+      radioButtons(
+        inputId = "medval",
+        label = h4("Median value?"),
+        choices = c(TRUE, FALSE),
+        selected = c(FALSE),
+        inline = TRUE
       ),
-      
-      radioButtons(inputId = "ords", 
-                   label = h4("Order by"),
-                   choices = c("Variable 1", "Variable 2"),
-                   selected = c("Variable 1"), 
-                   inline = TRUE
+      radioButtons(
+        inputId = "ords",
+        label = h4("Order by"),
+        choices = c("Variable 1", "Variable 2"),
+        selected = c("Variable 1"),
+        inline = TRUE
       )
-      
-    ), 
-    
-  # main panel
-  mainPanel(
-  
+    ),
+
+    # main panel
+    mainPanel(
       plotOutput(outputId = "p1", width = "700px", height = "750px")
-      
     )
-  
   )
-        
 )
 ```
 
@@ -200,7 +194,7 @@ The ui.R file begins by importing the relevant package dependencies, specificall
 
 The server.R file is as follows:
 
-```{r eval = F}
+```{r, eval = FALSE}
 library(shiny)
 library(micromap)
 library(datasets)
@@ -213,7 +207,6 @@ data(USstates)
 
 # define server for the application
 server <- function(input, output) {
-   
   output$p1 <- renderPlot({
 
     # include median value, groupings
@@ -227,32 +220,32 @@ server <- function(input, output) {
     # name the variable for ordering
     ords <- input$ords
     ords <- gsub(pattern = "Variable\\s", replacement = "vr", x = ords)
-    
+
     # subset variables and dates, combine
     toplo <- statdat[, c(vr1, vr2)]
-    toplo <- data.frame(toplo)  
+    toplo <- data.frame(toplo)
     names(toplo) <- c("vr1", "vr2")
     toplo$ST <- row.names(x = toplo)
-    
+
     # create map table for polygons
     polys <- create_map_table(tmp.map = USstates, IDcolumn = "ST_NAME")
 
     # plot
-    mmplot(stat.data = toplo,
+    mmplot(
+      stat.data = toplo,
       map.data = polys,
       panel.types = c("labels", "dot", "dot", "map"),
       panel.data = list("ST", "vr1", "vr2", NA),
-      ord.by = ords,  
+      ord.by = ords,
       median.row = medval,
       grouping = grps,
-      map.link = c("ST", "ID"), 
-        panel.att = list(
-          list(2, header = vr1),
-          list(3, header = vr2)
-        ))
-
+      map.link = c("ST", "ID"),
+      panel.att = list(
+        list(2, header = vr1),
+        list(3, header = vr2)
+      )
+    )
   })
-  
 }
 ```
 
@@ -263,7 +256,7 @@ The code within the `server` object creates a micromap plot object for output (`
 The web app is a proof of concept for how a micromap can be used in a shiny framework.  It is simple by design to expand on the concepts described earlier in this chapter.  In practice, shiny can be used to create more complex and rich web apps for micromaps to improve how users engage with spatial data in different contexts.  One contemporary example is provided by the Virginia Department of Environmental Quality (DEQ) and is available at https://evjones.shinyapps.io/FreshwaterProbMonEDA/ (Figure \@ref(fig:Ch7-VDEQ-shiny)).  The application is used by Virginia DEQ to support an annual report for their freshwater probabilistic monitoring program (additional examples from Virginia DEQ are in Chapter \@ref(Ch11)).  Readers are invited to explore this application to better understand the full potential of shiny as a platform for facilitating the delivery of scientific products.
 
 ```{r Ch7-VDEQ-shiny, fig.cap = 'A screenshot of a shiny app with linked micromaps from the Virginia Department of Environmental Quality, available at https://evjones.shinyapps.io/FreshwaterProbMonEDA/.', out.width = '100%', echo = FALSE}
-knitr::include_graphics(path = 'img/Ch7-VDEQ-shiny.PNG')
+knitr::include_graphics(path = "img/Ch7-VDEQ-shiny.PNG")
 ```
 
 ### Getting Shiny Online {#Ch7-shiny-online}
@@ -289,4 +282,3 @@ The overview of shiny and its reactive principles in section \@ref(Ch7-Shiny) pr
 Shiny is also not the the only tool available for developing a web app.  As mentioned above, shiny is useful if a developer is already familiar with R and comfortable creating an app with code.  Those with web experience may prefer using the core tools, such as Java, HTML, and CSS, although this may create additional challenges when workflows are not entirely within the R environment.  Conversely, other platforms provide a graphical user interface (GUI), e.g., ArcGIS StoryMaps (https://storymaps.arcgis.com/), Tableau (https://www.tableau.com/),  or Power BI https://powerbi.microsoft.com/), that can be used for app development, eliminating the need for direct coding.  For GUI-driven development, functionality may be sacrificed for ease of use because a developer may not have complete control over the server and user interface components. In all cases, shiny is a compromise between directly using web programming languages and more simple development software. Shiny offers a platform that is currently relevant for R users, but it is inevitable that this work space will change as new tools address the evolving needs of the research community and those that need scientific products to make informed decisions. The role of R and shiny in this future environment will necessarily change and paying attention to these dynamics is critical in understanding how web apps can help communicate scientific information.   
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
