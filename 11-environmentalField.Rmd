@@ -14,7 +14,7 @@ Public health statistics are often reported by administrative boundaries, such a
 
 Virginia Department of Environmental Quality and Florida Department of Environmental Protection both implemented spatially balanced probabilistic surveys of aquatic resources and visualized the results of the surveys using linked micromaps.  Under the Clean Water Act in the United States, states must report on the condition or status of their lakes, rivers, streams, and estuaries.  To meet this requirement, VDEQ has conducted such surveys of perennial, non-tidal, wadeable streams and rivers from 2001-2018 and has collected aquatic macroinvertebrates at stream sites for biological monitoring [@VirginiaDEQ2020]. The aquatic macroinvertebrates indicate the ecological conditions of a stream and are expressed as a Stream Condition Index (SCI) on a numeric scale, and from the surveys estimates of the SCI score can be made among the 11 major river basins in Virginia and compared to a statewide threshold value [@VirginiaDEQ2020]. The higher the index score indicates better ecological condition of the streams.
 
-```{r Ch11-micromapVDEQ, fig.width = 7, fig.height = 9, fig.cap = 'A Virginia Linked Micromap.', eval = TRUE, echo = FALSE}
+```{r Ch11-micromapVDEQ, fig.width = 7, fig.height = 5, fig.cap = 'A Virginia Linked Micromap.', eval = TRUE, echo = FALSE}
 library(micromap)
 
 # initial example
@@ -30,19 +30,19 @@ map.table <- readRDS("data/map.table.RDS")
          grouping=c(4,3,4),
          vertical.align = "center",
          median.row=F,
-         plot.height=7,
-         plot.width=8,
+#         plot.height=7,
+#         plot.width=8,
          colors=brewer.pal(3, "Spectral"),
          rev.ord=T,
          panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                        list(2, header='Basin', panel.width=.5, 
+                        list(2, header='Basin', panel.width=.6, 
                              align='left', text.size=.9),
                         list(3,header='n',panel.width=.2,align='left',text.size=.9),
-                        list(4, header='Estimated Median VSCI/VCPMI Score and \nAssociated Interquartile Range',
+                        list(4, header='Estimated Median VSCI/VCPMI Score\nand Associated Interquartile Range',
                              graph.bgcolor='lightgray', point.size=1.5,
                              xaxis.ticks=list(40,50,60,70,80), xaxis.labels=list(40,50,60,70,80)
                              ,add.line=60,add.line.col='black',add.line.typ='dashed',
-                             xaxis.title='VSCI Score'),
+                             xaxis.title='VSCI Score', panel.width=1.2),
                         list(5, header='Light Gray Means\nPreviously Displayed',
                              map.all=TRUE, fill.regions='aggregate',
                              active.border.color='black', active.border.size=1.0,
@@ -59,13 +59,12 @@ While the VDEQ R code builds off Chapter \@ref(Ch2), some distinct arguments and
 Finally, here is the R code that was used to create Figure \@ref(fig:Ch11-micromapVDEQ). That code 
 uses of the _stats_\index{Datasets!stats} dataset and the _map.table_\index{Datasets!map.table}
 
-```{r Ch11-micromapVDEQ2, eval = FALSE}
-#
+```{r, Ch11-micromapVDEQ, eval = FALSE, echo = TRUE}
 ```
 
 The next example is from FDEP. Studies of freshwater aquatic ecosystems often need to summarize water quality results from watersheds, as VDEQ did, along with land cover in those watersheds, which is how FDEP used linked micromaps.  Spatially balanced probabilistic surveys were done by FDEP to study emerging contaminants from different types of waterbodies, canals, rivers, streams, small and large lakes, and unconfined aquifers, in 29 drainage basins [@SWSCSS2018]. The results for one of the contaminants, the widely used pesticide imidacloprid, were pooled across waterbody types and summarized with a 3-statistical panel linked micromap of the 29 drainage basins  displaying:  percentage of surveyed sites having detections of imidacloprid, percentage of urban and agricultural land cover in a basin, and a five-number summary, minimum, first quartile, median, third quartile, and maximum, of imidacloprid concentrations shown as a box plot [@SWSCSS2018]. As an exploratory spatial data analysis tool, @SWSCSS2018 noted from the linked micromap that neighboring drainage basins showed no geographic patterning in percentages of detections, and this was confirmed by a no significant spatial autocorrelation detected using Moran’s Index.  This application of linked micromaps was novel in two regards, first, by summarizing different types of data for the polygons of interest, and second, by formally testing if there was geographic patterning in the results.
 
-```{r Ch11-micromapFDEP, fig.width = 7, fig.height = 9, fig.cap = 'A Florida Linked Micromap.',eval = TRUE, echo = FALSE}
+```{r Ch11-micromapFDEP, fig.width = 7, fig.height = 6, fig.cap = 'A Florida Linked Micromap.',eval = TRUE, echo = FALSE}
 library(micromap)
 
 # data frames
@@ -81,17 +80,18 @@ mmplot(stat.data=Land4_Imida_NA,
                  map.link=c('GROUP_NAME','ID'),
                  ord.by='Imidacloprid',
                  rev.ord = TRUE,
-                 grouping=c(6,6,5,6,6), ##median.row=F,
+                 grouping=c(6,6,5,6,6), 
+#                median.row=F,
                  vertical.align = 'center',
                  plot.panel.spacing = 2,
-                 plot.height=6, 
-                 plot.width = 9,
+#                 plot.height=6, 
+#                 plot.width = 9,
                  colors=c('red','orange','yellow', 'green','blue','purple'),
-                 print.res = 900,
+#                 print.res = 900,
                  
                  panel.att=list(list(1, point.type=20, point.border=TRUE, panel.width=1, point.size=2),
                                 
-                                list(2, header='Basin\nName', panel.width=.9, 
+                                list(2, header='Basin\nName', panel.width=1.1, 
                                      align='left', left.margin=-1.6, text.size=.65), 
                                 
                                 list(3, header='Sample\nSize',panel.width=.1,
@@ -100,34 +100,35 @@ mmplot(stat.data=Land4_Imida_NA,
                                 list(4, header='Imidacloprid\nDetected',
                                      graph.bgcolor='lightgray', point.size=1,
                                      xaxis.ticks=list(0,25,50,75), xaxis.labels=list(0,25,50,75),
-                                     xaxis.title='Percent', left.margin=-1.6,
+                                     xaxis.title='Percent', left.margin=-1.0,
                                      panel.width=.4),
                                 
                                 list(5, header='Ag + Urban\nLand Use',
                                      graph.bgcolor='lightgray', point.size=1,
-                                     xaxis.ticks=list(0,25,50,75), xaxis.labels=list(0,25,50,75), 
-                                     xaxis.title='Percent', left.margin=-1.6,
+                                     xaxis.ticks=list(0,25,50,75), 
+                                     xaxis.labels=list(0,25,50,75), 
+                                     xaxis.title='Percent', left.margin=-1.4,
                                      panel.width=.4),
                                 
-                                list(6, header='Imidacloprid Median          \nmin, 25th, 75th, & max',
+                                list(6, header='Imidacloprid Boxplot\n(min-25th-Med-75th-max)',
                                      graph.bgcolor='lightgray',
-                                     xaxis.ticks=list(-3,-2.5,-2,-1.5,-1,-0.5,0), xaxis.labels=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
+                                     xaxis.ticks=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
+                                     xaxis.labels=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
                                      xaxis.title='Log micrograms per liter', 
-                                     graph.bar.size = 0.4, left.margin=-1.6,
-                                     panel.width=.75),
+                                     graph.bar.size = 0.4, left.margin=-1.4,
+                                     panel.width=.85),
                                 
-                                list(7, header='Gray Means            \n  Previously Displayed',
+                                list(7, header='Gray Means\nPreviously Displayed',
                                      map.all=TRUE, fill.regions='aggregate',
-                                     active.border.color='black', active.border.size=1, left.margin=-1.6,
-                                     panel.width=.6)))
+                                     active.border.color='black', active.border.size=1, left.margin=-0.8,
+                                     panel.width=.7)))
 
 
 ```
 
 In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the third statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. Here is the R code that was used to create Figure \@ref(fig:Ch11-micromapFDEP). A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
 
-```{r Ch11-micromapFDEP2, eval = FALSE}
-#
+```{r, Ch11-micromapFDEP, eval = FALSE, echo = TRUE}
 ```
 
 ## Spatial Surveys and Linked Micromaps {#Ch11-Spatial_Surveys}
@@ -141,8 +142,9 @@ We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon)
 ```{r Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
 library(spsurvey)
 library(tidyverse)
-#install.packages("USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
 library(USAboundaries)
+if (!("USAboundariesData" %in% rownames(installed.packages())))
+  install.packages(pkgs = "USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
 library(USAboundariesData)
 
 state_names <- c("Oregon")
@@ -185,7 +187,7 @@ OR_lakes <- st_transform(OR_lakes, crs = 5070)
 OR_lakes
 ```
 
-```{r Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates'}
+```{r Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates. Red points are the GRTS sample and blue points are the sample frame.'}
 
 set.seed(20220502)
 eqprob <- grts(OR_lakes, n_base = 50)
