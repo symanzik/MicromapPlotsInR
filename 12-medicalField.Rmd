@@ -14,6 +14,60 @@ such as scatterplots to emphasize on the relationship of two variables.
 ## Introduction {#Ch12-Introduction}
 
 
+Visualization and disease mapping have long been part of medical field since John snow’s map of the Cholera Outbreak in London of 1854.  Snow drew dots on a map background which he subsequently used to trace the source of the cholera outbreak, i.e., fecal-contaminated water supplied by the Broad Street pump [@Snow1936]. His direct action in dismantling the pump saved many lives. However, since this investigation, advances in Geographic Information Systems (GIS), spatial statistical methods, coupled with developments in digital and computing resources, has led to a very powerful synergistic toolset that now supplies the means with which to effectively analyze and visualize any data that is spatially distributed. 
+
+Over many years, many visualization tools have been developed to convert tabular information into visual graphs or plots (e.g. , @Carr1994a). Visualization tools offer a set of tools that can be used to simplify large and complex datasets into more comprehensible forms. Recent development in the field highlights the use of linked micromap (LM) plots [@CaPi1996]
+as a way of displaying geographically indexed data. LM plots use multiple small maps (called micromaps) to visualize complex data structures in a geographical context. LM plots have already been used in many fields, including environmental science [@CaPi1996;@COPC1998;@SCAWWW1999], ecology [@COPC2000], epidemiology [@CWC2000;@SGGW2003ASA], and in the case of federal statistical summaries [@HSG2003].
+
+History of LM plots in medical field:  application to birth defects data, Cardiovascular disease, Cancer, West Nile virus **(I will further expand this from literature review)**
+
+
+The primary objective of this chapter is to demonstrate the applications of LM plots in presenting spatially and temporally indexed medical and health data. Specifically, it will describe the steps for generating various LM Plots and graph types (e.g., box plots, bar plots, scatter plots, and time series) using R programing language to summarize and visualize health outcomes and associated risk factors. This chapter will also provide examples of LM plots using non-standard geographic boundaries (e.g., census division). In conclusion, the chapter we will describe how LM plot can be a valuable tool to identify patterns, trends, relationships, and anomalies that were not at first obvious in the tables can be revealed quickly. Moreover, it will highlight the effectiveness of LM in communicating valuable medical information to the public and policy makers.
+
+
+## Types of Medial Field Data {#Ch12-Types-Medical-Data}
+
+
+## Applications of Linked Micromaps in Medical Field {#Ch12-Applications-Medical-Field}
+
+
+### Classic Three-Column Linked Micromaps
+
+- Data Source CDC: Age-standardized Cancer Mortality Rate FY2020, Smoking rate FY 2019, Poverty FY 2019
+    -State Rates dots -classic three-Column Version with confidence interval)
+-	Data Source: CVH, Stroke and CHD [@GDSMGD2015]
+
+
+### Linked Micromaps with Bars and Boxplots
+
+-	Data Source CDC: Age-standardized stroke death rates and annual percentage change by state  FY2000, and FY 2015 
+    -State rates dots with confidence interval rates and bars for annual percentage change
+-	Data Source CDC: Age-standardized heart Disease Mortality Data Among US Adults (35+) 
+    -State rates dots with confidence interval rates, and county rates with boxplots 
+
+
+### Time Series Linked Micromaps 
+
+-	Data Source: CDC United States COVD-19 cases by state and time (Months: FY2020-2022)
+    -Timeseries of COVID-19 Death by months (Jan- Dec), and  total cases dots with confidence interval  for FY 2020, FY2021, and FY2022
+
+
+###	Linked Micromaps with Non-traditional Boundaries 
+
+-	Data Source Gebreab et al published: Utah Birth defects  (classic three-Column Version with confidence interval)
+-	Data Source CDC: Tobacco Use by US Census Division FY2018
+
+
+## Concluding Remarks  {#Ch12-Concluding-Remarks}
+
+
+The chapter illustrated the applications of LM plots in visualizing spatially indexed medical data. It demonstrated that LM plots can be valuable tools to graphically relate health outcomes and their associated demographic, social  and behavioral factors. Overall, the chapter highlighted that LM plots can be effective tools to identify geographic patterns, regional similarities, medically vulnerable populations, health outcomes, risk factors, trends, and the relationships between them **( I will further expand this).**
+
+
+
+## Provided Template (To Be Deleted) {#Ch12-Template}
+
+
 As a reminder, see Chapter \@ref(Ch1) for general style requirements
 for our `Micromap Plots in R` book. In particular, please do the following:
 
