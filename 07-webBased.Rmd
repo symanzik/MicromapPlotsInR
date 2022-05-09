@@ -49,7 +49,7 @@ shinyApp(ui = ui, server = server)
 In RStudio, the application can be run clicking the "Run App" button at the top right of the source window or sending the code to the R console (Figure \@ref(fig:Ch7-shiny-code)).  
 
 ```{r Ch7-shiny-code, fig.cap = 'A minimal working shiny application in RStudio showing code for the user interface and server.  The application can be run in RStudio by selecting "Run App".', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch7-shiny-code.PNG')
+knitr::include_graphics(path = "img/Ch7-shiny-code.PNG")
 ```
 
 The above application will open locally, either through a local port opened by RStudio or in a web browser depending on the user options in `shinyApp()`.  In this example, an empty screen appears because the application currently does nothing and it is only accessible to the user in the current R session.  Building a more functional shiny application only requires adding code to the server and user interface.  Making the application accessible to others is described in section \@ref(Ch7-shiny-online).  
@@ -60,14 +60,14 @@ The example above can be expanded to demonstrate how code within the server and 
 library(shiny)
 
 ui <- fluidPage(
-  numericInput(inputId = 'n', label = 'Sample size', value = 50),
-  plotOutput('myplot')
+  numericInput(inputId = "n", label = "Sample size", value = 50),
+  plotOutput(outputId = "myplot")
 )
 
 server <- function(input, output){
   output$myplot <- renderPlot({
-    dat <- rnorm(input$n)
-    hist(dat)
+    dat <- rnorm(n = input$n)
+    hist(x = dat)
   })
 }
 
@@ -75,7 +75,7 @@ shinyApp(ui = ui, server = server)
 ```
 
 ```{r Ch7-shiny-histogram, fig.cap = 'A minimal working shiny application with additional components in the server and user interface that produces a histogram and options to select the sample size.', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch7-shiny-histogram.PNG')
+knitr::include_graphics(path = "img/Ch7-shiny-histogram.PNG")
 ```
 
 Evaluating what happens in the application each time a different sample size is selected by a user and how the application functions with the user interface and server components of the code is critical to understanding reactivity.  The running application follows these steps (Figure \@ref(fig:Ch7-shiny-flow)) when the web app is initialized in the browser and when a user selects a new sample size:
@@ -86,25 +86,25 @@ Evaluating what happens in the application each time a different sample size is 
 1. The plot is then rendered on the `ui` side using `plotOutput` by referencing the `myplot` name from the `output` object. 
 
 ```{r Ch7-shiny-flow, fig.cap = 'A representation of reactivity each time the user input is changed to select a different sample size for the histogram.', echo = FALSE, out.width = '100%'}
-knitr::include_graphics('img/Ch7-shiny-flow.png')
+knitr::include_graphics(path = "img/Ch7-shiny-flow.png")
 ```
 
 From this simple workflow, some generalized rules and concepts about shiny reactivity can be described that apply to most shiny applications.  
 
 * All input objects are defined in the `ui` object, given a name inside the input function and then referenced in the `server` file by `input$name` (`input$n` in the example). 
     ```{r, eval = F}
-    numericInput(inputId = 'n', label = 'Sample size', value = 50)
+    numericInput(inputId = "n", label = "Sample size", value = 50)
     ```
 * All output objects to use in the `ui` object are created in the `server` object by assigning a "rendered" object to the `output` object by `output$name` (`output$myplot` in this case).
     ```{r, eval = F}
     output$myplot <- renderPlot({
-      dat <- rnorm(input$n)
-      hist(dat)
+      dat <- rnorm(n = input$n)
+      hist(x = dat)
     })
     ```
 * The `ui` file controls where and when the output is rendered, typically using a function named `fooOutput()` (`foo` meaning generic, e.g., `plot`, `table`, etc.) that has a complementary reactive function named `renderFoo()` in the `server` file.
     ```{r, eval = F}
-    plotOutput('myplot')
+    plotOutput(outputId = "myplot")
     ```
 * The `ui` file can be declared with a function (`fluidPage()` here as one type of layout) with at least two inputs (one input, one output) separated by commas. 
 * The `server` file can be declared with the `server()` function, where the input is evaluated as a standalone group of operations with the curly braces `{}`.
@@ -119,12 +119,12 @@ Using the above concepts and packages allows a developer to create more involved
 
 ### Minimal Micromap Example
 
-A simple example of a shiny application using the **micromap**\index{R Packages!micromap} package [@PaOl2015] is described in this section.  The application is accessible at [https://beckmw.shinyapps.io/micromap_app/](https://beckmw.shinyapps.io/micromap_app/) using the RStudio [shinyapps.io](https://www.shinyapps.io/) platform. The source code for the application is available on GitHub at [https://github.com/fawda123/micromap_app](https://github.com/fawda123/micromap_app) and archived through Zenodo at [https://doi.org/10.5281/zenodo.160579](https://doi.org/10.5281/zenodo.160579) [@Beck2016].  The services used to host and archive this application and reasons for their use are described in the next section. 
+A simple example of a shiny application using the **micromap**\index{R Packages!micromap} package [@PaOl2015] is described in this section.  The application is accessible at https://beckmw.shinyapps.io/micromap_app/ using the RStudio shinyapps.io (https://www.shinyapps.io/) platform. The source code for the application is available on GitHub at https://github.com/fawda123/micromap_app and archived through Zenodo at https://doi.org/10.5281/zenodo.160579 [@Beck2016].  The services used to host and archive this application and reasons for their use are described in the next section. 
 
 The micromap web app is a simple extension of the `server` and `ui` format described in the previous section.  The structure is similar with a notable difference that the server and user interface components are in separate .R files, although they can also be placed in a single file as above. The separation into two scripts is a decision made by the developer based on personal preference, rather than a functional difference.  For example, a developer may prefer to use two files to simplify working with the code for each component.  The application uses the _USstates_\index{Datasets!USstates} as the spatial polygon boundaries and the `state.x77` dataset from the **datasets**\index{R Packages!datasets} package that is included with the base R installation.  The simple micromap plots the chosen state data from `state.x77` (e.g., population, income, etc.) as two dot plots, with the state labels on the left and maps on the right using the `mmplot()` function (see Chapter \@ref(Ch2)).  The application allows a user to select which state data to show in the dot plots, the number of perceptual groups, whether a median value is shown, and which dot plot determines the ordering of the rows in the micromap (Figure \@ref(fig:Ch7-shiny-example)).
 
 ```{r Ch7-shiny-example, fig.cap = 'A minimal working shiny application using the micromap package.', out.width = '100%', echo = FALSE}
-knitr::include_graphics('img/Ch7-shiny-example.PNG')
+knitr::include_graphics(path = "img/Ch7-shiny-example.PNG")
 ```
 
 The server.R file is as follows:
@@ -146,7 +146,7 @@ server <- function(input, output) {
   output$p1 <- renderPlot({
 
     # include median value, groupings
-    medval <- as.logical(input$medval)
+    medval <- as.logical(x = input$medval)
     grps <- input$grps
 
     # input variables, dates, and order
@@ -155,26 +155,26 @@ server <- function(input, output) {
 
     # name the variable for ordering
     ords <- input$ords
-    ords <- gsub('Variable\\s', 'vr', ords)
+    ords <- gsub(pattern = "Variable\\s", replacement = "vr", x = ords)
     
     # subset variables and dates, combine
     toplo <- statdat[, c(vr1, vr2)]
     toplo <- data.frame(toplo)  
-    names(toplo) <- c('vr1', 'vr2')
-    toplo$ST <- row.names(toplo)
+    names(toplo) <- c("vr1", "vr2")
+    toplo$ST <- row.names(x = toplo)
     
     # create map table for polygons
-    polys <- create_map_table(USstates, 'ST_NAME')
+    polys <- create_map_table(tmp.map = USstates, IDcolumn = "ST_NAME")
 
     # plot
     mmplot(stat.data = toplo,
       map.data = polys,
-      panel.types = c('labels', 'dot', 'dot', 'map'),
-      panel.data = list('ST', 'vr1', 'vr2', NA),
+      panel.types = c("labels", "dot", "dot", "map"),
+      panel.data = list("ST", "vr1", "vr2", NA),
       ord.by = ords,  
       median.row = medval,
       grouping = grps,
-      map.link = c('ST', 'ID'), 
+      map.link = c("ST", "ID"), 
         panel.att = list(
           list(2, header = vr1),
           list(3, header = vr2)
@@ -200,50 +200,50 @@ library(datasets)
 statdat <- state.x77
 
 # variables
-vrs <- colnames(statdat)
+vrs <- colnames(x = statdat)
 
 # define ui for application
 ui <- fluidPage(
   
-  theme = shinytheme('journal'), 
+  theme = shinytheme(theme = "journal"), 
   
-  titlePanel('Micromap Shiny Application'), 
+  titlePanel(title = "Micromap Shiny Application"), 
   
   sidebarLayout(
     
     # side bar
     sidebarPanel(width = 2,
       
-      selectInput(inputId = 'vr1', 
-                  label = h4('Variable 1'),
+      selectInput(inputId = "vr1", 
+                  label = h4("Variable 1"),
                   choices = vrs,
                   selected = vrs[1]
       ),
       
-      selectInput(inputId = 'vr2', 
-                  label = h4('Variable 2'),
+      selectInput(inputId = "vr2", 
+                  label = h4("Variable 2"),
                   choices = vrs,
                   selected = vrs[2]
       ),
       
-      numericInput("grps", 
+      numericInput(inputId = "grps", 
                    label = h4("Groupings"), 
                    value = 10, 
                    min = 1, 
                    max = 50
       ),
       
-      radioButtons(inputId = 'medval', 
-                   label = h4('Median value?'),
+      radioButtons(inputId = "medval", 
+                   label = h4("Median value?"),
                    choices = c(TRUE, FALSE),
                    selected = c(FALSE), 
                    inline = TRUE
       ),
       
-      radioButtons(inputId = 'ords', 
-                   label = h4('Order by'),
-                   choices = c('Variable 1', 'Variable 2'),
-                   selected = c('Variable 1'), 
+      radioButtons(inputId = "ords", 
+                   label = h4("Order by"),
+                   choices = c("Variable 1", "Variable 2"),
+                   selected = c("Variable 1"), 
                    inline = TRUE
       )
       
@@ -252,7 +252,7 @@ ui <- fluidPage(
   # main panel
   mainPanel(
   
-      plotOutput("p1", width = '700px', height = '750px')
+      plotOutput(outputId = "p1", width = "700px", height = "750px")
       
     )
   
@@ -263,21 +263,21 @@ ui <- fluidPage(
 
 The beginning of the ui.R file is similar to the server.R file by importing the relevant package dependencies and creating the input data objects for the user interface.  The `vrs` object is created as a list of options to use for selecting which variables can be chosen for the dot plots with the input functions.  Various components of the web app are created Within the `ui` object, specifically the `fluidPage()` layout, a custom CSS theme from the **shinythemes**\index{R Packages!shinythemes} package [@Chang2021], several user inputs that are sent to the server described above, and finally the micromap plot created in the server and defined as output in the user interface by `plotOutput()`.  The user inputs include options to select which variables to plot from a menu with `selectInput()`, numeric options for the number of perceptual groups with `numericInput()`, and radio buttons with `radioButtons()` for selecting whether the median is shown on the micromap and which variable in the dot plots is used for the ordering.  Other functions define the visual layout, notably the `sidebarLayout()` that places the inputs in a `sidebarPanel()` on the left and the main plot in a `mainPanel()` on the right (Figure \@ref(fig:Ch7-shiny-example)).   
 
-The web app is a proof of concept for how a micromap can be used in a shiny framework.  It is simple by design to expand on the concepts described earlier in this chapter.  In practice, shiny can be used to create more complex and rich web apps for micromaps to improve how users engage with spatial data in different contexts.  One contemporary example is provided by the Virginia Department of Environmental Quality (DEQ) and is available at [https://evjones.shinyapps.io/FreshwaterProbMonEDA/](https://evjones.shinyapps.io/FreshwaterProbMonEDA/).  The application is used by Virginia DEQ to support an annual report for their freshwater probabilistic monitoring program (additional examples from Virginia DEQ are in Chapter \@ref(Ch11)).  Readers are invited to explore this application to better understand the full potential of shiny as a platform for facilitating the delivery of scientific products in a web-based environment.
+The web app is a proof of concept for how a micromap can be used in a shiny framework.  It is simple by design to expand on the concepts described earlier in this chapter.  In practice, shiny can be used to create more complex and rich web apps for micromaps to improve how users engage with spatial data in different contexts.  One contemporary example is provided by the Virginia Department of Environmental Quality (DEQ) and is available at https://evjones.shinyapps.io/FreshwaterProbMonEDA/.  The application is used by Virginia DEQ to support an annual report for their freshwater probabilistic monitoring program (additional examples from Virginia DEQ are in Chapter \@ref(Ch11)).  Readers are invited to explore this application to better understand the full potential of shiny as a platform for facilitating the delivery of scientific products in a web-based environment.
 
 ### Getting Shiny Online {#Ch7-shiny-online}
 
 Using shiny to create web apps includes additional considerations that are equally, if not more, important than the development and coding process.  First, shiny allows a developer to create an application that is accessible through a web browser.  Exposing the application outside of the local environment (i.e., the developer's personal computer) requires additional steps to make the the app accessible by others through a URL web address.  There are several options for hosting a shiny application online and each varies in the ease of use, cost, and options desired by the developer for allowing others to access or authenticate to the app.  Some of these options are: 
 
-1. Deploy to [shinyapps.io](https://www.shinyapps.io/) directly from the RStudio console using the **rsconnect**\index{R Packages!rsconnect} R package [@Atkins2021].  The server is maintained by RStudio and the **rsconnect**\index{R Packages!rsconnect} package identifies all dependencies required for an application on deployment.  This option may be preferred for novice shiny users because knowledge of server management is not required.  However, the service uses a tiered pricing plan. The free tier is good for very simple apps, but a larger plan will be needed if a developer expects others to have any meaningful engagement with an app.
+1. Deploy to shinyapps.io (https://www.shinyapps.io/) directly from the RStudio console using the **rsconnect**\index{R Packages!rsconnect} R package [@Atkins2021].  The server is maintained by RStudio and the **rsconnect**\index{R Packages!rsconnect} package identifies all dependencies required for an application on deployment.  This option may be preferred for novice shiny users because knowledge of server management is not required.  However, the service uses a tiered pricing plan. The free tier is good for very simple apps, but a larger plan will be needed if a developer expects others to have any meaningful engagement with an app.
 
-1. The open-source [Shiny Server](https://rstudio.com/products/shiny/shiny-server/) from RStudio can be used for full ownership of an application.  This requires more extensive knowledge of server management, specifically on a Unix operating system.  A developer will be responsible for maintaining the Shiny Server, RStudio Server, and any of the application dependencies. However, this may be a more practical option if resources are limited and an organization desires full control of web resources.  
+1. The open-source Shiny Server (https://rstudio.com/products/shiny/shiny-server/) from RStudio can be used for full ownership of an application.  This requires more extensive knowledge of server management, specifically on a Unix operating system.  A developer will be responsible for maintaining the Shiny Server, RStudio Server, and any of the application dependencies. However, this may be a more practical option if resources are limited and an organization desires full control of web resources.  
 
-1. [RStudio Connect](https://rstudio.com/products/connect/) can be used as a commercial solution to hosting shiny applications.  RStudio Connect is a business model version of multiple resources provided by RStudio in an online format.  The services are marketed for larger organizations with greater enterprising needs, as opposed to an individual developer.  
+1. RStudio Connect (https://rstudio.com/products/connect/) can be used as a commercial solution to hosting shiny applications.  RStudio Connect is a business model version of multiple resources provided by RStudio in an online format.  The services are marketed for larger organizations with greater enterprising needs, as opposed to an individual developer.  
 
-1. [Docker](https://www.docker.com/) shiny apps can also be created as an alternative solution that leverages both the open source versions of Shiny Server and RStudio.  Docker allows a developer to solve portability and versioning problems with software management that is independent of the operating system.  Docker takes a "snapshot" of a local software environment (i.e., R version, package dependencies, etc.) and creates a standalone application that can run on any server that uses Docker. Server maintenance is also greatly simplified because only Docker is required to run a shiny app.  However, additional expertise on using Docker is required. 
+1. Docker (https://www.docker.com/) shiny apps can also be created as an alternative solution that leverages both the open source versions of Shiny Server and RStudio.  Docker allows a developer to solve portability and versioning problems with software management that is independent of the operating system.  Docker takes a "snapshot" of a local software environment (i.e., R version, package dependencies, etc.) and creates a standalone application that can run on any server that uses Docker. Server maintenance is also greatly simplified because only Docker is required to run a shiny app.  However, additional expertise on using Docker is required. 
 
-In addition to hosting, a shiny developer must consider how the source code is managed, both during development and for long-term maintenance.  Use of version control software, such as [Git](https://git-scm.com/), and a web-hosting service for sharing version control projects, such as [GitHub](http://github.com/), should be used to create an accessible, long-term record of the development history of an app.  This creates a record of changes that a developer can retrieve at any time and allows others to view and reuse code from an existing app.  In the latter case, [licensing options](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) are available on GitHub so that a developer can define how code can be reused by others from an existing repository.  GitHub is also linked to [Zenodo](https://zenodo.org/) so that an application can be archived as a stand-alone set of files and assigned a unique identifier that can be cited and tracked.  This service extends the utility of GitHub by establishing a stronger precedent for "FAIR" data practices as a tenet of broader open science principles [@Wilkinsonetal2016;@Mons2018].  
+In addition to hosting, a shiny developer must consider how the source code is managed, both during development and for long-term maintenance.  Use of version control software, such as Git (https://git-scm.com/), and a web-hosting service for sharing version control projects, such as GitHub (http://github.com/), should be used to create an accessible, long-term record of the development history of an app.  This creates a record of changes that a developer can retrieve at any time and allows others to view and reuse code from an existing app.  In the latter case, licensing options are available on GitHub so that a developer can define how code can be reused by others from an existing repository.  GitHub is also linked to Zenodo (https://zenodo.org/) so that an application can be archived as a stand-alone set of files and assigned a unique identifier that can be cited and tracked.  This service extends the utility of GitHub by establishing a stronger precedent for "FAIR" data practices as a tenet of broader open science principles [@Wilkinsonetal2016;@Mons2018].  
 
 ## Summary and Further Reading {#Ch7-Summary}
 
@@ -285,7 +285,7 @@ This chapter provided a general overview of how **shiny**\index{R Packages!shiny
 
 The overview of shiny and its reactive principles in section \@ref(Ch7-Shiny) provided only the basics of shiny's functionality and additional resources should be consulted to develop a greater understanding of shiny in practice.  @Wickham2021 and @Sievert2020, in particular, cover these principles in greater detail.  Modularity (shiny modules) is an additional concept that can improve how an app functions, specifically in production [@FRGG2022].  Modules address complexity in an app by creating standalone pieces of code for creating input or output, much like functions in conventional R context, while also addressing labeling conflicts that are common in complex web apps. @SNYPV2022 also provide an excellent overview of best practices for app development in a "ten simple rules" format that caters to the research community that typically has no formal training in these tools.  Other important considerations for app development include understanding fundamentals of user interface design (i.e, the `ui` component of an app), which is critical for guiding and improving how a user engages with an app [see Chapter 6 in @FRGG2022].  The best developed code for an app will not have value if a user is unable to navigate the front end of an app.    
 
-Shiny is also not the the only tool available for developing a web app.  As mentioned above, shiny is useful if a developer is already familiar with R and comfortable creating an app with code.  Those with web experience may prefer using the core tools, such as Java, HTML, and CSS, although this may create additional challenges when workflows are not entirely within the R environment.  Conversely, other platforms provide a graphical user interface (GUI, e.g., [ArcGIS StoryMaps](https://storymaps.arcgis.com/), [Tableau](https://www.tableau.com/), [Power BI](https://powerbi.microsoft.com/)) that can be used for app development, eliminating the need for direct coding.  For GUI-driven development, functionality may be sacrificed for ease of use because a developer does not have complete control over the server and user interface components. In all cases, shiny is a compromise between directly using web programming languages and more simple development software. Shiny offers a platform that is currently relevant for R users, but it is inevitable that this work space will change as new tools address the evolving needs of the research community and those that need scientific products to make informed decisions. The role of R and shiny in this future environment will necessarily change and paying attention to these dynamics is critical in understanding how web apps can help deliver scientific information.   
+Shiny is also not the the only tool available for developing a web app.  As mentioned above, shiny is useful if a developer is already familiar with R and comfortable creating an app with code.  Those with web experience may prefer using the core tools, such as Java, HTML, and CSS, although this may create additional challenges when workflows are not entirely within the R environment.  Conversely, other platforms provide a graphical user interface (GUI), e.g., ArcGIS StoryMaps (https://storymaps.arcgis.com/), Tableau (https://www.tableau.com/),  or Power BI https://powerbi.microsoft.com/), that can be used for app development, eliminating the need for direct coding.  For GUI-driven development, functionality may be sacrificed for ease of use because a developer does not have complete control over the server and user interface components. In all cases, shiny is a compromise between directly using web programming languages and more simple development software. Shiny offers a platform that is currently relevant for R users, but it is inevitable that this work space will change as new tools address the evolving needs of the research community and those that need scientific products to make informed decisions. The role of R and shiny in this future environment will necessarily change and paying attention to these dynamics is critical in understanding how web apps can help deliver scientific information.   
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
 
