@@ -94,7 +94,7 @@ or provide me with any other way to construct a related bibtex entry.
 
 
 - McManus, Payton, Weber, et al.:
-@Beck2016 (Code at https://github.com/fawda123/micromap_app/tree/v1.0.1,
+@Beck2022 (Code at https://github.com/fawda123/micromap_app/tree/v2.0.0,
 App at https://beckmw.shinyapps.io/micromap_app/),
 @Griffith2014,
 @MPRG2016,
