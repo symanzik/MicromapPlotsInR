@@ -178,16 +178,7 @@ ggplot() +
   theme_bw() 
 ```
 
-The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in a projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates and then a spatially balanced sample can be drawn.
-
-```{r Ch11-micromap-spsurvey-error, eval = FALSE, echo = FALSE}
-# an equal probability sample draw of 50 lakes
-set.seed(20220502)
-eqprob <- grts(OR_lakes, n_base = 50)
-# look at error message
-stop_df
-# rm(eqprob)
-```
+The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates so then a spatially balanced sample can be drawn.
 
 ```{r Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
 OR_lakes <- st_transform(OR_lakes, crs = 5070)
