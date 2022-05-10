@@ -1,0 +1,52 @@
+StAbbrev,State,avgscore,PctBelowBasic,PctAtBasic,PctProficient,PctAdvanced
+AK,Alaska,283,26,39,28,7
+AL,Alabama,269,40,40,17,3
+AR,Arkansas,279,30,41,24,5
+AZ,Arizona,279,32,37,24,7
+CA,California,273,39,36,19,6
+CO,Colorado,292,20,37,31,12
+CT,Connecticut,287,25,37,28,10
+DC,District of Columbia,260,52,31,14,3
+DE,Delaware,283,26,42,25,7
+FL,Florida,278,32,40,22,6
+GA,Georgia,278,32,41,22,6
+HI,Hawaii,278,32,38,24,6
+IA,Iowa,285,23,43,26,8
+ID,Idaho,287,23,41,28,9
+IL,Illinois,283,27,40,25,8
+IN,Indiana,285,23,43,27,7
+KS,Kansas,290,20,39,32,8
+KY,Kentucky,282,28,41,24,6
+LA,Louisiana,273,37,41,19,3
+MA,Massachusetts,299,14,34,36,15
+MD,Maryland,288,26,34,29,12
+ME,Maine,289,22,40,29,10
+MI,Michigan,280,29,40,25,6
+MN,Minnesota,295,17,36,34,13
+MO,Missouri,282,27,41,25,7
+MS,Mississippi,269,42,39,16,3
+MT,Montana,293,17,37,35,11
+NC,North Carolina,286,25,38,27,10
+ND,North Dakota,292,15,42,34,8
+NE,Nebraska,283,26,42,26,7
+NH,New Hampshire,292,18,38,33,11
+NJ,New Jersey,294,18,35,33,14
+NM,New Mexico,274,36,40,20,4
+NV,Nevada,278,33,38,23,6
+NY,New York,280,30,40,23,7
+OH,Ohio,289,21,40,31,8
+OK,Oklahoma,279,28,44,23,4
+OR ,Oregon,283,28,39,25,7
+PA,Pennsylvania,286,26,35,29,9
+RI,Rhode Island,283,27,40,27,7
+SC,South Carolina,281,30,38,25,7
+SD,South Dakota,291,18,40,33,8
+TN,Tennessee,274,36,40,19,5
+TX,Texas,290,19,41,31,9
+UT,Utah,283,27,38,28,7
+VA,Virginia,289,22,38,29,11
+VT,Vermont,294,18,36,33,13
+WA,Washington,288,23,36,29,11
+WI,Wisconsin,289,21,38,32,9
+WV,West Virginia,273,35,44,18,3
+WY,Wyoming,288,20,43,30,7

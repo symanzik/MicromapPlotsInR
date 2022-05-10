@@ -1,4 +1,4 @@
-# Advanced Shapefile Use in the **micromapST** R Package {#Ch4b}
+# Processing Other Boundary Files for Use in the **micromapST** R Package {#Ch4b}
 
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr., Daniel B. Carr}
@@ -17,38 +17,42 @@ that makes use of these boundaries that are part of the
 ## Introduction {#Ch4b-Introduction}
 
 
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
-
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
-
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
-
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
-
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
+In this section we demonstrate how to modify boundary files to use in micromapST. First, we show how the 100+ counties
+in Kentucky can be aggregated to fewer boundaries used by public health departments in that state, then demonstrate
+how to read them in for use in micromapST. Then we apply the same process to US state boundaries to demonstrate
+how to modify shapes within the larger map to make them more visible.
 
 
-## Modifying the US shapefile {#Ch4b-USshapefile}
+JUERGEN: 
+
+- Provide an overview (one section) of the border groups that are currently available in micromapST.
+Refer back to Ch3 how to make use of a certain boundary group, e.g., the Maryland example there.
+
+- In the examples below, instead of showing how to produce something that is currently part of the
+micromapST package, could you show how to create something that is not directly accessible
+via the package (and also do not make this available in the next update of the package).
+I mentioned some NY zones in an e-mail a few weeks ago. Or the 50 US states + DC + 5 territories 
+(here is a Wikipedia example where they have placed the territories to the southeast:
+https://en.wikipedia.org/wiki/List_of_states_and_territories_of_the_United_States#/media/File:Map_of_USA_with_state_and_territory_names_2.png). Or modify one of the historic maps from the cshapes R package 
+(https://cran.rstudio.com/web/packages/cshapes/ - also see https://doi.org/10.1080/03050620903554614)
+into a border group for micromapST. Or ...
+
+Personally, I feel it bit redundant to show how to create a new border group that is already part of the package. 
+I am also a bit worried that this may mislead some readers who only glance over some of the chapters and make some 
+believe that that they always have to do this step to create a micromap plot for a region other than the US.
+
+Would it be possible to create border groups for regions that will not end up in the package (in the near future)?
+
+- Can you extend your examples and produce complete linked micromap plots with your newly created border groups.
 
 
-```{r Ch4b-modifiedUSshapefile, fig.cap = 'Shapefile modification of the US shapefile in 4 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
-knitr::include_graphics(c("img/USBorderGrp_p1.pdf", "img/USBorderGrp_p2.pdf"))
-knitr::include_graphics(c("img/USBorderGrp_p3.pdf", "img/USBorderGrp_p4.pdf"))
-```
+
+## Creating Boundary Sets for Use in **micromapST** {#Ch4b-Boundaries}
 
 
-## Modifying the Kentucky Shapefile {#Ch4b-Kentucky}
+### Modifying the Kentucky Shapefile {#Ch4b-Kentucky}
+
+Example 1: Kentucky Area Development Districts - aggregating counties to new units
 
 
 Here are the steps used to create the multiple maps in each PDF:
@@ -71,39 +75,43 @@ knitr::include_graphics("img/KYBorderGrp1_p5.pdf")
 ```
 
 
+### Modifying the US Shapefile {#Ch4b-USshapefile}
 
-## Main {#Ch4b-Main}
-
-
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch4b-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+Example 2: US states - smoothing boundaries and enlarging small areas for visibility
 
 
-```{r Ch4b-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
+```{r Ch4b-modifiedUSshapefile, fig.cap = 'Shapefile modification of the US shapefile in 4 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
+knitr::include_graphics(c("img/USBorderGrp_p1.pdf", "img/USBorderGrp_p2.pdf"))
+knitr::include_graphics(c("img/USBorderGrp_p3.pdf", "img/USBorderGrp_p4.pdf"))
 ```
+
+
+## Discussion {#Ch4b-Discussion}
+
+
+## Old Instructions - delete
+
+
+As a reminder, see Chapter \@ref(Ch1) for general style requirements
+for our `Micromap Plots in R` book. In particular, please do the following:
+
+- Introduce meaningful labels for the sections, figures, and tables in your chapter.
+
+- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
+and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
+that are used in your chapter.
+
+- Include references for R packages and publications related to your chapter,
+such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
+**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
+and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
+
+- Also create index entries for main topics such as
+linked micromap plots,\index{Linked micromap plot}
+conditioned choropleth maps,\index{Conditioned choropleth map}
+perceptual group,\index{Perceptual group}
+color blindness,\index{Color blindness},
+and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
 ## Further Reading {#Ch4b-FurtherReading}
