@@ -2,6 +2,8 @@
 
 \chapterauthor{Marcus W. Beck}
 
+OK, LET'S TRY IT. PLEASE REMOVE AGAIN.
+
 Web-based interactive linked micromaps were first developed in the late 1990s. Early examples included visualizing hazardous air pollutant data using the Graphics Production Library [@SACWWW1999] and use of micromaps by the National Cancer Institute to visualize long-term cancer data [@BHPW2006]. These early examples primarily used Java-based web technologies to combine micromap visualization tools with online functionality.  Since then, the development of R packages to create web-based applications has allowed new opportunities to visualize and share micromaps online. This chapter will introduce the reader to the creation of linked micromap plots via the R **shiny**\index{R Packages!shiny} package [@CCASSXAMDB2021]. Core concepts of creating shiny applications will be discussed, including an example that demonstrates a minimal working shiny application with the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2022].   
 
 ## The Need for Web Applications {#Ch7-Introduction}
@@ -24,7 +26,7 @@ A common theme of these early web-based tools was the need to deliver relevant s
 
 ## Shiny as an Open Source Tool for Web Applications {#Ch7-Shiny}
 
-### What is Shiny?
+### What is Shiny? {#Ch7-What-Is-Shiny}
 
 The R **shiny**\index{R Packages!shiny} package [@CCASSXAMDB2021;@Wickham2021] allows a developer to create web apps entirely in R. Shiny can expose existing R scripts to a web browser to allow anybody to access underlying features outside of R and the local environment of a personal computer. Shiny is commonly used to 1) communicate complex workflows to a non-technical audience with informative visualizations and interactive components, 2) share analysis output easily with colleagues without having to walk them through details of a script, and 3) help inform understanding of an analysis by creating a user interface to quickly evaluate data.  Because linked micromaps can be easily created in R using the **micromap**\index{R Packages!micromap} or **micromapST**\index{R Packages!micromapST} packages, creating web apps with shiny is a simple extension that can greatly improve understanding of data.   
 
@@ -118,7 +120,7 @@ The layout of the dashboard as seen from the user's perspective can also be modi
 
 Using the above concepts and packages allows a developer to create more involved and useful applications, such as creating custom micromap plots and options to allow a user to explore patterns more easily than using a conventional R script. In the following section, a simple shiny application is described to demonstrate how it can be used with the **micromap**\index{R Packages!micromap} package. 
 
-### Minimal Micromap Example
+### Minimal Micromap Example {#Ch7-Minimal-Example}
 
 A simple example of a shiny application using the **micromap**\index{R Packages!micromap} package [@PaOl2015] is described in this section.  The application is accessible at https://beckmw.shinyapps.io/micromap_app/ using the RStudio shinyapps.io (https://www.shinyapps.io/) platform. The source code for the application is available on GitHub at https://github.com/fawda123/micromap_app and archived through Zenodo at https://doi.org/10.5281/zenodo.6532271 [@Beck2022].  The services used to host and archive this application and reasons for their use are described in the next section. 
 
