@@ -2,8 +2,6 @@
 
 \chapterauthor{Marcus W. Beck}
 
-OK, LET'S TRY IT. PLEASE REMOVE AGAIN.
-
 Web-based interactive linked micromaps were first developed in the late 1990s. Early examples included visualizing hazardous air pollutant data using the Graphics Production Library [@SACWWW1999] and use of micromaps by the National Cancer Institute to visualize long-term cancer data [@BHPW2006]. These early examples primarily used Java-based web technologies to combine micromap visualization tools with online functionality.  Since then, the development of R packages to create web-based applications has allowed new opportunities to visualize and share micromaps online. This chapter will introduce the reader to the creation of linked micromap plots via the R **shiny**\index{R Packages!shiny} package [@CCASSXAMDB2021]. Core concepts of creating shiny applications will be discussed, including an example that demonstrates a minimal working shiny application with the **micromap**\index{R Packages!micromap} package [@PaOl2015; @Beck2022].   
 
 ## The Need for Web Applications {#Ch7-Introduction}
