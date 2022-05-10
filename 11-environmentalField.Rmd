@@ -71,6 +71,9 @@ library(micromap)
 Land4_Imida_NA <- readRDS("data/Land4_Imida_NA.rds")
 FL_Basins <- readRDS("data/Florida_Basins.rds")
 
+# code to handle NA values in rankings
+Land4_Imida_NA$ranked_imida <- rank(Land4_Imida_NA$Imidacloprid, na.last = FALSE, ties.method = "first")
+
 mmplot(stat.data=Land4_Imida_NA, 
                  map.data=FL_Basins,
                  panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map'),
@@ -78,7 +81,7 @@ mmplot(stat.data=Land4_Imida_NA,
                                  list('Imida_Min','Imida_25','Imida_Med','Imida_75','Imida_Max'),
                                  NA),       
                  map.link=c('GROUP_NAME','ID'),
-                 ord.by='Imidacloprid',
+                 ord.by='ranked_imida',
                  rev.ord = TRUE,
                  grouping=c(6,6,5,6,6), 
 #                median.row=F,
@@ -126,7 +129,8 @@ mmplot(stat.data=Land4_Imida_NA,
 
 ```
 
-In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the third statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. Here is the R code that was used to create Figure \@ref(fig:Ch11-micromapFDEP). A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
+In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the third statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. Here is the R code that was used to create Figure \@ref(fig:Ch11-micromapFDEP). The _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset had an NA entry for the Florida Keys regarding the percentage of samples having detectable imidacloprid concentrations as none of the freshwater bodies sampled by FDEP occurred there. Users may have to explicit code how to handle NA values.  In this case we used the syntax
+`Land4_Imida_NA$ranked_imida <- rank(Land4_Imida_NA$Imidacloprid, na.last = FALSE, ties.method = "first")` to create a new variable that ranked NA values last. The new variable was then used with the `ord.by` function. A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
 
 ```{r, Ch11-micromapFDEP, eval = FALSE, echo = TRUE}
 ```
