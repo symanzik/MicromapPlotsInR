@@ -1,4 +1,4 @@
-# Advanced Plot Types for Use in the **micromapST** R Package {#Ch5b}
+# Enhanced Glyphs Available in the **micromapST** R Package {#Ch5b}
 
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr., Daniel B. Carr}
@@ -15,6 +15,179 @@ that makes use of these advanced plot types that are part of the
 
 
 ## Introduction {#Ch5b-Introduction}
+
+- 12 glyph types - include Table from 2015 JSS paper
+
+## Time Series Data {#Ch5b-Time-Series-Data}
+
+- time series plot
+
+```{r Ch5b-micromap8, fig.cap = 'Time Series plots of cumulative # covid cases by month, Feb 2020 - Apr 2022, sorted by March 2021 rates', fig.width = 7, fig.height = 9}
+# set up input array with dates & rates
+STcovidcaserates = read.csv('data/STCaseRatesFeb242020Apr142022.csv',row.names=2)
+stpostal = rownames(STcovidcaserates)
+tempinput = STcovidcaserates[,c(-1,-2,-3,-4)]
+temprates = data.frame(tempinput)
+rownames(temprates) = stpostal
+head(temprates,n=3L)
+# format of dates is year-month in fractions of each year, subtracting 1/2 month because # measured mid-month
+tempdates = c(20.125,20.218,20.288,20.375,20.458,20.541,20.628,20.708,20.791,20.875,20.918,21.042,21.125,21.218,21.288,21.375,21.458,21.541,21.628,21.708,21.791,21.875,21.958,22.042,22.125,22.218,22.375)
+# set up 3D array
+temparray2 = NULL
+temparray2 = array(dim=c(51,27,2),dimnames=list(stpostal))
+dim(temparray2)  # confirm dim still = 51x27x2
+
+# loop thru each row (state) and put numeric dates in [,,1] and rates in [,,2]
+ 
+for (inx in seq(1,51)) {
+    temparray2[inx,,1] = tempdates
+    tempdata = as.numeric(temprates[inx,])
+    temparray2[inx,,2] = tempdata
+ }
+temparray2[1:3,,]
+
+panelDesc = data.frame(
+  type=c('map','id','ts'),  
+  lab1=c('','','Cum # cases'),
+  lab2=c('','','Feb 2020-Apr 2022'),
+  col1=c(NA,NA,NA),
+  panelData=c(NA,NA,'temparray2')
+ )
+
+# sort by midpoint of dates (= #14)
+micromapST(temprates,rowNames='ab',
+            panelDesc,sortVar=14,ascend=F,
+            plotNames='full',
+            title=c('Cumulative # covid cases by month, Feb 2020 - Apr 2022')
+  )
+
+```
+
+- note the bump up in # cases in fall of 2020 in ND & SD
+- note rise in # cases in early 2022, due to rapid spread of new covid variant
+- simplify the time series by showing a box plot of county rates & arrow from 1st to last case count
+
+```{r Ch5b-micromap9, fig.cap = 'Time Series plots of cumulative # covid cases by month, Feb 2020 - Apr 2022', fig.width = 7, fig.height = 9}
+
+STcovidcaserates = read.csv('data/STCaseRatesFeb242020Apr142022.csv',row.names=2)
+CTYcovidcaserates = read.csv('data/cnty_cRates_04_14_2022.csv',row.names=1)
+head(CTYcovidcaserates,3L)
+covidboxlist = boxplot(split(CTYcovidcaserates$Rates,CTYcovidcaserates$STPostal),plot=FALSE)
+covidboxlist
+
+panelDesc = data.frame(
+  type = c('map','id','arrow','arrow','boxplot'),
+  lab1=c('','','State rates','State rates','County rates Apr 22'),
+  lab2=c('','','Trend Feb 20-Mar 21','Trend Mar 21-Apr 22','(suppressed if 1-9 deaths)'),
+  lab3=c('','','Cases/100,000','Cases/100,000','Cases/100,000'),
+  col1=c(NA,NA,5,18,NA),
+  col2=c(NA,NA,18,31,NA),
+  refVals=c(NA,NA,NA,NA,23804),
+  refTexts=c(NA,NA,NA,NA,'US rate'),
+  panelData=c('','','','','covidboxlist')
+)
+
+micromapST(STcovidcaserates,panelDesc,sortVar=18,ascend=F,
+           title=c('State time trends and county covid rates')
+)
+```
+
+- set of arrows for 1st half of time period is consistent with previous time series plot
+- 2nd set of arrows shows increase during 2nd 1/2 of time period; look at length of bars to see which states rose the most then, a different set of states from the 1st 1/2
+- the county box plots show that in general the county variation within state is small, but there are some county outliers, possibly due to small populations
+
+## Scaled Response Data {#Ch5b-Scaled-Response-Data}
+
+- a common type of data is survey data where responses are on a Likert scale, 
+-    e.g., agree strongly, agree somewhat, neutral, disagree somewhat, disagree strongly
+- micromapST can display these sorts of data in 3 ways: segmenting a full bar into component parts or normalized to 100% total or centered on a particular cutpoint.
+- this 1st micromap is the basic segmented bar for math scores among 8th graders in 2011, collected by Nat Ctr Ed Stats
+
+```{r Ch5b-micromap10, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade', fig.width = 7, fig.height = 9}
+
+library(micromapST)
+# Figure 10 - dots and centered bar (source of code sample for section 4.7)
+
+data("Educ8thData")  # columns = State abbrev, State name, Avg Score, 4 percents as above
+panelDesc = data.frame(                 
+    type=c("map","id","dot","segbar")
+    ,lab1=c("","","Avg. Scores","Math Proficiency")         
+    ,lab2=c("","","","<Basic, Basic, Proficient, Advanced")  
+    ,lab3=c("","","","  % to Left of 0          |    % to Right")  
+    ,col1=c(NA,NA,3,4),col2=c(NA,NA,NA,7)   
+  )
+
+micromapST(Educ8thData,panelDesc,sortVar=3, 
+    title='Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade', 
+             details=list(CBar.varht=FALSE))  
+```
+
+- in this type of display, the % total of all types of responses = 100%, with proportions for each response shown in a different saturation of the hue for that state
+- redo the example, centering between Proficient and Not Proficient 
+
+
+```{r Ch5b-micromap11, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient', fig.width = 7, fig.height = 9}
+
+library(micromapST)
+# Figure 10 - dots and centered bar (source of code sample for section 4.7)
+
+data("Educ8thData")  # columns = State abbrev, State name, Avg Score, 4 percents as above
+panelDesc = data.frame(                 
+    type=c("map","id","dot","ctrbar")
+    ,lab1=c("","","Avg. Scores","Math Proficiency")         
+    ,lab2=c("","","","<Basic, Basic, Proficient, Advanced")  
+    ,lab3=c("","","","  % to Left of 0          |    % to Right")  
+    ,col1=c(NA,NA,3,4),col2=c(NA,NA,NA,7)   
+  )
+
+micromapST(Educ8thData,panelDesc,sortVar=3, 
+    title='Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient', 
+             details=list(CBar.varht=FALSE))  
+```
+
+- centering at proficient/not proficient (the 0 point) allows the reader to judge the lengths of bars to the left (not proficient) and to the right (proficient) of the midline
+- we can see that DC has a very low average test score but isn't that much worse than other states that sort near it; (DC is a 100% urban area so it is in a sense unfair to compare it to whole states)
+- revisit the Maryland data: this time display the same poverty & college education data in a scatter plot
+
+## Scatter Plots {#Ch5b-Scatter-Plots}
+
+```{r Ch5b-micromap12, fig.cap = 'Scatter plot of % residents with income < 150% federal poverty level and % with 4+ years of college', fig.width = 7, fig.height = 9}
+
+library(micromapST)
+
+# Input data files.
+# Data Set # 1
+MDPovEd = read.csv('data/MDPovEducACSData20162020.csv',row.names=3)
+head(MDPovEd)
+panelDesc = data.frame(
+  type=c('mapcum','id','scatdot'),  
+  lab1=c('','','% College by % Pov'),		
+  col1=c(NA,NA,'PctBachDegree'),
+  col2=c(NA,NA,'PctLess150Pov')
+ )
+
+# sort by % college
+micromapST(MDPovEd,rowNames='id',panelDesc,sortVar='PctBachDegree',ascend=F,bordGrp='MarylandBG',
+            plotNames='full',
+            title=c('Maryland counties: % Living < 150% of Poverty Level and % with 4+ Years of College'))  
+```
+
+## Conclusions {#Ch5b-Conclusions}
+
+- a wide range of types of data can be plotted
+- other glyphs can be designed in R (see @CP2010) and added to the package later, e.g., Omernick region plot
+
+JUERGEN:
+
+- Can a user of your package create their own glyph (whatever that may be) and use this for linked micromap plots
+based on micromapST? Or, is it necessary that you create a new glyph type and make it available as part of
+a future release of the package? As an example, I am a huge fan of letter-value plots
+(see https://doi.org/10.1080/10618600.2017.1305277).
+I am not suggesting that you add them to the package. Rather, could a reader who wants to use
+them add them and then use them in the context of micromapST?
+
+
+## Old Instructions - delete
 
 
 As a reminder, see Chapter \@ref(Ch1) for general style requirements
@@ -37,40 +210,6 @@ conditioned choropleth maps,\index{Conditioned choropleth map}
 perceptual group,\index{Perceptual group}
 color blindness,\index{Color blindness},
 and quantile-quantile plot.\index{Quantile-quantile plot}
-
-
-## Main {#Ch5b-Main}
-
-
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch5b-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
-
-
-```{r Ch5b-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
-```
 
 
 ## Further Reading {#Ch5b-FurtherReading}
