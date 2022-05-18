@@ -11,6 +11,21 @@ area that can be color-coded in a linked micromap plot. This chapter provides an
 overview of necessary steps to produce linked micromap plots for point locations 
 to create areas of suitable sizes and to avoid overplotting of nearby point locations.
 
+## Notes [to be deleted later]
+
+To do:
+-Create a function that creates polygons (circles) around points,
+at least allow this function to work with dataframe and sf objects as inputs
+(possible function name `points2circles()`) [this function is now drafted]
+-create another function that will combine the circles with a background map
+(this could be called `create_spatial_points_map()`)
+
+-create function to jitter point locations (before circles are drawn) (this
+function could be called `adjust_points()`)
+-down the road maybe consider being able to jitter point locations within
+a polygon (e.g., so the county seat point location stays within the county 
+polygon)
+
 
 ## Introduction: The challenge of displaying point data using micromaps
 
@@ -82,13 +97,14 @@ should provide examples using real data.
 Here we will be visualizing the locations of the 10 largest cities
 in Asia, and their associated populations. 
 
-Loading necessary R packages
+Loading necessary dependencies
 
 ```{r message = FALSE, warning=FALSE}
 library(micromap)
 library(maptools)
 library(sf)
 library(dplyr)
+source("R/Ch6_functions.R")
 ```
 
 
@@ -126,11 +142,8 @@ an algorithm--later examples can automate that step]
 
 
 ```{r}
-points_sf <- st_as_sf(cities, coords = c("long", "lat"),
-                      crs = "EPSG:4326")
-# create buffer around the points (i.e. circular polygons)
-circles_sf <- st_buffer(points_sf,dist = 400000, nQuadSegs = 4)
-
+circles_sf <- points2circles(cities, coords = c("long", "lat"), 
+                             crs = "EPSG:4326")
 
 ```
 
@@ -242,7 +255,6 @@ mmplot(stat.data=cities,
 ```
 
 
-
 ## Example 2
 
 Additionally, the more complex example could also include map and point data that
@@ -275,7 +287,7 @@ Note the overlap between points
 stadiums <- readRDS("data/Ch6-data/stadiums.RDS")
 head(stadiums)
 
-stadium_circles <- st_buffer(stadiums, dist = 40000, nQuadSegs = 4)
+stadium_circles <- points2circles(stadiums)
 ```
 
 ### Acquire the underlying map
@@ -333,7 +345,24 @@ mmplot(stat.data=st_drop_geometry(stadiums),
 
 ### Jitter stadium locations
 
-Walk through jittering the stadium locations and make a better, final map
+The the `point_repel()` function can be used to repel points that are too 
+close together, so that in this case the cluster of stadiums in London
+don't all over-plot each other. Default arguments in `point_repel()` can be changed
+to adjust the level of repulsion between points. 
+
+```{r}
+stadiums_repelled <- point_repel(stadiums)
+par(mfrow = c(1, 2))
+plot(stadiums$geometry, main = 'original point locations')
+plot(stadiums_repelled$geometry, main = 'repelled points')
+```
+
+Now circles need to be drawn around the points.
+
+```{r}
+
+```
+
 
 ## Further Reading {#Ch6-FurtherReading}
 
