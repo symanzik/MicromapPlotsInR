@@ -287,7 +287,7 @@ Note the overlap between points
 stadiums <- readRDS("data/Ch6-data/stadiums.RDS")
 head(stadiums)
 
-stadium_circles <- points2circles(stadiums)
+stadium_circles <- points2circles(stadiums, radius = 8)
 ```
 
 ### Acquire the underlying map
@@ -296,17 +296,17 @@ stadium_circles <- points2circles(stadiums)
 uk_map <- wrld_simpl[wrld_simpl@data$NAME == "United Kingdom", ]
 uk_map_crop <- raster::crop(uk_map, raster::extent(-5, 50, 0, 56))
 uk_map_sf <- st_as_sf(uk_map_crop)
-uk_map_sf$ID <- NA
+uk_map_sf$stadium <- NA
 ```
 
 ### Combine with points
 
 ```{r}
-stadium_circles$ID <- stadiums$stadium
-stadiums_map1 <- rbind(uk_map_sf['ID'], stadium_circles['ID'])
+
+stadiums_map1 <- rbind(uk_map_sf['stadium'], stadium_circles['stadium'])
 
 stadiums_map_df <- create_map_table(as(stadiums_map1, 'Spatial'), 
-                                    IDcolumn = "ID")
+                                    IDcolumn = "stadium")
 ```
 
 ### Create initial map
@@ -317,13 +317,12 @@ the next section will show how to properly jitter those points
 ```{r Ch6-micromap4, fig.cap = 'Micromap showing stadium locations, note that these maps aren not very readable due to the overlap in locations', fig.width = 5, fig.height = 7}
 mmplot(stat.data=st_drop_geometry(stadiums),
        map.data=stadiums_map_df,
-      panel.types=c("labels", "dot", "map", "labels"),
-       panel.data=list("stadium","capacity", NA, "team"),
+      panel.types=c("labels", "dot", "map"),
+       panel.data=list("stadium","capacity", NA),
        ord.by="capacity", grouping=5,
        map.link=c('stadium', "ID"),
        panel.att = list(
          list(1, panel.width = 1.8),
-         list(4, panel.width = 2.2),
          list(3,
               # the 'ID' column is null for polygons of the underlying basemap
               # so to show those (and therefore show the underlying basemap),
@@ -334,7 +333,7 @@ mmplot(stat.data=st_drop_geometry(stadiums),
               active.border.size = 0.3,
               inactive.border.color = "gray", 
               inactive.border.size = 0.3, 
-              panel.width = 0.6, 
+              panel.width = 1, 
               outer.hull =  FALSE, # shows outside of map
               # this is required to see all map borders:
               nodata.border.color = "black", 
@@ -347,22 +346,54 @@ mmplot(stat.data=st_drop_geometry(stadiums),
 
 The the `point_repel()` function can be used to repel points that are too 
 close together, so that in this case the cluster of stadiums in London
-don't all over-plot each other. Default arguments in `point_repel()` can be changed
-to adjust the level of repulsion between points. 
+don't all over-plot each other. Here some of the default arguments in `point_repel()` 
+were changed (`rep.fact` & `adj.max`) to increase the distance between points.
+The default arguments may need to be adjustment to obtain satisfactory repulsion
+between points. Note that points that are already far apart are not moved. 
 
 ```{r}
-stadiums_repelled <- point_repel(stadiums)
+stadiums_repel <- point_repel(stadiums, rep.fact = 50, adj.max = 1)
 par(mfrow = c(1, 2))
-plot(stadiums$geometry, main = 'original point locations')
-plot(stadiums_repelled$geometry, main = 'repelled points')
+plot(stadiums$geometry, main = 'Original point locations')
+plot(stadiums_repel$geometry, main = 'Repelled points')
 ```
 
 Now circles need to be drawn around the points.
 
 ```{r}
+stadium_circles_repel <- points2circles(stadiums_repel)
 
+stadiums_map_repel <- rbind(uk_map_sf['stadium'], 
+                            stadium_circles_repel['stadium'])
+
+stadiums_map_repel_df <- create_map_table(as(stadiums_map_repel, 'Spatial'), 
+                                    IDcolumn = "stadium")
 ```
 
+
+```{r Ch6-micromap5, fig.cap = 'Micromap showing stadium locations. Here the stadium locations have been moved slightly so that complete overlap of points does not occur. Micromaps can contain two label columns, as seen here where both the stadium name and team name are provided.', fig.width = 7.5, fig.height = 7}
+mmplot(stat.data=st_drop_geometry(stadiums),
+       map.data=stadiums_map_repel_df,
+      panel.types=c("labels", "dot", "map", "labels"),
+       panel.data=list("stadium","capacity", NA, "team"),
+       ord.by="capacity", grouping=5,
+       map.link=c('stadium', "ID"),
+       panel.att = list(
+         list(1, panel.width = 1.8),
+         list(4, panel.width = 1.8, align = 'left'),
+         list(3,
+              map.all = TRUE,
+              active.border.color = 'black', 
+              active.border.size = 0.3,
+              inactive.border.color = "gray", 
+              inactive.border.size = 0.3, 
+              panel.width = 1, 
+              outer.hull =  FALSE, 
+              nodata.border.color = "black", 
+              nodata.border.size = 0.5,
+              outer.hull.size = 0.5))
+)
+```
 
 ## Further Reading {#Ch6-FurtherReading}
 
