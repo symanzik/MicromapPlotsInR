@@ -94,7 +94,7 @@ or provide me with any other way to construct a related bibtex entry.
 
 
 - McManus, Payton, Weber, et al.:
-@Beck2016 (Code at https://github.com/fawda123/micromap_app/tree/v1.0.1,
+@Beck2022 (Code at https://github.com/fawda123/micromap_app/tree/v2.0.0,
 App at https://beckmw.shinyapps.io/micromap_app/),
 @Griffith2014,
 @MPRG2016,
@@ -112,6 +112,7 @@ App at https://beckmw.shinyapps.io/micromap_app/),
 @GDSMGD2015,
 @HPMCSGA2014,
 @HPSCA2016,
+@HSG2003,
 @JoSy2001,
 @LiSy2016ASA,
 @Li2017,
@@ -170,6 +171,7 @@ App at https://evjones.shinyapps.io/FreshwaterProbMonEDA/),
 
 
 @RCore2022
+
 
 Note: 126 micromap references found on Semantic Scholar on 3/23/2022 - see
 https://www.semanticscholar.org/search?q=micromap&sort=relevance.
