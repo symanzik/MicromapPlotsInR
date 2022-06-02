@@ -213,7 +213,75 @@ ggplot() +
 
 ```
 
-The survey designs by VDEQ and FDEP that led to the linked micromaps, Figure \@ref(fig:Ch11-micromapVDEQ) and Figure \@ref(fig:Ch11-micromapFDEP), were more sophisticated than the example of an equal probability draw.  Using a spatially balance probabilistic survey drawn from **spsurvey**\index{R Packages!spsurvey} has two advantages.  First, from a design perspective, one obtains a good spatial coverage of the features to be sampled.  As @OKP2012 noted, users designing a spatially balanced survey often underestimate the effort required to build a single GIS layer having all the attributes needed for such a design.  Second, from an analytical perspective, a local neighborhood variance estimator is used, which outperforms other alternatives, by providing smaller variances, and consequently confidence limits, around the estimated means, totals, percentiles, and cumulative distribution functions from the survey [@SO2004; @OKP2012]. This advantage of the local neighborhood variance estimator over an independent random sample variance estimator has been shown in a river and stream survey estimates of a fish community index of biotic integrity and a qualitative habitat evaluation index, and in a reservoir survey estimates of methane emission rates, which is a greenhouse gas [@SO2004; @BMN2016].  Consequently, in a linked micromap of spatially balanced probabilistic survey results one would have smaller confidence limits displayed around the means or percentiles because of this effect of the local neighborhood variance estimate.
+The survey designs by VDEQ and FDEP that led to the linked micromaps, Figure \@ref(fig:Ch11-micromapVDEQ) and Figure \@ref(fig:Ch11-micromapFDEP), were more sophisticated than the example of an equal probability draw.  Using a spatially balance probabilistic survey drawn from **spsurvey**\index{R Packages!spsurvey} has two advantages.  First, from a design perspective, one obtains a good spatial coverage of the features to be sampled.  As @OKP2012 noted, users designing a spatially balanced survey often underestimate the effort required to build a single GIS layer having all the attributes needed for such a design.  Second, from an analytical perspective, a local neighborhood variance estimator is used, which outperforms other alternatives, by providing smaller variances, and consequently confidence limits, around the estimated means, totals, percentiles, and cumulative distribution functions from the survey [@SO2004; @OKP2012]. This advantage of the local neighborhood variance estimator over an independent random sample variance estimator has been shown in a river and stream survey estimates of a fish community index of biotic integrity and a qualitative habitat evaluation index, and in reservoir survey estimates of chlorphyll-a, a measure of productivity, temperature, secchi depth, a measure of water clarity, and methane emission rates, which is a greenhouse gas [@SO2003; @SO2004; @BMN2016].  Consequently, in a linked micromap of spatially balanced probabilistic survey results one would have smaller confidence limits displayed around the means or percentiles because of this effect of the local neighborhood variance estimate.  Just such a result is seen below for 25 basins in West Virginia with median estimates and 95% confidence limits for specific conductivity, a measure of the ionic content of the sampled rivers and streams.  The left statistical panel has confidence limits using the local neighborhood variance estimator, and the right panel used the simple random sample variance estimator.  Some of the percentage reductions in confidence limits were quite modest. The Lower New basin had only ~ a 3% reduction; whereas others reductions where quite large, such as the Upper Ohio North/Upper Ohio South basin having a ~56% reduction.  The average percentage reduction among the 25 basins was ~28%.  The independent random sample variance estimator does not take into account any spatial patterning in the sampled survey responses [@SO2003].  If there is spatial patterning, such that responses at two sites close to each other are more similar than responses at two sites further apart, then that patterning is incorporated into the local neighborhood variance estimator [@SO2003].
+
+```{r Ch11-micromapWVDEP, fig.width = 7, fig.height = 6, fig.cap = 'A West Virginia Linked Micromap.',eval = TRUE, echo = FALSE}
+library(sf)
+library(micromap)
+
+# sf data frame with geospatial and statistical data
+WV_Basins <- readRDS("data/wvbasins2.rds")
+class(WV_Basins)
+
+mmplot(map.data = WV_Basins,
+       panel.types = c('dot_legend', 'labels', 'dot_cl', 'dot_cl', 'map'),
+       panel.data=list(
+         NA,
+         'alt.name',
+         list('Cond_med', 'Cond_LCB95Pct', 'Cond_UCB95Pct'),
+         list('Cond_med_srs', 'Cond_LCB95Pct_srs', 'Cond_UCB95Pct_srs'),
+         NA),
+       ord.by = 'Cond_med',
+       rev.ord = TRUE,
+       grouping = 5,
+       median.row = FALSE,
+       
+       plot.height=9, plot.width=6.8,
+      #colors = c(hdColors2[1], hdColors2[2], 
+                                #hdColors2[3], hdColors2[4], 
+                                #hdColors2[5]),
+       colors = brewer.pal(6,"Blues")[-1],
+       #colors = colorscheme,
+       #colors=brewer.pal(5, "Spectral"),
+
+      panel.att=list(list(1, panel.width=1, point.type=20, point.size=2,
+                           point.border=FALSE, xaxis.title.size=1), 
+                      
+                      list(2, header='WVDEP\nSubbasins', panel.width=1.25,
+                           align='left', text.size=.8),
+                      list(3, header='Specific\nConductance',
+                           graph.bgcolor='white',
+                           xaxis.ticks=list(0, 250, 500, 750),
+                           xaxis.labels=list(0, 250, 500, 750),
+                           xaxis.labels.size=1,
+                           xaxis.title='microSiemens per cm',
+                           #xaxis.labels.angle=90,
+                           xaxis.title.size=1,panel.width=1.5,
+                          point.border=FALSE,
+                          line.width=1.25,
+                          point.size=1.5),
+                      
+                      list(4, header='Specific\nConductance',
+                           graph.bgcolor='white',
+                           xaxis.ticks=c(0, 250, 500, 750),
+                           xaxis.labels=c(0, 250, 500, 750),
+                           xaxis.labels.size=1,
+                           #xaxis.labels.angle=90,
+                           xaxis.title='microSiemens per cm',
+                           xaxis.title.size=1,
+                           panel.width=1.5,
+                           point.border=FALSE,
+                          line.width=1.25,
+                          point.size=1.5),
+                      
+                      list(5, header='Light Gray Means\n Highlighted Above',
+                           inactive.border.color=gray(.7),
+                           inactive.border.size=2,
+                            panel.width=1.5)))
+
+```
+
+Two final points about the West Virginia Department of Environmental Protect linked micromap should be noted. First, we used a simple features object, **sf**\index{R Packages!sf}, that contained both the geospatial data and the statistical of the basins. Consequently, we only had to specify the `map.data` argument, in contrast to the Virginia and Florida examples, where we used both the `map.data` and `stat.data` syntax.  Second, the basins in the linked micromap were smoothed, that is their polygon boundaries generalized, so they would draw faster.
 
 ## Further Reading {#Ch11-FurtherReading}
 
