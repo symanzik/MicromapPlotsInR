@@ -46,28 +46,33 @@ boundaries of interest.
 Broadly the following steps need be taken to display point locations
 on micromaps.
 
-\begin{enumerate}
-   \item Obtain coordinates of the point locations of interest along with 
-  the corresponding data that you wish to display.
-  \item Obtain geographic data for the underlying base map that the user wishes
-  to display.
-  \item If needed, adjust the locations of points that are close to each other. Otherwise, if points are very close together they may almost entirely overlap on the final map,
-  making them hard to see.
-  \item Polygons (circles, or other shape) need to be created around points. 
-  Multiple R packages offer ways to create buffers (polygons) around objects,
-  and the `points2circles()` function (described below) provides a convenient wrapper to do this.
-  \item The base map and polygons representing point locations need to be 
-  combined into single object.
-  \item Flatten the object created in the previous step into a dataframe 
-  that can be used in the `mmplot()` function from the
-  **micromap** package.
-  \item Create micromap.
-  \item Iterate until the size of the circles representing point locations
-  and their level of overlap is acceptable .
-\end{enumerate}
+1. Obtain coordinates of the point locations of interest along with 
+the corresponding data that you wish to display.
+
+1. Obtain geographic data for the underlying base map that the user wishes
+to display.
+
+1. If needed, adjust the locations of points that are close to each other. Otherwise, if points are very close together they may almost entirely overlap on the final map,
+making them hard to see.
+
+1. Polygons (circles, or other shape) need to be created around points. 
+Multiple R packages offer ways to create buffers (polygons) around objects,
+and the `points2circles()` function (described below) provides a convenient wrapper to do this.
+
+1. The base map and polygons representing point locations need to be 
+combined into single object.
+
+1. Flatten the object created in the previous step into a dataframe 
+that can be used in the `mmplot()` function from the
+**micromap** package.
+
+1. Create micromap.
+
+1. Iterate until the size of the circles representing point locations
+and their level of overlap is acceptable .
 
 We walk through the steps needed to make micromaps using three separate datasets. 
-In section \@ref(Ch6-Example1) we create a micromap showing
+In Section \@ref(Ch6-Example1), we create a micromap showing
 the populations of large cities across Asia. Section \@ref(Ch6-Example2) provides
 a more complex example where point locations are manually adjusted to limit overlap, and section
 \@ref(Ch6-Example3) provides an example where point locations are repelled
