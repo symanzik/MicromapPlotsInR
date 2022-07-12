@@ -140,68 +140,25 @@ Spatially balanced probabilistic surveys are often used to draw samples for crea
 
 Three steps are required to draw a spatially balanced probabilistic survey using the R package **spsurvey**\index{R Packages!spsurvey}: 1) reading in the sample frame, which is a GIS file in the format of shapefile or an R simple feature, or sf, object, 2) specifying the design, and 3) selecting the sample [@OKP2012].  The example sample frame we will use contains points for 3,190 lakes in the state of Oregon in the U.S. and is the same sample frame used by @OKP2012, where readers can get more details on the Generalized Random Tessellation Stratified (GRTS) algorithm. Unlike other spatially balanced sampling algorithms, GRTS can draw samples from sample frames of points, such as lakes, linear networks, such as rivers and streams, or polygons, such as estuaries [@DKOW2022].  For the Oregon lakes, we will draw an equal probability sample of 50 lakes where each site has an equal inclusion probability. This equal probability sample can more accurately represent the lake target population by accounting for the natural spatial aggregation of the lakes on the landscape.
 
-We begin by plotting the border of Oregon Figure \@ref(fig:Ch11-micromap-oregon), and then points representing the lakes in Oregon Figure \@ref(fig:Ch11-micromap-lakes).  Before we can plot these two simple features together, we first have to check that they have the same coordinate reference system otherwise the two sf objects will not align.  We check that by submitting `st_crs(OR) == st_crs(OR_lakes)` using the st_crs function from the sf package, which returns FALSE.  Submitting `OR_lakes <- st_transform(OR_lakes, st_crs(OR))` transforms the lakes data frame so it now has the same coordinate reference system as the Oregon data frame.  Now, both the Oregon border and lakes can be plotted together Figure \@ref(fig:Ch11-micromap-oregon-lakes).
-
-```{r Ch11-micromap-oregon, eval = TRUE, fig.cap = 'Plot of Oregon'}
-library(spsurvey)
-library(tidyverse)
-library(USAboundaries)
-if (!("USAboundariesData" %in% rownames(installed.packages())))
-  install.packages(pkgs = "USAboundariesData", repos = "https://ropensci.r-universe.dev", type = "source")
-library(USAboundariesData)
-
-state_names <- c("Oregon")
-OR<-us_states(resolution = "high", states = "Oregon") 
-
-plot(OR$geometry, main = "Oregon")
-```
-
-```{r Ch11-micromap-lakes, eval = TRUE, fig.cap = 'Plot of Lakes in Oregon'}
-
-OR_lakes <- readRDS("data/OR_lakes.rds")
-
-plot(OR_lakes$geometry, main='Oregon Lakes')
-```
-
-```{r Ch11-micromap-crs-check1, eval = FALSE, echo = FALSE}
-# do the two sf objects have the same crs (coordinate reference system)?
-st_crs(OR) == st_crs(OR_lakes)
-
-# FALSE, which means an st_transform is needed so they have the same crs
-
-OR_lakes <- st_transform(OR_lakes, st_crs(OR))
-
-st_crs(OR) == st_crs(OR_lakes)
-# TRUE is now returned
-```
+We begin by plotting the  both the Oregon border and lakes can be plotted together Figure \@ref(fig:Ch11-micromap-oregon-lakes). Note that the Oregon border and lakes are sf objects and for them to be plotted together they need to have the same coordinate reference system or crs. This condition is evaluated by `st_crs(OR) == st_crs(OR_lakes)`.  
 
 ```{r Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
+
+library(spsurvey)
+library(tidyverse)
+
+load("OR_spsurvey.RData")
+
 ggplot() + 
   geom_sf(data=OR_lakes,  color="blue") +
   geom_sf(data=OR,  color="black", fill=NA) +
-  labs(title="Oregon Lakes") +
+  labs(title="Oregon Lakes:  Albers Equal Area Projection") +
   theme_bw() 
 ```
 
-The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. Initially, we get an error message because the sample frame is in  geographic coordinates, latitude and longitude, but instead needs to be in projected coordinates.  The assignment `OR_lakes <- st_transform(OR_lakes, crs = 5070)` put the sample frame into Albers equal area projected coordinates so then a spatially balanced sample can be drawn.
+The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. That function explicitly incorporates spatial locations into the survey design.  Consequently, the sample frame needs to be in a projected coordinate reference system such as an Albers or UTM projection so a spatially balanced sample can be drawn [@OKP2012]. An equal-probability draw of 50 lakes is done by specifying `eqprob <- grts(OR_lakes, n_base = 50)`. That sample of 50 lakes is shown in Figure \@ref(fig:Ch11-micromap-spsurvey-lakes)
 
-```{r Ch11-micromap-crs-check2, eval = TRUE, echo = FALSE}
-OR_lakes <- st_transform(OR_lakes, crs = 5070)
-OR_lakes
-```
-
-```{r Ch11-micromap-spsurvey-correct, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates. Red points are the GRTS sample and blue points are the sample frame.'}
-
-set.seed(20220502)
-eqprob <- grts(OR_lakes, n_base = 50)
-
-# head(eqprob$sites_base)
-
-eqprob_base <- eqprob$sites_base
-
-OR <- st_transform(OR, st_crs(eqprob_base))
-
-OR_lakes <- st_transform(OR_lakes, st_crs(eqprob_base))
+```{r Ch11-micromap-spsurvey-lakes, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates. Red points are the GRTS sample and blue points are the sample frame.'}
 
 ggplot() + 
   geom_sf(data=OR_lakes, color = "blue") +
@@ -212,7 +169,7 @@ ggplot() +
 
 ```
 
-We demonstrated a practical example of how to import a population dataset and used the spsurvey to create a spatially balanced sample.  This sample can then be used to collect and summarize data that can be further displayed with a linked micromap.  Next, we demonstrate the value of using spsurvey for increasing confidence in summary statistics with an example from West Virginia Department of Environment Protection (WVDEP) [@MPRG2016].
+We demonstrated a practical example of how to import a target population dataset and used the spsurvey to create a spatially balanced sample.  This sample can then be used to collect and summarize data that can be further displayed with a linked micromap.  Next, we demonstrate the value of using spsurvey for increasing confidence in summary statistics with an example from West Virginia Department of Environment Protection (WVDEP) [@MPRG2016].
 
 The survey designs by VDEQ and FDEP that led to the linked micromaps, Figure \@ref(fig:Ch11-micromapVDEQ) and Figure \@ref(fig:Ch11-micromapFDEP), were more sophisticated than the example of an equal probability draw.  Using a spatially balance probabilistic survey drawn from **spsurvey**\index{R Packages!spsurvey} has two advantages.  First, from a design perspective, one obtains a good spatial coverage of the features to be sampled.  As @OKP2012 noted, users designing a spatially balanced survey often underestimate the effort required to build a single GIS layer having all the attributes needed for such a design.  Second, from an analytical perspective, a local neighborhood variance estimator is used, which outperforms other alternatives, by providing smaller variances, and consequently confidence limits, around the estimated means, totals, percentiles, and cumulative distribution functions from the survey [@SO2004; @OKP2012]. This advantage of the local neighborhood variance estimator over an independent random sample variance estimator has been shown in a river and stream survey estimates of a fish community index of biotic integrity and a qualitative habitat evaluation index, and in reservoir survey estimates of chlorphyll-a, a measure of productivity, temperature, secchi depth, a measure of water clarity, and methane emission rates, which is a greenhouse gas [@SO2003; @SO2004; @BMN2016].  Consequently, in a linked micromap of spatially balanced probabilistic survey results one would have smaller confidence limits displayed around the means or percentiles because of this effect of the local neighborhood variance estimate.  Just such a result is seen below for 25 basins in West Virginia with median estimates and 95% confidence limits for specific conductivity, a measure of the ionic content of the sampled rivers and streams.  The left statistical panel has confidence limits using the local neighborhood variance estimator, and the right panel used the simple random sample variance estimator.  Some of the percentage reductions in confidence limits were quite modest. The Lower New basin had only ~ a 3% reduction; whereas others reductions were quite large, such as the Upper Ohio North/Upper Ohio South basin having a ~56% reduction.  The average percentage reduction among the 25 basins was ~28%.  The independent random sample variance estimator does not take into account any spatial patterning in the sampled survey responses [@SO2003].  If there is spatial patterning, such that responses at two sites close to each other are more similar than responses at two sites further apart, then that patterning is incorporated into the local neighborhood variance estimator [@SO2003].
 
