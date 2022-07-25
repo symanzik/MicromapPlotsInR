@@ -39,19 +39,19 @@ The shapefiles for the micro poster plot is the boundaries of the areas of inter
 <!-- The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package.  -->
 The rectangles that represent the AOIs are drawn by mouse clicking two vertices using the _locator_ function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. The AOIs are named by the analyst, 
 <!-- The \textit{DrawAOIs} function used __locator__ function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click.  -->
-Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \@ref(tab:Ch10-aoi_data) shows two of the AOIs definitions considered as the shapefile for the poster and will be used for the microposter plot creation. 
+Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \@ref(tab:Ch10-aoi-data) shows two of the AOIs definitions considered as the shapefile for the poster and will be used for the microposter plot creation. 
 <!-- The code for **EyeTrackR**\index{R Packages!EyeTrackR} R package is available on Github (https://github.com/ChunyangCLi/EyeTrackR.git). -->
 
-The user can create self-defined shapefile based on their own needs, for example, defining different locations of the stores or spots in a baseball field. The output similar to the AOIs from Table \@ref(tab:Ch10-aoi_data) can be directly used to generate the micromap plot, which contains the names of the AOIs and the x, y coordinates of the vertices of the AOIs. The coordinates start with one vertex and end with the coordinates of the same vertex. Each AOI is separated by a line with "NA"s. 
+The user can create self-defined shapefile based on their own needs, for example, defining different locations of the stores or spots in a baseball field. The output similar to the AOIs from Table \@ref(tab:Ch10-aoi-data) can be directly used to generate the micromap plot, which contains the names of the AOIs and the x, y coordinates of the vertices of the AOIs. The coordinates start with one vertex and end with the coordinates of the same vertex. Each AOI is separated by a line with "NA"s. 
 According to @CP2010 and @PMWOK2015JSS, "the polygons displayed in the maps of micromaps only need to be detailed enough to convey shape and relative position of the areas and provide a spatial framework by identifying neighboring polygons". 
 <!-- If the polygons one is interested to create are all rectangles, the _DrawAOIs_ function from base R can be used to extract the point coordinate in order to create the shape file.  -->
 <!-- Here is the code we used to create poster shape files for eye tracking data. -->
 Twelve AOIs are defined on the poster image and the shape data is saved as``AOIName.rda''.
 
 
-```{r Ch10-aoi_data, eval = TRUE, echo = FALSE}
+```{r Ch10-aoi-data, eval = TRUE, echo = FALSE}
 
-RegionName <- read.csv("ch10/RegionName.csv")
+RegionName <- read.csv("data/Ch10/RegionName.csv")
 # load(file = "fig_10/RegionName.RData")
 
 knitr::kable(
@@ -63,20 +63,20 @@ knitr::kable(
 ```
 
 
-Figure\@ref(fig:Ch10-poster_AOI) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs, so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
+Figure\@ref(fig:Ch10-poster-AOI) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs, so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
 
 
-```{r Ch10-poster_AOI, fig.cap = 'Poster with defined AOIs.', out.width = '90%', eval = TRUE, echo = FALSE}
+```{r Ch10-poster-AOI, fig.cap = 'Poster with defined AOIs.', out.width = '90%', eval = TRUE, echo = FALSE}
 
 options(knitr.graphics.auto_pdf = TRUE)
-knitr::include_graphics("ch10/AOI_boxes.pdf")
+knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
 
 #### Eye tracking data feature extractions
 
 The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create linked micromap plot, the data features should be extracted based on the defined Region of Interests or AOIs. Different features of eye tracking data are extracted in terms of the defined AOIs, such as how long the participant has spent and how many times the participant has visited each AOI, eye movement speed from one focus point to another in pixels within each AOIs and pupil radiuses for each visit at the corresponding AOI. 
 
-The resulting datasets described in the above sections are provided to create a sample linked micromap plot or linked micro poster plot:  _AOIName_\index{Datasets!AOIName} is the shapefile; _locations_testing_\index{Datasets!locations_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; _posterdat.all_\index{Datasets!posterdat.all} is the list with features extracted from _locations_testing_ dataset. _Posterdat.all_ contains three lists: 1. A dataframe with three columns: section (AOI names), visits or time the participant spent on each AOI (in seconds), and visits.num indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
+The resulting datasets described in the above sections are provided to create a sample linked micromap plot or linked micro poster plot:  _AOIName_\index{Datasets!AOIName} is the shapefile; _locations_testing_\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; _posterdat.all_\index{Datasets!posterdat.all} is the list with features extracted from _locations_testing_ dataset. _Posterdat.all_ contains three lists: 1. A dataframe with three columns: section (AOI names), visits or time the participant spent on each AOI (in seconds), and visits.num indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
 
 
 ### Linked microposter plot creation
@@ -90,7 +90,7 @@ First, the user needs to figure out a few questions: What panels are there in th
 A vector of panel plot types are created to store the designed panel types. Then a list of column attributes are created to specify the order of the panels from left to right using a _col.num_. For the poster panel, _cumulate_ is an attribute that determines if one wants cumulative pattern or not. For each panel, one needs to specify the header of the panel, and the font of the labeling. For the data panels, the data needs to be specified. Below is the code how the linked microposter plot panels are specified. Here we are creating three data panels: two dot plot panels representing number of visits and length of visits, and one boxplot panel representing pupil data. The poster, legend and the data panels are presented from left to right. After the panel types and attributes are specified, a quick check is conducted to make sure that all the panel types one plans to plot are specified. 
 
 
-```{r Ch10-panel_design}
+```{r Ch10-panel-design}
 
 panel.types = c("poster", "legend", "dot", "dot", "boxplot")
 
@@ -115,11 +115,11 @@ if (length(panel.types) < columns){
 After specifying the panels, the image/poster and data need to be loaded. The poster image is changed to grayscale. We used **imager**\index{R Packages!imager} R package for the poster image processing such as changing the colored poster to grayscale in order to lay other colors on top. The user can replace poster with other images and replace eye tracking data with other data types. 
 
 
-```{r Ch10-load_data}
+```{r Ch10-load-data}
 library(imager)
 
-load(file = "ch10/posterdat.all.rda")
-poster.loc = "ch10/poster_colored.jpg"
+load(file = "data/Ch10/posterdat.all.rda")
+poster.loc = "img/Ch10-poster_colored.jpg"
 posterdat = posterdat.all[[1]]
 names(columns.att) = panel.types
 poster = imager::load.image(poster.loc)
@@ -132,8 +132,8 @@ poster = imager::grayscale(poster)
 The shape file, i.e. data for the definitions of AOIs, is loaded. The AOIs are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI "Blank" is added to the shape file with its vertices defined as 0s. A polygon for the entire poster is created after the creation and loading the polygons for all the AOIs.   
 
 
-```{r Ch10-load_shapefile}
-load("ch10/AOIName.rda")
+```{r Ch10-load-shapefile}
+load("data/Ch10/AOIName.rda")
 posterVBorders = AOIName
 
 # create shape data for blank and add it to poster shapefile
@@ -155,7 +155,7 @@ colnames(nationVBorders) = c("x", "y")
 The user can specify how they want the rows to be sorted by, i.e., which column to order by. In this case, can choose one from the three variables we visualize: number of visits (visits.num), length of visits (visits) or pupil radiuses (pupildat) to sort by. The variable ``visits'' is chosen to sort the rows for the plot as an example. The code is also provided if one wants to sort the rows by the other two variables.  
 
 
-```{r Ch10-sort_rows}
+```{r Ch10-sort-rows}
 
 sortby = "visits"
 decreasing = TRUE
@@ -183,8 +183,8 @@ The quickest approach is to use automatic layout and choose different partitioni
 
 
 
-```{r Ch10-panel_layout}
-source("ch10/SharedFunctions.R")
+```{r Ch10-panel-layout}
+source("R/Ch10_SharedFunctions.R")
 stateDataId = row.names(posterdat) 
 Layout = NA
 MedianRow = TRUE
@@ -225,7 +225,7 @@ if (MedianRow == FALSE){
 Details is a list structure that contains the variables and values for the detailed layout of the plot. _ArrangePanels_ function is able to automatically determine the start and end rows for each plot groups given the input: iBegin and iEnd. The content are arranged into 3 perceptual groups. 
 
 
-```{r Ch10-panel_layout and plot indexes}
+```{r Ch10-panel-layout-and-plot-indexes}
 
 panel.width = c(2.9, 2.9, 2.9, 2.9, 2.9)
 panels = panelLayout(nrow = rows, ncol = columns, topMargin = details$top, bottomMargin = details$bot, leftMargin = details$left, rightMargin = details$right, rowSep = rep(0.01, rows + 1), rowSize = rowsize,
@@ -249,7 +249,7 @@ The microposter column with small posters is plotted with highlights according t
 * pen: the index to determine which color to use in the selected color scheme "hdColors".
 * past: index for cumulative AOIs shown above. 
 
-```{r Ch10-crerate_microposter}
+```{r Ch10-create-microposter}
 
 microposters <- function( panel.col,
                          cumulate = TRUE,
@@ -363,7 +363,7 @@ microposters <- function( panel.col,
 Now we can apply the function to create our first column: microposter column. The color series are selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, 5 colors are used in the ``Accent'' color series, since we have five rows at most for each perceptual group. Multiple microposter columns can be created if one specify them.
 
 
-```{r Ch10-create_microposters, fig.cap = 'Plot posters.'}
+```{r Ch10-create-microposters, fig.cap = 'Plot posters.'}
     
 hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
 
@@ -399,7 +399,7 @@ hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
 After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function _m.labels_ to make the plotting process cleaner and easier to reuse. The function is structured similarly as the _microposters_ function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. Then we create the labels with a for-loop in the code based on the perceptual groups. The ``Blank'' AOI is defined separately as we want it to be white color, which is not in the color series we chose. 
 
 
-```{r Ch10-crerate_label_function}
+```{r Ch10-crerate-label-function}
 
 m.labels <- function(panel.col,
                      title,
@@ -460,7 +460,7 @@ m.labels <- function(panel.col,
 
 
 Now the function can be executed and the labels and the legends column can be plotted.   
-```{r Ch10-plot_labels, eval = F}
+```{r Ch10-plot-labels, eval = F}
 
 if (sum(panel.types == "legend") >= 1){
 
@@ -488,7 +488,7 @@ if (sum(panel.types == "legend") >= 1){
   }
 ```
 
-```{r Ch10-create_microposters_and_labels, echo = F, fig.cap = 'Plot labels.'}
+```{r Ch10-create-microposters-and-labels, echo = F, fig.cap = 'Plot labels.'}
     
 hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
 
