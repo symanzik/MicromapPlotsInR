@@ -49,7 +49,7 @@ or provide me with any other way to construct a related bibtex entry.
 
 - Carr, Pickle, Bell, et al.:
 @BHPW2006,
-@OCCP1996 (Create scan from JSM 1996 Abstract Book),
+@OCCP1996,
 @CaPi1996,
 @COCPC1998,
 @COPC1998,
@@ -106,7 +106,7 @@ App at https://beckmw.shinyapps.io/micromap_app/),
 
 
 - Symanzik et al.:
-@Chapala2005 (Locate printed MS Report),
+@Chapala2005,
 @GGMS2008,
 @Gebreab2010,
 @GDSMGD2015,

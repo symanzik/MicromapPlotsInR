@@ -147,7 +147,7 @@ We begin by plotting the  both the Oregon border and lakes can be plotted togeth
 library(spsurvey)
 library(tidyverse)
 
-load("OR_spsurvey.RData")
+load("data/OR_spsurvey.RData")
 
 ggplot() + 
   geom_sf(data=OR_lakes,  color="blue") +
