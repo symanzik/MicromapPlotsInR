@@ -71,7 +71,7 @@ to be colored in the maps. This spatial boundary data typically comes in the for
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
 boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
 provided as external shapefiles\index{Shapefiles}. We will also see in Chapter \@ref(Ch4) how
-to simplify complex boundaries, enlarge small subareas in the maps, and move subareas that are far away closer
+to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
 to the main area of the map.
 
 2. **Linking Spatial Boundary Data and Statistical Data**: To link spatial boundary data and statistical data, 
@@ -162,8 +162,8 @@ have to be used for linking the two data sets. For the _USstates_\index{Datasets
 this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for DC).
 The resulting `statePolys` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
-Note that there are typically more rows in this data frame than there are spatial subareas.
-This is because many spatial subareas consist of more than just one boundary, e.g., in the
+Note that there are typically more rows in this data frame than there are spatial subregions.
+This is because many spatial subregions consist of more than just one boundary, e.g., in the
 presence of islands or if a land mass is split into more than one area, e.g., as in Michigan in the US.
 
 
@@ -189,8 +189,8 @@ two data sets. Here, this is the `StateAb` variable.
 The last expression in the following R code verifies that there is indeed at least one matching ID 
 in the `statePolys` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
 Mismatching or missing IDs in the statistical data frame may cause
-that data for some subareas do not appear
-on any of the maps later on or that some subareas shown on the maps do not get colored in any of the maps.
+that data for some subregions do not appear
+on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
 While this often can be contributed to missing data in the statistical data frame, e.g., there is
 only data for the 50 states but not for Washington, D.C., mismatching identifiers also can be
 the underlying reason (e.g., if the statistical data frame uses `D.C.` as ID while
@@ -237,7 +237,7 @@ A list is necessary for this argument as some of the data itself can be lists as
 see in some examples XXXX later on.
 The `dot_legend` simply shows a plotting symbol in a certain color that represents that row in
 the linked micromap plot\index{Linked micromap plot}. Thus, no further data is needed and `NA`
-is assigned. `labels` requires some text argument, typically some identifiers of the subareas
+is assigned. `labels` requires some text argument, typically some identifiers of the subregions
 in the maps. Here `state` from _edPov_ is used. 
 The variables `pov` and `ed` from _edPov_ are used for the statistical displays in columns three and four.
 It should be noted that all data specified in `panel.data` by default is taken from the
@@ -257,8 +257,8 @@ shown in some examples XXXX later on.
 
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
-overall --- ten with five subareas and one with just one subarea. This is due to the fact
-that there are 51 subareas overall: The 50 US states and Washington, D.C.
+overall --- ten with five subregions and one with just one subregion. This is due to the fact
+that there are 51 subregions overall: The 50 US states and Washington, D.C.
 We abstain from interpreting this figure at this stage, but we will provide some
 helpful interpretation once we have created the last refined version of this figure
 in the next step.
@@ -284,14 +284,14 @@ We continue with the draft linked micromap plot\index{Linked micromap plot} from
 step and refine it in multiple small steps. The refinement should only be started once
 functional R code has been obtained in the previous step.
 
-First, we get rid of the eleventh perceptual group (with just one subarea) and introduce
+First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subareas is odd such as for the 51 states (and D.C.) here.
+number of subregions is odd such as for the 51 states (and D.C.) here.
 Here, Wyoming is the state shown in the median row. It has the 
-26$^th$ highest (or lowest) value for the sorting variable, i.e., `pov`.
+26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
 It does not appear in a map by itself, but rather is added to the perceptual
 groups above and below the median row in a neutral color, 
-thus increasing the number of subareas shown in each of these two maps by one (i.e., six here)
+thus increasing the number of subregions shown in each of these two maps by one (i.e., six here)
 Also, we reverse the sorting order via `rev.ord = TRUE`. 
 Now the sorting of the rows goes from largest (on top) to
 smallest (at the bottom).
@@ -368,7 +368,7 @@ The resulting linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-refining3).
 
 
-```{r Ch2-refining3, fig.cap = 'Third refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to perceptual groups with different numbers of subareas and the vertical alignment of rows in the middle of the plot. Also, `labels` are aligned on the left.', fig.width = 7, fig.height = 9}
+```{r Ch2-refining3, fig.cap = 'Third refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to perceptual groups with different numbers of subregions and the vertical alignment of rows in the middle of the plot. Also, `labels` are aligned on the left.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
   map.data = statePolys,
@@ -388,7 +388,7 @@ lmplot(
 After this experiment with a different grouping, we revert back to the more traditional grouping
 of ten perceptual groups with five rows each and a median row that is frequently used
 for the 50 US states (and D.C.). What we want to discuss next is the choice of colors
-for the subareas in each map (and thus for the `dot_legend` appearance in the
+for the subregions in each map (and thus for the `dot_legend` appearance in the
 `panel.type` argument as well). The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
 Thus, when `grouping = 5` as in Figures \@ref(fig:Ch2-creatingdraft)-\@ref(fig:Ch2-refining2),
@@ -425,7 +425,7 @@ that is also colorblind safe\index{Colors!Colorblind safe} and print friendly,\i
 obtained via `colors = brewer.pal(5, "BrBG")`.
 
 
-```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subareas.', fig.width = 7, fig.height = 9}
+```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subregions.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
   map.data = statePolys,
@@ -464,15 +464,15 @@ to considerably increase or decrease the numeric value of that element or change
 Here, we only want to explain the purpose of the `fill.regions` element with the matching `header` element
 in the list for column `1`, i.e., the `map` column:
 The setting `fill.regions = "aggregate"` (which in fact is the default setting)
-fills in the subareas from all previous perceptual groups in the
+fills in the subregions from all previous perceptual groups in the
 subsequent perceptual groups. This filing proceeds from
 the top perceptual group to the bottom perceptual group by sequentially
-filling the subareas that have already been displayed.
-Thus, in the map for teh final perceptual group at the bottom, all subareas have been filled.
+filling the subregions that have already been displayed.
+Thus, in the map for teh final perceptual group at the bottom, all subregions have been filled.
 The text in the `header` is used to communicate this information to the reader.
-Alternatively, the setting `fill.regions = "with data"` only fills those subareas
+Alternatively, the setting `fill.regions = "with data"` only fills those subregions
 in a map that actually show data in that perceptual group. 
-No additional subareas are filled in any of the maps.
+No additional subregions are filled in any of the maps.
 Another setting for `fill.regions` is discussed in the next refinement step.
 
 
@@ -548,15 +548,15 @@ but the actual number of near-optimal axis labels may differ slightly. The reade
 
 Second, we use the setting `fill.regions = "two ended"`. This setting makes most sense when
 `median.row = TRUE` (as is the case here) and the focus of the maps is to 
-indicate which subareas are above or below the median value
+indicate which subregions are above or below the median value
 of the variable specified in the `ord.by` argument (here `ed`).
 Similar to the setting `fill.regions = "aggregate"`,
-the subareas from all previous perceptual groups are filled in the
+the subregions from all previous perceptual groups are filled in the
 subsequent perceptual groups. This filing proceeds from
 the top perceptual group to the median row 
 and from the bottom perceptual group to the median row
 by sequentially
-filling the subareas that have already been displayed on the more extreme ends.
+filling the subregions that have already been displayed on the more extreme ends.
 The text in the `header` has been updated to communicate this information to the reader.
 
 Third, we reduce the margin space between some of the columns via the
