@@ -142,7 +142,7 @@ Three steps are required to draw a spatially balanced probabilistic survey using
 
 We begin by plotting the  both the Oregon border and lakes can be plotted together Figure \@ref(fig:Ch11-micromap-oregon-lakes). Note that the Oregon border and lakes are sf objects and for them to be plotted together they need to have the same coordinate reference system or crs. This condition is evaluated by `st_crs(OR) == st_crs(OR_lakes)`.  
 
-```{r Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Combining Oregon Border and Oregon Lakes'}
+```{r Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Map of Oregon Lakes, with lakes represented as their centroids. The simple features object of the 3190 lakes is the sample frame from which the Generalized Random Tessellation Stratified function draws an n = 50 lakes for a spatially balanced probabilistic survey. '}
 
 library(spsurvey)
 library(tidyverse)
@@ -173,7 +173,7 @@ We demonstrated a practical example of how to import a target population dataset
 
 The survey designs by VDEQ and FDEP that led to the linked micromaps, Figure \@ref(fig:Ch11-micromapVDEQ) and Figure \@ref(fig:Ch11-micromapFDEP), were more sophisticated than the example of an equal probability draw.  Using a spatially balance probabilistic survey drawn from **spsurvey**\index{R Packages!spsurvey} has two advantages.  First, from a design perspective, one obtains a good spatial coverage of the features to be sampled.  As @OKP2012 noted, users designing a spatially balanced survey often underestimate the effort required to build a single GIS layer having all the attributes needed for such a design.  Second, from an analytical perspective, a local neighborhood variance estimator is used, which outperforms other alternatives, by providing smaller variances, and consequently confidence limits, around the estimated means, totals, percentiles, and cumulative distribution functions from the survey [@SO2004; @OKP2012]. This advantage of the local neighborhood variance estimator over an independent random sample variance estimator has been shown in a river and stream survey estimates of a fish community index of biotic integrity and a qualitative habitat evaluation index, and in reservoir survey estimates of chlorphyll-a, a measure of productivity, temperature, secchi depth, a measure of water clarity, and methane emission rates, which is a greenhouse gas [@SO2003; @SO2004; @BMN2016].  Consequently, in a linked micromap of spatially balanced probabilistic survey results one would have smaller confidence limits displayed around the means or percentiles because of this effect of the local neighborhood variance estimate.  Just such a result is seen below for 25 basins in West Virginia with median estimates and 95% confidence limits for specific conductivity, a measure of the ionic content of the sampled rivers and streams.  The left statistical panel has confidence limits using the local neighborhood variance estimator, and the right panel used the simple random sample variance estimator.  Some of the percentage reductions in confidence limits were quite modest. The Lower New basin had only ~ a 3% reduction; whereas others reductions were quite large, such as the Upper Ohio North/Upper Ohio South basin having a ~56% reduction.  The average percentage reduction among the 25 basins was ~28%.  The independent random sample variance estimator does not take into account any spatial patterning in the sampled survey responses [@SO2003].  If there is spatial patterning, such that responses at two sites close to each other are more similar than responses at two sites further apart, then that patterning is incorporated into the local neighborhood variance estimator [@SO2003].
 
-```{r Ch11-micromapWVDEP, fig.width = 7, fig.height = 6, fig.cap = 'A West Virginia Linked Micromap.',eval = TRUE, echo = FALSE}
+```{r Ch11-micromapWVDEP, fig.width = 7, fig.height = 6, fig.cap = 'A linked micromap of specific conductance, a measure of the ionic content of the sampled rivers and streams, for 25 basins from spatially balanced probabilistic stream surveys done by West Virginia Department of Environmental Protection.  The first statistical panel displays the median and 95% confidence limits based on the default variance local neighborhood estimator.  The second statistical panel displays the median and 95% confidence limits based on specifying the simple random sample (SRS) variance estimator.',eval = TRUE, echo = FALSE}
 library(sf)
 library(micromap)
 
@@ -207,7 +207,7 @@ mmplot(map.data = WV_Basins,
                       
                       list(2, header='WVDEP\nSubbasins', panel.width=1.25,
                            align='left', text.size=.8),
-                      list(3, header='Specific\nConductance',
+                      list(3, header='Specific\nConductance\n(Local)',
                            graph.bgcolor='white',
                            xaxis.ticks=list(0, 250, 500, 750),
                            xaxis.labels=list(0, 250, 500, 750),
@@ -219,7 +219,7 @@ mmplot(map.data = WV_Basins,
                           line.width=1.25,
                           point.size=1.5),
                       
-                      list(4, header='Specific\nConductance',
+                      list(4, header='Specific\nConductance\n(SRS)',
                            graph.bgcolor='white',
                            xaxis.ticks=c(0, 250, 500, 750),
                            xaxis.labels=c(0, 250, 500, 750),
