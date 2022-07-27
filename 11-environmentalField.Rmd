@@ -235,18 +235,10 @@ mmplot(map.data = WV_Basins,
 
 Two final points about the WVDEP linked micromap should be noted. First, we used a simple features object, **sf**\index{R Packages!sf}, that contained both the geospatial data and the statistical of the basins. Consequently, we only had to specify the `map.data` argument, in contrast to the Virginia and Florida examples, where we used both the `map.data` and `stat.data` syntax.  Second, the basins in the linked micromap were smoothed, that is their polygon boundaries generalized, so they would draw faster as mention in \@ref(Ch2).
 
-## Further Reading {#Ch11-FurtherReading}
+## Summary and Further Reading {#Ch11-FurtherReading}
 
 
-Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
-where related work and further examples can be found in this book that match the content of this
-chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
-
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
-
+Building off of the foundation in Chapter \@ref(Ch02), this chapter covered environmental applications of linked micromaps. Such applications have two unique aspects. One is the use geographic boundaries from natural features, such as ecoregions or watersheds, instead of administrative boundaries. See also Chapter \@ref(Ch12) for medical applications that deal with non-standard geographic boundaries, such as health service areas and census tracts. The other is the strong link between spatial survey design to obtain a representative sample from the natural features so that survey estimates and sample statistics can be displayed in linked micromaps. Data collected from spatially balanced probabilistic surveys by state environmental agencies were used in the linked micromap examples from this chapter. The FDEP example used a linked micromap for initial exploratory spatial data analysis and subsequent testing for spatial autocorrelation in pesticide detection among basins [@SWSCSS2018]. @MPRG2016 used linked micromaps for a multivariate spatial analysis of WVDEP water quality data.  The examples in this chapter were of static linked micromaps, but Chapter \@ref(Ch07) covers interactive exploration of spatial data, including one by VDEQ.  
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
 
