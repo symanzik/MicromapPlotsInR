@@ -503,7 +503,7 @@ data <- read.csv("data/file.csv")
 load(file = "data/file.RData")
 ```
 
-See Section \@ref(Ch2-CodeChunksChina) how I read in shapefiles and data for Chinese micromaps.
+See Section \@ref(Ch4-CodeChunksChina) how I read in shapefiles and data for Chinese micromaps.
 Note that this chapter is still highly experimental at this time!!!
 
 

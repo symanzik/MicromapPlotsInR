@@ -65,7 +65,8 @@ Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create 
 linked micromap plot\index{Linked micromap plot} 
 with the **micromap**\index{R Packages!micromap} R package:
 
-1. **Identifying and Geoprocessing of Spatial Boundary Data**: In addition to a data frame that contains the statistical data,
+1. **Identifying and Geoprocessing of Spatial Boundary Data** (see Section \@ref(Ch2-Identifying) for details): 
+In addition to a data frame that contains the statistical data,
 the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
 to be colored in the maps. This spatial boundary data typically comes in the form of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
@@ -74,20 +75,23 @@ provided as external shapefiles\index{Shapefiles}. We will also see in Chapter \
 to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
 to the main area of the map.
 
-2. **Linking Spatial Boundary Data and Statistical Data**: To link spatial boundary data and statistical data, 
+2. **Linking Spatial Boundary Data and Statistical Data** (see Section \@ref(Ch2-Linking) for details): 
+To link spatial boundary data and statistical data, 
 the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first has to be transformed into a regular data frame
 via the `micromap::create_map_table()` function.
 Next, we have to identify one variable from the statistical data frame
 and one variable from the newly created data frame with the boundary information that 
 allow us to link statistical data and boundary data for each subregion.
 
-3. **Creating a Draft Linked Micromap Plot**: While not necessary, it is always a good idea to first create a minimal
+3. **Creating a Draft Linked Micromap Plot** (see Section \@ref(Ch2-Creating) for details): 
+While not necessary, it is always a good idea to first create a minimal
 linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
 are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
 step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
 to find possible errors in the R code.
 
-4. **Refining the Linked Micromap Plot**: Once a draft linked micromap plot\index{Linked micromap plot} has been
+4. **Refining the Linked Micromap Plot** (see Section \@ref(Ch2-Refining) for details): 
+Once a draft linked micromap plot\index{Linked micromap plot} has been
 created, this plot usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
 change of the layout and of perceptual groups, addition of labels and legends, and possibly the addition of additional
 statistical variables or changes to different graph types for some of the variables.
@@ -130,14 +134,14 @@ that was created for use in linked micromap plots\index{Linked micromap plot}. N
 of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
 contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
 main map and has been placed further to the east (and also has been enlarged)
-as shown in \@ref(fig:Ch2-USstates). In the following R code,
+as shown in Figure \@ref(fig:Ch2-USstates). In the following R code,
 we first load the **micromap**\index{R Packages!micromap} R package and the
 _USstates_\index{Datasets!USstates} data set, verify that this object indeed is a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
 at some of the data in the `data` component of this object, and finally plot it.
 
 
-```{r Ch2-USstates, fig.cap = 'Spatial boundary data for the United States that frequently is used for linked micromap plots\\index{Linked micromap plot} created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
+```{r Ch2-USstates, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary data set for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
 library(micromap)
 
 data(USstates)
@@ -159,7 +163,7 @@ component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object
 can be used as an ID column. 
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
-this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for DC).
+this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
 The resulting `statePolys` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
 Note that there are typically more rows in this data frame than there are spatial subregions.
@@ -177,12 +181,13 @@ statePolys <- create_map_table(
 
 class(statePolys)
 dim(statePolys)
+names(statePolys)
 ```
 
 
 _edPov_\index{Datasets!edPov} is a data frame that contains
 education and poverty level data for the 50 states (and Washington, D.C.).
-This data frame has 51 rows, one for each of the 50 states (and for DC).
+This data frame has 51 rows, one for each of the 50 states (and for D.C.).
 We have to identify one variable from this data frame that can be used for linking the
 two data sets. Here, this is the `StateAb` variable.
 
@@ -281,7 +286,7 @@ lmplot(
 
 
 We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
-step and refine it in multiple small steps. The refinement should only be started once
+step and refine it in multiple small steps. This refinement should only be started once
 functional R code has been obtained in the previous step.
 
 First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
@@ -327,7 +332,7 @@ i.e., we place `ed` to the left of `pov` and use `ed` as the sorting variable (i
 While any column of the linked micromap plot\index{Linked micromap plot} or even
 variables not shown in it can be used as sorting variables, in most cases,
 the first (leftmost) statistical column is used for sorting purposes.
-Moreover, we place the maps on the left side. As previously stated,
+Moreover, we place the maps on the left side of the plot. As previously stated,
 the `panel.types` and `panel.data` arguments of the `micromap::lmplot()` function
 are closely related. Thus, if we change the order of one, the order of the
 other one has to be changed accordingly. 
@@ -409,20 +414,20 @@ Such color schemes can be obtained from the
 The reader is encouraged to read more about the theoretical background
 of these color schemes in @BHH2003 and @HaBr2003 and experiment with different settings
 at the supporting web page at https://colorbrewer2.org/.
-@SDWPM2014 used a greyscale sequential color scheme\index{Color scheme!Sequential}
+@SDWPM2014 used a five-class greyscale sequential color scheme\index{Color scheme!Sequential}
 from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
 the darkest grey color comes first) for publication in a greyscale publication,\index{Colors!Greyscale publication}
-obtained via `colors = brewer.pal(5, "Greys")[5:1]`.
-@SBDSS2016 used a divergent red-yellow-blue (RdYlBu) color scheme\index{Color scheme!Divergent}
+obtained via `colors = brewer.pal(n = 5, name = "Greys")[5:1]`.
+@SBDSS2016 used a five-class divergent red-yellow-blue (RdYlBu) color scheme\index{Color scheme!Divergent}
 from **RColorBrewer**\index{R Packages!RColorBrewer}
 that is colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
-obtained via `colors = brewer.pal(5, "RdYlBu")`.
+obtained via `colors = brewer.pal(n = 5, name = "RdYlBu")`.
 In the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining4), we use a
-divergent brown-blue-green (BrBG) color scheme\index{Color scheme!Divergent}
+five-class divergent brown-blue-green (BrBG) color scheme\index{Color scheme!Divergent}
 from **RColorBrewer**\index{R Packages!RColorBrewer}
 that is also colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
-obtained via `colors = brewer.pal(5, "BrBG")`.
+obtained via `colors = brewer.pal(n = 5, name = "BrBG")`.
 
 
 ```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subregions.', fig.width = 7, fig.height = 9}
@@ -436,7 +441,7 @@ lmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(5, "BrBG"),
+  colors = brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(list(3, align = "left"))
 )
 ```
@@ -456,7 +461,7 @@ the dot plots\index{Dot plot} in the two statistical columns,
 in the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining5).
 
-We leave it to the reader to experiment with the different elements in these list.
+We leave it to the reader to further experiment with the different elements in these lists.
 If the purpose of a certain element is not immediately obvious, it might be a good idea
 to considerably increase or decrease the numeric value of that element or change the color to
 `red` or `yellow` to highlight that element. 
@@ -468,7 +473,7 @@ fills in the subregions from all previous perceptual groups in the
 subsequent perceptual groups. This filing proceeds from
 the top perceptual group to the bottom perceptual group by sequentially
 filling the subregions that have already been displayed.
-Thus, in the map for teh final perceptual group at the bottom, all subregions have been filled.
+Thus, in the map for the final perceptual group at the bottom, all subregions have been filled.
 The text in the `header` is used to communicate this information to the reader.
 Alternatively, the setting `fill.regions = "with data"` only fills those subregions
 in a map that actually show data in that perceptual group. 
@@ -487,7 +492,7 @@ lmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(5, "BrBG"),
+  colors = brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(
     list(
       1,
@@ -540,8 +545,8 @@ lmplot(
 In the final revised linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
 First, we make use of the `labeling::extended()` function of the **labeling**\index{R Packages!labeling} R package.
-This function is provided with the minimum and maximum of a variable and the tentative
-number of tic marks and tic marks labels for that variable and then creates a vector with
+This function is provided with the minimum and maximum values of a variable and the tentative
+number of tic marks and tic marks labels for that variable and it then creates a vector with
 near-optimal axis labels. The argument `m` is used as a guideline for the number of axis labels,
 but the actual number of near-optimal axis labels may differ slightly. The reader is encouraged to experiment with
 `m = 2` to `m = 6` in the R code below.
@@ -580,7 +585,7 @@ lmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(5, "BrBG"),
+  colors = brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(
     list(
       1,
@@ -652,284 +657,39 @@ lmplot(
 ```
 
 
-## Code Chunks China {#Ch2-CodeChunksChina}
+What remains to be done is a summary and interpretation of the 
+final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
+This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
+(in the fourth column) and the percentage living below poverty level (in the fifth column) 
+in the 50 US states and D.C.
 
+The percentage of adults with four or more years of college is used as the sorting variable
+for the rows in the plot -- with highest percentages shown at the top and lowest percentages
+shown at the bottom.
+The map panel in the first column shows some noticeable, but not very strong spatial patterns.
+Highest percentages of adults with four or more years of college can be found in the
+northeastern states. In fact, eight of the top-10 states are located in the northeast,
+with Washington, D.C., having the highest percentage with almost 40%. When looking at the other
+maps above the median state (here Arizona), additional eastern states, but also several western
+states can be seen.
+When looking at the two maps at the bottom of the plot, mostly southern states can be seen.
+West Virginia is the state with the lowest percentage of only about 15%
+of adults with four or more years of college. Overall,
+primarily southern and central states can be seen in the maps below the median state.
 
-```{r Ch2-micromaChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-# VI. Use of external shapefiles
-
-library(rgeos)
-library(rgdal)
-library(maptools)
-library(micromap)
-
-### Read in the shapefile and simplify the polygons (run this part of the code only once!)
-
-ChinaShapefile <- readOGR(
-  dsn = "data/China_Shapefiles",
-  layer = "export",
-  verbose = TRUE
-)
-
-plot(ChinaShapefile)
-summary(ChinaShapefile)
-```
-
-
-```{r Ch2-micromaChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-gIsValid(spgeom = ChinaShapefile, byid = TRUE, reason = TRUE)
-
-ChinaShapefileThin <- thinnedSpatialPoly(
-  SP = ChinaShapefile,
-  tolerance = 300,
-  # try 100, 300, 3000, 30000
-  minarea = 10000000000,
-  topologyPreserve = TRUE,
-  avoidGEOS = TRUE
-)
-
-ChinaShapefileThin <- gBuffer(
-  spgeom = ChinaShapefileThin,
-  width = 0,
-  byid = TRUE
-)
-
-gIsValid(spgeom = ChinaShapefileThin, byid = TRUE, reason = TRUE)
-plot(ChinaShapefileThin)
-
-### Change tolerance to 100, 3000, and 30000 and run the the entire code again, starting with readOGR.
-### Which of these is the best choice for tolerance? You may have to enlarge the map.
-
-### If you plan to use LM plots for a research project, you may also want to
-### enlarge small regions or shift far-away regions closer to the main region.
-### Talk to me for further information.
-```
-
-
-```{r Ch2-micromaChina3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### Read in the data
-
-religion <- read.csv(
-  file = "data/China_ReligionData.csv",
-  header = TRUE
-)
-
-ChinaPolys <- create_map_table(
-  tmp.map = ChinaShapefileThin,
-  IDcolumn = "ename"
-)
-
-### Basic micromap plot
-
-ChinaPlot <- mmplot(
-  stat.data = religion,
-  map.data = ChinaPolys,
-  panel.types = c("labels", "dot", "map"),
-  panel.data = list("Province", "Christianity", NA),
-  ord.by = "Christianity",
-  grouping = 5,
-  median.row = TRUE,
-  map.link = c("Province", "ID")
-)
-```
-
-
-```{r Ch2-micromaChina4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### Advanced micromap plot
-
-ChinaReligion <- mmplot(
-  stat.data = religion,
-  map.data = ChinaPolys,
-  panel.types = c(
-    "map", "dot_legend", "labels",
-    "dot", "dot", "dot", "dot"
-  ),
-  panel.data = list(
-    NA,
-    NA,
-    "Province",
-    "Christianity",
-    "Buddhism",
-    "Daoism",
-    "Islam"
-  ),
-  map.link = c("Province", "ID"),
-  ord.by = "Christianity",
-  rev.ord = TRUE,
-  grouping = 5,
-  median.row = TRUE,
-  plot.height = 9,
-  plot.width = 9,
-  colors = c("red", "orange", "green", "blue", "purple"),
-  two.ended.maps = TRUE,
-  map.all = TRUE,
-  map.color2 = "lightgray",
-  plot.header = "Religion in China",
-  plot.header.size = 2,
-  plot.header.color = "black",
-  plot.panel.spacing = 0,
-  panel.att = list(
-    list(
-      1,
-      header = "Two-ended\nCumulative Maps",
-      inactive.border.color = gray(.7),
-      inactive.border.size = 1,
-      panel.width = 1.2
-    ),
-    list(2,
-      point.type = 20,
-      point.size = 1.4
-    ),
-    list(
-      3,
-      header = "Provinces",
-      panel.width = .9,
-      align = "left",
-      text.size = .8
-    ),
-    list(
-      4,
-      header = "Christianity",
-      header.color = "red",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      xaxis.ticks = seq(0, 3000, by = 1000),
-      xaxis.labels = seq(0, 3, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      5,
-      header = "Buddhism",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      xaxis.ticks = seq(0, 3000, by = 1000),
-      xaxis.labels = seq(0, 3, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      6,
-      header = "Daoism",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      xaxis.ticks = seq(0, 2000, by = 1000),
-      xaxis.labels = seq(0, 2, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      7,
-      header = "Islam",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      xaxis.ticks = seq(0, 25000, by = 12500),
-      xaxis.labels = seq(0, 25, by = 12.5),
-      xaxis.title = "Number (Thousand)"
-    )
-  )
-)
-```
-
-
-```{r Ch2-micromaChina5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-### Final advanced micromap plot with reduced margins
-
-ChinaReligion <- mmplot(
-  stat.data = religion,
-  map.data = ChinaPolys,
-  panel.types = c(
-    "map", "dot_legend", "labels",
-    "dot", "dot", "dot", "dot"
-  ),
-  panel.data = list(
-    NA,
-    NA,
-    "Province",
-    "Christianity",
-    "Buddhism",
-    "Daoism",
-    "Islam"
-  ),
-  map.link = c("Province", "ID"),
-  ord.by = "Christianity",
-  rev.ord = TRUE,
-  grouping = 5,
-  median.row = TRUE,
-  plot.height = 9,
-  plot.width = 9,
-  colors = c("red", "orange", "green", "blue", "purple"),
-  two.ended.maps = TRUE,
-  map.all = TRUE,
-  map.color2 = "lightgray",
-  plot.header = "Religion in China",
-  plot.header.size = 2,
-  plot.header.color = "black",
-  plot.panel.spacing = 0,
-  panel.att = list(
-    list(
-      1,
-      header = "Two-ended\nCumulative Maps",
-      inactive.border.color = gray(.7),
-      inactive.border.size = 1,
-      panel.width = 1.2
-    ),
-    list(2,
-      point.type = 20,
-      point.size = 1.4
-    ),
-    list(
-      3,
-      header = "Provinces",
-      panel.width = .9,
-      align = "left",
-      text.size = .8
-    ),
-    list(
-      4,
-      header = "Christianity",
-      header.color = "red",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      right.margin = 0,
-      left.margin = -0.5,
-      xaxis.ticks = seq(0, 3000, by = 1000),
-      xaxis.labels = seq(0, 3, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      5,
-      header = "Buddhism",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      right.margin = 0,
-      left.margin = -0.5,
-      xaxis.ticks = seq(0, 3000, by = 1000),
-      xaxis.labels = seq(0, 3, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      6,
-      header = "Daoism",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      right.margin = 0,
-      left.margin = -0.5,
-      xaxis.ticks = seq(0, 2000, by = 1000),
-      xaxis.labels = seq(0, 2, by = 1),
-      xaxis.title = "Number (Thousand)"
-    ),
-    list(
-      7,
-      header = "Islam",
-      graph.bgcolor = "lightgray",
-      point.size = 1,
-      right.margin = 0.25,
-      left.margin = -0.5,
-      xaxis.ticks = seq(0, 25000, by = 12500),
-      xaxis.labels = seq(0, 25, by = 12.5),
-      xaxis.title = "Number (Thousand)"
-    )
-  )
-)
-```
+The percentage living below poverty level (in the fifth column) shows a different pattern.
+States with a high percentage of adults with four or more years of college have
+a low percentage living below poverty level. 
+Visually, the dots in the fourth and fifth column diverge, forming some crude reflected V-shape.
+Washington, D.C., is a major outlier as it has the highest 
+percentage of adults with four or more years of college (almost 40%)
+but also the highest percentage living below poverty level (more than 20%).
+Another interesting state is New Mexico with 
+an above median percentage of adults with four or more years of college,
+but with the fourth highest percentage living below poverty level (more than 18%).
+As expected, the overall correlation between these two variables is negative,
+but given these outliers, the correlation coefficient $r$ is 
+only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 
 ## Further Reading {#Ch2-FurtherReading}
