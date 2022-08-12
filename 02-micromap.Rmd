@@ -120,13 +120,18 @@ grViz(
 ```
 
 
-### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-Identifying}
+## Example 1: A Linked Micromap Plot for the 50 US States and Washington, D.C. {#Ch2-Example1}
 
 
 In this first linked micromap plot\index{Linked micromap plot}
 example created with the **micromap**\index{R Packages!micromap} R package, we work with the
 _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets
 from the **micromap**\index{R Packages!micromap} R package.
+We follow the four steps outlined in Section \@ref(Ch2-Steps).
+
+
+### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-Identifying}
+
 
 _USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
 the 50 states (and Washington, D.C.) of the United States (U.S.) 
@@ -661,7 +666,7 @@ What remains to be done is a summary and interpretation of the
 final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
 This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
 (in the fourth column) and the percentage living below poverty level (in the fifth column) 
-in the 50 US states and D.C.
+in the 50 US states and Washington, D.C.
 
 The percentage of adults with four or more years of college is used as the sorting variable
 for the rows in the plot -- with highest percentages shown at the top and lowest percentages
@@ -670,7 +675,7 @@ The map panel in the first column shows some noticeable, but not very strong spa
 Highest percentages of adults with four or more years of college can be found in the
 northeastern states. In fact, eight of the top-10 states are located in the northeast,
 with Washington, D.C., having the highest percentage with almost 40%. When looking at the other
-maps above the median state (here Arizona), additional eastern states, but also several western
+maps above the median state (here, Arizona), additional eastern states, but also several western
 states can be seen.
 When looking at the two maps at the bottom of the plot, mostly southern states can be seen.
 West Virginia is the state with the lowest percentage of only about 15%
@@ -686,9 +691,377 @@ percentage of adults with four or more years of college (almost 40%)
 but also the highest percentage living below poverty level (more than 20%).
 Another interesting state is New Mexico with 
 an above median percentage of adults with four or more years of college,
-but with the fourth highest percentage living below poverty level (more than 18%).
+but with the fourth highest percentage living below poverty level (about 18%).
 As expected, the overall correlation between these two variables is negative,
-but given these outliers, the correlation coefficient $r$ is 
+but given these two major outliers and several minor outliers
+(such as Indiana and Nevada that both have a relatively low percentage living below poverty level
+despite being among the bottom-10 states with respect to the percentage of
+adults with four or more years of college), the correlation coefficient $r$ is relatively weak
+only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
+
+
+## Example 2: A Linked Micromap Plot for Watersheds in West Virginia {#Ch2-Example2}
+
+
+In this second linked micromap plot\index{Linked micromap plot}
+example created with the **micromap**\index{R Packages!micromap} R package, we work with the
+
+UPDATE _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets
+from the **micromap**\index{R Packages!micromap} R package. ENDUPDATE
+
+We follow the four steps outlined in Section \@ref(Ch2-Steps) again.
+
+IV. Demonstration of adding an overall statistic or criteria line
+Chunk 1. Linked micromap of conductivity descriptive statistics and estimates
+spatial and statistical data brought in together as shapefile
+
+UPDATE ALL TEXT AND FURTHER REFINE THE LINKED MICROMAP PLOT.
+
+
+### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-IdentifyingWV}
+
+
+UPDATE
+_USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
+the 50 states (and Washington, D.C.) of the United States (U.S.) 
+that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
+of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
+contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
+main map and has been placed further to the east (and also has been enlarged)
+as shown in Figure \@ref(fig:Ch2-USstates). In the following R code,
+we first load the **micromap**\index{R Packages!micromap} R package and the
+_USstates_\index{Datasets!USstates} data set, verify that this object indeed is a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
+at some of the data in the `data` component of this object, and finally plot it.
+ENDUPDATE
+
+
+```{r Ch2-WV, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary data set for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
+library(micromap)
+
+wv.ds1 <- readOGR(
+  dsn = "data/WV_Watershed", 
+  layer = "RandomWatershed2_stats_smooth", 
+  verbose = FALSE
+)
+
+class(wv.ds1)
+
+plot(wv.ds1)
+
+head(wv.ds1@data)
+wv.data.ds1 <- wv.ds1@data # Pull out statistical data from spatial polygon dataframe
+head(wv.data.ds1)
+names(wv.data.ds1)
+
+# The variable names beginning with an uppercase letter, Cond_med, Cond_LCB95.
+# Cond_UCB95, Wvsci_med, etc., are the population estimates.  Variable names that
+# start with a lowercase letter, cond_min, condq1, cond_med1, cond_q3, cond_max, etc.,
+# are the descriptive statistics.
+```
+
+
+### Linking Spatial Boundary Data and Statistical Data {#Ch2-LinkingWV}
+
+
+In this step, the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
+into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
+via the `micromap::create_map_table()` function. We have to indicate a variable from the `data`
+component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object that 
+can be used as an ID column. 
+A matching ID column has to be identified in the statistical dataset. These two ID columns
+have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
+this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
+The resulting `statePolys` is a regular data frame that can be used for creating a
+linked micromap plot\index{Linked micromap plot} in the next step.
+Note that there are typically more rows in this data frame than there are spatial subregions.
+This is because many spatial subregions consist of more than just one boundary, e.g., in the
+presence of islands or if a land mass is split into more than one area, e.g., as in Michigan in the US.
+
+
+```{r Ch2-linkingdataframesWV}
+# shorten names of Random_Watersheds that combine 7 smaller HUC08s with larger
+# neighboring HUC08s in WV Sampling Frame
+wv.data.ds1$alt.name <- as.factor(wv.data.ds1$Random_Wat)
+
+levels(wv.data.ds1$alt.name) <- list(
+  "S. Br. Potomac" = "South Branch Potomac",
+  "N. Br. Potomac" = "North Branch Potomac",
+  "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
+  "Potomac/Shen." = "Potomac Direct Drains/Shenandoah Jefferson",
+  "U. New/James" = "Upper New/James",
+  "Tygart Valley" = "Tygart Valley",
+  "West Fork" = "West Fork",
+  "Mononga./Dunk." = "Monongahela/Dunkard",
+  "Cheat/Youg." = "Cheat/Youghiogheny",
+  "U. Ohio N./S." = "Upper Ohio North/Upper Ohio South",
+  "M. Ohio N." = "Middle Ohio North",
+  "M. Ohio S." = "Middle Ohio South",
+  "Little Kanawha" = "Little Kanawha",
+  "Greenbrier" = "Greenbrier",
+  "L. New" = "Lower New",
+  "Gauley" = "Gauley",
+  "U. Kanawha" = "Upper Kanawha",
+  "Elk" = "Elk",
+  "L. Kanawha" = "Lower Kanawha",
+  "Coal" = "Coal",
+  "U. Guyandotte" = "Upper Guyandotte",
+  "L. Guyandotte" = "Lower Guyandotte",
+  "Tug Fork" = "Tug Fork",
+  "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
+  "Twelvepole" = "Twelvepole"
+)
+
+wv.map.table <- create_map_table(
+  tmp.map = wv.ds1,
+  IDcolumn = "Random_Wat"
+)
+# ID variable is Random_Wat
+head(wv.map.table)
+
+
+head(USstates@data$ST)
+
+statePolys <- create_map_table(
+  tmp.map = USstates,
+  IDcolumn = "ST"
+)
+
+class(statePolys)
+dim(statePolys)
+names(statePolys)
+```
+
+
+_edPov_\index{Datasets!edPov} is a data frame that contains
+education and poverty level data for the 50 states (and Washington, D.C.).
+This data frame has 51 rows, one for each of the 50 states (and for D.C.).
+We have to identify one variable from this data frame that can be used for linking the
+two data sets. Here, this is the `StateAb` variable.
+
+The last expression in the following R code verifies that there is indeed at least one matching ID 
+in the `statePolys` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
+Mismatching or missing IDs in the statistical data frame may cause
+that data for some subregions do not appear
+on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
+While this often can be contributed to missing data in the statistical data frame, e.g., there is
+only data for the 50 states but not for Washington, D.C., mismatching identifiers also can be
+the underlying reason (e.g., if the statistical data frame uses `D.C.` as ID while
+the spatial data frame uses `DC`). Here, everything is matching.
+
+
+```{r Ch2-linkingdataframesWV2}
+data(edPov)
+dim(edPov)
+
+head(edPov)
+head(edPov$StateAb)
+
+all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
+```
+
+
+### Creating a Draft Linked Micromap Plot {#Ch2-CreatingWV}
+
+
+Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
+`micromap::lmplot()` function, based on the previously created 
+`statePolys` data frame and the _edPov_\index{Datasets!edPov} dataset.
+In our function call, we only provide seven required arguments. None of these arguments has a default setting.
+For all other arguments of this function, the default settings will be used here. 
+The statistical data (_edPov_\index{Datasets!edPov}) is assigned to the `stat.data` argument
+and the spatial boundary data (in the `statePolys` data frame) is assigned to the `map.data` argument.
+
+The `map.link` argument is needed to tell the function how to link the statistical data
+and the spatial boundary data. A vector with the names of the two linking variables 
+identified in the previous step is needed for this argument.
+The first variable name (`StateAb`) must come from the statistical data (here _edPov_\index{Datasets!edPov})
+and the second variable name (`ID`) must come from the `statePolys` data frame that
+contains the spatial boundary information.
+Changing the order of these two variable names typically results in an error.
+
+The `panel.types` and `panel.data` are closely related. As the name suggests, `panel.types` is a vector
+that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
+Here, we have the `dot_legend` in the first column, `labels` in the second column,
+two columns with statistical data represented as dot plots\index{Dot plot} (`dot`),
+and the micromaps in the fifth and final (`map`) column.
+This is matched with a list of data that is used for each of the five columns.
+A list is necessary for this argument as some of the data itself can be lists as we will
+see in some examples XXXX later on.
+The `dot_legend` simply shows a plotting symbol in a certain color that represents that row in
+the linked micromap plot\index{Linked micromap plot}. Thus, no further data is needed and `NA`
+is assigned. `labels` requires some text argument, typically some identifiers of the subregions
+in the maps. Here `state` from _edPov_ is used. 
+The variables `pov` and `ed` from _edPov_ are used for the statistical displays in columns three and four.
+It should be noted that all data specified in `panel.data` by default is taken from the
+data frame specified in the `stat.data` argument.
+The fifth and final column contains the micromaps. Their boundaries are obtained from
+the `map.data` data frame. Thus, no further data has to be specified here. Instead, `NA` 
+is assigned here.
+
+Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
+rows in the linked micromap plot\index{Linked micromap plot}. Here, `pov` 
+from the `stat.data` argument is used. The sorting of the rows goes from smallest (on top) to
+largest (at the bottom). Finally, `grouping` specifies  the number of rows
+in each of the perceptual groups (here `5` rows). If a single integer value is provided, 
+that value is used for all perceptual groups. If a vector of integer values is provided,
+each perceptual group may have a different number of rows as 
+shown in some examples XXXX later on.
+
+The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
+overall --- ten with five subregions and one with just one subregion. This is due to the fact
+that there are 51 subregions overall: The 50 US states and Washington, D.C.
+We abstain from interpreting this figure at this stage, but we will provide some
+helpful interpretation once we have created the last refined version of this figure
+in the next step.
+
+
+```{r Ch2-creatingdraftWV, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 7}
+# Chunk 2. code below for publication plot of conductivity descriptive statistics
+# and estimates together
+### add.line=129 for estimated median conductvity
+# Draft plot
+mmplot(
+  stat.data = wv.data.ds1,
+  map.data = wv.map.table,
+  panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
+  panel.data = list(
+    NA,
+    "alt.name",
+    list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
+    list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
+    NA
+  ),
+  ord.by = "Cond_med", rev.ord = TRUE,
+  grouping = 5, plot.pGrp.spacing = 1,
+  median.row = FALSE,
+  map.link = c("Random_Wat", "ID")
+)
+```
+
+
+### Refining the Linked Micromap Plot {#Ch2-RefiningWV}
+
+
+We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
+step and refine it in multiple small steps. This refinement should only be started once
+functional R code has been obtained in the previous step.
+
+First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
+a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
+number of subregions is odd such as for the 51 states (and D.C.) here.
+Here, Wyoming is the state shown in the median row. It has the 
+26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
+It does not appear in a map by itself, but rather is added to the perceptual
+groups above and below the median row in a neutral color, 
+thus increasing the number of subregions shown in each of these two maps by one (i.e., six here)
+Also, we reverse the sorting order via `rev.ord = TRUE`. 
+Now the sorting of the rows goes from largest (on top) to
+smallest (at the bottom).
+The resulting linked micromap plot\index{Linked micromap plot} is shown in
+Figure \@ref(fig:Ch2-refining1).
+While we keep `pov` as the sorting variable in this first refined version,
+the reader is encouraged to use `ed` as sorting variables and see how
+the spatial patterns highlighted in the maps change. This can be done
+for the original sorting order or for the reversed sorting order.
+The rows can even be sorted by `region` or alphabetically 
+by `state` or `StateAb` even though such an alphabetical sorting
+in most cases is not very meaningful, at least not for this specific example.
+
+
+```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 7}
+# Refined Plot
+mmplot(
+  stat.data = wv.data.ds1,
+  map.data = wv.map.table,
+  panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
+  panel.data = list(
+    NA,
+    "alt.name",
+    list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
+    list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
+    NA
+  ),
+  ord.by = "Cond_med", rev.ord = TRUE,
+  grouping = 5, plot.pGrp.spacing = 1,
+  median.row = FALSE,
+  map.link = c("Random_Wat", "ID"),
+  plot.height = 9, plot.width = 6.8, # for poster use plot.height=6, plot.width=9,
+  colors = brewer.pal(5, "Spectral"), # for journal use plot.height=9, plot.width=6.8
+
+  panel.att = list(
+    list(1,
+      panel.width = 1, point.type = 20, point.size = 2,
+      point.border = TRUE
+    ),
+    list(2,
+      header = "WVDEP\nSubbasins", panel.width = 1.25, # increased panel.width to 1.1 from .8
+      align = "left", text.size = .8
+    ),
+    list(3,
+      header = "Observed Conductivity\n4th Order Streams or Less",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
+      xaxis.labels = c(0, 1, 2, 3, 4, 5),
+      xaxis.labels.size = 1.25,
+      # xaxis.labels.angle=90,
+      xaxis.title = "Conductivity (x1000)", xaxis.title.size = 1.25, panel.width = 2
+    ),
+    list(4,
+      header = "Estimated Conductivity\n4th Order Streams or Less",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 150, 300, 450, 600, 750),
+      xaxis.labels = list(0, 150, 300, 450, 600, 750),
+      xaxis.labels.size = 1.25,
+      xaxis.title = "Conductivity",
+      add.line = 129, add.line.col = "black", add.line.typ = "dashed",
+      xaxis.title.size = 1.25, panel.width = 2
+    ),
+    list(5,
+      header = "Light Gray Means\nHighlighted Above",
+      inactive.border.color = gray(.7), inactive.border.size = 2,
+      panel.width = 1.5
+    )
+  )
+)
+```
+
+What remains to be done is a summary and interpretation of the 
+final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
+This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
+(in the fourth column) and the percentage living below poverty level (in the fifth column) 
+in the 50 US states and Washington, D.C.
+
+The percentage of adults with four or more years of college is used as the sorting variable
+for the rows in the plot -- with highest percentages shown at the top and lowest percentages
+shown at the bottom.
+The map panel in the first column shows some noticeable, but not very strong spatial patterns.
+Highest percentages of adults with four or more years of college can be found in the
+northeastern states. In fact, eight of the top-10 states are located in the northeast,
+with Washington, D.C., having the highest percentage with almost 40%. When looking at the other
+maps above the median state (here, Arizona), additional eastern states, but also several western
+states can be seen.
+When looking at the two maps at the bottom of the plot, mostly southern states can be seen.
+West Virginia is the state with the lowest percentage of only about 15%
+of adults with four or more years of college. Overall,
+primarily southern and central states can be seen in the maps below the median state.
+
+The percentage living below poverty level (in the fifth column) shows a different pattern.
+States with a high percentage of adults with four or more years of college have
+a low percentage living below poverty level. 
+Visually, the dots in the fourth and fifth column diverge, forming some crude reflected V-shape.
+Washington, D.C., is a major outlier as it has the highest 
+percentage of adults with four or more years of college (almost 40%)
+but also the highest percentage living below poverty level (more than 20%).
+Another interesting state is New Mexico with 
+an above median percentage of adults with four or more years of college,
+but with the fourth highest percentage living below poverty level (about 18%).
+As expected, the overall correlation between these two variables is negative,
+but given these two major outliers and several minor outliers
+(such as Indiana and Nevada that both have a relatively low percentage living below poverty level
+despite being among the bottom-10 states with respect to the percentage of
+adults with four or more years of college), the correlation coefficient $r$ is relatively weak
 only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 
