@@ -37,6 +37,18 @@ color blindness,\index{Color blindness},
 and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
+## Outline {#Ch5-Outline}
+
+
+- overview of graph types that are part of the micromap R package
+
+- general principles of adding new graph types
+
+- Example 1: Arrow Plots for Differences
+
+- Example 2: Scatterplots
+
+
 ## Main {#Ch5-Main}
 
 

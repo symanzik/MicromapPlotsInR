@@ -42,6 +42,24 @@ color blindness,\index{Color blindness},
 and quantile-quantile plot.\index{Quantile-quantile plot}
 
 
+## Outline {#Ch4-Outline}
+
+
+- overview of boundary files / regions that are part of the micromap R package
+
+- use of external shapefiles
+
+- thinning only (from within R)
+
+- approach used for Latin American countries (from within R)
+
+- use of the LMshapemaker R package at the command level
+
+- the Shiny interface for LMshapemaker
+
+- shapefile modifications beyond the LMshapemaker R package
+
+
 ## Main {#Ch4-Main}
 
 
