@@ -922,9 +922,10 @@ in the next step.
 # and estimates together
 ### add.line=129 for estimated median conductvity
 # Draft plot
-mmplot(
+lmplot(
   stat.data = wv.data.ds1,
   map.data = wv.map.table,
+  map.link = c("Random_Wat", "ID"),
   panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
   panel.data = list(
     NA,
@@ -933,10 +934,11 @@ mmplot(
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
-  ord.by = "Cond_med", rev.ord = TRUE,
-  grouping = 5, plot.pGrp.spacing = 1,
-  median.row = FALSE,
-  map.link = c("Random_Wat", "ID")
+  ord.by = "Cond_med", 
+  rev.ord = TRUE,
+  grouping = 5, 
+  plot.pGrp.spacing = 1,
+  median.row = FALSE
 )
 ```
 
@@ -972,9 +974,10 @@ in most cases is not very meaningful, at least not for this specific example.
 
 ```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 7}
 # Refined Plot
-mmplot(
+lmplot(
   stat.data = wv.data.ds1,
   map.data = wv.map.table,
+  map.link = c("Random_Wat", "ID"),
   panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
   panel.data = list(
     NA,
@@ -983,44 +986,61 @@ mmplot(
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
-  ord.by = "Cond_med", rev.ord = TRUE,
-  grouping = 5, plot.pGrp.spacing = 1,
+  ord.by = "Cond_med", 
+  rev.ord = TRUE,
+  grouping = 5, 
+  plot.pGrp.spacing = 1,
   median.row = FALSE,
-  map.link = c("Random_Wat", "ID"),
-  plot.height = 9, plot.width = 6.8, # for poster use plot.height=6, plot.width=9,
+#  plot.height = 9, 
+#  plot.width = 6.8, # for poster use plot.height=6, plot.width=9,
   colors = brewer.pal(5, "Spectral"), # for journal use plot.height=9, plot.width=6.8
 
   panel.att = list(
-    list(1,
-      panel.width = 1, point.type = 20, point.size = 2,
+    list(
+      1,
+      panel.width = 1.2, 
+      point.type = 20, 
+      point.size = 2,
       point.border = TRUE
     ),
-    list(2,
-      header = "WVDEP\nSubbasins", panel.width = 1.25, # increased panel.width to 1.1 from .8
-      align = "left", text.size = .8
+    list(
+      2,
+      header = "WVDEP\nSubbasins", 
+      panel.width = 1.25, # increased panel.width to 1.1 from .8
+      align = "left", 
+      text.size = .8
     ),
-    list(3,
+    list(
+      3,
       header = "Observed Conductivity\n4th Order Streams or Less",
       graph.bgcolor = "lightgray",
       xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
       xaxis.labels = c(0, 1, 2, 3, 4, 5),
       xaxis.labels.size = 1.25,
       # xaxis.labels.angle=90,
-      xaxis.title = "Conductivity (x1000)", xaxis.title.size = 1.25, panel.width = 2
+      xaxis.title = "Conductivity (x1000)", 
+      xaxis.title.size = 1.25, 
+      panel.width = 2
     ),
-    list(4,
+    list(
+      4,
       header = "Estimated Conductivity\n4th Order Streams or Less",
       graph.bgcolor = "lightgray",
       xaxis.ticks = list(0, 150, 300, 450, 600, 750),
       xaxis.labels = list(0, 150, 300, 450, 600, 750),
       xaxis.labels.size = 1.25,
       xaxis.title = "Conductivity",
-      add.line = 129, add.line.col = "black", add.line.typ = "dashed",
-      xaxis.title.size = 1.25, panel.width = 2
+      add.line = 129, 
+      add.line.col = "black", 
+      add.line.typ = "dashed",
+      xaxis.title.size = 1.25, 
+      panel.width = 2
     ),
-    list(5,
+    list(
+      5,
       header = "Light Gray Means\nHighlighted Above",
-      inactive.border.color = gray(.7), inactive.border.size = 2,
+      inactive.border.color = gray(.7), 
+      inactive.border.size = 2,
       panel.width = 1.5
     )
   )
