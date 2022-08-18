@@ -169,7 +169,7 @@ can be used as an ID column.
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
 this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
-The resulting `statePolys` is a regular data frame that can be used for creating a
+The resulting `state_polys_table` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
 Note that there are typically more rows in this data frame than there are spatial subregions.
 This is because many spatial subregions consist of more than just one boundary, e.g., in the
@@ -179,14 +179,14 @@ presence of islands or if a land mass is split into more than one area, e.g., as
 ```{r Ch2-linkingdataframesUSstates}
 head(USstates@data$ST)
 
-statePolys <- create_map_table(
+state_polys_table <- create_map_table(
   tmp.map = USstates,
   IDcolumn = "ST"
 )
 
-class(statePolys)
-dim(statePolys)
-names(statePolys)
+class(state_polys_table)
+dim(state_polys_table)
+names(state_polys_table)
 ```
 
 
@@ -197,7 +197,7 @@ We have to identify one variable from this data frame that can be used for linki
 two data sets. Here, this is the `StateAb` variable.
 
 The last expression in the following R code verifies that there is indeed at least one matching ID 
-in the `statePolys` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
+in the `state_polys_table` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
 Mismatching or missing IDs in the statistical data frame may cause
 that data for some subregions do not appear
 on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
@@ -214,7 +214,7 @@ dim(edPov)
 head(edPov)
 head(edPov$StateAb)
 
-all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
+all(sort(edPov$StateAb) == sort(unique(state_polys_table$ID)))
 ```
 
 
@@ -223,17 +223,17 @@ all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
 
 Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
 `micromap::lmplot()` function, based on the previously created 
-`statePolys` data frame and the _edPov_\index{Datasets!edPov} dataset.
+`state_polys_table` data frame and the _edPov_\index{Datasets!edPov} dataset.
 In our function call, we only provide seven required arguments. None of these arguments has a default setting.
 For all other arguments of this function, the default settings will be used here. 
 The statistical data (_edPov_\index{Datasets!edPov}) is assigned to the `stat.data` argument
-and the spatial boundary data (in the `statePolys` data frame) is assigned to the `map.data` argument.
+and the spatial boundary data (in the `state_polys_table` data frame) is assigned to the `map.data` argument.
 
 The `map.link` argument is needed to tell the function how to link the statistical data
 and the spatial boundary data. A vector with the names of the two linking variables 
 identified in the previous step is needed for this argument.
 The first variable name (`StateAb`) must come from the statistical data (here _edPov_\index{Datasets!edPov})
-and the second variable name (`ID`) must come from the `statePolys` data frame that
+and the second variable name (`ID`) must come from the `state_polys_table` data frame that
 contains the spatial boundary information.
 Changing the order of these two variable names typically results in an error.
 
@@ -277,7 +277,7 @@ in the next step.
 ```{r Ch2-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
   panel.data = list(NA, "state", "pov", "ed", NA),
@@ -319,7 +319,7 @@ in most cases is not very meaningful, at least not for this specific example.
 ```{r Ch2-refining1, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
   panel.data = list(NA, "state", "pov", "ed", NA),
@@ -356,7 +356,7 @@ e.g., in @TaSt2019.
 ```{r Ch2-refining2, fig.cap = 'Second refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the order of the five columns in the plot. Most notable, the map column is shown on the left here.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
   panel.data = list(NA, NA, "state", "ed", "pov"),
@@ -381,7 +381,7 @@ Figure \@ref(fig:Ch2-refining3).
 ```{r Ch2-refining3, fig.cap = 'Third refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to perceptual groups with different numbers of subregions and the vertical alignment of rows in the middle of the plot. Also, `labels` are aligned on the left.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
   panel.data = list(NA, NA, "state", "ed", "pov"),
@@ -438,7 +438,7 @@ obtained via `colors = brewer.pal(n = 5, name = "BrBG")`.
 ```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subregions.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
   panel.data = list(NA, NA, "state", "ed", "pov"),
@@ -489,7 +489,7 @@ Another setting for `fill.regions` is discussed in the next refinement step.
 ```{r Ch2-refining5, fig.cap = 'Fifth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the panel specific attributes.', fig.width = 7, fig.height = 9}
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
   panel.data = list(NA, NA, "state", "ed", "pov"),
@@ -582,7 +582,7 @@ library(labeling)
 
 lmplot(
   stat.data = edPov,
-  map.data = statePolys,
+  map.data = state_polys_table,
   map.link = c("StateAb", "ID"),
   panel.types = c("map", "dot_legend", "labels", "dot", "dot"),
   panel.data = list(NA, NA, "state", "ed", "pov"),
@@ -739,20 +739,21 @@ ENDUPDATE
 ```{r Ch2-WV, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary data set for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
 library(micromap)
 
-wv.ds1 <- readOGR(
+wv_watershed <- readOGR(
   dsn = "data/WV_Watershed", 
   layer = "RandomWatershed2_stats_smooth", 
   verbose = FALSE
 )
 
-class(wv.ds1)
+class(wv_watershed)
 
-plot(wv.ds1)
+plot(wv_watershed)
 
-head(wv.ds1@data)
-wv.data.ds1 <- wv.ds1@data # Pull out statistical data from spatial polygon dataframe
-head(wv.data.ds1)
-names(wv.data.ds1)
+head(wv_watershed@data)
+
+wv_data <- wv_watershed@data # Pull out statistical data from spatial polygon dataframe
+head(wv_data)
+names(wv_data)
 
 # The variable names beginning with an uppercase letter, Cond_med, Cond_LCB95.
 # Cond_UCB95, Wvsci_med, etc., are the population estimates.  Variable names that
@@ -772,7 +773,7 @@ can be used as an ID column.
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
 this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
-The resulting `statePolys` is a regular data frame that can be used for creating a
+The resulting `state_polys_table` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
 Note that there are typically more rows in this data frame than there are spatial subregions.
 This is because many spatial subregions consist of more than just one boundary, e.g., in the
@@ -780,56 +781,16 @@ presence of islands or if a land mass is split into more than one area, e.g., as
 
 
 ```{r Ch2-linkingdataframesWV}
-# shorten names of Random_Watersheds that combine 7 smaller HUC08s with larger
-# neighboring HUC08s in WV Sampling Frame
-wv.data.ds1$alt.name <- as.factor(wv.data.ds1$Random_Wat)
-
-levels(wv.data.ds1$alt.name) <- list(
-  "S. Br. Potomac" = "South Branch Potomac",
-  "N. Br. Potomac" = "North Branch Potomac",
-  "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
-  "Potomac/Shen." = "Potomac Direct Drains/Shenandoah Jefferson",
-  "U. New/James" = "Upper New/James",
-  "Tygart Valley" = "Tygart Valley",
-  "West Fork" = "West Fork",
-  "Mononga./Dunk." = "Monongahela/Dunkard",
-  "Cheat/Youg." = "Cheat/Youghiogheny",
-  "U. Ohio N./S." = "Upper Ohio North/Upper Ohio South",
-  "M. Ohio N." = "Middle Ohio North",
-  "M. Ohio S." = "Middle Ohio South",
-  "Little Kanawha" = "Little Kanawha",
-  "Greenbrier" = "Greenbrier",
-  "L. New" = "Lower New",
-  "Gauley" = "Gauley",
-  "U. Kanawha" = "Upper Kanawha",
-  "Elk" = "Elk",
-  "L. Kanawha" = "Lower Kanawha",
-  "Coal" = "Coal",
-  "U. Guyandotte" = "Upper Guyandotte",
-  "L. Guyandotte" = "Lower Guyandotte",
-  "Tug Fork" = "Tug Fork",
-  "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
-  "Twelvepole" = "Twelvepole"
-)
-
-wv.map.table <- create_map_table(
-  tmp.map = wv.ds1,
+wv_polys_table <- create_map_table(
+  tmp.map = wv_watershed,
   IDcolumn = "Random_Wat"
 )
 # ID variable is Random_Wat
-head(wv.map.table)
+head(wv_polys_table)
 
-
-head(USstates@data$ST)
-
-statePolys <- create_map_table(
-  tmp.map = USstates,
-  IDcolumn = "ST"
-)
-
-class(statePolys)
-dim(statePolys)
-names(statePolys)
+class(wv_polys_table)
+dim(wv_polys_table)
+names(wv_polys_table)
 ```
 
 
@@ -840,7 +801,7 @@ We have to identify one variable from this data frame that can be used for linki
 two data sets. Here, this is the `StateAb` variable.
 
 The last expression in the following R code verifies that there is indeed at least one matching ID 
-in the `statePolys` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
+in the `state_polys_table` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
 Mismatching or missing IDs in the statistical data frame may cause
 that data for some subregions do not appear
 on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
@@ -851,13 +812,7 @@ the spatial data frame uses `DC`). Here, everything is matching.
 
 
 ```{r Ch2-linkingdataframesWV2}
-data(edPov)
-dim(edPov)
-
-head(edPov)
-head(edPov$StateAb)
-
-all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
+all(sort(wv_data$Random_Wat) == sort(unique(wv_polys_table$ID)))
 ```
 
 
@@ -866,17 +821,17 @@ all(sort(edPov$StateAb) == sort(unique(statePolys$ID)))
 
 Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
 `micromap::lmplot()` function, based on the previously created 
-`statePolys` data frame and the _edPov_\index{Datasets!edPov} dataset.
+`state_polys_table` data frame and the _edPov_\index{Datasets!edPov} dataset.
 In our function call, we only provide seven required arguments. None of these arguments has a default setting.
 For all other arguments of this function, the default settings will be used here. 
 The statistical data (_edPov_\index{Datasets!edPov}) is assigned to the `stat.data` argument
-and the spatial boundary data (in the `statePolys` data frame) is assigned to the `map.data` argument.
+and the spatial boundary data (in the `state_polys_table` data frame) is assigned to the `map.data` argument.
 
 The `map.link` argument is needed to tell the function how to link the statistical data
 and the spatial boundary data. A vector with the names of the two linking variables 
 identified in the previous step is needed for this argument.
 The first variable name (`StateAb`) must come from the statistical data (here _edPov_\index{Datasets!edPov})
-and the second variable name (`ID`) must come from the `statePolys` data frame that
+and the second variable name (`ID`) must come from the `state_polys_table` data frame that
 contains the spatial boundary information.
 Changing the order of these two variable names typically results in an error.
 
@@ -917,27 +872,80 @@ helpful interpretation once we have created the last refined version of this fig
 in the next step.
 
 
+```{r Ch2-creatingdraftWVdot, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 7}
+# Chunk 2. code below for publication plot of conductivity descriptive statistics
+# and estimates together
+### add.line=129 for estimated median conductvity
+# Draft plot
+lmplot(
+  stat.data = wv_data,
+  map.data = wv_polys_table,
+  map.link = c("Random_Wat", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
+  panel.data = list(NA, "Random_Wat", "cond_med1", "Cond_med", NA),
+  ord.by = "Cond_med", 
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = FALSE
+)
+```
+
+
+```{r Ch2-shortennamesWV}
+# shorten names of Random_Watersheds that combine 7 smaller HUC08s with larger
+# neighboring HUC08s in WV Sampling Frame
+wv_data$short_name <- as.factor(wv_data$Random_Wat)
+
+levels(wv_data$short_name) <- list(
+  "S. Br. Potomac" = "South Branch Potomac",
+  "N. Br. Potomac" = "North Branch Potomac",
+  "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
+  "Potomac/Shen." = "Potomac Direct Drains/Shenandoah Jefferson",
+  "U. New/James" = "Upper New/James",
+  "Tygart Valley" = "Tygart Valley",
+  "West Fork" = "West Fork",
+  "Mononga./Dunk." = "Monongahela/Dunkard",
+  "Cheat/Youg." = "Cheat/Youghiogheny",
+  "U. Ohio N./S." = "Upper Ohio North/Upper Ohio South",
+  "M. Ohio N." = "Middle Ohio North",
+  "M. Ohio S." = "Middle Ohio South",
+  "Little Kanawha" = "Little Kanawha",
+  "Greenbrier" = "Greenbrier",
+  "L. New" = "Lower New",
+  "Gauley" = "Gauley",
+  "U. Kanawha" = "Upper Kanawha",
+  "Elk" = "Elk",
+  "L. Kanawha" = "Lower Kanawha",
+  "Coal" = "Coal",
+  "U. Guyandotte" = "Upper Guyandotte",
+  "L. Guyandotte" = "Lower Guyandotte",
+  "Tug Fork" = "Tug Fork",
+  "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
+  "Twelvepole" = "Twelvepole"
+)
+```
+
+
 ```{r Ch2-creatingdraftWV, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 7}
 # Chunk 2. code below for publication plot of conductivity descriptive statistics
 # and estimates together
 ### add.line=129 for estimated median conductvity
 # Draft plot
 lmplot(
-  stat.data = wv.data.ds1,
-  map.data = wv.map.table,
+  stat.data = wv_data,
+  map.data = wv_polys_table,
   map.link = c("Random_Wat", "ID"),
   panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
   panel.data = list(
     NA,
-    "alt.name",
+    "short_name",
     list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
   ord.by = "Cond_med", 
   rev.ord = TRUE,
-  grouping = 5, 
-  plot.pGrp.spacing = 1,
+  grouping = 5,
   median.row = FALSE
 )
 ```
@@ -975,13 +983,13 @@ in most cases is not very meaningful, at least not for this specific example.
 ```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 7}
 # Refined Plot
 lmplot(
-  stat.data = wv.data.ds1,
-  map.data = wv.map.table,
+  stat.data = wv_data,
+  map.data = wv_polys_table,
   map.link = c("Random_Wat", "ID"),
   panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
   panel.data = list(
     NA,
-    "alt.name",
+    "short_name",
     list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
@@ -989,18 +997,19 @@ lmplot(
   ord.by = "Cond_med", 
   rev.ord = TRUE,
   grouping = 5, 
-  plot.pGrp.spacing = 1,
+  plot.pGrp.spacing = 1.2,
   median.row = FALSE,
 #  plot.height = 9, 
 #  plot.width = 6.8, # for poster use plot.height=6, plot.width=9,
-  colors = brewer.pal(5, "Spectral"), # for journal use plot.height=9, plot.width=6.8
+#  for journal use plot.height=9, plot.width=6.8
+  colors = brewer.pal(n = 5, name = "YlGnBu")[5:1], 
 
   panel.att = list(
     list(
       1,
-      panel.width = 1.2, 
-      point.type = 20, 
-      point.size = 2,
+      panel.width = 1.6, 
+      point.type = 15, 
+      point.size = 1.2,
       point.border = TRUE
     ),
     list(
@@ -1008,19 +1017,22 @@ lmplot(
       header = "WVDEP\nSubbasins", 
       panel.width = 1.25, # increased panel.width to 1.1 from .8
       align = "left", 
-      text.size = .8
+      text.size = 0.8
     ),
     list(
       3,
       header = "Observed Conductivity\n4th Order Streams or Less",
       graph.bgcolor = "lightgray",
+      graph.bar.size = 0.7,
       xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
       xaxis.labels = c(0, 1, 2, 3, 4, 5),
       xaxis.labels.size = 1.25,
       # xaxis.labels.angle=90,
-      xaxis.title = "Conductivity (x1000)", 
+      xaxis.title = "Conductivity [in 1,000]", 
       xaxis.title.size = 1.25, 
-      panel.width = 2
+      panel.width = 2,
+      right.margin = 0,
+      left.margin = -0.5
     ),
     list(
       4,
@@ -1034,13 +1046,15 @@ lmplot(
       add.line.col = "black", 
       add.line.typ = "dashed",
       xaxis.title.size = 1.25, 
-      panel.width = 2
+      panel.width = 2,
+      right.margin = 0.1,
+      left.margin = -0.5
     ),
     list(
       5,
       header = "Light Gray Means\nHighlighted Above",
-      inactive.border.color = gray(.7), 
-      inactive.border.size = 2,
+      inactive.border.color = gray(0.7), 
+      inactive.border.size = 1.5,
       panel.width = 1.5
     )
   )
