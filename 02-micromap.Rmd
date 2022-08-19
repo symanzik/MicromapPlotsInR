@@ -754,12 +754,19 @@ head(wv_watershed@data)
 wv_data <- wv_watershed@data # Pull out statistical data from spatial polygon dataframe
 head(wv_data)
 names(wv_data)
-
-# The variable names beginning with an uppercase letter, Cond_med, Cond_LCB95.
-# Cond_UCB95, Wvsci_med, etc., are the population estimates.  Variable names that
-# start with a lowercase letter, cond_min, condq1, cond_med1, cond_q3, cond_max, etc.,
-# are the descriptive statistics.
 ```
+
+
+Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95`,
+`Cond_UCB95`, are the population estimates, representing the median,
+the lower 95\% confidence bound, and the upper 95\% confidence bound of a variable, respectively.
+These will be used for the construction of dot plots with confidence bounds.
+
+Variable names starting with a lowercase letter, e.g., 
+`cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
+are the descriptive statistics, representing the minimum, first quartile, median,
+third quartile, and maximum of a variable, respectively.
+These will be used for the construction of boxplots.
 
 
 ### Linking Spatial Boundary Data and Statistical Data {#Ch2-LinkingWV}
@@ -999,11 +1006,7 @@ lmplot(
   grouping = 5, 
   plot.pGrp.spacing = 1.2,
   median.row = FALSE,
-#  plot.height = 9, 
-#  plot.width = 6.8, # for poster use plot.height=6, plot.width=9,
-#  for journal use plot.height=9, plot.width=6.8
-  colors = brewer.pal(n = 5, name = "YlGnBu")[5:1], 
-
+  colors = brewer.pal(n = 5, name = "YlGnBu")[5:1],
   panel.att = list(
     list(
       1,
@@ -1027,7 +1030,6 @@ lmplot(
       xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
       xaxis.labels = c(0, 1, 2, 3, 4, 5),
       xaxis.labels.size = 1.25,
-      # xaxis.labels.angle=90,
       xaxis.title = "Conductivity [in 1,000]", 
       xaxis.title.size = 1.25, 
       panel.width = 2,
@@ -1100,6 +1102,12 @@ only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 
 ## Further Reading {#Ch2-FurtherReading}
+
+
+Suggestions: 
+For a journal, use plot.height=9, plot.width=6.8.
+For a poster, use plot.height=6, plot.width=9.
+
 
 
 Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch3),
