@@ -69,9 +69,9 @@ Here are the steps used to create the multiple maps in each PDF:
 
 
 ```{r Ch4b-modifiedKYshapefile, fig.cap = 'Shapefile modification of the KY shapefile in 5 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
-knitr::include_graphics(c("img/KYBorderGrp1_p1.pdf", "img/KYBorderGrp1_p2.pdf"))
-knitr::include_graphics(c("img/KYBorderGrp1_p3.pdf", "img/KYBorderGrp1_p4.pdf"))
-knitr::include_graphics("img/KYBorderGrp1_p5.pdf")
+knitr::include_graphics(c("img/KYBorderGrp1_p1.png", "img/KYBorderGrp1_p2.png"), auto_pdf = TRUE)
+knitr::include_graphics(c("img/KYBorderGrp1_p3.png", "img/KYBorderGrp1_p4.png"), auto_pdf = TRUE)
+knitr::include_graphics("img/KYBorderGrp1_p5.png", auto_pdf = TRUE)
 ```
 
 
@@ -81,8 +81,8 @@ Example 2: US states - smoothing boundaries and enlarging small areas for visibi
 
 
 ```{r Ch4b-modifiedUSshapefile, fig.cap = 'Shapefile modification of the US shapefile in 4 images.', fig.show = "hold", out.width = '50%', echo = FALSE}
-knitr::include_graphics(c("img/USBorderGrp_p1.pdf", "img/USBorderGrp_p2.pdf"))
-knitr::include_graphics(c("img/USBorderGrp_p3.pdf", "img/USBorderGrp_p4.pdf"))
+knitr::include_graphics(c("img/USBorderGrp_p1.png", "img/USBorderGrp_p2.png"), auto_pdf = TRUE)
+knitr::include_graphics(c("img/USBorderGrp_p3.png", "img/USBorderGrp_p4.png"), auto_pdf = TRUE)
 ```
 
 
