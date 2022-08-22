@@ -1,4 +1,4 @@
-# Linked Micromap Plots via the **micromapST** R Package {#Ch3}
+# Linked Micromap Plots via the **micromapST** R Package {#Ch3a}
 
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr., Daniel B. Carr}
@@ -9,204 +9,203 @@ accessible at https://cran.r-project.org/web/packages/micromapST/index.html,
 will be introduced in this chapter. The reader will learn how to create a 
 basic linked micromap plot\index{Linked micromap plot} via this R package. 
 Although the default parameter settings give publication-ready output,
-details will be provided on setting up additional labels and optional cumulative shading
-which displays the growing geographic shading as one moves from the top to bottom
-of the full plot.
+details will be provided on several display options and how to map geographies other than U.S. states.
+
+## Introduction {#Ch3a-Introduction}
+As noted in Chapter \@ref(Ch1), the linked micromap plot design arose from Dan Carr’s wish to make geospatial data available from many federal agencies more accessible to the public. This goal was primarily to communicate those statistics in a compact, easily-understood form. Up to that point, most federal statistical reports consisted of tables sorted alphabetically by the names of the geographic units or ignored geography altogether. Collaborations with researchers on specific geospatial graphical design questions at the Environmental Protection Agency, the Bureau of Labor Statistics, the National Center for Health Statistics and the National Cancer Institute led to refinement of the design in the late 1990s.
+
+A secondary goal of the micromap design was to serve as a tool for exploratory spatial data analyses. For example, static maps of death rates due to cancer [ref Mason 1975; Pickle 1987; Pickle 1990] and other causes [ref Pickle 1996] generated hypotheses about possible causes of the observed geographic patterns that could subsequently be tested in epidemiologic studies. Linked micromaps give the analyst a tool to explore visual correlations between the geographic patterns of the outcome variable and possible risk factors for that outcome, such as smoking rates, income and education levels versus lung cancer death rates. While the micromaps might be for larger geographic units than the planned followup studies, they can help the analyst quickly identify the most promising of many potential risk factors for subsequent study.
+
+Early implementations of the micromap design were done using Splus software [ref 1996, 1998a, 1998b, 2000a, 2000b]. When the National Cancer Institute (NCI) became interested in including a web-based interactive version of linked micromaps on its proposed State Cancer Profiles website, Dan Carr worked with Sue Bell at NCI to finalize the design and functionality of the new graphical tool, which was then implemented in JAVA [ref] [ref 2002a, 2003]. Since this JAVA applet was specifically for publicly-available cancer data and could not be changed from the NCI production website version, Carr led the efforts to convert the earlier Splus software to R code so that refinements of the basic design could continue. 
+
+Later, Jim Pearson collaborated with Carr to create an R package, first released in 2013. The goal of this package development was to quickly display a visually appealing linked micromap plot from a list of user-provided parameters without requiring customizing code. The package was structured to use a table-driven description of the desired micromap, much like filling in cells of a spreadsheet, which most users are familiar with. That is, the user need only know how to read in the data to display, then load and execute a package in R. Pearson generalized the original R code for ease of maintenance and added checks and meaningful messages for input parameter errors. Functionality of the package was expanded by adding many new glyphs and the ability to display a variable number of areas and maps. Because the initial implementation was for a fixed design to display U.S. states, and to distinguish this package from the EPA version (**micromap**), we named this package **micromapST**. This was an unfortunate choice, because users think that the package still only displays U.S. states although it has since been expanded to show data for sub-state cancer registries, selected states at the county level, and several other countries.
+
+In this chapter you will learn how to use **micromapST** to create a basic linked micromap plot of U.S. state data. From the default output, we will show how to add or modify display options and then will illustrate how to plot other geographic boundary sets that are included in the package. In Chapter \@ref(Ch3b-Glyphs) we will demonstrate the various glyphs that are currently available in the package. In Chapter \@ref(Ch3c) we will illustrate a new feature whereby the user can supply their own boundary file to create other geographic displays.
 
 
-## Introduction {#Ch3-Introduction}
+## Basic plot layout and function call {#Ch3a-Basics}
 
-- will define linked micromap plot (ref back to Ch 1)
-- uses of LMMs: teaching tool, communication of geostatistics, investigation of patterns leading to followup analyses
-- history of micromapST: 1st coded in R, then in JAVA for State Cancer Profiles at NCI, then an R package
-- evolution from only US states to include NCI cancer registry boundaries and selected state/county, country boundaries
+We will start by producing the most basic linked micromap plot from **micromapST**, using only default settings except for data specification and definition of the columns to be included. In the next sections, we will add various display options and show how to change the perceptual grouping of areas, using one of the new built-in boundary files. 
 
-## Basic Plot Layout and Function Call {#Ch3-Basics}
+For these first examples, the growing numbers of covid-19 cases by state are examined over time in a search for geographic clusters. The data are state monthly cumulative case counts, both confirmed and presumptive, reported from February 24, 2020, to April 14, 2022, provided by USAFacts [ref https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/, accessed 4/19/22]. In order to compare states with widely varying populations, we divided each count by the state’s 2019 population. The resulting cumulative case rates are reported as cases per 1000 population. The same process was used to produce cumulative case rates for each U.S. county.
 
-- Introduce the most basic linked micromap plot from micromapST, using only default settings except for data specification; data = cumulative # covid cases by state on 11/20/20
-- in this example, column order left to right = map, state label, dot plot
+We wondered if the clear differences in the emergence and later surges of covid seen among the states were correlated with differences in preventive behavior, such as social distancing and mask wearing. To illustrate how this question could be examined using linked micromap plots, we merged the cumulative case rate dataset with data on mask wearing collected from the Carnegie Mellon University’s Delphi Group’s Facebook survey [ref Salomon et al, PNAS 118(51), 2021]. The survey question in 2020 was “In the last 5 days, how often did you wear a mask in public?”. We downloaded the percents by state who responded that they work a mask most or all of the time in September, 2020. To illustrate, the merged input data for Alaska (AK) and Alabama (AL) are shown below:
 
-```{r Ch3-micromap1, fig.cap = 'Prevalence of covid-19 cases by U.S. state on Nov. 20, 2020', fig.width = 7, fig.height = 9}
+```{r}
+# Input data files.
+# Data Set # 1
+STcovidcaserates = read.csv('data/STCaseRatesPer1000.csv',row.names=2)
+head(STcovidcaserates,n=2L)
+```
+
+To create the linked micromap, the user first specifies what to display in a data frame called `panelDesc`. For this simple example the code below requests that three columns be included, from left to right: maps, area i.d. and dot plots (`type=c('map','id','dot')`). Then we specify in `col1` what data are to be used from the data frame provided by the user: the cumulative number of covid cases on November 20,2020, which has column name `Nov_20_2020`. We could stop our layout specification there but we added a column label (`lab1`) to make the plot more readable. Note that because we specified three columns for the micromap (map, i.d., dot plot), every other specification in panelDesc must also contain three components. For `col1`, 'NA' is used as a placeholder, indicating that the map and i.d. columns do not have data in them. For `lab1`, ' ' is used as a placeholder, indicating that the column headings for the map and i.d. columns do not have extra text. You can think of `panelDesc` as a spreadsheet-like structure, with each column defining a column on the micromap and each row defining a particular display parameter. 
+
+After setting up the display format, we call the micromapST function within the package. For this simple example, we only need to specify the names of the relevant data frames: where the data to be plotted reside and the name of the plot description (`panelDesc`). We also add a title for clarity.
+
+```{r Ch3a-LMMalpha, fig.cap = 'Cumulative # of covid-19 cases reported by U.S. states on Nov. 20, 2020', fig.width = 7, fig.height = 9}
 
 library(micromapST)
 
-# Input data files.
-# Data Set # 1
-STcovidcaserates = read.csv('data/STCaseRatesFeb242020Apr142022.csv',row.names=2)
-head(STcovidcaserates,n=2L)
 panelDesc = data.frame(
   type=c('map','id','dot'),  
-  lab1=c('','','Cases/100,000'),		
-  col1=c(NA,NA,'Nov_20_2020')
- )
-
+  col1=c(NA,NA,'Nov_20_2020'),
+  lab1=c('','','Cases/1000')
+)
+panelDesc
 
 # default = alphabetic state name sort
 micromapST(STcovidcaserates,panelDesc,
-            title=c('US State Covid Case Rates, Nov. 20, 2020'))  
+  title=c('US State Covid Cumulative Case Rates per 1000 Population, Nov. 20, 2020')
+)  
+```
+This is a nice-looking plot that would work well for the task of reading the case rates for particular states. Thin black horizontal lines delineate the perceptual groups of 5 states each and white vertical lines on the light gray background help guide the reader's eye up or down to the axis labels. The default grouping for 51 areas is 10 groups of 5 areas each with the median-valued area shown separately in the middle of the plot.
+
+The default order of the rows is alphabetic by area i.d., here U.S. state postal codes. This is not useful for identifying any geographic patterns in the data. Sorting by the data values is a more useful design. We can reuse the plot definitions (`panelDesc`) and just add to the function call the option to sort layout in descending order by our specified data value (`sortVar='Nov_20_2020,ascend=F`).
+
+```{r Ch3a-LMMsorted, fig.cap = 'Cumulative # of covid-19 cases reported by U.S. states on Nov. 20, 2020', fig.width = 7, fig.height = 9}
+micromapST(STcovidcaserates,
+  panelDesc,
+  sortVar='Nov_20_2020',ascend=F,
+  title=c('US State Covid Cumulative Case Rates per 1000 Population, Nov. 20, 2020')
+)  
 ```
 
-- this doesn't show anything
-- sort to bring out geographic patterns (by case rate in descending order)
-- reuse last paneldesc
+Now we can see that North and South Dakota and nearby states had high case rates in the fall of 2020. Others noticed this spike in cases at that time and speculated that a huge motorcycle rally in Sturgis ND during August 2020 might have been a covid superspreader event, because so many people were crowded together and most attendees were reportedly strongly against mask mandates. [Ref MMWR article] 
 
-```{r Ch3-micromap2, fig.cap = 'Prevalence of covid-19 cases by U.S. state on Nov. 20, 2020', fig.width = 7, fig.height = 9}
-micromapST(STcovidcaserates,panelDesc,
-            sortVar='Nov_20_2020',ascend=F,
-            title=c('US State Covid Case Rates, Nov. 20, 2020'))  
-```
+Let's see how our linked micromap plot could explore this hypothesis. We can add a second variable measuring mask wearing and look for a visual correlation with the case rate column. Included in our dataset is the percent who reported that they usually wore a mask in public on a Facebook survey in Sept 2020 as described earlier in this section. For this variable, we chose a month close to the motorcycle rally but before the case spike had been reported.
 
-- Here we can see that ND & SD + surrounding states were high in the fall of 2020
-- story behind date choices: There was a huge motorcycle rally in Sturgis ND during the 1st 2 weeks of Aug 2020 that in hindsight was thought to be a covid superspreader event, because (1) 50,000 people were crowded together
--   (ck #) and (2) most attendees were strongly against mask mandates. Ref MMWR article
-- now add a 2nd variable, look for correlation with 1st variable
-- 2nd var = % who reported that they usually wore a mask in public on a Facebook survey in Sept 2020
+First, we define the plot (`panelDesc`) to include four columns, the fourth (rightmost) one being the mask variable `PctWoreMask0920`, which will also be shown as a dot. Then we call the plotting function, again specifying that the states be sorted in descending order by case count. Note that since the plot title has gotten long, we split the title into two character strings; the second string prints on a second title line.
 
-```{r Ch3-micromap3, fig.cap = 'Prevalence of covid-19 cases on Nov. 20, 2020, and % who usually wore a mask in Sep. 2020', fig.width = 7, fig.height = 9}
+```{r Ch3a-LMMmask, fig.cap = 'Cumulative # of covid-19 cases by state on Nov. 20, 2020, and % who usually wore a mask in Sep. 2020', fig.width = 7, fig.height = 9}
 
-# Input data files.
-# Data Set # 1
 panelDesc = data.frame(
   type=c('map','id','dot','dot'),  
-  lab1=c('','','Cases/100,000','% wore mask'),		
+  lab1=c('','','Cases/1000','% wore mask'),		
   col1=c(NA,NA,'Nov_20_2020','PctWoreMask0920')
  )
 
-micromapST(STcovidcaserates,panelDesc,
-           sortVar='Nov_20_2020',ascend=F,
-            title=c('US State Covid Case Rates, Nov. 20, 2020 and % who usually wore a mask in Sep. 2020'))  
+micromapST(STcovidcaserates,
+  panelDesc,
+  sortVar='Nov_20_2020',ascend=F,
+  title=c('US State Covid Cumulative Case Rates, Nov. 20, 2020',' and % who usually wore a mask, Sep. 2020'))  
 ```
 
-- This micromap supports the theory that the Sturgis superspreader event, i.e., exposure in ND in Aug 2020 led to infections within the following month in surrounding states where most attendees came from.
-- We see that ND & SD had very high totals in Nov 20 and residents there reported relatively low mask wearing in Sep
+There appears to be a negative correlation between the two variables. For example, we can see that the Dakotas had very high totals by November 2020 and residents there reported relatively low mask wearing in September. This micromap supports the theory that the Sturgis motorcycle rally was a covid superspreader event, i.e., exposure in North Dakota in August led to covid infections soon after in surrounding states where most attendees came from. Of course, a more refined epidemiologic study would be needed to confirm this, but it illustrates how linked micromaps can be used to quickly identify case clusters and explore suspected risk factors.
 
-## Display Options {#Ch3-DisplayOpt}
+## Display options {#Ch3a-DisplayOpt}
 
-In this section we illustrate some optional display options, such as full name labels, cumulative shading, color
-choices, enhanced labels and a vertical reference line. A reference is made to changing the number of rows per
-perceptual group, to be illustrated in the next section.
+In this section we illustrate how to modify the display, such as substituting full area names for the default abbreviations, cumulative shading on the maps, color choices, enhanced labels and a vertical reference line. We will modify the default display for the same data shown in Figure \@ref(fig:Ch3a-LMMmask). Since there are four columns in the display, every parameter specification must have four values, one for each column, left to right. 'NA' is used as a placeholder for each column where that parameter is not applicable.
 
+First, we change the simple dot glyph for the percent who wore a mask to include a standard error bar by changing ‘dot’ to ‘dotse’ in the definition of the plot columns (`type`). In Chapter \@ref(Ch3b-Glyphs) many more glyphs will be defined. Compared to the simple dot, this glyph needs the additional information of the length of the error bar, so a parameter (`col2`) is added to point to that value in the data set. Note that this extra value is only needed for the ‘dotse’ column, the fourth column from left to right on the plot, so the first three positions in `col2` are shown as ‘NA’.  
 
-- in this figure, add cumulative shading to map, add error bar to dot for % wore mask, change to full state name, add US reference line
-- ck whether data has stderr or stddev, fix if necessary
+Another addition to `panelDesc` here is `refVals`, which defines a vertical dashed line in any or all of the graphical columns. In this example, we request a line to be drawn at 85% on the mask-wearing column, the reported percent wearing masks in the U.S. on that date. `refTexts` provides a label ('US %') for the reference line legend.
 
-```{r Ch3-micromap4, fig.cap = 'Prevalence of covid-19 cases on Nov. 20, 2020, and % who usually wore a mask in Sep 2020, with optional error bars, cumulative map shading and full state names', fig.width = 7, fig.height = 9}
+Finally, cumulative map shading is requested by changing ‘map’ to ‘mapcum’ in the column definitions (`type`). This option shades in light yellow any map areas that had been already displayed above. That is, from the top down, each map shows the active perceptual group’s colored areas as well as the previous groups’ areas shaded in yellow. In this way, any growing geographic cluster of sorted values is evident. This alleviates the problem of missing a cluster of similar-valued states that may fall into different, but adjacent, perceptual groups. The shading can be defined to accumulate from the top down (‘mapcum’) or from the extremes to the middle (‘maptail’). A third option (‘mapmedian’) is a simple binary shading whereby areas that have values above the median are shaded in one color in the upper maps and areas in the lower maps with values below the median are shaded in another color.
 
-# Input data files.
-# Data Set # 1
+In general, options for the display of the statistical data and glyphs are specified in `panelDesc` while options for the entire micromap display are specified in the function call to **micromapST**. In this example, full state names will be displayed as the geographic identifier, rather than the default state postal codes used in the previous examples (`plotNames=’full’`).
+
+```{r Ch3a-LMMoptions, fig.cap = 'Cumulative # of covid-19 cases by state on Nov. 20, 2020, and % who usually wore a mask in Sep 2020, with optional error bars, cumulative map shading and full state names', fig.width = 7, fig.height = 9}
+
 panelDesc = data.frame(
   type=c('mapcum','id','dot','dotse'),
-  lab1=c('','','Cases/100,000','% wore mask'),		
+  lab1=c('','','Cases/1000','% wore mask'),		
   col1=c(NA,NA,'Nov_20_2020','PctWoreMask0920'),
   col2=c(NA,NA,NA,'PctMaskStderr'),
-  refVals=c(NA,85),refTexts='US %'
+  refVals=c(NA,NA,NA,85),refTexts='US %'
  )
 
 micromapST(STcovidcaserates,panelDesc,
-            sortVar='Nov_20_2020',ascend=F,
-            plotNames='full',
-            title=c('US State Covid Case Rates, Nov. 20, 2020 and % who usually wore a mask in Sep. 2020'))  
+  sortVar='Nov_20_2020',ascend=F,
+  plotNames='full',
+  title=c('US State Covid Cumulative Case Rates, Nov. 20, 2020,',
+           ' and % who usually wore a mask, Sep. 2020'))
 ```
 
-- cumulative shading shows an enlarging cluster of states in the N. Central region of the US, consistent with the superspreader ND motorcycle rally hypothesis
-- by adding a confidence bar to the mask % dot, we can see that even though ND & SD %s have a wide bar, they are still much lower than most other states
-- adding the US referent line (85%) shows that the highest 15 case rates are in states with below US mask wearing %
--    and the lowest 30 rates are in states with above US mask wearing %
+The cumulative shading from the highest to lowest case rates shows an enlarging cluster of states in the North Central region of the U.S., consistent with the superspreader North Dakota motorcycle rally hypothesis.  By adding an error bar to the mask-wearing dot, we can see that even though North Dakota, South Dakota and Wyoming have wide error bars, mostly due to their smaller populations, they still appear to have values lower than most other states. There appears to be a slight negative correlation between the case and mask columns. Adding the U.S. value referent line (85%) shows that the highest 15 case rates are in states with mask wearing percents below the U.S. value and the most of the other states have mask wearing percents about the same (error bar touches the U.S. line) or slightly above the U.S. value.
 
-- in the next figure, move maps to right, add 2nd label lines, change dotse to bar, change colors to gray shades
+In the next figure, the maps are moved to the right side of the plot by reordering the specified glyphs in `type` and the dot with error bar is changed to a horizontal bar (`bar`). Note that this requires a change in the order of values in all of the parameter lines. In addition, a second line of column labels is added (`lab2`) and the colors are changed from the default colors to predefined shades of gray. We recommend using the default colors but sometimes publishers are unable to print color. The gray scale available for optional area and glyph shading was chosen to maximize readability and distinctions among the areas when colors are not available. The user can also specify a different color set by the `colors` parameter, defining the colors by their names or hexadecimal definitions. The only palette name recognized is 'grays'. See the package documentation for details. 
 
-```{r Ch3-micromap5, fig.cap = 'Prevalence of covid-19 cases on Nov. 20, 2020, and % who usually wore a mask in Sep 2020, with different colors, expanded labels and bar glyph', fig.width = 7, fig.height = 9}
+There are 12 default colors used:
 
-# Input data files.
-# Data Set # 1
+-	Up to 6 for the map areas and symbols on the glyphs (red, orange, green, blue/green, lavender, magenta/brown;
+-	1 for the median area (black);
+-	3 foreground colors for highlighted areas on maps with cumulative shading (light yellow, light red, light blue);
+-	1 for areas not referenced (lightest gray);
+-	1 for non-active background areas (lighter gray).
+
+
+```{r Ch3a-LMMcolorsbar, fig.cap = 'Cumulative # of covid-19 cases by state on Nov. 20, 2020, and % who usually wore a mask in Sep 2020, with different colors, expanded labels and bar glyph', fig.width = 7, fig.height = 9}
+
 panelDesc = data.frame(
   type=c('id','dot','bar','mapcum'),
-  lab1=c('','Cases/100,000','% wore mask',''),
+  lab1=c('','Cases/1000','% wore mask',''),
   lab2=c('','Nov 20, 2020','Sep 2020',''),
   col1=c(NA,'Nov_20_2020','PctWoreMask0920',NA),
   col2=c(NA,NA,'PctMaskStderr',NA),
-  refVals=c(NA,85),refTexts='US %'
+  refVals=c(NA,NA,85,NA),refTexts='US %'
  )
 
 micromapST(STcovidcaserates,panelDesc,
-            sortVar='Nov_20_2020',ascend=F,
-            plotNames='full',
-            colors='grays',
-            title=c('US State Covid Case Rates, Nov. 20, 2020 and % who usually wore a mask in Sep. 2020'))  
+  sortVar='Nov_20_2020',ascend=F,
+  plotNames='full',
+  colors='grays',
+  title=c('US State Covid Cumulative Case Rates, Nov. 20, 2020',
+          ' and % who usually wore a mask, Sep. 2020'))  
 ```
-- I don't think that the gray scale works as well as colors but sometimes a publisher can't do color
-- comment on how to specify other colors
 
-## Changing Perceptual Group Size {#Ch3-PerceptGroups}
+All of the examples in this book direct the micromap display to print on these pages. However, the output could be written to a file for inclusion in other documents. For example, to write to a PDF file, open an output file by `pdf(file='samplefilename',width=7,height=8)` before the function call to **micromapST**, then close the file by `dev.off()` after the call. `pdf` could be replaced by `png` to create that type of file or `windows` to direct the plot to a Windows display (with no filename specified). The default is to write to the open graphical window. The PDF and PNG file formats retain sufficient information to allow scaling and zooming in to see detail in the plot and so are preferred over other output formats that do not. Because the characteristics of a graphical window are much different from a file, it is difficult to predict how the the window will display the micromap. Writing the micromap image to a file gives a consistent format. See Chapter \@ref(Ch3c-OtherBoundaries) for an example of how to read an external image file back in for display.
 
-- now change dataset to Maryland by county, % residents with 4+ years of college & % living <150% federal poverty level
-- 1st micromap uses default of 5 counties in each perceptual group.
-- look for geographic clustering in the state: a well known pattern in MD: highest ed in DC suburbs/central MD,
--   then southern MD, then lower Eastern Shore & Western MD.
+## Using other geographies {#Ch3a-Geog}
 
-```{r Ch3-micromap6, fig.cap = 'Percent residents with income < 150% federal poverty level and % with 4+ years of college', fig.width = 7, fig.height = 9}
+Over time, boundary files have been added to micromapST that represent geographies other than the original U.S. states. We refer to these as border groups. At this writing, the package includes generalized border groups for counties within the U.S. states of Kansas, Maryland, New York and Utah; the NCI cancer registries [ref SEER]; districts in Seoul, South Korea; provinces and municipalities in China; and the countries of Africa. We will examine education and poverty levels for the 24 Maryland counties to illustrate how to use these additional boundary files. In Chapter \@ref(Ch3c-OtherGeographies), we will demonstrate how the user may read in their own border group file to create a linked micromap.
+
+The data frame `MDPovEd` consists of various measures of education and poverty by county as reported on the Census Bureau’s publicly available American Community Survey for 2016-2020 [ref online source]. Maryland is a diverse state, with mostly agricultural jobs east of the Chesapeake Bay, mostly white-collar jobs in and around Baltimore and Washington D.C. (adjacent to Montgomery and Prince George’s counties in MD), and mostly rural areas in the southern and western counties. Let’s see if a linked micromap plot can discern these expected patterns by plotting the percent of adults who had at least four years of college and the percent of residents living below 150% of the federal poverty level. The cost of living in Maryland tends to be high, so the 150% criterion will capture those who are struggling to make ends meet even though they technically are not living below the poverty line.
+
+First, the data file is read in, specifying the third column as containing the row names to match the area names in the border group dataset; these are the numeric county FIPS codes. The first two counties’ data are printed for illustration. Then a simple linked micromap is requested, with full county names listed as the geographic identifier and the rows sorted by college education in descending order (`sortVar='PctBachDegree',ascend=F`). This example follows the design and display specification for Figure \@ref(fig:Ch3a-LMMmask). Note that because the plot is for a border group other than U.S. states, we need to specify `bordGrp='MarylandBG'`. 
+
+```{r Ch3a-LMMMDpoved, fig.cap = 'Percent of Maryland residents with income < 150% federal poverty level and % with 4+ years of college, by county', fig.width = 7, fig.height = 9}
 
 library(micromapST)
 
-# Input data files.
-# Data Set # 1
 MDPovEd = read.csv('data/MDPovEducACSData20162020.csv',row.names=3)
-head(MDPovEd)
+head(MDPovEd,n=2L)
+
 panelDesc = data.frame(
   type=c('mapcum','id','dot','dot'),  
-  lab1=c('','','% College','% Pov'),		
+  lab1=c('','','% College','% Poverty'),		
   col1=c(NA,NA,'PctBachDegree','PctLess150Pov')
- )
+)
 
 # sort by % college
-micromapST(MDPovEd,rowNames='id',panelDesc,sortVar='PctBachDegree',ascend=F,bordGrp='MarylandBG',
-            plotNames='full',
-            title=c('Maryland counties: % Living < 150% of Poverty Level and % with 4+ Years of College'))  
+micromapST(MDPovEd,rowNames='id',panelDesc,
+  sortVar='PctBachDegree',ascend=F,
+  bordGrp='MarylandBG',
+  plotNames='full',
+  title=c('Maryland counties: % Living < 150% of Poverty Level',
+          'and % with 4+ Years of College'))   
+# Note 2 character strings for 2 lines of the long title 
 ```
 
-- change perceptual group size to c(5,4,3,3,4,5), see if the geographic patterns are any clearer (probably not)
+This plot shows the expected negative correlation between college education and income – counties with more college-educated residents tend to have a lower instance of poverty. The maps show a cluster of highest education/lowest poverty in the DC suburbs plus Talbot County on the Eastern Shore, followed by a cluster of the Baltimore suburbs plus two more Eastern Shore counties. The cumulative shading through the first three maps defines a contiguous block of 14 counties in central Maryland with higher income and lower poverty than in the other 10 counties, which are located in western Maryland, the lower Eastern Shore, Cecil County in the northeast corner and Charles County in the southwest corner of the state. 
 
+The 24 counties on this plot were split into the default perceptual group size of five counties each from the bottom and top, with the remaining four counties shown in the middle group. Perhaps the geographic patterns would be clearer by using smaller groups so that there were fewer than four counties in the middle group. Using the same design specified by `panelDesc`, the revised perceptual grouping is specified by `grpPattern=c(5,4,3,3,4,5)` from top to bottom. [ref Juergen's paper?] Note that the panel height is determined by the map size and so is not affected by the number of areas in each panel.
 
-```{r Ch3-micromap7, fig.cap = 'Percent residents with income < 150% federal poverty level and % with 4+ years of college - smaller perceptual groups', fig.width = 7, fig.height = 9}
+```{r Ch3a-LMMMDpercep, fig.cap = 'Percent of Maryland residents with income < 150% federal poverty level and % with 4+ years of college by county, displayed in smaller perceptual groups', fig.width = 7, fig.height = 9}
 
-library(micromapST)
-
-# Input data files.
-# Data Set # 1
-MDPovEd = read.csv('data/MDPovEducACSData20162020.csv',row.names=3)
-head(MDPovEd)
-panelDesc = data.frame(
-  type=c('mapcum','id','dot','dot'),  
-  lab1=c('','','% College','% Pov'),		
-  col1=c(NA,NA,'PctBachDegree','PctLess150Pov')
- )
-
-# sort by % college
-micromapST(MDPovEd,rowNames='id',panelDesc,sortVar='PctBachDegree',ascend=F,bordGrp='MarylandBG',
-            plotNames='full',grpPattern=c(5,4,3,3,4,5),
-            title=c('Maryland counties: % Living < 150% of Poverty Level and % with 4+ Years of College'))  
+micromapST(MDPovEd,rowNames='id',
+  panelDesc,
+  sortVar='PctBachDegree',ascend=F,
+  bordGrp='MarylandBG',
+  plotNames='full',
+  grpPattern=c(5,4,3,3,4,5),
+  title=c('Maryland counties: % Living < 150% of Poverty Level',
+          ' and % with 4+ Years of College'))  
 ```
+Since the default grouping led to a fairly clear clustering of counties within Maryland, this revised grouping is only slightly better. 
 
-## Conclusions {#Ch3-Conclusions}
+## Conclusions {#Ch3a-Conclusions}
+In this chapter you have learned how to create a basic linked micromap plot using the package **micromapST**, then how to enhance that plot with several display options. In the last section, you learned how to use one of the additional boundary group files included in the package; In the next chapter (Chapter \@ref(Ch3c)), you will learn how to read in your own geographic file and to process it for use as a micromap.
 
-- default layout is of publishable quality and gets you pretty far along in displaying the data in a meaningful way
-- options to enhance the display are presented
-- easy to use & to change options, quick to run, so good for teaching, communicating spatial patterns & generating hypotheses for further analysis
+The advantages of building many functions and datasets into the package include ease of use by those not familiar with R coding, freeing the user to focus on the task of examining patterns in the data. Because the linked micromap is drawn by the `polygon` function in base R, with no need to call another drawing package, execution is very fast. Thus linked micromaps with different variables and display options can be quickly generated to identify the best plot for the purpose at hand. The disadvantage of this approach is that the user has less control of display features, although we have attempted to create publication-ready output without user modification and to offer many optional display modifications through parameter choices. The ease of use combined with speed of execution makes this an excellent tool for teaching, exploring and communicating spatial patterns and generating hypotheses for further analysis.
 
-
-## Further Reading {#Ch3-FurtherReading}
-
-- Purposes and uses of the micromapST package to date
-
-Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
-where related work and further examples can be found in this book that match the content of this
-chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
-
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
-
-
-\printbibliography[segment=\therefsegment,heading=subbibliography]
 
