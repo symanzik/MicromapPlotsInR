@@ -244,7 +244,9 @@ two columns with statistical data represented as dot plots\index{Dot plot} (`dot
 and the micromaps in the fifth and final (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 A list is necessary for this argument as some of the data itself can be lists as we will
-see in some examples XXXX later on.
+see in the R code for Figures \@ref(fig:Ch2-creatingdraftWV) 
+and \@ref(fig:Ch2-refining1WV) later on.
+
 The `dot_legend` simply shows a plotting symbol in a certain color that represents that row in
 the linked micromap plot\index{Linked micromap plot}. Thus, no further data is needed and `NA`
 is assigned. `labels` requires some text argument, typically some identifiers of the subregions
@@ -263,7 +265,7 @@ largest (at the bottom). Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups (here `5` rows). If a single integer value is provided, 
 that value is used for all perceptual groups. If a vector of integer values is provided,
 each perceptual group may have a different number of rows as 
-shown in some examples XXXX later on.
+shown in the R code for Figure \@ref(fig:Ch2-refining3).
 
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
@@ -705,38 +707,70 @@ only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 In this second linked micromap plot\index{Linked micromap plot}
 example created with the **micromap**\index{R Packages!micromap} R package, we work with the
+_WV_Watershed_\index{Datasets!WV\_Watershed} dataset
+from the **MPIRBook**\index{R Packages!MPIRBook} R package.
+We follow the four general steps outlined in Section \@ref(Ch2-Steps) again.
+However, there are several differences compared to the first example in Section \@ref(Ch2-Example1).
+First, we work with external shapefiles\index{Shapefiles}
+that contain both, the boundary for watersheds in West Virginia and the statistical data
+used in this linked micromap plot\index{Linked micromap plot}, rather than having
+a separate dataset for the statistical data. 
+These external shapefiles\index{Shapefiles} have to be read in as a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
+that has to be split into the geographic information and the statistical data comonents.
 
-UPDATE _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets
-from the **micromap**\index{R Packages!micromap} R package. ENDUPDATE
-
-We follow the four steps outlined in Section \@ref(Ch2-Steps) again.
-
-IV. Demonstration of adding an overall statistic or criteria line
-Chunk 1. Linked micromap of conductivity descriptive statistics and estimates
-spatial and statistical data brought in together as shapefile
-
-UPDATE ALL TEXT AND FURTHER REFINE THE LINKED MICROMAP PLOT.
+Moreover, we introduce two new statistical displays
+for the data columns of the linked micromap plot\index{Linked micromap plot} - 
+a boxplot\index{Boxplot} and a dot plot with confidence bounds\index{Dot plot with confidence bounds}. 
+Different arguments are used to fine-tune this linked micromap plot\index{Linked micromap plot}.
+Moreover, we will demonstrate how to add an overall statistics or criteria line to the 
+statistical columns.
 
 
 ### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-IdentifyingWV}
 
 
-UPDATE
-_USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
-the 50 states (and Washington, D.C.) of the United States (U.S.) 
-that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
-of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
-contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
-main map and has been placed further to the east (and also has been enlarged)
-as shown in Figure \@ref(fig:Ch2-USstates). In the following R code,
-we first load the **micromap**\index{R Packages!micromap} R package and the
-_USstates_\index{Datasets!USstates} data set, verify that this object indeed is a
+The _WV\_Watershed_\index{Datasets!WV\_Watershed} dataset
+from the **MPIRBook**\index{R Packages!MPIRBook} R package
+is stored in external shapefiles\index{Shapefiles} that can be
+read in as a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
+via the `rgdal::readOGR()` function from the
+**rgdal**\index{R Packages!rgdal} R package. It contains
+25 aggregated watersheds and subbasins in West Virginia in the United States. 
+These watersheds were introduced and discussed in more detail in @MPRG2016.
+In addition to the geographic information, this dataset also contains
+the statistical information for the linked micromap plots\index{Linked micromap plot} in this section.
+
+Similar to the first example in Section \@ref(Ch2-Identifying), 
+we verify that this object (once read into R) indeed is a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
-at some of the data in the `data` component of this object, and finally plot it.
-ENDUPDATE
+at some of the data in the `data` component of this object, and finally plot it,
+as shown in Figure \@ref(fig:Ch2-WV).
+The last step is the extraction of the statistical data from this
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} into a regular data frame.
+This can be done by accessing the data via `@data` in the 
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}.
 
+There are 41 variables in the resulting data frame.
+In contrast to @MPRG2016, we will focus on the conductivity variables
+in this linked micromap plot\index{Linked micromap plot}.
 
-```{r Ch2-WV, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary data set for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
+Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95`,
+`Cond_UCB95`, are the population estimates, representing the median,
+the lower 95% confidence bound, and the upper 95% confidence bound of a variable
+(here, conductivity) in each of the 25 watersheds, respectively.
+These will be used for the construction of 
+dot plots with confidence bounds\index{Dot plot with confidence bounds}.
+
+Variable names starting with a lowercase letter, e.g., 
+`cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
+are the descriptive statistics, representing the minimum, first quartile, median,
+third quartile, and maximum of a variable (here, conductivity) in each of the 25 watersheds, respectively.
+These will be used for the construction of boxplots\index{Boxplot}.
+
+(ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary data set for the 25 watersheds in West Virginia that is used as the basis for linked micromap plots\index{Linked micromap plot} in this section.
+
+```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
 library(micromap)
 
 wv_watershed <- readOGR(
@@ -747,26 +781,14 @@ wv_watershed <- readOGR(
 
 class(wv_watershed)
 
+head(wv_watershed@data, n = 2)
+
 plot(wv_watershed)
 
-head(wv_watershed@data)
+wv_data <- wv_watershed@data
 
-wv_data <- wv_watershed@data # Pull out statistical data from spatial polygon dataframe
-head(wv_data)
 names(wv_data)
 ```
-
-
-Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95`,
-`Cond_UCB95`, are the population estimates, representing the median,
-the lower 95\% confidence bound, and the upper 95\% confidence bound of a variable, respectively.
-These will be used for the construction of dot plots with confidence bounds.
-
-Variable names starting with a lowercase letter, e.g., 
-`cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
-are the descriptive statistics, representing the minimum, first quartile, median,
-third quartile, and maximum of a variable, respectively.
-These will be used for the construction of boxplots.
 
 
 ### Linking Spatial Boundary Data and Statistical Data {#Ch2-LinkingWV}
