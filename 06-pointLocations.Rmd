@@ -138,7 +138,8 @@ combined.
 
 ```{r}
 circles_sf <- points2circles(cities, coords = c("long", "lat"), 
-                             radius = 5, crs = "EPSG:4326")
+                             radius = 5, crs = "+proj=longlat +ellps=WGS84 +no_defs")
+#                             radius = 5, crs = "EPSG:4326")
 names(circles_sf)
 ```
 
@@ -209,6 +210,8 @@ system (CRS).
 
 ```{r}
 st_crs(asia_sf) == st_crs(circles_sf)
+# this was FALSE after package updates - thus the different CRS above
+# it may be a good idea to obtain FALSE here and then update the CRS afterwards
 ```
 
 Since the they share the same CRS we don't need to do anything. 
@@ -504,10 +507,23 @@ uk_map_sf$stadium <- NA
 
 ### Combine with points
 
+Compare CRS - and adjust again.
+
+```{r}
+st_crs(uk_map_sf) == st_crs(stadium_circles)
+```
+
+
+```{r }
+stadium_circles2 <- st_transform(stadium_circles, crs = st_crs(uk_map_sf))
+```
+
+
+
 Here we bind the the base map and the point locations together.
 
 ```{r}
-stadiums_map1 <- rbind(uk_map_sf['stadium'], stadium_circles['stadium'])
+stadiums_map1 <- rbind(uk_map_sf['stadium'], stadium_circles2['stadium'])
 
 stadiums_map_df <- create_map_table(as(stadiums_map1, 'Spatial'), 
                                     IDcolumn = "stadium")
@@ -564,8 +580,10 @@ Now circles need to be drawn around the points.
 ```{r}
 stadium_circles_repel <- points2circles(stadiums_repel, radius = 8)
 
+stadium_circles_repel2 <- st_transform(stadium_circles_repel, crs = st_crs(uk_map_sf))
+
 stadiums_map_repel <- rbind(uk_map_sf['stadium'], 
-                            stadium_circles_repel['stadium'])
+                            stadium_circles_repel2['stadium'])
 
 stadiums_map_repel_df <- create_map_table(as(stadiums_map_repel, 'Spatial'), 
                                     IDcolumn = "stadium")
