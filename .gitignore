@@ -1,5 +1,6 @@
 _bookdown_files/
 _book/
+_NOT_USED/
 .Rproj.user
 .Rhistory
 .RData
@@ -9,6 +10,7 @@ bookdown.log
 bookdown-crc.Rproj
 *.aux
 *.bbl
+*.bcf
 *.idx
 *.lof
 *.lot
