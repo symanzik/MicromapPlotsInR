@@ -55,11 +55,10 @@ RegionName <- read.csv("data/Ch10/RegionName.csv")
 # load(file = "fig_10/RegionName.RData")
 
 knitr::kable(
-  RegionName, 
+  RegionName,
   caption = "An example of shapefile for micromap plot.",
   booktabs = TRUE
 )
-
 ```
 
 
@@ -92,21 +91,43 @@ A vector of panel plot types are created to store the designed panel types. Then
 
 ```{r Ch10-panel-design}
 
-panel.types = c("poster", "legend", "dot", "dot", "boxplot")
+panel.types <- c("poster", "legend", "dot", "dot", "boxplot")
 
-columns.att = list(
-  list(col.num = 1, cumulate = TRUE),
-  list(col.num = 2, header = "Areas of Interest", header.size = 0.7, point.size = 0.96, text.size = 0.7, text.font = 1),
-  list(col.num = 3, panel.data = "visits.num", header = "Number of Visits", text.size = 0.7, point.size = 0.96, axis.ticks = NA, axis.labels = NA),
-  list(col.num = 4, panel.data = "visits", header = "Length of Visits (sec)", text.size = 0.7, point.size = 0.96, axis.ticks = NA, axis.labels = NA),
-  list(col.num = 5, panel.data = "pupildat", header = "Pupil Radius in Pixels", text.size = 0.7, axis.ticks = NA, axis.labels = NA)
+columns.att <- list(
+  list(col.num = 1, 
+       cumulate = TRUE),
+  list(col.num = 2, 
+       header = "Areas of Interest", 
+       header.size = 0.7, 
+       point.size = 0.96, 
+       text.size = 0.7, 
+       text.font = 1),
+  list(col.num = 3, 
+       panel.data = "visits.num", 
+       header = "Number of Visits", 
+       text.size = 0.7, 
+       point.size = 0.96, 
+       axis.ticks = NA, 
+       axis.labels = NA),
+  list(col.num = 4, 
+       panel.data = "visits", 
+       header = "Length of Visits (sec)", 
+       text.size = 0.7, 
+       point.size = 0.96, 
+       axis.ticks = NA, 
+       axis.labels = NA),
+  list(col.num = 5, 
+       panel.data = "pupildat", 
+       header = "Pupil Radius in Pixels", 
+       text.size = 0.7, 
+       axis.ticks = NA, 
+       axis.labels = NA)
 )
 
-columns = length(columns.att)
-if (length(panel.types) < columns){
+columns <- length(columns.att)
+if (length(panel.types) < columns) {
   warning("Panel types are not completely specified.")
 }
-
 ```
 
 
@@ -119,12 +140,11 @@ After specifying the panels, the image/poster and data need to be loaded. The po
 library(imager)
 
 load(file = "data/Ch10/posterdat.all.rda")
-poster.loc = "img/Ch10-poster_colored.jpg"
-posterdat = posterdat.all[[1]]
-names(columns.att) = panel.types
-poster = imager::load.image(poster.loc)
-poster = imager::grayscale(poster)
-
+poster.loc <- "img/Ch10-poster_colored.jpg"
+posterdat <- posterdat.all[[1]]
+names(columns.att) <- panel.types
+poster <- imager::load.image(poster.loc)
+poster <- imager::grayscale(poster)
 ```
 
 3. **Load shapefile for poster.**
@@ -134,19 +154,28 @@ The shape file, i.e. data for the definitions of AOIs, is loaded. The AOIs are l
 
 ```{r Ch10-load-shapefile}
 load("data/Ch10/AOIName.rda")
-posterVBorders = AOIName
+posterVBorders <- AOIName
 
 # create shape data for blank and add it to poster shapefile
-blank = as.data.frame(matrix(c(rep(0, 5 * 3), NA, NA, NA), nrow = 6, ncol = 3, byrow = TRUE))
-blank[, 1] = "Blank"
-colnames(blank) = colnames(posterVBorders)
-stateVBorders = rbind(posterVBorders, blank)
+blank <- as.data.frame(matrix(c(rep(0, 5 * 3), NA, NA, NA), 
+                              nrow = 6, 
+                              ncol = 3, 
+                              byrow = TRUE))
+blank[, 1] <- "Blank"
+colnames(blank) <- colnames(posterVBorders)
+stateVBorders <- rbind(posterVBorders, blank)
 
 # create the polygon for the entire poster
-nationVBorders = matrix(c(0, 0, imager::width(poster), 0, imager::width(poster), imager::height(poster), 0, imager::height(poster), 0, 0), nrow = 5, ncol = 2, byrow = TRUE)
-nationVBorders = as.data.frame(nationVBorders)
-colnames(nationVBorders) = c("x", "y")
-
+nationVBorders <- matrix(c(0, 0, 
+                           imager::width(poster), 0, 
+                           imager::width(poster), imager::height(poster), 
+                           0, imager::height(poster), 
+                           0, 0), 
+                         nrow = 5, 
+                         ncol = 2, 
+                         byrow = TRUE)
+nationVBorders <- as.data.frame(nationVBorders)
+colnames(nationVBorders) <- c("x", "y")
 ```
 
 
@@ -157,23 +186,25 @@ The user can specify how they want the rows to be sorted by, i.e., which column 
 
 ```{r Ch10-sort-rows}
 
-sortby = "visits"
-decreasing = TRUE
+sortby <- "visits"
+decreasing <- TRUE
 
-if (sortby == "pupildat"){
-  unordered.median = unlist(lapply(pupildat, stats::median))
-  ordered.median = order(unordered.median, decreasing = decreasing)
-  pupildat = pupildat[ordered.median]
-  posterdat = posterdat[ordered.median, ]
-} else if (sortby == "speed"){
-  unordered.median = unlist(lapply(speed, stats::median))
-  ordered.median = order(unordered.median, decreasing = decreasing)
-  speed = speed[ordered.median]
-  posterdat = posterdat[ordered.median, ]
+if (sortby == "pupildat") {
+  unordered.median <- unlist(lapply(pupildat, stats::median))
+  ordered.median <- order(unordered.median, 
+                          decreasing = decreasing)
+  pupildat <- pupildat[ordered.median]
+  posterdat <- posterdat[ordered.median, ]
+} else if (sortby == "speed") {
+  unordered.median <- unlist(lapply(speed, stats::median))
+  ordered.median <- order(unordered.median, 
+                          decreasing = decreasing)
+  speed <- speed[ordered.median]
+  posterdat <- posterdat[ordered.median, ]
 } else {
-  posterdat = posterdat[order(posterdat[, sortby], decreasing = decreasing), ]
+  posterdat <- posterdat[order(posterdat[, sortby], 
+                               decreasing = decreasing), ]
 }
-
 ```
 
 
@@ -185,38 +216,37 @@ The quickest approach is to use automatic layout and choose different partitioni
 
 ```{r Ch10-panel-layout}
 source("R/Ch10_SharedFunctions.R")
-stateDataId = row.names(posterdat) 
-Layout = NA
-MedianRow = TRUE
-AutomaticLayout = TRUE
-partitioning = 1
+stateDataId <- row.names(posterdat)
+Layout <- NA
+MedianRow <- TRUE
+AutomaticLayout <- TRUE
+partitioning <- 1
 
 # determine the layouts
- if (AutomaticLayout){
-   rows = ArrangePanels(posterdat = posterdat, partitioning)[[3]]
-   MedianRow = DetermineMedianRow(nrow(posterdat), partitioning)
- } else {
-   rows = length(Layout)
-   if (length(hdColors) < max(Layout)){
-     hdColors = rep(hdColors, ceiling(max(Layout)/length(hdColors)))
-     warning('There are too few colors provided.')
-   }
- }
-
- if ((AutomaticLayout == FALSE) && MedianRow){
-   if ((rows %% 2 == 0) || (Layout[ceiling(length(Layout)/2)] != 1)){
-     MedianRow = FALSE
-     warning("There is no median row.")
-   }
- }
- 
-# determine the size of the rows    
-if (MedianRow == FALSE){
-  rowsize = rep(17.2/rows, rows)
+if (AutomaticLayout) {
+  rows <- ArrangePanels(posterdat = posterdat, partitioning)[[3]]
+  MedianRow <- DetermineMedianRow(nrow(posterdat), partitioning)
 } else {
-  rowsize = c(rep(17.2/rows, floor(rows/2)), 17.2/(rows*3.2), rep(17.2/rows, floor(rows/2)))
+  rows <- length(Layout)
+  if (length(hdColors) < max(Layout)) {
+    hdColors <- rep(hdColors, ceiling(max(Layout) / length(hdColors)))
+    warning("There are too few colors provided.")
+  }
 }
-  
+
+if ((AutomaticLayout == FALSE) && MedianRow) {
+  if ((rows %% 2 == 0) || (Layout[ceiling(length(Layout) / 2)] != 1)) {
+    MedianRow <- FALSE
+    warning("There is no median row.")
+  }
+}
+
+# determine the size of the rows
+if (MedianRow == FALSE) {
+  rowsize <- rep(17.2 / rows, rows)
+} else {
+  rowsize <- c(rep(17.2 / rows, floor(rows / 2)), 17.2 / (rows * 3.2), rep(17.2 / rows, floor(rows / 2)))
+}
 ```
 
 
@@ -227,13 +257,15 @@ Details is a list structure that contains the variables and values for the detai
 
 ```{r Ch10-panel-layout-and-plot-indexes}
 
-panel.width = c(2.9, 2.9, 2.9, 2.9, 2.9)
-panels = panelLayout(nrow = rows, ncol = columns, topMargin = details$top, bottomMargin = details$bot, leftMargin = details$left, rightMargin = details$right, rowSep = rep(0.01, rows + 1), rowSize = rowsize,
-                     colSize = panel.width, colSep = rep(0.05, (columns + 1)))
+panel.width <- c(2.9, 2.9, 2.9, 2.9, 2.9)
+panels <- panelLayout(
+  nrow = rows, ncol = columns, topMargin = details$top, bottomMargin = details$bot, leftMargin = details$left, rightMargin = details$right, rowSep = rep(0.01, rows + 1), rowSize = rowsize,
+  colSize = panel.width, colSep = rep(0.05, (columns + 1))
+)
 
-iBegin = ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[1]]
-iEnd = ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[2]]
-nGroups = length(iEnd)
+iBegin <- ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[1]]
+iEnd <- ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layout, MedianRow)[[2]]
+nGroups <- length(iEnd)
 ```
 
 7. **Plot posters.**
@@ -251,7 +283,7 @@ The microposter column with small posters is plotted with highlights according t
 
 ```{r Ch10-create-microposter}
 
-microposters <- function( panel.col,
+microposters <- function(panel.col,
                          cumulate = TRUE,
                          posterdat = posterdat,
                          stateVBorders,
@@ -263,10 +295,10 @@ microposters <- function( panel.col,
                          MedianRow,
                          iBegin,
                          iEnd,
-                         hdColors){
+                         hdColors) {
 
   # polygon id's one per polygon
-  polygonId = stateVBorders$section[is.na(stateVBorders$x)]
+  polygonId <- stateVBorders$section[is.na(stateVBorders$x)]
 
   # panel titles
   panelSelect(panels, 1, panel.col)
@@ -274,16 +306,13 @@ microposters <- function( panel.col,
   if (MedianRow == TRUE) {
     graphics::mtext(side = 3, line = details$line1, "Above Median Visits", cex = details$cex)
 
-    if(cumulate){
-    graphics::mtext(side = 3, line = details$line2, "Cumulative Microposters", cex = details$cex)
+    if (cumulate) {
+      graphics::mtext(side = 3, line = details$line2, "Cumulative Microposters", cex = details$cex)
     }
-
   } else {
-
-    if(cumulate){
-    graphics::mtext(side = 3, line = details$line1, "Cumulative Microposters", cex = details$cex)
+    if (cumulate) {
+      graphics::mtext(side = 3, line = details$line1, "Cumulative Microposters", cex = details$cex)
     }
-
   }
 
   panelSelect(panels, nGroups, panel.col)
@@ -293,70 +322,67 @@ microposters <- function( panel.col,
     graphics::mtext(side = 1, line = details$line3, "Below Median Visits", cex = details$cex)
   }
 
-  rxpoly = range(nationVBorders$x, na.rm = TRUE)
-  rypoly = range(nationVBorders$y, na.rm = TRUE)
+  rxpoly <- range(nationVBorders$x, na.rm = TRUE)
+  rypoly <- range(nationVBorders$y, na.rm = TRUE)
 
   # plot by perceptual groups
   for (i in 1:nGroups) {
-
-    if (MedianRow == TRUE && i == ceiling(nGroups/2)){
+    if (MedianRow == TRUE && i == ceiling(nGroups / 2)) {
 
       # map not drawn, median region in adjacent panel
-      panelSelect(panels, (nGroups + 1)/2, panel.col)
+      panelSelect(panels, (nGroups + 1) / 2, panel.col)
       panelScale()
       panelFill(col = details$wgray)
       panelOutline(col = "black")
       graphics::text(0.5, 0.55, "Median", cex = details$cex)
       next
-
     }
 
     panelSelect(panels, i, panel.col)
     panelScale(rxpoly, rypoly)
-    gsubs = iBegin[i]:iEnd[i]
-    median_group = iBegin[ceiling(nGroups/2)]
+    gsubs <- iBegin[i]:iEnd[i]
+    median_group <- iBegin[ceiling(nGroups / 2)]
 
-    if (MedianRow == TRUE){
-      if (i == ceiling(nGroups/2) - 1)
-        gsubs = c(gsubs, median_group)  # median region added here
-      if (i == ceiling(nGroups/2) + 1)
-        gsubs = c(gsubs, median_group)  # median region added here
+    if (MedianRow == TRUE) {
+      if (i == ceiling(nGroups / 2) - 1) {
+        gsubs <- c(gsubs, median_group)
+      } # median region added here
+      if (i == ceiling(nGroups / 2) + 1) {
+        gsubs <- c(gsubs, median_group)
+      } # median region added here
     }
 
-    panelNames = posterdat$section[gsubs]
+    panelNames <- posterdat$section[gsubs]
 
     # plot background image
     graphics::rasterImage(poster, 0, 0, imager::width(poster), imager::height(poster))
 
     # plot background (out of contour) regions in gray with white outlines
     # frontRegions are the regions in the group, the rest are back
-    frontRegions = posterdat$section[1:iEnd[i]]
-    back = is.na(match(stateVBorders$section, frontRegions))
+    frontRegions <- posterdat$section[1:iEnd[i]]
+    back <- is.na(match(stateVBorders$section, frontRegions))
     graphics::polygon(stateVBorders$x[back], stateVBorders$y[back], border = TRUE)
 
     # plot foreground regions for the panel in their special colors pens 1:5 and other in contour regions in light yellow
-    fore = !is.na(match(stateVBorders$section, panelNames))
-    pen = match(polygonId, panelNames, nomatch = 10)[!is.na(match(polygonId, panelNames))]
+    fore <- !is.na(match(stateVBorders$section, panelNames))
+    pen <- match(polygonId, panelNames, nomatch = 10)[!is.na(match(polygonId, panelNames))]
     # outline regions
-    if (MedianRow){
-      pen[which(pen == median_group)] = length(hdColors)
+    if (MedianRow) {
+      pen[which(pen == median_group)] <- length(hdColors)
     }
     graphics::polygon(stateVBorders$x[fore], stateVBorders$y[fore], col = scales::alpha(hdColors[pen], 0.7), border = FALSE)
     # plot borders
     graphics::polygon(stateVBorders$x[fore], stateVBorders$y[fore], col = "black", density = 0, lwd = 1)
     # plot past regions
-    if (cumulate){
-      past = !back & !fore
+    if (cumulate) {
+      past <- !back & !fore
       graphics::polygon(stateVBorders$x[past], stateVBorders$y[past], col = scales::alpha(details$wyellow, 0.7), border = FALSE)
       graphics::polygon(stateVBorders$x[past], stateVBorders$y[past], col = "black", density = 0, lwd = 1)
     }
     # outline poster
     graphics::polygon(nationVBorders$x, nationVBorders$y, col = "black", density = 0, lwd = 1)
-
   }
 }
-
-
 ```
 
 
@@ -364,33 +390,30 @@ Now we can apply the function to create our first column: microposter column. Th
 
 
 ```{r Ch10-create-microposters, fig.cap = 'Plot posters.'}
-    
-hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
 
-  if (sum(panel.types == "poster") >= 1){
+hdColors <- rev(RColorBrewer::brewer.pal(5, "Accent"))
 
-    posters = which(panel.types == "poster")
+if (sum(panel.types == "poster") >= 1) {
+  posters <- which(panel.types == "poster")
 
-    for (i in 1:length(posters)){
-
-  microposters(panel.col = columns.att[posters[i]]$poster$col.num,
-               cumulate = columns.att[posters[i]]$poster$cumulate,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               poster,
-               panels,
-               nGroups,
-               rows,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(posters)) {
+    microposters(
+      panel.col = columns.att[posters[i]]$poster$col.num,
+      cumulate = columns.att[posters[i]]$poster$cumulate,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      poster,
+      panels,
+      nGroups,
+      rows,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
-
-
+}
 ```
 
 
@@ -415,130 +438,123 @@ m.labels <- function(panel.col,
                      MedianRow,
                      iBegin,
                      iEnd,
-                     hdColors){
-  
-  stateNames = posterdat$section 
+                     hdColors) {
+  stateNames <- posterdat$section
   panelSelect(panels, 1, panel.col)
   panelScale()
-  
-  if (MedianRow){
+
+  if (MedianRow) {
     graphics::mtext(side = 3, line = details$line2, title, cex = header.size)
   } else {
     graphics::mtext(side = 3, line = details$line1, title, cex = header.size)
   }
-  
+
   for (i in 1:nGroups) {
-    
-    gsubs = iBegin[i]:iEnd[i]
-    gnams = posterdat$section[gsubs]
-    nsubs = length(gnams)
-    pen = 1:nsubs
-    laby = nsubs:1
-    
+    gsubs <- iBegin[i]:iEnd[i]
+    gnams <- posterdat$section[gsubs]
+    nsubs <- length(gnams)
+    pen <- 1:nsubs
+    laby <- nsubs:1
+
     panelSelect(panels, i, panel.col)
     panelScale(c(0, 1), c(1 - details$ypad, nsubs + details$ypad))
-    
-    if (MedianRow == TRUE && i == ((nGroups + 1)/2)){
-      pen = length(hdColors)
+
+    if (MedianRow == TRUE && i == ((nGroups + 1) / 2)) {
+      pen <- length(hdColors)
     }
-    
+
     for (j in 1:length(pen)) {
       graphics::points(0.1, laby[j], pch = 16, col = hdColors[pen[j]], cex = dcex)
       graphics::points(0.1, laby[j], pch = 1, col = "black", cex = dcex)
       graphics::text(0.18, laby[j] + details$nameShift, gnams[j], cex = cex, adj = 0, col = "black", font = font)
-      
+
       if (gnams[j] == "Blank") {
         graphics::points(0.1, laby[j], pch = 16, col = "white", cex = dcex)
         graphics::points(0.1, laby[j], pch = 1, col = "black", cex = dcex)
       }
-      
     }
   }
 }
-
 ```
 
 
 Now the function can be executed and the labels and the legends column can be plotted.   
 ```{r Ch10-plot-labels, eval = F}
 
-if (sum(panel.types == "legend") >= 1){
+if (sum(panel.types == "legend") >= 1) {
+  legends <- which(panel.types == "legend")
 
-  legends = which(panel.types == "legend")
-
-  for (i in 1:length(legends)){
-
-      m.labels(panel.col = columns.att[legends[i]]$legend$col.num,
-               title = columns.att[legends[i]]$legend$header,
-               header.size = columns.att[legends[i]]$legend$header.size,
-               cex = columns.att[legends[i]]$legend$text.size,
-               dcex = columns.att[legends[i]]$legend$point.size,
-               font = columns.att[legends[i]]$legend$text.font,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               panels,
-               nGroups,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(legends)) {
+    m.labels(
+      panel.col = columns.att[legends[i]]$legend$col.num,
+      title = columns.att[legends[i]]$legend$header,
+      header.size = columns.att[legends[i]]$legend$header.size,
+      cex = columns.att[legends[i]]$legend$text.size,
+      dcex = columns.att[legends[i]]$legend$point.size,
+      font = columns.att[legends[i]]$legend$text.font,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 ```
 
 ```{r Ch10-create-microposters-and-labels, echo = F, fig.cap = 'Plot labels.'}
-    
-hdColors = rev(RColorBrewer::brewer.pal(5, "Accent"))
 
-  if (sum(panel.types == "poster") >= 1){
+hdColors <- rev(RColorBrewer::brewer.pal(5, "Accent"))
 
-    posters = which(panel.types == "poster")
+if (sum(panel.types == "poster") >= 1) {
+  posters <- which(panel.types == "poster")
 
-    for (i in 1:length(posters)){
-
-  microposters(panel.col = columns.att[posters[i]]$poster$col.num,
-               cumulate = columns.att[posters[i]]$poster$cumulate,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               poster,
-               panels,
-               nGroups,
-               rows,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(posters)) {
+    microposters(
+      panel.col = columns.att[posters[i]]$poster$col.num,
+      cumulate = columns.att[posters[i]]$poster$cumulate,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      poster,
+      panels,
+      nGroups,
+      rows,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 
-if (sum(panel.types == "legend") >= 1){
+if (sum(panel.types == "legend") >= 1) {
+  legends <- which(panel.types == "legend")
 
-  legends = which(panel.types == "legend")
-
-  for (i in 1:length(legends)){
-
-      m.labels(panel.col = columns.att[legends[i]]$legend$col.num,
-               title = columns.att[legends[i]]$legend$header,
-               header.size = columns.att[legends[i]]$legend$header.size,
-               cex = columns.att[legends[i]]$legend$text.size,
-               dcex = columns.att[legends[i]]$legend$point.size,
-               font = columns.att[legends[i]]$legend$text.font,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               panels,
-               nGroups,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(legends)) {
+    m.labels(
+      panel.col = columns.att[legends[i]]$legend$col.num,
+      title = columns.att[legends[i]]$legend$header,
+      header.size = columns.att[legends[i]]$legend$header.size,
+      cex = columns.att[legends[i]]$legend$text.size,
+      dcex = columns.att[legends[i]]$legend$point.size,
+      font = columns.att[legends[i]]$legend$text.font,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 ```
 
 
@@ -565,16 +581,15 @@ m.dotplot <- function(var,
                       MedianRow,
                       iBegin,
                       iEnd,
-                      hdColors){
-
-  var = posterdat[, var]
-  sectionNames = posterdat$section
-  countRange = range(var)
-  countRange = mean(countRange) + 1.3 * diff(countRange) * c(-0.5, 0.5)
-  if(is.na(axis.ticks)){
-    countGrid = panelInbounds(countRange)  # used pretty values that are in bounds
+                      hdColors) {
+  var <- posterdat[, var]
+  sectionNames <- posterdat$section
+  countRange <- range(var)
+  countRange <- mean(countRange) + 1.3 * diff(countRange) * c(-0.5, 0.5)
+  if (is.na(axis.ticks)) {
+    countGrid <- panelInbounds(countRange) # used pretty values that are in bounds
   } else {
-    countGrid = axis.ticks
+    countGrid <- axis.ticks
   }
 
   panelSelect(panels, 1, panel.num)
@@ -582,30 +597,35 @@ m.dotplot <- function(var,
   graphics::mtext(side = 3, line = details$line1, text = title, cex = cex)
 
   for (i in 1:nGroups) {
-    gsubs = iBegin[i]:iEnd[i]
-    gnams = sectionNames[gsubs]
-    nsubs = length(gsubs)
-    pen = 1:nsubs
-    laby = nsubs:1
+    gsubs <- iBegin[i]:iEnd[i]
+    gnams <- sectionNames[gsubs]
+    nsubs <- length(gsubs)
+    pen <- 1:nsubs
+    laby <- nsubs:1
     panelSelect(panels, i, panel.num)
-    countRange2 = c(min(countGrid) - mean(countGrid)*0.28, max(countGrid) + mean(countGrid)*0.28)
+    countRange2 <- c(min(countGrid) - mean(countGrid) * 0.28, max(countGrid) + mean(countGrid) * 0.28)
     panelScale(countRange2, c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
     panelGrid(x = countGrid, col = "white")
     panelOutline(col = "white")
 
     if (i == nGroups) {
-      if (is.na(axis.labels)){
-        graphics::axis(side = 1, at = countGrid, labels = as.character(countGrid), col = "black", mgp = c(1, 0, 0),
-             tck = -0.04, cex.axis = cex)
+      if (is.na(axis.labels)) {
+        graphics::axis(
+          side = 1, at = countGrid, labels = as.character(countGrid), col = "black", mgp = c(1, 0, 0),
+          tck = -0.04, cex.axis = cex
+        )
       } else {
-        graphics::axis(side = 1, at = countGrid, labels = as.character(axis.labels), col = "black", mgp = c(1, 0, 0),
-             tck = -0.04, cex.axis = cex)
+        graphics::axis(
+          side = 1, at = countGrid, labels = as.character(axis.labels), col = "black", mgp = c(1, 0, 0),
+          tck = -0.04, cex.axis = cex
+        )
       }
     }
 
-    if (MedianRow == TRUE & i == ((nGroups + 1)/2))
-      pen = length(hdColors)
+    if (MedianRow == TRUE & i == ((nGroups + 1) / 2)) {
+      pen <- length(hdColors)
+    }
     graphics::lines(var[gsubs], laby, col = "black", lwd = 1)
 
     for (j in 1:length(pen)) {
@@ -616,7 +636,6 @@ m.dotplot <- function(var,
         graphics::points(var[gsubs[j]], laby[j], pch = 1, cex = dcex, col = "black")
       }
     }
-
   }
 }
 
@@ -634,67 +653,69 @@ m.boxplot <- function(dat,
                       iBegin,
                       iEnd,
                       hdColors) {
-
-  if (dat == "speed"){
-    dat = posterdat[[2]]
-  } else if (dat == "pupildat"){
-    dat = posterdat[[3]]
+  if (dat == "speed") {
+    dat <- posterdat[[2]]
+  } else if (dat == "pupildat") {
+    dat <- posterdat[[3]]
   }
 
-  sectionNames = posterdat[[1]]$section
+  sectionNames <- posterdat[[1]]$section
   # box plot parameters
-  thinBox = .2                 
-  thickBox = .60   
-  useBlack = FALSE    # for outliners
-  medianLine = .88
-  colDotMedian = "white"
-  pchMedian = 19
-  cexMedian = .95
-  lwdMedian = 2
-  colMedian = "white"
-  cexOutlier = .6 # see cexDot  
-  lwdOutlier = .4               
-  sc = 1.3
-  pad = .67       # y axis padding for integer plotting locates
-  lwdGrid = 1
+  thinBox <- .2
+  thickBox <- .60
+  useBlack <- FALSE # for outliners
+  medianLine <- .88
+  colDotMedian <- "white"
+  pchMedian <- 19
+  cexMedian <- .95
+  lwdMedian <- 2
+  colMedian <- "white"
+  cexOutlier <- .6 # see cexDot
+  lwdOutlier <- .4
+  sc <- 1.3
+  pad <- .67 # y axis padding for integer plotting locates
+  lwdGrid <- 1
 
-  boxlist = graphics::boxplot(dat, plot = FALSE)
-  # y boxplot scaling              
+  boxlist <- graphics::boxplot(dat, plot = FALSE)
+  # y boxplot scaling
   # standard - horizontal box - no vertical (y) dimensions
-  py = c(-.5, -.5, .5, .5)
-  thiny = thinBox*py
-  thicky = thickBox*py
-  medy = medianLine*c(-.5, .5)
-  ry = c(0, 1)                      # used in y scaling for grid lines
+  py <- c(-.5, -.5, .5, .5)
+  thiny <- thinBox * py
+  thicky <- thickBox * py
+  medy <- medianLine * c(-.5, .5)
+  ry <- c(0, 1) # used in y scaling for grid lines
 
-  #_______________Gather stats and put in State Order______________
+  # _______________Gather stats and put in State Order______________
 
   # For the moment match on names
   # Boxlist = names, stats, out, group,
-  stats = boxlist$stats       # Name,1-low,2-25%,3-median,4-75%,5-high  - 5 variables for each state.
-  thin = stats[c(1, 5, 5, 1 ), ]   # a column for each state - thin line - outliers - columns in boxlist (1,5,5,1)
-  thick = stats[c(2, 4, 4, 2), ]  # a column for each state - thick line - 25% to 75% - columns in boxlist(2,4,4,2)
-  med = stats[3, ]             # a single value for each state (median)
-  nam = boxlist$names         # state name.
+  stats <- boxlist$stats # Name,1-low,2-25%,3-median,4-75%,5-high  - 5 variables for each state.
+  thin <- stats[c(1, 5, 5, 1), ] # a column for each state - thin line - outliers - columns in boxlist (1,5,5,1)
+  thick <- stats[c(2, 4, 4, 2), ] # a column for each state - thick line - 25% to 75% - columns in boxlist(2,4,4,2)
+  med <- stats[3, ] # a single value for each state (median)
+  nam <- boxlist$names # state name.
 
-  outlier = rep(FALSE, length(med))
-  if(!is.null(boxlist$out)){
-    out = boxlist$out
-    group = boxlist$group
-    outlier[unique(group)] = TRUE
+  outlier <- rep(FALSE, length(med))
+  if (!is.null(boxlist$out)) {
+    out <- boxlist$out
+    group <- boxlist$group
+    outlier[unique(group)] <- TRUE
   }
 
   # Need to put data in order
-  ord = match(sectionNames, nam)
+  ord <- match(sectionNames, nam)
 
-  if(is.null(out)) rx = range(stats) else
-    rx  = range(stats, out)
-  countRange  = sc*diff(rx)*c(-.5,.5) + mean(rx)
-
-  if(is.na(axis.ticks)){
-    countGrid = panelInbounds(countRange)  # used pretty values that are in bounds
+  if (is.null(out)) {
+    rx <- range(stats)
   } else {
-    countGrid = axis.ticks
+    rx <- range(stats, out)
+  }
+  countRange <- sc * diff(rx) * c(-.5, .5) + mean(rx)
+
+  if (is.na(axis.ticks)) {
+    countGrid <- panelInbounds(countRange) # used pretty values that are in bounds
+  } else {
+    countGrid <- axis.ticks
   }
 
   panelSelect(panels, 1, panel.num)
@@ -702,69 +723,73 @@ m.boxplot <- function(dat,
   graphics::mtext(side = 3, line = details$line1, text = title, cex = text.size)
 
   for (i in 1:nGroups) {
-    gsubs = iBegin[i]:iEnd[i]
-    nsubs = length(gsubs)
-    gnams = sectionNames[gsubs]
-    pen = 1:nsubs
-    laby = nsubs:1
+    gsubs <- iBegin[i]:iEnd[i]
+    nsubs <- length(gsubs)
+    gnams <- sectionNames[gsubs]
+    pen <- 1:nsubs
+    laby <- nsubs:1
     panelSelect(panels, i, panel.num)
-    countRange2 = c(min(countGrid) - stats::median(countGrid)*0.05, max(countGrid) + stats::median(countGrid)*0.05)
+    countRange2 <- c(min(countGrid) - stats::median(countGrid) * 0.05, max(countGrid) + stats::median(countGrid) * 0.05)
     panelScale(countRange2, c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
     panelGrid(x = countGrid, col = "white")
     panelOutline(col = "white")
     if (i == nGroups) {
-      if(is.na(axis.labels)){
-        graphics::axis(side = 1, at = countGrid, labels = as.character(countGrid), col = "black", mgp = c(1, 0, 0),
-             tck = -0.04, cex.axis = text.size)
+      if (is.na(axis.labels)) {
+        graphics::axis(
+          side = 1, at = countGrid, labels = as.character(countGrid), col = "black", mgp = c(1, 0, 0),
+          tck = -0.04, cex.axis = text.size
+        )
       } else {
-        graphics::axis(side = 1, at = countGrid, labels = as.character(axis.labels), col = "black", mgp = c(1, 0, 0),
-             tck = -0.04, cex.axis = text.size)
+        graphics::axis(
+          side = 1, at = countGrid, labels = as.character(axis.labels), col = "black", mgp = c(1, 0, 0),
+          tck = -0.04, cex.axis = text.size
+        )
       }
     }
 
-    if (MedianRow == TRUE & i == ((nGroups + 1)/2)){
-      pen = length(hdColors)
+    if (MedianRow == TRUE & i == ((nGroups + 1) / 2)) {
+      pen <- length(hdColors)
     }
 
-    for (k in 1:length(pen)){
+    for (k in 1:length(pen)) {
+      m <- ord[gsubs[k]] # m is the location of the state in boxlist
+      if (is.na(m)) next
+      kp <- pen[k] # color number
+      ht <- laby[k]
 
-      m = ord[gsubs[k]] #m is the location of the state in boxlist
-      if(is.na(m)) next
-      kp = pen[k]      # color number
-      ht = laby[k]
 
-
-      if(outlier[m]){
-        vals = out[group == m]
-        if (gnams[k] == "Blank"){
-          graphics::points(vals, rep(ht,length(vals)), pch = 1,
-                 col = ifelse(useBlack, "black", "#FFFFFF"),
-                 cex = cexOutlier,lwd = lwdOutlier)
+      if (outlier[m]) {
+        vals <- out[group == m]
+        if (gnams[k] == "Blank") {
+          graphics::points(vals, rep(ht, length(vals)),
+            pch = 1,
+            col = ifelse(useBlack, "black", "#FFFFFF"),
+            cex = cexOutlier, lwd = lwdOutlier
+          )
         } else {
-          graphics::points(vals, rep(ht, length(vals)), pch = 1,
-                 col = ifelse(useBlack, "black", hdColors[kp]),
-                 cex = cexOutlier,lwd = lwdOutlier)
+          graphics::points(vals, rep(ht, length(vals)),
+            pch = 1,
+            col = ifelse(useBlack, "black", hdColors[kp]),
+            cex = cexOutlier, lwd = lwdOutlier
+          )
         }
       }
 
-      if (gnams[k] == "Blank"){
-
+      if (gnams[k] == "Blank") {
         graphics::polygon(thin[, m], rep(ht, 4) + thiny, col = "#FFFFFF", border = NA)
         graphics::polygon(thick[, m], rep(ht, 4) + thicky, col = "#FFFFFF", border = NA)
         graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
-                 col = "black", lwd = lwdMedian)
-
+          col = "black", lwd = lwdMedian
+        )
       } else {
-
-        graphics::polygon(thin[,m], rep(ht, 4) + thiny,col = hdColors[kp], border = NA)
-        graphics::polygon(thick[,m], rep(ht, 4) + thicky,col = hdColors[kp], border = NA)
-        graphics::segments(med[m],ht + medy[1], med[m], ht + medy[2],
-                 col = "black",lwd = lwdMedian)
-
+        graphics::polygon(thin[, m], rep(ht, 4) + thiny, col = hdColors[kp], border = NA)
+        graphics::polygon(thick[, m], rep(ht, 4) + thicky, col = hdColors[kp], border = NA)
+        graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
+          col = "black", lwd = lwdMedian
+        )
       }
     }
-
   }
 }
 ```
@@ -772,235 +797,229 @@ m.boxplot <- function(dat,
 There are two columns visualized with dotplot: the length of time spent in each AOI and the number of times each AOI is visited. The two columns are plotted by calling the _m.dotplot_ function within the for loop. 
 ```{r Ch10-dotplot, eval=F}
 
-  # Plot percent of visits___________________________________
-  if (sum(panel.types == "dot") >= 1){
+# Plot percent of visits___________________________________
+if (sum(panel.types == "dot") >= 1) {
+  dots <- which(panel.types == "dot")
 
-   dots = which(panel.types == "dot")
-
-   for (i in 1:length(dots)){
-
-   m.dotplot(var = columns.att[dots[i]]$dot$panel.data,
-          posterdat,
-          panel.num = columns.att[dots[i]]$dot$col.num,
-          title = columns.att[dots[i]]$dot$header,
-          cex = columns.att[dots[i]]$dot$text.size,
-          dcex = columns.att[dots[i]]$dot$point.size,
-          axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-          axis.labels = columns.att[dots[i]]$dot$axis.labels,
-          panels,
-          nGroups,
-          MedianRow,
-          iBegin,
-          iEnd,
-          hdColors)
-   }
-    }
-
-
+  for (i in 1:length(dots)) {
+    m.dotplot(
+      var = columns.att[dots[i]]$dot$panel.data,
+      posterdat,
+      panel.num = columns.att[dots[i]]$dot$col.num,
+      title = columns.att[dots[i]]$dot$header,
+      cex = columns.att[dots[i]]$dot$text.size,
+      dcex = columns.att[dots[i]]$dot$point.size,
+      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
+      axis.labels = columns.att[dots[i]]$dot$axis.labels,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
+}
 ```
 
 ```{r Ch10-dotplot-cum, echo=F, fig.cap = 'Add two dotplot columns.'}
-  if (sum(panel.types == "poster") >= 1){
+if (sum(panel.types == "poster") >= 1) {
+  posters <- which(panel.types == "poster")
 
-    posters = which(panel.types == "poster")
-
-    for (i in 1:length(posters)){
-
-  microposters(panel.col = columns.att[posters[i]]$poster$col.num,
-               cumulate = columns.att[posters[i]]$poster$cumulate,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               poster,
-               panels,
-               nGroups,
-               rows,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(posters)) {
+    microposters(
+      panel.col = columns.att[posters[i]]$poster$col.num,
+      cumulate = columns.att[posters[i]]$poster$cumulate,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      poster,
+      panels,
+      nGroups,
+      rows,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
-  
+}
 
-  # Plot labels____________________________________________________________
 
-  if (sum(panel.types == "legend") >= 1){
+# Plot labels____________________________________________________________
 
-    legends = which(panel.types == "legend")
+if (sum(panel.types == "legend") >= 1) {
+  legends <- which(panel.types == "legend")
 
-    for (i in 1:length(legends)){
-
-  m.labels(panel.col = columns.att[legends[i]]$legend$col.num,
-           title = columns.att[legends[i]]$legend$header,
-           header.size = columns.att[legends[i]]$legend$header.size,
-           cex = columns.att[legends[i]]$legend$text.size,
-           dcex = columns.att[legends[i]]$legend$point.size,
-           font = columns.att[legends[i]]$legend$text.font,
-           posterdat = posterdat,
-           stateVBorders,
-           nationVBorders,
-           panels,
-           nGroups,
-           MedianRow,
-           iBegin,
-           iEnd,
-           hdColors)
-
-    }
+  for (i in 1:length(legends)) {
+    m.labels(
+      panel.col = columns.att[legends[i]]$legend$col.num,
+      title = columns.att[legends[i]]$legend$header,
+      header.size = columns.att[legends[i]]$legend$header.size,
+      cex = columns.att[legends[i]]$legend$text.size,
+      dcex = columns.att[legends[i]]$legend$point.size,
+      font = columns.att[legends[i]]$legend$text.font,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 
 
 
-  # Plot percent of visits___________________________________
-  if (sum(panel.types == "dot") >= 1){
+# Plot percent of visits___________________________________
+if (sum(panel.types == "dot") >= 1) {
+  dots <- which(panel.types == "dot")
 
-   dots = which(panel.types == "dot")
-
-   for (i in 1:length(dots)){
-
-   m.dotplot(var = columns.att[dots[i]]$dot$panel.data,
-          posterdat,
-          panel.num = columns.att[dots[i]]$dot$col.num,
-          title = columns.att[dots[i]]$dot$header,
-          cex = columns.att[dots[i]]$dot$text.size,
-          dcex = columns.att[dots[i]]$dot$point.size,
-          axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-          axis.labels = columns.att[dots[i]]$dot$axis.labels,
-          panels,
-          nGroups,
-          MedianRow,
-          iBegin,
-          iEnd,
-          hdColors)
-   }
-    }
-
-
+  for (i in 1:length(dots)) {
+    m.dotplot(
+      var = columns.att[dots[i]]$dot$panel.data,
+      posterdat,
+      panel.num = columns.att[dots[i]]$dot$col.num,
+      title = columns.att[dots[i]]$dot$header,
+      cex = columns.att[dots[i]]$dot$text.size,
+      dcex = columns.att[dots[i]]$dot$point.size,
+      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
+      axis.labels = columns.att[dots[i]]$dot$axis.labels,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
+}
 ```
 
 Then the last column, the boxplot column, is plotted. 
 ```{r Ch10-boxplot, eval=F}
 # Plot Pupil Size
-  if (sum(panel.types == "boxplot") >= 1){
+if (sum(panel.types == "boxplot") >= 1) {
+  bplot <- which(panel.types == "boxplot")
 
-    bplot = which(panel.types == "boxplot")
-
-    for (i in 1:length(bplot)){
-    m.boxplot(dat = columns.att[bplot[i]]$boxplot$panel.data,
-    posterdat = posterdat.all,
-    panel.num = columns.att[bplot[i]]$boxplot$col.num,
-    text.size = columns.att[bplot[i]]$boxplot$text.size,
-    axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
-    axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
-    panels,
-    title = columns.att[bplot[i]]$boxplot$header,
-    nGroups,
-    MedianRow,
-    iBegin,
-    iEnd,
-    hdColors)
-    }
+  for (i in 1:length(bplot)) {
+    m.boxplot(
+      dat = columns.att[bplot[i]]$boxplot$panel.data,
+      posterdat = posterdat.all,
+      panel.num = columns.att[bplot[i]]$boxplot$col.num,
+      text.size = columns.att[bplot[i]]$boxplot$text.size,
+      axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
+      axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
+      panels,
+      title = columns.att[bplot[i]]$boxplot$header,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
 }
 ```
 
 ```{r Ch10-boxplot-cum, echo=F, fig.cap = 'Add a boxplot column.'}
-  if (sum(panel.types == "poster") >= 1){
+if (sum(panel.types == "poster") >= 1) {
+  posters <- which(panel.types == "poster")
 
-    posters = which(panel.types == "poster")
-
-    for (i in 1:length(posters)){
-
-  microposters(panel.col = columns.att[posters[i]]$poster$col.num,
-               cumulate = columns.att[posters[i]]$poster$cumulate,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               poster,
-               panels,
-               nGroups,
-               rows,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(posters)) {
+    microposters(
+      panel.col = columns.att[posters[i]]$poster$col.num,
+      cumulate = columns.att[posters[i]]$poster$cumulate,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      poster,
+      panels,
+      nGroups,
+      rows,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
-  
+}
 
-  # Plot labels____________________________________________________________
 
-  if (sum(panel.types == "legend") >= 1){
+# Plot labels____________________________________________________________
 
-    legends = which(panel.types == "legend")
+if (sum(panel.types == "legend") >= 1) {
+  legends <- which(panel.types == "legend")
 
-    for (i in 1:length(legends)){
-
-  m.labels(panel.col = columns.att[legends[i]]$legend$col.num,
-           title = columns.att[legends[i]]$legend$header,
-           header.size = columns.att[legends[i]]$legend$header.size,
-           cex = columns.att[legends[i]]$legend$text.size,
-           dcex = columns.att[legends[i]]$legend$point.size,
-           font = columns.att[legends[i]]$legend$text.font,
-           posterdat = posterdat,
-           stateVBorders,
-           nationVBorders,
-           panels,
-           nGroups,
-           MedianRow,
-           iBegin,
-           iEnd,
-           hdColors)
-
-    }
+  for (i in 1:length(legends)) {
+    m.labels(
+      panel.col = columns.att[legends[i]]$legend$col.num,
+      title = columns.att[legends[i]]$legend$header,
+      header.size = columns.att[legends[i]]$legend$header.size,
+      cex = columns.att[legends[i]]$legend$text.size,
+      dcex = columns.att[legends[i]]$legend$point.size,
+      font = columns.att[legends[i]]$legend$text.font,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 
-  # Plot percent of visits___________________________________
-  if (sum(panel.types == "dot") >= 1){
+# Plot percent of visits___________________________________
+if (sum(panel.types == "dot") >= 1) {
+  dots <- which(panel.types == "dot")
 
-   dots = which(panel.types == "dot")
-
-   for (i in 1:length(dots)){
-
-   m.dotplot(var = columns.att[dots[i]]$dot$panel.data,
-          posterdat,
-          panel.num = columns.att[dots[i]]$dot$col.num,
-          title = columns.att[dots[i]]$dot$header,
-          cex = columns.att[dots[i]]$dot$text.size,
-          dcex = columns.att[dots[i]]$dot$point.size,
-          axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-          axis.labels = columns.att[dots[i]]$dot$axis.labels,
-          panels,
-          nGroups,
-          MedianRow,
-          iBegin,
-          iEnd,
-          hdColors)
-   }
-    }
+  for (i in 1:length(dots)) {
+    m.dotplot(
+      var = columns.att[dots[i]]$dot$panel.data,
+      posterdat,
+      panel.num = columns.att[dots[i]]$dot$col.num,
+      title = columns.att[dots[i]]$dot$header,
+      cex = columns.att[dots[i]]$dot$text.size,
+      dcex = columns.att[dots[i]]$dot$point.size,
+      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
+      axis.labels = columns.att[dots[i]]$dot$axis.labels,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
+}
 
 # Plot Pupil Size
-  if (sum(panel.types == "boxplot") >= 1){
+if (sum(panel.types == "boxplot") >= 1) {
+  bplot <- which(panel.types == "boxplot")
 
-    bplot = which(panel.types == "boxplot")
-
-    for (i in 1:length(bplot)){
-    m.boxplot(dat = columns.att[bplot[i]]$boxplot$panel.data,
-    posterdat = posterdat.all,
-    panel.num = columns.att[bplot[i]]$boxplot$col.num,
-    text.size = columns.att[bplot[i]]$boxplot$text.size,
-    axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
-    axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
-    panels,
-    title = columns.att[bplot[i]]$boxplot$header,
-    nGroups,
-    MedianRow,
-    iBegin,
-    iEnd,
-    hdColors)
-    }
+  for (i in 1:length(bplot)) {
+    m.boxplot(
+      dat = columns.att[bplot[i]]$boxplot$panel.data,
+      posterdat = posterdat.all,
+      panel.num = columns.att[bplot[i]]$boxplot$col.num,
+      text.size = columns.att[bplot[i]]$boxplot$text.size,
+      axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
+      axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
+      panels,
+      title = columns.att[bplot[i]]$boxplot$header,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
 }
 ```
 
@@ -1010,105 +1029,104 @@ So far, all the columns in the linked microposter plot are created, the plot can
 
 
 ```{r Ch10-title-cum, echo=F, fig.cap = 'Add figure main title.'}
-  if (sum(panel.types == "poster") >= 1){
+if (sum(panel.types == "poster") >= 1) {
+  posters <- which(panel.types == "poster")
 
-    posters = which(panel.types == "poster")
-
-    for (i in 1:length(posters)){
-
-  microposters(panel.col = columns.att[posters[i]]$poster$col.num,
-               cumulate = columns.att[posters[i]]$poster$cumulate,
-               posterdat = posterdat,
-               stateVBorders,
-               nationVBorders,
-               poster,
-               panels,
-               nGroups,
-               rows,
-               MedianRow,
-               iBegin,
-               iEnd,
-               hdColors)
-
-    }
+  for (i in 1:length(posters)) {
+    microposters(
+      panel.col = columns.att[posters[i]]$poster$col.num,
+      cumulate = columns.att[posters[i]]$poster$cumulate,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      poster,
+      panels,
+      nGroups,
+      rows,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
-  
+}
 
-  # Plot labels____________________________________________________________
 
-  if (sum(panel.types == "legend") >= 1){
+# Plot labels____________________________________________________________
 
-    legends = which(panel.types == "legend")
+if (sum(panel.types == "legend") >= 1) {
+  legends <- which(panel.types == "legend")
 
-    for (i in 1:length(legends)){
-
-  m.labels(panel.col = columns.att[legends[i]]$legend$col.num,
-           title = columns.att[legends[i]]$legend$header,
-           header.size = columns.att[legends[i]]$legend$header.size,
-           cex = columns.att[legends[i]]$legend$text.size,
-           dcex = columns.att[legends[i]]$legend$point.size,
-           font = columns.att[legends[i]]$legend$text.font,
-           posterdat = posterdat,
-           stateVBorders,
-           nationVBorders,
-           panels,
-           nGroups,
-           MedianRow,
-           iBegin,
-           iEnd,
-           hdColors)
-
-    }
+  for (i in 1:length(legends)) {
+    m.labels(
+      panel.col = columns.att[legends[i]]$legend$col.num,
+      title = columns.att[legends[i]]$legend$header,
+      header.size = columns.att[legends[i]]$legend$header.size,
+      cex = columns.att[legends[i]]$legend$text.size,
+      dcex = columns.att[legends[i]]$legend$point.size,
+      font = columns.att[legends[i]]$legend$text.font,
+      posterdat = posterdat,
+      stateVBorders,
+      nationVBorders,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 
-  # Plot percent of visits___________________________________
-  if (sum(panel.types == "dot") >= 1){
+# Plot percent of visits___________________________________
+if (sum(panel.types == "dot") >= 1) {
+  dots <- which(panel.types == "dot")
 
-   dots = which(panel.types == "dot")
-
-   for (i in 1:length(dots)){
-
-   m.dotplot(var = columns.att[dots[i]]$dot$panel.data,
-          posterdat,
-          panel.num = columns.att[dots[i]]$dot$col.num,
-          title = columns.att[dots[i]]$dot$header,
-          cex = columns.att[dots[i]]$dot$text.size,
-          dcex = columns.att[dots[i]]$dot$point.size,
-          axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-          axis.labels = columns.att[dots[i]]$dot$axis.labels,
-          panels,
-          nGroups,
-          MedianRow,
-          iBegin,
-          iEnd,
-          hdColors)
-   }
-    }
+  for (i in 1:length(dots)) {
+    m.dotplot(
+      var = columns.att[dots[i]]$dot$panel.data,
+      posterdat,
+      panel.num = columns.att[dots[i]]$dot$col.num,
+      title = columns.att[dots[i]]$dot$header,
+      cex = columns.att[dots[i]]$dot$text.size,
+      dcex = columns.att[dots[i]]$dot$point.size,
+      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
+      axis.labels = columns.att[dots[i]]$dot$axis.labels,
+      panels,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
+  }
+}
 
 # Plot Pupil Size
-  if (sum(panel.types == "boxplot") >= 1){
+if (sum(panel.types == "boxplot") >= 1) {
+  bplot <- which(panel.types == "boxplot")
 
-    bplot = which(panel.types == "boxplot")
-
-    for (i in 1:length(bplot)){
-    m.boxplot(dat = columns.att[bplot[i]]$boxplot$panel.data,
-    posterdat = posterdat.all,
-    panel.num = columns.att[bplot[i]]$boxplot$col.num,
-    text.size = columns.att[bplot[i]]$boxplot$text.size,
-    axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
-    axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
-    panels,
-    title = columns.att[bplot[i]]$boxplot$header,
-    nGroups,
-    MedianRow,
-    iBegin,
-    iEnd,
-    hdColors)
-    }
+  for (i in 1:length(bplot)) {
+    m.boxplot(
+      dat = columns.att[bplot[i]]$boxplot$panel.data,
+      posterdat = posterdat.all,
+      panel.num = columns.att[bplot[i]]$boxplot$col.num,
+      text.size = columns.att[bplot[i]]$boxplot$text.size,
+      axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
+      axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
+      panels,
+      title = columns.att[bplot[i]]$boxplot$header,
+      nGroups,
+      MedianRow,
+      iBegin,
+      iEnd,
+      hdColors
+    )
   }
+}
 
-main.title = "Eye Tracking: Looking at Poster Statistics"
-title.cex = 1.08
+main.title <- "Eye Tracking: Looking at Poster Statistics"
+title.cex <- 1.08
 
 panelSelect(panels, margin = "top")
 invisible(panelScale())
@@ -1120,8 +1138,8 @@ invisible(panelScale(inches = TRUE))
 
 
 ```{r Ch10-title, eval=F}
-main.title = "Eye Tracking: Looking at Poster Statistics"
-title.cex = 1.08
+main.title <- "Eye Tracking: Looking at Poster Statistics"
+title.cex <- 1.08
 
 panelSelect(panels, margin = "top")
 invisible(panelScale())
@@ -1144,4 +1162,3 @@ Further, all the steps demonstrated in this chapter have been put into function 
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
