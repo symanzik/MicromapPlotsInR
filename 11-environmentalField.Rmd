@@ -18,45 +18,78 @@ Virginia Department of Environmental Quality (VDEQ) and Florida Department of En
 library(micromap)
 
 # initial example
-stats <- readRDS("data/stats.RDS")
-map.table <- readRDS("data/map.table.RDS")
+VA_stats <- readRDS("data/stats.RDS")
+VA_map_table <- readRDS("data/map.table.RDS")
 
- mmplot(stat.data=stats,
-         map.data=map.table,
-         map.link=c("Basin", "ID"),
-         panel.types=c('dot_legend', 'labels','labels', 'dot_cl', 'map'),
-         panel.data=list(NA,'Basin','n',list('x50', 'x25', 'x75'),NA),
-         ord.by='x50',
-         grouping=c(4,3,4),
-         vertical.align = "center",
-         median.row=F,
-#         plot.height=7,
-#         plot.width=8,
-         colors=brewer.pal(3, "Spectral"),
-         rev.ord=T,
-         panel.att=list(list(1, point.type=20, point.border=TRUE, point.size=2),
-                        list(2, header='Basin', panel.width=.6, 
-                             align='left', text.size=.9),
-                        list(3,header='n',panel.width=.2,align='left',text.size=.9),
-                        list(4, header='Estimated Median VSCI/VCPMI Score\nand Associated Interquartile Range',
-                             graph.bgcolor='lightgray', point.size=1.5,
-                             xaxis.ticks=list(40,50,60,70,80), xaxis.labels=list(40,50,60,70,80)
-                             ,add.line=60,add.line.col='black',add.line.typ='dashed',
-                             xaxis.title='VSCI Score', panel.width=1.2),
-                        list(5, header='Light Gray Means\nPreviously Displayed',
-                             map.all=TRUE, fill.regions='aggregate',
-                             active.border.color='black', active.border.size=1.0,
-                             inactive.border.color=gray(.7), inactive.border.size=1, 
-                             panel.width=1.0)))
- 
+mmplot(
+  stat.data = VA_stats,
+  map.data = VA_map_table,
+  map.link = c("Basin", "ID"),
+  panel.types = c("dot_legend", "labels", "labels", "dot_cl", "map"),
+  panel.data = list(NA, "Basin", "n", list("x50", "x25", "x75"), NA),
+  ord.by = "x50",
+  grouping = c(4, 3, 4),
+  vertical.align = "center",
+  median.row = FALSE,
+  #         plot.height=7,
+  #         plot.width=8,
+  colors = brewer.pal(3, "Spectral"),
+  rev.ord = TRUE,
+  panel.att = list(
+    list(
+      1,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2
+    ),
+    list(
+      2,
+      header = "Basin",
+      panel.width = .6,
+      align = "left",
+      text.size = .9
+    ),
+    list(
+      3,
+      header = "n",
+      panel.width = .2,
+      align = "left",
+      text.size = .9
+    ),
+    list(
+      4,
+      header = "Estimated Median VSCI/VCPMI Score\nand Associated Interquartile Range",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(40, 50, 60, 70, 80),
+      xaxis.labels = list(40, 50, 60, 70, 80),
+      add.line = 60,
+      add.line.col = "black",
+      add.line.typ = "dashed",
+      xaxis.title = "VSCI Score",
+      panel.width = 1.2
+    ),
+    list(
+      5,
+      header = "Light Gray Means\nPreviously Displayed",
+      map.all = TRUE,
+      fill.regions = "aggregate",
+      active.border.color = "black",
+      active.border.size = 1.0,
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.0
+    )
+  )
+)
 ```
 
 Unlike a chloropleth map that simply maps a summary statistic to color aesthetics of polygons, the SCI linked micromap produced by VDEQ displays *both* a measure of central tendency and a measure of variation for each of the 11 major river basins Figure \@ref(fig:Ch11-micromapVDEQ). Specifically, the statistical panel of the linked micromap shows the estimated median SCI score and the interquartile range (IQR), as the estimated 25th and 75th percentiles, with the basins ranked by their medians. Those statistics are compared to a statewide threshold SCI of 60 as shown by the vertical, black, dashed line. Close inspection of the linked micromap reveals a spatial dissimilarity for the southwestern basins of Holston, Clinch-Powel, and Big Sandy, all of which are part of the Tennessee River drainage. Holston has excellent condition based on its SCI score, Clinch-Powell has good condition, and Big Sandy has severe stress. Also, worth noting, is that the 75th percentile of the poorest scoring basin, Rappahannock, extends past the statewide threshold indicating that some sites might benefit from conservation efforts as opposed to poorer scoring sites, which might need remediation to improve their condition. The VDEQ Report included additional linked micromaps having two statistical panels, with one panel having the basin estimates of a water quality stressor and that was paired with another panel of the SCI [@VirginiaDEQ2020]. Pairing a potential stressor with the SCI response provided a visualization of stressors that might have a larger impact on aquatic macroinvertebrates relative to other basins [@VirginiaDEQ2020]. The VDEQ linked micromap provided a means to show measures of variation, along with comparison to a reference value. 
 
-While the VDEQ R code builds off Chapter \@ref(Ch2), some distinct arguments and layouts are worth mentioning. The VDEQ linked micromap features asymmetrical perceptual grouping as specified by `grouping=c(4,3,4)`, followed by `vertical.align = "center"` that aligns the rows within a perceptual group, rather than the default alignment of "top". The center alignment is helpful when perceptual groups contain different number of rows. This is a five panel linked micromap showing a unique aspect of two label panels by using this syntax: `panel.types=c('dot_legend', 'labels','labels', 'dot_cl', 'map')`. The first label specification corresponds to Basin in the `panel.data`, while the second label specification corresponds to the sample size, n.  From both of those calls, the linked micromap displays the basin names and their sample size. The VDEQ ecologists applied a novel use of dot_cl by reporting a three-number summary of estimates of the median, first quartile, and third quartile in their linked micromap.  The dot_cl argument is typically use to report a central tendency estimate, such as a mean or median, and then the lower and upper confidence limits, as @MPRG2016 did. Finally, in that same statistical panel, the overall statewide median estimate of SCI was displayed by using these arguments:
-`add.line=60,add.line.col='black',add.line.typ='dashed'`.
+While the VDEQ R code builds off Chapter \@ref(Ch2), some distinct arguments and layouts are worth mentioning. The VDEQ linked micromap features asymmetrical perceptual grouping as specified by `grouping = c(4, 3, 4)`, followed by `vertical.align = "center"` that aligns the rows within a perceptual group, rather than the default alignment of "top". The center alignment is helpful when perceptual groups contain different number of rows. This is a five panel linked micromap showing a unique aspect of two label panels by using this syntax: `panel.types = c("dot_legend", "labels", "labels", "dot_cl", "map")`. The first label specification corresponds to Basin in the `panel.data`, while the second label specification corresponds to the sample size, n.  From both of those calls, the linked micromap displays the basin names and their sample size. The VDEQ ecologists applied a novel use of dot_cl by reporting a three-number summary of estimates of the median, first quartile, and third quartile in their linked micromap.  The dot_cl argument is typically use to report a central tendency estimate, such as a mean or median, and then the lower and upper confidence limits, as @MPRG2016 did. Finally, in that same statistical panel, the overall statewide median estimate of SCI was displayed by using these arguments:
+`add.line = 60, add.line.col = "black", add.line.typ = "dashed"`.
 
-Finally, the R code used to create Figure \@ref(fig:Ch11-micromapVDEQ) is shown below, which uses the _stats_\index{Datasets!stats} and _map.table_\index{Datasets!map.table} datasets.
+Finally, the R code used to create Figure \@ref(fig:Ch11-micromapVDEQ) is shown below, which uses the _stats_\index{Datasets!stats} and _VA_map_table_\index{Datasets!VA\_map\_table} datasets.
 
 ```{r, Ch11-micromapVDEQ, eval = FALSE, echo = TRUE}
 ```
@@ -68,73 +101,114 @@ library(micromap)
 
 # data frames
 Land4_Imida_NA <- readRDS("data/Land4_Imida_NA.rds")
-FL_Basins <- readRDS("data/Florida_Basins.rds")
+FL_basins <- readRDS("data/Florida_Basins.rds")
 
 # code to handle NA values in rankings
-Land4_Imida_NA$ranked_imida <- rank(Land4_Imida_NA$Imidacloprid, na.last = FALSE, ties.method = "first")
+Land4_Imida_NA$ranked_imida <- rank(Land4_Imida_NA$Imidacloprid,
+  na.last = FALSE,
+  ties.method = "first"
+)
 
-mmplot(stat.data=Land4_Imida_NA, 
-                 map.data=FL_Basins,
-                 panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map'),
-                 panel.data=list(NA,'GROUP_NAME','Sum_PNT_COUNT','Imidacloprid','Percent_Ag_Ur_Tr',
-                                 list('Imida_Min','Imida_25','Imida_Med','Imida_75','Imida_Max'),
-                                 NA),       
-                 map.link=c('GROUP_NAME','ID'),
-                 ord.by='ranked_imida',
-                 rev.ord = TRUE,
-                 grouping=c(6,6,5,6,6), 
-#                median.row=F,
-                 vertical.align = 'center',
-                 plot.panel.spacing = 2,
-#                 plot.height=6, 
-#                 plot.width = 9,
-                 colors=c('red','orange','yellow', 'green','blue','purple'),
-#                 print.res = 900,
-                 
-                 panel.att=list(list(1, point.type=20, point.border=TRUE, panel.width=1, point.size=2),
-                                
-                                list(2, header='Basin\nName', panel.width=1.1, 
-                                     align='left', left.margin=-1.6, text.size=.65), 
-                                
-                                list(3, header='Sample\nSize',panel.width=.1,
-                                     align='right', left.margin=-1.6, text.size=.65),
-                                
-                                list(4, header='Imidacloprid\nDetected',
-                                     graph.bgcolor='lightgray', point.size=1,
-                                     xaxis.ticks=list(0,25,50,75), xaxis.labels=list(0,25,50,75),
-                                     xaxis.title='Percent', left.margin=-1.0,
-                                     panel.width=.4),
-                                
-                                list(5, header='Ag + Urban\nLand Use',
-                                     graph.bgcolor='lightgray', point.size=1,
-                                     xaxis.ticks=list(0,25,50,75), 
-                                     xaxis.labels=list(0,25,50,75), 
-                                     xaxis.title='Percent', left.margin=-1.4,
-                                     panel.width=.4),
-                                
-                                list(6, header='Imidacloprid Boxplot\n(min-25th-Med-75th-max)',
-                                     graph.bgcolor='lightgray',
-                                     xaxis.ticks=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
-                                     xaxis.labels=list(-3,-2.5,-2,-1.5,-1,-0.5,0),
-                                     xaxis.title='Log micrograms per liter', 
-                                     graph.bar.size = 0.4, left.margin=-1.4,
-                                     panel.width=.85),
-                                
-                                list(7, header='Gray Means\nPreviously Displayed',
-                                     map.all=TRUE, fill.regions='aggregate',
-                                     active.border.color='black', active.border.size=1, left.margin=-0.8,
-                                     panel.width=.7)))
+mmplot(
+  stat.data = Land4_Imida_NA,
+  map.data = FL_basins,
+  map.link = c("GROUP_NAME", "ID"),
+  panel.types = c("dot_legend", "labels", "labels", "dot", 
+                  "dot", "box_summary", "map"),
+  panel.data = list(
+    NA, "GROUP_NAME", "Sum_PNT_COUNT", "Imidacloprid", "Percent_Ag_Ur_Tr",
+    list("Imida_Min", "Imida_25", "Imida_Med", "Imida_75", "Imida_Max"),
+    NA
+  ),
+  ord.by = "ranked_imida",
+  rev.ord = TRUE,
+  grouping = c(6, 6, 5, 6, 6),
+  #                median.row = FALSE,
+  vertical.align = "center",
+  plot.panel.spacing = 2,
+  #                 plot.height=6,
+  #                 plot.width = 9,
+  colors = c("red", "orange", "yellow", "green", "blue", "purple"),
+  #                 print.res = 900,
 
-
+  panel.att = list(
+    list(
+      1,
+      point.type = 20,
+      point.border = TRUE,
+      panel.width = 1,
+      point.size = 2
+    ),
+    list(
+      2,
+      header = "Basin\nName",
+      panel.width = 1.1,
+      align = "left",
+      left.margin = -1.6,
+      text.size = .65
+    ),
+    list(
+      3,
+      header = "Sample\nSize",
+      panel.width = .1,
+      align = "right",
+      left.margin = -1.6,
+      text.size = .65
+    ),
+    list(
+      4,
+      header = "Imidacloprid\nDetected",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent",
+      left.margin = -1.0,
+      panel.width = .4
+    ),
+    list(
+      5,
+      header = "Ag + Urban\nLand Use",
+      graph.bgcolor = "lightgray",
+      point.size = 1,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent",
+      left.margin = -1.4,
+      panel.width = .4
+    ),
+    list(
+      6,
+      header = "Imidacloprid Boxplot\n(min-25th-Med-75th-max)",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(-3, -2.5, -2, -1.5, -1, -0.5, 0),
+      xaxis.labels = list(-3, -2.5, -2, -1.5, -1, -0.5, 0),
+      xaxis.title = "Log micrograms per liter",
+      graph.bar.size = 0.4,
+      left.margin = -1.4,
+      panel.width = .85
+    ),
+    list(
+      7,
+      header = "Gray Means\nPreviously Displayed",
+      map.all = TRUE,
+      fill.regions = "aggregate",
+      active.border.color = "black",
+      active.border.size = 1,
+      left.margin = -0.8,
+      panel.width = .7
+    )
+  )
+)
 ```
 
-In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types=c('dot_legend','labels','labels','dot','dot','box_summary','map')` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the third statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. The R code used to create Figure \@ref(fig:Ch11-micromapFDEP) is below. The _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset had an NA entry for the Florida Keys regarding the percentage of samples having detectable imidacloprid concentrations as none of the freshwater bodies sampled by FDEP occurred there. Users may have to explicitly code how to handle NA values.  In this case, the syntax
+In Figure \@ref(fig:Ch11-micromapFDEP), the syntax: `panel.types = c("dot_legend", "labels", "labels", "dot", "dot", "box_summary", "map")` is used in the creation of boxplots.  The `box_summary` requires that _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset have columns containing the following summary statistics for imidalcloprid concentrations for each drainage basin:  minimum, first quartile, median, third quartile, and maximum.  The boxplots are displayed in the third statistical panel, with the width of the boxplot specified with the argument: `graph.bar.size = 0.4`. The R code used to create Figure \@ref(fig:Ch11-micromapFDEP) is below. The _Land4\_Imida\_NA_\index{Datasets!Land4\_Imida\_NA} dataset had an NA entry for the Florida Keys regarding the percentage of samples having detectable imidacloprid concentrations as none of the freshwater bodies sampled by FDEP occurred there. Users may have to explicitly code how to handle NA values.  In this case, the syntax
 `Land4_Imida_NA$ranked_imida <- rank(Land4_Imida_NA$Imidacloprid, na.last = FALSE, ties.method = "first")` is used to create a new variable that ranked NA values last. The new variable was then used with the `ord.by` argument. A challenge mentioned in Chapter \@ref(Ch2) and illustrated with the Florida linked micromap is that of small subareas, which is the Perdido basin, the westernmost basin in Florida.  
 
 ```{r, Ch11-micromapFDEP, eval = FALSE, echo = TRUE}
 ```
 
-## Spatial Surveys and Linked Micromaps {#Ch11-Spatial_Surveys}
+## Spatial Surveys and Linked Micromaps {#Ch11-Spatial-Surveys}
 
 Spatially balanced probabilistic surveys are often used to draw samples for creating summary statistics for areal units, such as watersheds or ecoregions, and we will illustrate the drawing of such a survey sample. For more details on the design and analysis of those surveys, the readers should consult @SO2004, @OKP2012, @DKOW2022.  A spatially balanced probabilistic survey is connected to a linked micromap in that the survey provides the representative samples of the natural feature (lakes, rivers, streams, estuaries, ecoregions) from which estimates are made for the areal units. This is a unique application to environmental data by demonstrating how the spsurvey package can be used to draw samples that can be used to collect and summarize data with micromaps.
 
@@ -143,30 +217,44 @@ Three steps are required to draw a spatially balanced probabilistic survey using
 We begin by plotting the Oregon border and lakes together in Figure \@ref(fig:Ch11-micromap-oregon-lakes). Note that both spatial layers are simple features objects and the same coordinate reference system or crs is required to plot them together. This condition is evaluated by `st_crs(OR) == st_crs(OR_lakes)`.  
 
 ```{r Ch11-micromap-oregon-lakes, eval = TRUE, echo = FALSE, fig.cap = 'Map of Oregon Lakes, with lakes represented as their centroids. The simple features object of the 3190 lakes is the sample frame from which the Generalized Random Tessellation Stratified function draws an n = 50 lakes for a spatially balanced probabilistic survey. '}
-
 library(spsurvey)
 library(tidyverse)
 
 load("data/OR_spsurvey.RData")
 
-ggplot() + 
-  geom_sf(data=OR_lakes,  color="blue") +
-  geom_sf(data=OR,  color="black", fill=NA) +
-  labs(title="Oregon Lakes:  Albers Equal Area Projection") +
-  theme_bw() 
+ggplot() +
+  geom_sf(
+    data = OR_lakes,
+    color = "blue"
+  ) +
+  geom_sf(
+    data = OR,
+    color = "black",
+    fill = NA
+  ) +
+  labs(title = "Oregon Lakes:  Albers Equal Area Projection") +
+  theme_bw()
 ```
 
-The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. That function explicitly incorporates spatial locations into the survey design.  Consequently, the sample frame needs to be in a projected coordinate reference system such as an Albers or UTM projection so a spatially balanced sample can be drawn [@OKP2012]. An equal-probability draw of 50 lakes is done by specifying `eqprob <- grts(OR_lakes, n_base = 50)`. That sample of 50 lakes is shown in Figure \@ref(fig:Ch11-micromap-spsurvey-lakes)
+The _OR_lakes_\index{Datasets!OR\_lakes} dataset is the sample frame that will be used with the `grts` function from **spsurvey**\index{R Packages!spsurvey} R package to draw a spatially balanced probabilistic sample. That function explicitly incorporates spatial locations into the survey design.  Consequently, the sample frame needs to be in a projected coordinate reference system such as an Albers or UTM projection so a spatially balanced sample can be drawn [@OKP2012]. An equal-probability draw of 50 lakes is done by specifying `eqprob <- grts(OR_lakes, n_base = 50)`. That sample of 50 lakes is shown in Figure \@ref(fig:Ch11-micromap-spsurvey-lakes).
 
 ```{r Ch11-micromap-spsurvey-lakes, eval = TRUE, echo = FALSE,  fig.cap = 'Oregon Lakes Sample Frame & Equal Probability Sites in Projected Coordinates. Red points are the GRTS sample and blue points are the sample frame.'}
-
-ggplot() + 
-  geom_sf(data=OR_lakes, color = "blue") +
-  geom_sf(data=eqprob_base,  color="red") +
-  geom_sf(data=OR,  color="black", fill=NA) +
-  labs(title="Oregon Lakes Sample Frame & GRTS Equal Probability Sites") +
-  theme_bw() 
-
+ggplot() +
+  geom_sf(
+    data = OR_lakes,
+    color = "blue"
+  ) +
+  geom_sf(
+    data = eqprob_base,
+    color = "red"
+  ) +
+  geom_sf(
+    data = OR,
+    color = "black",
+    fill = NA
+  ) +
+  labs(title = "Oregon Lakes Sample Frame & GRTS Equal Probability Sites") +
+  theme_bw()
 ```
 
 We demonstrated a practical example of how to import a target population dataset and used the spsurvey to create a spatially balanced sample.  This sample can then be used to collect and summarize data that can be further displayed with a linked micromap.  Next, we demonstrate the value of using spsurvey for increasing confidence in summary statistics with an example from West Virginia Department of Environment Protection (WVDEP) [@MPRG2016].
@@ -178,62 +266,83 @@ library(sf)
 library(micromap)
 
 # sf data frame with geospatial and statistical data
-WV_Basins <- readRDS("data/wvbasins2.rds")
-# class(WV_Basins)
+WV_basins <- readRDS("data/wvbasins2.rds")
+# class(WV_basins)
 
-mmplot(map.data = WV_Basins,
-       panel.types = c('dot_legend', 'labels', 'dot_cl', 'dot_cl', 'map'),
-       panel.data=list(
-         NA,
-         'alt.name',
-         list('Cond_med', 'Cond_LCB95Pct', 'Cond_UCB95Pct'),
-         list('Cond_med_srs', 'Cond_LCB95Pct_srs', 'Cond_UCB95Pct_srs'),
-         NA),
-       ord.by = 'Cond_med',
-       rev.ord = TRUE,
-       grouping = 5,
-       median.row = FALSE,
-       
-       plot.height=9, plot.width=6.8,
-       colors = brewer.pal(6,"Blues")[-1],
-       
-      panel.att=list(list(1, panel.width=1, point.type=20, point.size=2,
-                           point.border=FALSE, xaxis.title.size=1), 
-                      
-                      list(2, header='WVDEP\nSubbasins', panel.width=1.25,
-                           align='left', text.size=.8),
-                      list(3, header='Specific\nConductance Local',
-                           graph.bgcolor='white',
-                           xaxis.ticks=list(0, 250, 500, 750),
-                           xaxis.labels=list(0, 250, 500, 750),
-                           xaxis.labels.size=1,
-                           xaxis.title='microSiemens per cm',
-                           xaxis.title.size=1,
-                           panel.width=1.5,
-                          point.border=FALSE,
-                          line.width=1.25,
-                          point.size=1.5),
-                      
-                      list(4, header='Specific\nConductance SRS',
-                           graph.bgcolor='white',
-                           xaxis.ticks=c(0, 250, 500, 750),
-                           xaxis.labels=c(0, 250, 500, 750),
-                           xaxis.labels.size=1,
-                           xaxis.title='microSiemens per cm',
-                           xaxis.title.size=1,
-                           panel.width=1.5,
-                           point.border=FALSE,
-                          line.width=1.25,
-                          point.size=1.5),
-                      
-                      list(5, header='Light Gray Means\n Highlighted Above',
-                           inactive.border.color=gray(.7),
-                           inactive.border.size=2,
-                            panel.width=1.5)))
-
+mmplot(
+  map.data = WV_basins,
+  panel.types = c("dot_legend", "labels", "dot_cl", "dot_cl", "map"),
+  panel.data = list(
+    NA,
+    "alt.name",
+    list("Cond_med", "Cond_LCB95Pct", "Cond_UCB95Pct"),
+    list("Cond_med_srs", "Cond_LCB95Pct_srs", "Cond_UCB95Pct_srs"),
+    NA
+  ),
+  ord.by = "Cond_med",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = FALSE,
+  plot.height = 9,
+  plot.width = 6.8,
+  colors = brewer.pal(6, "Blues")[-1],
+  panel.att = list(
+    list(
+      1,
+      panel.width = 1,
+      point.type = 20,
+      point.size = 2,
+      point.border = FALSE,
+      xaxis.title.size = 1
+    ),
+    list(
+      2,
+      header = "WVDEP\nSubbasins",
+      panel.width = 1.25,
+      align = "left",
+      text.size = .8
+    ),
+    list(
+      3,
+      header = "Specific\nConductance Local",
+      graph.bgcolor = "white",
+      xaxis.ticks = list(0, 250, 500, 750),
+      xaxis.labels = list(0, 250, 500, 750),
+      xaxis.labels.size = 1,
+      xaxis.title = "microSiemens per cm",
+      xaxis.title.size = 1,
+      panel.width = 1.5,
+      point.border = FALSE,
+      line.width = 1.25,
+      point.size = 1.5
+    ),
+    list(
+      4,
+      header = "Specific\nConductance SRS",
+      graph.bgcolor = "white",
+      xaxis.ticks = c(0, 250, 500, 750),
+      xaxis.labels = c(0, 250, 500, 750),
+      xaxis.labels.size = 1,
+      xaxis.title = "microSiemens per cm",
+      xaxis.title.size = 1,
+      panel.width = 1.5,
+      point.border = FALSE,
+      line.width = 1.25,
+      point.size = 1.5
+    ),
+    list(
+      5,
+      header = "Light Gray Means\n Highlighted Above",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 2,
+      panel.width = 1.5
+    )
+  )
+)
 ```
 
 Two final points about the WVDEP linked micromap should be noted. First, we used a simple features object, **sf**\index{R Packages!sf}, that contained both the geospatial data and the statistical summaries of the basins. Consequently, we only had to specify the `map.data` argument, in contrast to the Virginia and Florida examples, where we used both the `map.data` and `stat.data` syntax.  Second, the basins in the linked micromap were smoothed, that is their polygon boundaries generalized, so they would draw faster as mentioned in Chapter \@ref(Ch2).
+
 
 ## Summary and Further Reading {#Ch11-FurtherReading}
 
@@ -241,4 +350,3 @@ Two final points about the WVDEP linked micromap should be noted. First, we used
 Building off of the foundation in Chapter \@ref(Ch2), this chapter covered environmental applications of linked micromaps. Such applications have two unique aspects. One is the use of geographic boundaries from natural features, such as ecoregions or watersheds, instead of administrative or political boundaries that are more commonly used in other applications. See also Chapter \@ref(Ch12) for medical applications that deal with non-standard geographic boundaries, such as health service areas and census tracts. The other is the strong link between spatial survey design to obtain a representative sample from the natural features so that survey estimates and sample statistics can be displayed in linked micromaps. Data collected from spatially balanced probabilistic surveys by state environmental agencies were used in the linked micromap examples from this chapter. The FDEP example used a linked micromap for initial exploratory spatial data analysis and subsequent testing for spatial autocorrelation in pesticide detection among basins [@SWSCSS2018]. @MPRG2016 used linked micromaps for a multivariate spatial analysis of WVDEP water quality data.  The examples in this chapter were of static linked micromaps, but Chapter \@ref(Ch7) covers interactive exploration of spatial data, including one by VDEQ.  
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
