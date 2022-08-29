@@ -70,7 +70,7 @@ temp_array2[1:3, 1:8, ]
 
 Next we define the micromap plot (shown in Figure \@ref(fig:Ch5b-micromap1) using the postal abbreviations as the geographic identifier and sorting by the midpoint of the date range (March 2021) in descending order:
 
-```{r Ch5b-micromap1, fig.cap = 'Time Series plots of cumulative covid case rates by month, Feb 2020 - Apr 2022, sorted by March 2021 (median date) rates', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap1, fig.cap = 'Time Series plots of cumulative covid case rates by month, Feb 2020 - Apr 2022, sorted by March 2021 (median date) rates.', fig.width = 7, fig.height = 9}
 library(micromapST)
 
 panel_desc_timeseries <- data.frame(
@@ -122,7 +122,7 @@ covid_box_list$out[1:5]
 
 Now that the boxplot values have been computed outside the package, we just need to include the name of the matrix with those values in the `panelData` parameter, as shown in Figure \@ref(fig:Ch3-GlyphTableFigure). XXX-CHECK-XXX To help interpret the boxplot results, `refvals` and `refTexts` specify the U.S. overall case rate and text label, respectively, for a vertical reference line. By default, this is a green dashed line. 
 
-```{r Ch5b-micromap2, fig.cap = 'Time Series arrow plots of cumulative covid case rates, Feb 2020 - Mar 2021 and Mar 2021 - Apr 2022, and county rate boxplots', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap2, fig.cap = 'Time Series arrow plots of cumulative covid case rates, Feb 2020 - Mar 2021 and Mar 2021 - Apr 2022, and county rate boxplots.', fig.width = 7, fig.height = 9}
 library(micromapST)
 
 panel_desc_arrow_boxplot <- data.frame(
@@ -154,13 +154,13 @@ The box plot values are displayed in a typical format. The box encompasses the m
 ## Scaled Response Data {#Ch5b-Scaled-Response-Data}
 
 
-Many surveys collect responses that have a rank order but are not strictly quantifiable. For example, the Likert scale [ref Likert 1932] is a commonly-used set of symmetric responses for the respondent's agreement or disagreement with a series of questions; a five-category scale would typically be "Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree" and "Strongly agree". The number of responses for each of these choices can be compared across categories of respondents, geographic areas, etc. 
+Many surveys collect responses that have a rank order but are not strictly quantifiable. For example, the Likert scale [@Lik1932] is a commonly-used set of symmetric responses for the respondent's agreement or disagreement with a series of questions; a five-category scale would typically be "Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree" and "Strongly agree". The number of responses for each of these choices can be compared across categories of respondents, geographic areas, etc. 
 
-**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, normalized to 100% total bar length or centered on a particular cutpoint. Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [ref NCES 2012]. 
+**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, normalized to 100% total bar length or centered on a particular cutpoint. Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [@NCES2011]. 
 
 In Figure \@ref(fig:Ch5b-micromap3), the first column plots the average math scores for students in each state. The second column displays individual student scores categorized into proficiency classes: "Less than basic", "Basic", "Proficient" and "Advanced". Except for a few missing scores, each state's total is nearly 100%, so the basic horizontal stacked bar design (`type = "segbar"`) is used. No scaling to 100% (`type = "normbar"`) is needed. The states are sorted in ascending order of the average math scores.
 
-```{r Ch5b-micromap3, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, measured by average scores and achievement category', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap3, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, measured by average scores and achievement category.', fig.width = 7, fig.height = 9}
 library(micromapST)
 # Figure - dots and centered bar (source of code sample for section 4.7)
 
@@ -187,9 +187,9 @@ micromapST(
 
 The order of states ranges from Washington DC as worst to Massachusetts as best on the math tests that year, as measured by both average score and the percent of students with less than basic proficiency. (Of course, DC is a totally urban city and is not fairly compared to all other states which are a mix of urban, suburban and rural areas. However, this is how the data are reported.) 
 
-Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. Heiberger and Robbins [ref H & R 2014] suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [ref Cleveland and McGill 1984]. The `type="ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
+Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. Heiberger and Robbins [@HeRo2014] suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [@CleMc84]. The `type="ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
 
-```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced.', fig.width = 7, fig.height = 9}
 library(micromapST)
 # Figure - dots and centered bar (source of code sample for section 4.7)
 
@@ -212,7 +212,7 @@ micromapST(
 
 Centering between the second and third categories leads to the interpretation of the total length of the bars to the left and right of center as the percent of students who were less than proficient and at least proficient in eighth grade math, respectively. Centering in this way shows DC in a better light - although its average score is worst, its percent of students who were not proficient in math (represented by the length of the bar to the left of zero) was not much different from the next seven poorly-ranked states.
 
-Adding cumulative shading to this plot highlights the generally lower performance of students in southern states compared to northern states. The top four panels, representing the 20 lowest ranking states, include 15 states in the southern half of the country. The original report [ref NCES 2012] presented these results in a segmented bar chart centered in the same way as in Figure \@ref(fig:Ch5b-micromap4), but sorted by state name. No geographic patterns could be discerned.
+Adding cumulative shading to this plot highlights the generally lower performance of students in southern states compared to northern states. The top four panels, representing the 20 lowest ranking states, include 15 states in the southern half of the country. The original report [@NCES2011] presented these results in a segmented bar chart centered in the same way as in Figure \@ref(fig:Ch5b-micromap4), but sorted by state name. No geographic patterns could be discerned.
 
 
 ## Scatter Plots {#Ch5b-Scatter-Plots}
@@ -220,9 +220,9 @@ Adding cumulative shading to this plot highlights the generally lower performanc
 
 One of the simplest types of graphs is the two-dimensional scatter plot, which displays pairwise values, usually denoted (x, y). However, this graphic presents challenges in the linked micromap design - each state's micromap row is too small to display a two-dimensional plot and, even if we could scale such a plot to be visible, we would lose the information about where that state's value fits within the entire bivariate distribution of all states. The solution implemented in **micromapST** is to display a scatter plot for each panel, i.e., for five states in the default design. Each scatter plot contains dots for every state, with only those dots representing the states in that panel colored in. The colors for the state dots match the colors for other column glyphs, the state name key and on the map, just as in every other micromap design.
 
-To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [ref]. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot.
+To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [@NRC2022]. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot.
 
-```{r Ch5b-micromap5, fig.cap = 'Scatter plot of % residents with income < 150% federal poverty level and % with 4+ years of college, sorted by % college', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap5, fig.cap = 'Scatter plot of % residents with income < 150% federal poverty level and % with 4+ years of college, sorted by % college.', fig.width = 7, fig.height = 9}
 library(micromapST)
 
 # Input data files.
