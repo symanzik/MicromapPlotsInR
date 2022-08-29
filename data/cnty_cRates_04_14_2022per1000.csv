@@ -1,0 +1,3143 @@
+Fips,County,st_postal,Days,Rates
+1001,Autauga County,AL,Apr_14_2022,281.9
+1003,Baldwin County,AL,Apr_14_2022,248.8
+1005,Barbour County,AL,Apr_14_2022,229.2
+1007,Bibb County,AL,Apr_14_2022,287.0
+1009,Blount County,AL,Apr_14_2022,258.6
+1011,Bullock County,AL,Apr_14_2022,228.1
+1013,Butler County,AL,Apr_14_2022,259.9
+1015,Calhoun County,AL,Apr_14_2022,284.9
+1017,Chambers County,AL,Apr_14_2022,254.9
+1019,Cherokee County,AL,Apr_14_2022,195.4
+1021,Chilton County,AL,Apr_14_2022,249.3
+1023,Choctaw County,AL,Apr_14_2022,162.8
+1025,Clarke County,AL,Apr_14_2022,302.3
+1027,Clay County,AL,Apr_14_2022,308.3
+1029,Cleburne County,AL,Apr_14_2022,238.6
+1031,Coffee County,AL,Apr_14_2022,259.3
+1033,Colbert County,AL,Apr_14_2022,295.3
+1035,Conecuh County,AL,Apr_14_2022,237.1
+1037,Coosa County,AL,Apr_14_2022,277.9
+1039,Covington County,AL,Apr_14_2022,251.3
+1041,Crenshaw County,AL,Apr_14_2022,275.8
+1043,Cullman County,AL,Apr_14_2022,292.9
+1045,Dale County,AL,Apr_14_2022,261.7
+1047,Dallas County,AL,Apr_14_2022,225.7
+1049,DeKalb County,AL,Apr_14_2022,262.2
+1051,Elmore County,AL,Apr_14_2022,286.7
+1053,Escambia County,AL,Apr_14_2022,273.4
+1055,Etowah County,AL,Apr_14_2022,281.2
+1057,Fayette County,AL,Apr_14_2022,305.5
+1059,Franklin County,AL,Apr_14_2022,314.4
+1061,Geneva County,AL,Apr_14_2022,246.1
+1063,Greene County,AL,Apr_14_2022,230.7
+1065,Hale County,AL,Apr_14_2022,321.9
+1067,Henry County,AL,Apr_14_2022,265.7
+1069,Houston County,AL,Apr_14_2022,242.5
+1071,Jackson County,AL,Apr_14_2022,291.0
+1073,Jefferson County,AL,Apr_14_2022,280.5
+1075,Lamar County,AL,Apr_14_2022,269.9
+1077,Lauderdale County,AL,Apr_14_2022,260.0
+1079,Lawrence County,AL,Apr_14_2022,232.7
+1081,Lee County,AL,Apr_14_2022,228.9
+1083,Limestone County,AL,Apr_14_2022,251.7
+1085,Lowndes County,AL,Apr_14_2022,268.4
+1087,Macon County,AL,Apr_14_2022,213.8
+1089,Madison County,AL,Apr_14_2022,239.6
+1091,Marengo County,AL,Apr_14_2022,274.9
+1093,Marion County,AL,Apr_14_2022,273.3
+1095,Marshall County,AL,Apr_14_2022,282.6
+1097,Mobile County,AL,Apr_14_2022,273.8
+1099,Monroe County,AL,Apr_14_2022,254.1
+1101,Montgomery County,AL,Apr_14_2022,242.0
+1103,Morgan County,AL,Apr_14_2022,301.1
+1105,Perry County,AL,Apr_14_2022,234.5
+1107,Pickens County,AL,Apr_14_2022,263.7
+1109,Pike County,AL,Apr_14_2022,225.4
+1111,Randolph County,AL,Apr_14_2022,223.7
+1113,Russell County,AL,Apr_14_2022,173.6
+1115,St. Clair County,AL,Apr_14_2022,282.3
+1117,Shelby County,AL,Apr_14_2022,278.9
+1119,Sumter County,AL,Apr_14_2022,207.2
+1121,Talladega County,AL,Apr_14_2022,279.0
+1123,Tallapoosa County,AL,Apr_14_2022,282.3
+1125,Tuscaloosa County,AL,Apr_14_2022,267.5
+1127,Walker County,AL,Apr_14_2022,293.7
+1129,Washington County,AL,Apr_14_2022,228.5
+1131,Wilcox County,AL,Apr_14_2022,278.1
+1133,Winston County,AL,Apr_14_2022,320.1
+2013,Aleutians East Borough,AK,Apr_14_2022,173.8
+2016,Aleutians West Census Area,AK,Apr_14_2022,152.5
+2020,Municipality of Anchorage,AK,Apr_14_2022,350.9
+2050,Bethel Census Area,AK,Apr_14_2022,544.8
+2060,Bristol Bay Borough,AK,Apr_14_2022,727.3
+2068,Denali Borough,AK,Apr_14_2022,160.2
+2070,Dillingham Census Area,AK,Apr_14_2022,366.6
+2090,Fairbanks North Star Borough,AK,Apr_14_2022,274.6
+2100,Haines Borough,AK,Apr_14_2022,236.0
+2105,Hoonah-Angoon Census Area,AK,Apr_14_2022,0.0
+2110,City and Borough of Juneau,AK,Apr_14_2022,248.0
+2122,Kenai Peninsula Borough,AK,Apr_14_2022,291.7
+2130,Ketchikan Gateway Borough,AK,Apr_14_2022,273.1
+2150,Kodiak Island Borough,AK,Apr_14_2022,366.5
+2158,Kusilvak Census Area,AK,Apr_14_2022,181.4
+2164,Lake and Peninsula Borough,AK,Apr_14_2022,76.0
+2170,Matanuska-Susitna Borough,AK,Apr_14_2022,313.2
+2180,Nome Census Area,AK,Apr_14_2022,605.0
+2185,North Slope Borough,AK,Apr_14_2022,411.0
+2188,Northwest Arctic Borough,AK,Apr_14_2022,597.4
+2195,Petersburg Borough,AK,Apr_14_2022,54.8
+2198,Prince of Wales - Hyder Census Area,AK,Apr_14_2022,40.5
+2220,City and Borough of Sitka,AK,Apr_14_2022,264.6
+2230,Municipality of Skagway,AK,Apr_14_2022,25.4
+2240,Southeast Fairbanks Census Area,AK,Apr_14_2022,273.8
+2261,Valdez-Cordova Census Area,AK,Apr_14_2022,200.4
+2275,City and Borough of Wrangell,AK,Apr_14_2022,28.4
+2282,City and Borough of Yakutat,AK,Apr_14_2022,108.8
+2290,Yukon-Koyukuk Census Area,AK,Apr_14_2022,270.2
+4001,Apache County,AZ,Apr_14_2022,310.3
+4003,Cochise County,AZ,Apr_14_2022,249.5
+4005,Coconino County,AZ,Apr_14_2022,303.8
+4007,Gila County,AZ,Apr_14_2022,318.2
+4009,Graham County,AZ,Apr_14_2022,307.9
+4011,Greenlee County,AZ,Apr_14_2022,233.2
+4012,La Paz County,AZ,Apr_14_2022,246.4
+4013,Maricopa County,AZ,Apr_14_2022,284.0
+4015,Mohave County,AZ,Apr_14_2022,270.4
+4017,Navajo County,AZ,Apr_14_2022,344.0
+4019,Pima County,AZ,Apr_14_2022,242.7
+4021,Pinal County,AZ,Apr_14_2022,286.0
+4023,Santa Cruz County,AZ,Apr_14_2022,358.3
+4025,Yavapai County,AZ,Apr_14_2022,203.7
+4027,Yuma County,AZ,Apr_14_2022,293.0
+5001,Arkansas County,AR,Apr_14_2022,324.9
+5003,Ashley County,AR,Apr_14_2022,260.1
+5005,Baxter County,AR,Apr_14_2022,208.9
+5007,Benton County,AR,Apr_14_2022,238.9
+5009,Boone County,AR,Apr_14_2022,252.0
+5011,Bradley County,AR,Apr_14_2022,277.8
+5013,Calhoun County,AR,Apr_14_2022,185.0
+5015,Carroll County,AR,Apr_14_2022,215.1
+5017,Chicot County,AR,Apr_14_2022,274.2
+5019,Clark County,AR,Apr_14_2022,237.8
+5021,Clay County,AR,Apr_14_2022,282.0
+5023,Cleburne County,AR,Apr_14_2022,258.6
+5025,Cleveland County,AR,Apr_14_2022,283.9
+5027,Columbia County,AR,Apr_14_2022,231.0
+5029,Conway County,AR,Apr_14_2022,262.3
+5031,Craighead County,AR,Apr_14_2022,340.8
+5033,Crawford County,AR,Apr_14_2022,250.2
+5035,Crittenden County,AR,Apr_14_2022,297.4
+5037,Cross County,AR,Apr_14_2022,294.0
+5039,Dallas County,AR,Apr_14_2022,248.3
+5041,Desha County,AR,Apr_14_2022,266.3
+5043,Drew County,AR,Apr_14_2022,256.9
+5045,Faulkner County,AR,Apr_14_2022,278.2
+5047,Franklin County,AR,Apr_14_2022,215.1
+5049,Fulton County,AR,Apr_14_2022,215.6
+5051,Garland County,AR,Apr_14_2022,234.3
+5053,Grant County,AR,Apr_14_2022,244.2
+5055,Greene County,AR,Apr_14_2022,350.3
+5057,Hempstead County,AR,Apr_14_2022,211.5
+5059,Hot Spring County,AR,Apr_14_2022,330.9
+5061,Howard County,AR,Apr_14_2022,284.9
+5063,Independence County,AR,Apr_14_2022,280.4
+5065,Izard County,AR,Apr_14_2022,285.5
+5067,Jackson County,AR,Apr_14_2022,365.0
+5069,Jefferson County,AR,Apr_14_2022,278.2
+5071,Johnson County,AR,Apr_14_2022,256.2
+5073,Lafayette County,AR,Apr_14_2022,195.7
+5075,Lawrence County,AR,Apr_14_2022,322.6
+5077,Lee County,AR,Apr_14_2022,328.2
+5079,Lincoln County,AR,Apr_14_2022,377.1
+5081,Little River County,AR,Apr_14_2022,267.0
+5083,Logan County,AR,Apr_14_2022,238.3
+5085,Lonoke County,AR,Apr_14_2022,271.1
+5087,Madison County,AR,Apr_14_2022,238.9
+5089,Marion County,AR,Apr_14_2022,202.9
+5091,Miller County,AR,Apr_14_2022,220.8
+5093,Mississippi County,AR,Apr_14_2022,333.5
+5095,Monroe County,AR,Apr_14_2022,287.6
+5097,Montgomery County,AR,Apr_14_2022,169.2
+5099,Nevada County,AR,Apr_14_2022,264.7
+5101,Newton County,AR,Apr_14_2022,221.6
+5103,Ouachita County,AR,Apr_14_2022,233.7
+5105,Perry County,AR,Apr_14_2022,240.3
+5107,Phillips County,AR,Apr_14_2022,270.3
+5109,Pike County,AR,Apr_14_2022,243.9
+5111,Poinsett County,AR,Apr_14_2022,340.8
+5113,Polk County,AR,Apr_14_2022,207.7
+5115,Pope County,AR,Apr_14_2022,287.4
+5117,Prairie County,AR,Apr_14_2022,243.4
+5119,Pulaski County,AR,Apr_14_2022,263.1
+5121,Randolph County,AR,Apr_14_2022,288.5
+5123,St. Francis County,AR,Apr_14_2022,285.8
+5125,Saline County,AR,Apr_14_2022,252.1
+5127,Scott County,AR,Apr_14_2022,223.0
+5129,Searcy County,AR,Apr_14_2022,266.8
+5131,Sebastian County,AR,Apr_14_2022,255.9
+5133,Sevier County,AR,Apr_14_2022,348.5
+5135,Sharp County,AR,Apr_14_2022,265.6
+5137,Stone County,AR,Apr_14_2022,232.8
+5139,Union County,AR,Apr_14_2022,238.8
+5141,Van Buren County,AR,Apr_14_2022,209.5
+5143,Washington County,AR,Apr_14_2022,285.8
+5145,White County,AR,Apr_14_2022,280.3
+5147,Woodruff County,AR,Apr_14_2022,273.4
+5149,Yell County,AR,Apr_14_2022,321.0
+6001,Alameda County,CA,Apr_14_2022,154.1
+6003,Alpine County,CA,Apr_14_2022,109.8
+6005,Amador County,CA,Apr_14_2022,214.5
+6007,Butte County,CA,Apr_14_2022,150.8
+6009,Calaveras County,CA,Apr_14_2022,158.4
+6011,Colusa County,CA,Apr_14_2022,160.2
+6013,Contra Costa County,CA,Apr_14_2022,164.3
+6015,Del Norte County,CA,Apr_14_2022,209.0
+6017,El Dorado County,CA,Apr_14_2022,138.9
+6019,Fresno County,CA,Apr_14_2022,231.5
+6021,Glenn County,CA,Apr_14_2022,175.6
+6023,Humboldt County,CA,Apr_14_2022,124.8
+6025,Imperial County,CA,Apr_14_2022,305.5
+6027,Inyo County,CA,Apr_14_2022,225.8
+6029,Kern County,CA,Apr_14_2022,213.2
+6031,Kings County,CA,Apr_14_2022,337.0
+6033,Lake County,CA,Apr_14_2022,166.2
+6035,Lassen County,CA,Apr_14_2022,292.7
+6037,Los Angeles County,CA,Apr_14_2022,270.5
+6039,Madera County,CA,Apr_14_2022,237.6
+6041,Marin County,CA,Apr_14_2022,130.4
+6043,Mariposa County,CA,Apr_14_2022,139.7
+6045,Mendocino County,CA,Apr_14_2022,151.0
+6047,Merced County,CA,Apr_14_2022,224.4
+6049,Modoc County,CA,Apr_14_2022,84.0
+6051,Mono County,CA,Apr_14_2022,205.7
+6053,Monterey County,CA,Apr_14_2022,182.6
+6055,Napa County,CA,Apr_14_2022,188.0
+6057,Nevada County,CA,Apr_14_2022,160.4
+6059,Orange County,CA,Apr_14_2022,172.5
+6061,Placer County,CA,Apr_14_2022,157.8
+6063,Plumas County,CA,Apr_14_2022,155.4
+6065,Riverside County,CA,Apr_14_2022,239.5
+6067,Sacramento County,CA,Apr_14_2022,179.0
+6069,San Benito County,CA,Apr_14_2022,205.8
+6071,San Bernardino County,CA,Apr_14_2022,258.6
+6073,San Diego County,CA,Apr_14_2022,226.3
+6075,City and County of San Francisco,CA,Apr_14_2022,143.6
+6077,San Joaquin County,CA,Apr_14_2022,218.7
+6079,San Luis Obispo County,CA,Apr_14_2022,186.0
+6081,San Mateo County,CA,Apr_14_2022,159.4
+6083,Santa Barbara County,CA,Apr_14_2022,192.5
+6085,Santa Clara County,CA,Apr_14_2022,163.3
+6087,Santa Cruz County,CA,Apr_14_2022,174.8
+6089,Shasta County,CA,Apr_14_2022,169.8
+6091,Sierra County,CA,Apr_14_2022,91.8
+6093,Siskiyou County,CA,Apr_14_2022,102.1
+6095,Solano County,CA,Apr_14_2022,182.8
+6097,Sonoma County,CA,Apr_14_2022,170.0
+6099,Stanislaus County,CA,Apr_14_2022,213.5
+6101,Sutter County,CA,Apr_14_2022,212.5
+6103,Tehama County,CA,Apr_14_2022,185.3
+6105,Trinity County,CA,Apr_14_2022,95.8
+6107,Tulare County,CA,Apr_14_2022,226.4
+6109,Tuolumne County,CA,Apr_14_2022,232.0
+6111,Ventura County,CA,Apr_14_2022,205.2
+6113,Yolo County,CA,Apr_14_2022,166.4
+6115,Yuba County,CA,Apr_14_2022,201.5
+8001,Adams County,CO,Apr_14_2022,256.0
+8003,Alamosa County,CO,Apr_14_2022,277.7
+8005,Arapahoe County,CO,Apr_14_2022,230.4
+8007,Archuleta County,CO,Apr_14_2022,206.3
+8009,Baca County,CO,Apr_14_2022,235.4
+8011,Bent County,CO,Apr_14_2022,454.9
+8013,Boulder County,CO,Apr_14_2022,196.2
+8014,City and County of Broomfield,CO,Apr_14_2022,190.3
+8015,Chaffee County,CO,Apr_14_2022,224.6
+8017,Cheyenne County,CO,Apr_14_2022,175.3
+8019,Clear Creek County,CO,Apr_14_2022,160.7
+8021,Conejos County,CO,Apr_14_2022,211.8
+8023,Costilla County,CO,Apr_14_2022,178.0
+8025,Crowley County,CO,Apr_14_2022,544.0
+8027,Custer County,CO,Apr_14_2022,127.7
+8029,Delta County,CO,Apr_14_2022,196.6
+8031,City and County of Denver,CO,Apr_14_2022,234.3
+8033,Dolores County,CO,Apr_14_2022,177.1
+8035,Douglas County,CO,Apr_14_2022,221.9
+8037,Eagle County,CO,Apr_14_2022,290.0
+8039,Elbert County,CO,Apr_14_2022,178.5
+8041,El Paso County,CO,Apr_14_2022,257.0
+8043,Fremont County,CO,Apr_14_2022,318.7
+8045,Garfield County,CO,Apr_14_2022,244.6
+8047,Gilpin County,CO,Apr_14_2022,152.3
+8049,Grand County,CO,Apr_14_2022,223.3
+8051,Gunnison County,CO,Apr_14_2022,193.8
+8053,Hinsdale County,CO,Apr_14_2022,150.0
+8055,Huerfano County,CO,Apr_14_2022,209.2
+8057,Jackson County,CO,Apr_14_2022,117.8
+8059,Jefferson County,CO,Apr_14_2022,211.9
+8061,Kiowa County,CO,Apr_14_2022,238.3
+8063,Kit Carson County,CO,Apr_14_2022,226.6
+8065,Lake County,CO,Apr_14_2022,220.7
+8067,La Plata County,CO,Apr_14_2022,227.5
+8069,Larimer County,CO,Apr_14_2022,217.9
+8071,Las Animas County,CO,Apr_14_2022,247.8
+8073,Lincoln County,CO,Apr_14_2022,382.4
+8075,Logan County,CO,Apr_14_2022,331.4
+8077,Mesa County,CO,Apr_14_2022,275.5
+8079,Mineral County,CO,Apr_14_2022,299.1
+8081,Moffat County,CO,Apr_14_2022,227.3
+8083,Montezuma County,CO,Apr_14_2022,236.1
+8085,Montrose County,CO,Apr_14_2022,217.1
+8087,Morgan County,CO,Apr_14_2022,194.1
+8089,Otero County,CO,Apr_14_2022,234.3
+8091,Ouray County,CO,Apr_14_2022,173.9
+8093,Park County,CO,Apr_14_2022,150.2
+8095,Phillips County,CO,Apr_14_2022,207.0
+8097,Pitkin County,CO,Apr_14_2022,364.8
+8099,Prowers County,CO,Apr_14_2022,215.9
+8101,Pueblo County,CO,Apr_14_2022,275.5
+8103,Rio Blanco County,CO,Apr_14_2022,265.0
+8105,Rio Grande County,CO,Apr_14_2022,248.6
+8107,Routt County,CO,Apr_14_2022,250.9
+8109,Saguache County,CO,Apr_14_2022,173.4
+8111,San Juan County,CO,Apr_14_2022,276.1
+8113,San Miguel County,CO,Apr_14_2022,278.4
+8115,Sedgwick County,CO,Apr_14_2022,214.9
+8117,Summit County,CO,Apr_14_2022,317.0
+8119,Teller County,CO,Apr_14_2022,190.0
+8121,Washington County,CO,Apr_14_2022,216.0
+8123,Weld County,CO,Apr_14_2022,256.9
+8125,Yuma County,CO,Apr_14_2022,187.0
+9001,Fairfield County,CT,Apr_14_2022,217.2
+9003,Hartford County,CT,Apr_14_2022,200.0
+9005,Litchfield County,CT,Apr_14_2022,177.3
+9007,Middlesex County,CT,Apr_14_2022,174.2
+9009,New Haven County,CT,Apr_14_2022,230.4
+9011,New London County,CT,Apr_14_2022,208.6
+9013,Tolland County,CT,Apr_14_2022,137.5
+9015,Windham County,CT,Apr_14_2022,220.8
+10001,Kent County,DE,Apr_14_2022,278.5
+10003,New Castle County,DE,Apr_14_2022,263.1
+10005,Sussex County,DE,Apr_14_2022,262.9
+11001,District of Columbia,DC,Apr_14_2022,190.8
+12001,Alachua County,FL,Apr_14_2022,253.3
+12003,Baker County,FL,Apr_14_2022,297.0
+12005,Bay County,FL,Apr_14_2022,261.6
+12007,Bradford County,FL,Apr_14_2022,265.1
+12009,Brevard County,FL,Apr_14_2022,221.8
+12011,Broward County,FL,Apr_14_2022,308.4
+12013,Calhoun County,FL,Apr_14_2022,290.0
+12015,Charlotte County,FL,Apr_14_2022,189.8
+12017,Citrus County,FL,Apr_14_2022,197.4
+12019,Clay County,FL,Apr_14_2022,244.0
+12021,Collier County,FL,Apr_14_2022,217.4
+12023,Columbia County,FL,Apr_14_2022,294.9
+12027,DeSoto County,FL,Apr_14_2022,247.0
+12029,Dixie County,FL,Apr_14_2022,239.7
+12031,Duval County,FL,Apr_14_2022,263.8
+12033,Escambia County,FL,Apr_14_2022,244.6
+12035,Flagler County,FL,Apr_14_2022,194.1
+12037,Franklin County,FL,Apr_14_2022,253.7
+12039,Gadsden County,FL,Apr_14_2022,294.2
+12041,Gilchrist County,FL,Apr_14_2022,244.2
+12043,Glades County,FL,Apr_14_2022,143.8
+12045,Gulf County,FL,Apr_14_2022,313.8
+12047,Hamilton County,FL,Apr_14_2022,265.5
+12049,Hardee County,FL,Apr_14_2022,321.5
+12051,Hendry County,FL,Apr_14_2022,278.2
+12053,Hernando County,FL,Apr_14_2022,216.5
+12055,Highlands County,FL,Apr_14_2022,226.7
+12057,Hillsborough County,FL,Apr_14_2022,254.7
+12059,Holmes County,FL,Apr_14_2022,276.1
+12061,Indian River County,FL,Apr_14_2022,203.2
+12063,Jackson County,FL,Apr_14_2022,318.7
+12065,Jefferson County,FL,Apr_14_2022,276.2
+12067,Lafayette County,FL,Apr_14_2022,329.6
+12069,Lake County,FL,Apr_14_2022,231.4
+12071,Lee County,FL,Apr_14_2022,245.6
+12073,Leon County,FL,Apr_14_2022,289.3
+12075,Levy County,FL,Apr_14_2022,246.8
+12077,Liberty County,FL,Apr_14_2022,299.0
+12079,Madison County,FL,Apr_14_2022,315.0
+12081,Manatee County,FL,Apr_14_2022,237.0
+12083,Marion County,FL,Apr_14_2022,227.9
+12085,Martin County,FL,Apr_14_2022,188.6
+12086,Miami-Dade County,FL,Apr_14_2022,435.1
+12087,Monroe County,FL,Apr_14_2022,242.8
+12089,Nassau County,FL,Apr_14_2022,245.1
+12091,Okaloosa County,FL,Apr_14_2022,243.7
+12093,Okeechobee County,FL,Apr_14_2022,251.8
+12095,Orange County,FL,Apr_14_2022,270.3
+12097,Osceola County,FL,Apr_14_2022,302.4
+12099,Palm Beach County,FL,Apr_14_2022,245.4
+12101,Pasco County,FL,Apr_14_2022,220.6
+12103,Pinellas County,FL,Apr_14_2022,214.4
+12105,Polk County,FL,Apr_14_2022,275.9
+12107,Putnam County,FL,Apr_14_2022,235.8
+12109,St. Johns County,FL,Apr_14_2022,236.0
+12111,St. Lucie County,FL,Apr_14_2022,225.9
+12113,Santa Rosa County,FL,Apr_14_2022,262.3
+12115,Sarasota County,FL,Apr_14_2022,206.4
+12117,Seminole County,FL,Apr_14_2022,219.5
+12119,Sumter County,FL,Apr_14_2022,164.2
+12121,Suwannee County,FL,Apr_14_2022,291.1
+12123,Taylor County,FL,Apr_14_2022,324.4
+12125,Union County,FL,Apr_14_2022,282.9
+12127,Volusia County,FL,Apr_14_2022,210.9
+12129,Wakulla County,FL,Apr_14_2022,294.3
+12131,Walton County,FL,Apr_14_2022,222.4
+12133,Washington County,FL,Apr_14_2022,260.1
+13001,Appling County,GA,Apr_14_2022,191.9
+13003,Atkinson County,GA,Apr_14_2022,190.2
+13005,Bacon County,GA,Apr_14_2022,215.7
+13007,Baker County,GA,Apr_14_2022,103.4
+13009,Baldwin County,GA,Apr_14_2022,162.8
+13011,Banks County,GA,Apr_14_2022,175.9
+13013,Barrow County,GA,Apr_14_2022,234.2
+13015,Bartow County,GA,Apr_14_2022,200.9
+13017,Ben Hill County,GA,Apr_14_2022,129.7
+13019,Berrien County,GA,Apr_14_2022,104.4
+13021,Bibb County,GA,Apr_14_2022,188.3
+13023,Bleckley County,GA,Apr_14_2022,113.4
+13025,Brantley County,GA,Apr_14_2022,129.3
+13027,Brooks County,GA,Apr_14_2022,122.4
+13029,Bryan County,GA,Apr_14_2022,174.1
+13031,Bulloch County,GA,Apr_14_2022,132.0
+13033,Burke County,GA,Apr_14_2022,132.6
+13035,Butts County,GA,Apr_14_2022,189.4
+13037,Calhoun County,GA,Apr_14_2022,159.5
+13039,Camden County,GA,Apr_14_2022,160.1
+13043,Candler County,GA,Apr_14_2022,129.1
+13045,Carroll County,GA,Apr_14_2022,120.3
+13047,Catoosa County,GA,Apr_14_2022,186.5
+13049,Charlton County,GA,Apr_14_2022,166.3
+13051,Chatham County,GA,Apr_14_2022,185.4
+13053,Chattahoochee County,GA,Apr_14_2022,603.1
+13055,Chattooga County,GA,Apr_14_2022,212.2
+13057,Cherokee County,GA,Apr_14_2022,175.1
+13059,Clarke County,GA,Apr_14_2022,204.3
+13061,Clay County,GA,Apr_14_2022,128.4
+13063,Clayton County,GA,Apr_14_2022,198.7
+13065,Clinch County,GA,Apr_14_2022,210.0
+13067,Cobb County,GA,Apr_14_2022,181.9
+13069,Coffee County,GA,Apr_14_2022,199.1
+13071,Colquitt County,GA,Apr_14_2022,174.6
+13073,Columbia County,GA,Apr_14_2022,132.1
+13075,Cook County,GA,Apr_14_2022,119.7
+13077,Coweta County,GA,Apr_14_2022,140.9
+13079,Crawford County,GA,Apr_14_2022,95.6
+13081,Crisp County,GA,Apr_14_2022,113.8
+13083,Dade County,GA,Apr_14_2022,162.3
+13085,Dawson County,GA,Apr_14_2022,235.9
+13087,Decatur County,GA,Apr_14_2022,200.9
+13089,DeKalb County,GA,Apr_14_2022,173.2
+13091,Dodge County,GA,Apr_14_2022,102.4
+13093,Dooly County,GA,Apr_14_2022,114.4
+13095,Dougherty County,GA,Apr_14_2022,160.7
+13097,Douglas County,GA,Apr_14_2022,193.2
+13099,Early County,GA,Apr_14_2022,206.5
+13101,Echols County,GA,Apr_14_2022,116.3
+13103,Effingham County,GA,Apr_14_2022,160.4
+13105,Elbert County,GA,Apr_14_2022,137.9
+13107,Emanuel County,GA,Apr_14_2022,151.5
+13109,Evans County,GA,Apr_14_2022,142.3
+13111,Fannin County,GA,Apr_14_2022,158.7
+13113,Fayette County,GA,Apr_14_2022,148.9
+13115,Floyd County,GA,Apr_14_2022,233.3
+13117,Forsyth County,GA,Apr_14_2022,181.3
+13119,Franklin County,GA,Apr_14_2022,187.8
+13121,Fulton County,GA,Apr_14_2022,176.1
+13123,Gilmer County,GA,Apr_14_2022,148.1
+13125,Glascock County,GA,Apr_14_2022,90.5
+13127,Glynn County,GA,Apr_14_2022,212.8
+13129,Gordon County,GA,Apr_14_2022,205.7
+13131,Grady County,GA,Apr_14_2022,149.8
+13133,Greene County,GA,Apr_14_2022,172.9
+13135,Gwinnett County,GA,Apr_14_2022,187.4
+13137,Habersham County,GA,Apr_14_2022,185.4
+13139,Hall County,GA,Apr_14_2022,229.6
+13141,Hancock County,GA,Apr_14_2022,161.9
+13143,Haralson County,GA,Apr_14_2022,116.0
+13145,Harris County,GA,Apr_14_2022,146.3
+13147,Hart County,GA,Apr_14_2022,122.4
+13149,Heard County,GA,Apr_14_2022,123.5
+13151,Henry County,GA,Apr_14_2022,194.9
+13153,Houston County,GA,Apr_14_2022,146.6
+13155,Irwin County,GA,Apr_14_2022,110.7
+13157,Jackson County,GA,Apr_14_2022,254.1
+13159,Jasper County,GA,Apr_14_2022,118.0
+13161,Jeff Davis County,GA,Apr_14_2022,152.8
+13163,Jefferson County,GA,Apr_14_2022,145.8
+13165,Jenkins County,GA,Apr_14_2022,124.1
+13167,Johnson County,GA,Apr_14_2022,152.9
+13169,Jones County,GA,Apr_14_2022,130.1
+13171,Lamar County,GA,Apr_14_2022,172.2
+13173,Lanier County,GA,Apr_14_2022,105.1
+13175,Laurens County,GA,Apr_14_2022,180.7
+13177,Lee County,GA,Apr_14_2022,128.2
+13179,Liberty County,GA,Apr_14_2022,178.6
+13181,Lincoln County,GA,Apr_14_2022,109.1
+13183,Long County,GA,Apr_14_2022,114.4
+13185,Lowndes County,GA,Apr_14_2022,130.1
+13187,Lumpkin County,GA,Apr_14_2022,196.1
+13189,McDuffie County,GA,Apr_14_2022,140.2
+13191,McIntosh County,GA,Apr_14_2022,137.2
+13193,Macon County,GA,Apr_14_2022,93.0
+13195,Madison County,GA,Apr_14_2022,199.6
+13197,Marion County,GA,Apr_14_2022,115.4
+13199,Meriwether County,GA,Apr_14_2022,153.8
+13201,Miller County,GA,Apr_14_2022,226.1
+13205,Mitchell County,GA,Apr_14_2022,142.2
+13207,Monroe County,GA,Apr_14_2022,141.7
+13209,Montgomery County,GA,Apr_14_2022,161.1
+13211,Morgan County,GA,Apr_14_2022,151.1
+13213,Murray County,GA,Apr_14_2022,227.1
+13215,Muscogee County,GA,Apr_14_2022,164.1
+13217,Newton County,GA,Apr_14_2022,162.4
+13219,Oconee County,GA,Apr_14_2022,172.3
+13221,Oglethorpe County,GA,Apr_14_2022,156.3
+13223,Paulding County,GA,Apr_14_2022,154.9
+13225,Peach County,GA,Apr_14_2022,134.0
+13227,Pickens County,GA,Apr_14_2022,157.1
+13229,Pierce County,GA,Apr_14_2022,147.2
+13231,Pike County,GA,Apr_14_2022,144.8
+13233,Polk County,GA,Apr_14_2022,217.5
+13235,Pulaski County,GA,Apr_14_2022,109.8
+13237,Putnam County,GA,Apr_14_2022,165.5
+13239,Quitman County,GA,Apr_14_2022,105.3
+13241,Rabun County,GA,Apr_14_2022,163.9
+13243,Randolph County,GA,Apr_14_2022,126.4
+13245,Richmond County,GA,Apr_14_2022,180.2
+13247,Rockdale County,GA,Apr_14_2022,166.8
+13249,Schley County,GA,Apr_14_2022,101.6
+13251,Screven County,GA,Apr_14_2022,132.2
+13253,Seminole County,GA,Apr_14_2022,204.0
+13255,Spalding County,GA,Apr_14_2022,157.3
+13257,Stephens County,GA,Apr_14_2022,227.7
+13259,Stewart County,GA,Apr_14_2022,327.0
+13261,Sumter County,GA,Apr_14_2022,132.9
+13263,Talbot County,GA,Apr_14_2022,152.4
+13265,Taliaferro County,GA,Apr_14_2022,119.7
+13267,Tattnall County,GA,Apr_14_2022,134.3
+13269,Taylor County,GA,Apr_14_2022,143.1
+13271,Telfair County,GA,Apr_14_2022,79.0
+13273,Terrell County,GA,Apr_14_2022,139.3
+13275,Thomas County,GA,Apr_14_2022,199.1
+13277,Tift County,GA,Apr_14_2022,154.6
+13279,Toombs County,GA,Apr_14_2022,203.1
+13281,Towns County,GA,Apr_14_2022,170.4
+13283,Treutlen County,GA,Apr_14_2022,164.8
+13285,Troup County,GA,Apr_14_2022,172.7
+13287,Turner County,GA,Apr_14_2022,139.5
+13289,Twiggs County,GA,Apr_14_2022,128.8
+13291,Union County,GA,Apr_14_2022,175.8
+13293,Upson County,GA,Apr_14_2022,158.7
+13295,Walker County,GA,Apr_14_2022,196.5
+13297,Walton County,GA,Apr_14_2022,167.9
+13299,Ware County,GA,Apr_14_2022,166.1
+13301,Warren County,GA,Apr_14_2022,124.7
+13303,Washington County,GA,Apr_14_2022,158.6
+13305,Wayne County,GA,Apr_14_2022,190.4
+13307,Webster County,GA,Apr_14_2022,96.7
+13309,Wheeler County,GA,Apr_14_2022,119.0
+13311,White County,GA,Apr_14_2022,203.4
+13313,Whitfield County,GA,Apr_14_2022,261.3
+13315,Wilcox County,GA,Apr_14_2022,96.1
+13317,Wilkes County,GA,Apr_14_2022,115.2
+13319,Wilkinson County,GA,Apr_14_2022,183.3
+13321,Worth County,GA,Apr_14_2022,115.6
+15001,Hawaii County,HI,Apr_14_2022,131.5
+15003,City and County of Honolulu,HI,Apr_14_2022,172.8
+15005,Kalawao County,HI,Apr_14_2022,0.0
+15007,Kauai County,HI,Apr_14_2022,165.5
+15009,Maui County,HI,Apr_14_2022,180.3
+16001,Ada County,ID,Apr_14_2022,278.1
+16003,Adams County,ID,Apr_14_2022,163.0
+16005,Bannock County,ID,Apr_14_2022,236.9
+16007,Bear Lake County,ID,Apr_14_2022,148.9
+16009,Benewah County,ID,Apr_14_2022,257.7
+16011,Bingham County,ID,Apr_14_2022,208.8
+16013,Blaine County,ID,Apr_14_2022,260.1
+16015,Boise County,ID,Apr_14_2022,139.1
+16017,Bonner County,ID,Apr_14_2022,193.9
+16019,Bonneville County,ID,Apr_14_2022,258.9
+16021,Boundary County,ID,Apr_14_2022,170.4
+16023,Butte County,ID,Apr_14_2022,182.9
+16025,Camas County,ID,Apr_14_2022,142.9
+16027,Canyon County,ID,Apr_14_2022,267.3
+16029,Caribou County,ID,Apr_14_2022,207.5
+16031,Cassia County,ID,Apr_14_2022,209.2
+16033,Clark County,ID,Apr_14_2022,129.0
+16035,Clearwater County,ID,Apr_14_2022,263.2
+16037,Custer County,ID,Apr_14_2022,121.7
+16039,Elmore County,ID,Apr_14_2022,261.6
+16041,Franklin County,ID,Apr_14_2022,167.9
+16043,Fremont County,ID,Apr_14_2022,164.6
+16045,Gem County,ID,Apr_14_2022,200.9
+16047,Gooding County,ID,Apr_14_2022,216.5
+16049,Idaho County,ID,Apr_14_2022,178.3
+16051,Jefferson County,ID,Apr_14_2022,201.9
+16053,Jerome County,ID,Apr_14_2022,248.7
+16055,Kootenai County,ID,Apr_14_2022,253.1
+16057,Latah County,ID,Apr_14_2022,167.0
+16059,Lemhi County,ID,Apr_14_2022,156.2
+16061,Lewis County,ID,Apr_14_2022,295.5
+16063,Lincoln County,ID,Apr_14_2022,206.1
+16065,Madison County,ID,Apr_14_2022,317.1
+16067,Minidoka County,ID,Apr_14_2022,200.9
+16069,Nez Perce County,ID,Apr_14_2022,220.2
+16071,Oneida County,ID,Apr_14_2022,176.6
+16073,Owyhee County,ID,Apr_14_2022,191.5
+16075,Payette County,ID,Apr_14_2022,231.1
+16077,Power County,ID,Apr_14_2022,191.0
+16079,Shoshone County,ID,Apr_14_2022,212.2
+16081,Teton County,ID,Apr_14_2022,223.4
+16083,Twin Falls County,ID,Apr_14_2022,276.6
+16085,Valley County,ID,Apr_14_2022,228.8
+16087,Washington County,ID,Apr_14_2022,234.1
+17001,Adams County,IL,Apr_14_2022,341.2
+17003,Alexander County,IL,Apr_14_2022,222.9
+17005,Bond County,IL,Apr_14_2022,263.7
+17007,Boone County,IL,Apr_14_2022,258.3
+17009,Brown County,IL,Apr_14_2022,365.9
+17011,Bureau County,IL,Apr_14_2022,255.9
+17013,Calhoun County,IL,Apr_14_2022,321.0
+17015,Carroll County,IL,Apr_14_2022,296.8
+17017,Cass County,IL,Apr_14_2022,379.6
+17019,Champaign County,IL,Apr_14_2022,303.5
+17021,Christian County,IL,Apr_14_2022,316.8
+17023,Clark County,IL,Apr_14_2022,314.2
+17025,Clay County,IL,Apr_14_2022,359.1
+17027,Clinton County,IL,Apr_14_2022,318.6
+17029,Coles County,IL,Apr_14_2022,302.6
+17031,Cook County,IL,Apr_14_2022,221.3
+17033,Crawford County,IL,Apr_14_2022,332.0
+17035,Cumberland County,IL,Apr_14_2022,311.2
+17037,DeKalb County,IL,Apr_14_2022,223.5
+17039,De Witt County,IL,Apr_14_2022,276.7
+17041,Douglas County,IL,Apr_14_2022,332.4
+17043,DuPage County,IL,Apr_14_2022,229.5
+17045,Edgar County,IL,Apr_14_2022,301.1
+17047,Edwards County,IL,Apr_14_2022,272.2
+17049,Effingham County,IL,Apr_14_2022,313.5
+17051,Fayette County,IL,Apr_14_2022,332.3
+17053,Ford County,IL,Apr_14_2022,340.4
+17055,Franklin County,IL,Apr_14_2022,318.9
+17057,Fulton County,IL,Apr_14_2022,293.1
+17059,Gallatin County,IL,Apr_14_2022,291.4
+17061,Greene County,IL,Apr_14_2022,277.5
+17063,Grundy County,IL,Apr_14_2022,248.3
+17065,Hamilton County,IL,Apr_14_2022,268.4
+17067,Hancock County,IL,Apr_14_2022,247.3
+17069,Hardin County,IL,Apr_14_2022,275.8
+17071,Henderson County,IL,Apr_14_2022,172.7
+17073,Henry County,IL,Apr_14_2022,259.0
+17075,Iroquois County,IL,Apr_14_2022,265.2
+17077,Jackson County,IL,Apr_14_2022,274.1
+17079,Jasper County,IL,Apr_14_2022,278.4
+17081,Jefferson County,IL,Apr_14_2022,294.6
+17083,Jersey County,IL,Apr_14_2022,286.1
+17085,Jo Daviess County,IL,Apr_14_2022,189.9
+17087,Johnson County,IL,Apr_14_2022,359.7
+17089,Kane County,IL,Apr_14_2022,237.9
+17091,Kankakee County,IL,Apr_14_2022,262.8
+17093,Kendall County,IL,Apr_14_2022,241.2
+17095,Knox County,IL,Apr_14_2022,252.1
+17097,Lake County,IL,Apr_14_2022,216.3
+17099,LaSalle County,IL,Apr_14_2022,266.8
+17101,Lawrence County,IL,Apr_14_2022,349.9
+17103,Lee County,IL,Apr_14_2022,257.6
+17105,Livingston County,IL,Apr_14_2022,300.8
+17107,Logan County,IL,Apr_14_2022,332.9
+17109,McDonough County,IL,Apr_14_2022,242.4
+17111,McHenry County,IL,Apr_14_2022,247.5
+17113,McLean County,IL,Apr_14_2022,292.1
+17115,Macon County,IL,Apr_14_2022,293.3
+17117,Macoupin County,IL,Apr_14_2022,284.5
+17119,Madison County,IL,Apr_14_2022,267.7
+17121,Marion County,IL,Apr_14_2022,318.9
+17123,Marshall County,IL,Apr_14_2022,241.9
+17125,Mason County,IL,Apr_14_2022,292.1
+17127,Massac County,IL,Apr_14_2022,280.9
+17129,Menard County,IL,Apr_14_2022,287.1
+17131,Mercer County,IL,Apr_14_2022,259.9
+17133,Monroe County,IL,Apr_14_2022,274.0
+17135,Montgomery County,IL,Apr_14_2022,345.1
+17137,Morgan County,IL,Apr_14_2022,282.2
+17139,Moultrie County,IL,Apr_14_2022,280.6
+17141,Ogle County,IL,Apr_14_2022,276.4
+17143,Peoria County,IL,Apr_14_2022,260.2
+17145,Perry County,IL,Apr_14_2022,357.0
+17147,Piatt County,IL,Apr_14_2022,271.0
+17149,Pike County,IL,Apr_14_2022,323.5
+17151,Pope County,IL,Apr_14_2022,228.9
+17153,Pulaski County,IL,Apr_14_2022,322.6
+17155,Putnam County,IL,Apr_14_2022,199.0
+17157,Randolph County,IL,Apr_14_2022,329.4
+17159,Richland County,IL,Apr_14_2022,332.6
+17161,Rock Island County,IL,Apr_14_2022,233.7
+17163,St. Clair County,IL,Apr_14_2022,245.2
+17165,Saline County,IL,Apr_14_2022,335.1
+17167,Sangamon County,IL,Apr_14_2022,282.5
+17169,Schuyler County,IL,Apr_14_2022,289.0
+17171,Scott County,IL,Apr_14_2022,253.7
+17173,Shelby County,IL,Apr_14_2022,286.7
+17175,Stark County,IL,Apr_14_2022,282.9
+17177,Stephenson County,IL,Apr_14_2022,258.1
+17179,Tazewell County,IL,Apr_14_2022,278.4
+17181,Union County,IL,Apr_14_2022,322.5
+17183,Vermilion County,IL,Apr_14_2022,368.7
+17185,Wabash County,IL,Apr_14_2022,322.2
+17187,Warren County,IL,Apr_14_2022,237.5
+17189,Washington County,IL,Apr_14_2022,247.0
+17191,Wayne County,IL,Apr_14_2022,326.4
+17193,White County,IL,Apr_14_2022,325.3
+17195,Whiteside County,IL,Apr_14_2022,278.7
+17197,Will County,IL,Apr_14_2022,235.7
+17199,Williamson County,IL,Apr_14_2022,339.1
+17201,Winnebago County,IL,Apr_14_2022,271.2
+17203,Woodford County,IL,Apr_14_2022,270.3
+18001,Adams County,IN,Apr_14_2022,212.5
+18003,Allen County,IN,Apr_14_2022,273.4
+18005,Bartholomew County,IN,Apr_14_2022,254.6
+18007,Benton County,IN,Apr_14_2022,282.9
+18009,Blackford County,IN,Apr_14_2022,265.5
+18011,Boone County,IN,Apr_14_2022,223.9
+18013,Brown County,IN,Apr_14_2022,171.3
+18015,Carroll County,IN,Apr_14_2022,208.4
+18017,Cass County,IN,Apr_14_2022,309.2
+18019,Clark County,IN,Apr_14_2022,262.5
+18021,Clay County,IN,Apr_14_2022,260.3
+18023,Clinton County,IN,Apr_14_2022,283.6
+18025,Crawford County,IN,Apr_14_2022,240.9
+18027,Daviess County,IN,Apr_14_2022,224.0
+18029,Dearborn County,IN,Apr_14_2022,271.6
+18031,Decatur County,IN,Apr_14_2022,265.9
+18033,DeKalb County,IN,Apr_14_2022,260.9
+18035,Delaware County,IN,Apr_14_2022,217.3
+18037,Dubois County,IN,Apr_14_2022,300.8
+18039,Elkhart County,IN,Apr_14_2022,262.4
+18041,Fayette County,IN,Apr_14_2022,297.4
+18043,Floyd County,IN,Apr_14_2022,240.9
+18045,Fountain County,IN,Apr_14_2022,330.6
+18047,Franklin County,IN,Apr_14_2022,193.3
+18049,Fulton County,IN,Apr_14_2022,246.0
+18051,Gibson County,IN,Apr_14_2022,345.6
+18053,Grant County,IN,Apr_14_2022,268.9
+18055,Greene County,IN,Apr_14_2022,225.7
+18057,Hamilton County,IN,Apr_14_2022,241.9
+18059,Hancock County,IN,Apr_14_2022,264.3
+18061,Harrison County,IN,Apr_14_2022,266.7
+18063,Hendricks County,IN,Apr_14_2022,239.3
+18065,Henry County,IN,Apr_14_2022,270.6
+18067,Howard County,IN,Apr_14_2022,307.7
+18069,Huntington County,IN,Apr_14_2022,314.7
+18071,Jackson County,IN,Apr_14_2022,282.9
+18073,Jasper County,IN,Apr_14_2022,268.6
+18075,Jay County,IN,Apr_14_2022,237.4
+18077,Jefferson County,IN,Apr_14_2022,289.4
+18079,Jennings County,IN,Apr_14_2022,250.4
+18081,Johnson County,IN,Apr_14_2022,267.5
+18083,Knox County,IN,Apr_14_2022,293.5
+18085,Kosciusko County,IN,Apr_14_2022,248.4
+18087,LaGrange County,IN,Apr_14_2022,147.6
+18089,Lake County,IN,Apr_14_2022,218.7
+18091,LaPorte County,IN,Apr_14_2022,231.3
+18093,Lawrence County,IN,Apr_14_2022,261.0
+18095,Madison County,IN,Apr_14_2022,252.1
+18097,Marion County,IN,Apr_14_2022,233.2
+18099,Marshall County,IN,Apr_14_2022,266.5
+18101,Martin County,IN,Apr_14_2022,211.0
+18103,Miami County,IN,Apr_14_2022,260.8
+18105,Monroe County,IN,Apr_14_2022,186.1
+18107,Montgomery County,IN,Apr_14_2022,278.2
+18109,Morgan County,IN,Apr_14_2022,233.6
+18111,Newton County,IN,Apr_14_2022,183.1
+18113,Noble County,IN,Apr_14_2022,273.6
+18115,Ohio County,IN,Apr_14_2022,245.8
+18117,Orange County,IN,Apr_14_2022,256.3
+18119,Owen County,IN,Apr_14_2022,280.5
+18121,Parke County,IN,Apr_14_2022,212.8
+18123,Perry County,IN,Apr_14_2022,243.4
+18125,Pike County,IN,Apr_14_2022,300.9
+18127,Porter County,IN,Apr_14_2022,220.6
+18129,Posey County,IN,Apr_14_2022,256.7
+18131,Pulaski County,IN,Apr_14_2022,248.5
+18133,Putnam County,IN,Apr_14_2022,248.1
+18135,Randolph County,IN,Apr_14_2022,240.6
+18137,Ripley County,IN,Apr_14_2022,292.4
+18139,Rush County,IN,Apr_14_2022,295.9
+18141,St. Joseph County,IN,Apr_14_2022,259.6
+18143,Scott County,IN,Apr_14_2022,329.4
+18145,Shelby County,IN,Apr_14_2022,328.1
+18147,Spencer County,IN,Apr_14_2022,257.5
+18149,Starke County,IN,Apr_14_2022,206.4
+18151,Steuben County,IN,Apr_14_2022,278.2
+18153,Sullivan County,IN,Apr_14_2022,255.3
+18155,Switzerland County,IN,Apr_14_2022,214.9
+18157,Tippecanoe County,IN,Apr_14_2022,255.0
+18159,Tipton County,IN,Apr_14_2022,232.9
+18161,Union County,IN,Apr_14_2022,290.0
+18163,Vanderburgh County,IN,Apr_14_2022,315.5
+18165,Vermillion County,IN,Apr_14_2022,262.6
+18167,Vigo County,IN,Apr_14_2022,269.4
+18169,Wabash County,IN,Apr_14_2022,281.3
+18171,Warren County,IN,Apr_14_2022,252.8
+18173,Warrick County,IN,Apr_14_2022,321.4
+18175,Washington County,IN,Apr_14_2022,213.7
+18177,Wayne County,IN,Apr_14_2022,291.4
+18179,Wells County,IN,Apr_14_2022,230.5
+18181,White County,IN,Apr_14_2022,284.3
+18183,Whitley County,IN,Apr_14_2022,284.1
+19001,Adair County,IA,Apr_14_2022,221.3
+19003,Adams County,IA,Apr_14_2022,227.1
+19005,Allamakee County,IA,Apr_14_2022,209.5
+19007,Appanoose County,IA,Apr_14_2022,233.9
+19009,Audubon County,IA,Apr_14_2022,200.5
+19011,Benton County,IA,Apr_14_2022,234.9
+19013,Black Hawk County,IA,Apr_14_2022,249.7
+19015,Boone County,IA,Apr_14_2022,208.2
+19017,Bremer County,IA,Apr_14_2022,219.3
+19019,Buchanan County,IA,Apr_14_2022,216.5
+19021,Buena Vista County,IA,Apr_14_2022,327.5
+19023,Butler County,IA,Apr_14_2022,223.0
+19025,Calhoun County,IA,Apr_14_2022,268.6
+19027,Carroll County,IA,Apr_14_2022,244.6
+19029,Cass County,IA,Apr_14_2022,230.4
+19031,Cedar County,IA,Apr_14_2022,222.5
+19033,Cerro Gordo County,IA,Apr_14_2022,261.3
+19035,Cherokee County,IA,Apr_14_2022,263.8
+19037,Chickasaw County,IA,Apr_14_2022,224.5
+19039,Clarke County,IA,Apr_14_2022,240.9
+19041,Clay County,IA,Apr_14_2022,255.6
+19043,Clayton County,IA,Apr_14_2022,197.8
+19045,Clinton County,IA,Apr_14_2022,248.2
+19047,Crawford County,IA,Apr_14_2022,269.0
+19049,Dallas County,IA,Apr_14_2022,246.6
+19051,Davis County,IA,Apr_14_2022,177.4
+19053,Decatur County,IA,Apr_14_2022,192.0
+19055,Delaware County,IA,Apr_14_2022,236.2
+19057,Des Moines County,IA,Apr_14_2022,234.3
+19059,Dickinson County,IA,Apr_14_2022,239.2
+19061,Dubuque County,IA,Apr_14_2022,266.6
+19063,Emmet County,IA,Apr_14_2022,255.5
+19065,Fayette County,IA,Apr_14_2022,208.3
+19067,Floyd County,IA,Apr_14_2022,227.2
+19069,Franklin County,IA,Apr_14_2022,249.6
+19071,Fremont County,IA,Apr_14_2022,199.1
+19073,Greene County,IA,Apr_14_2022,195.9
+19075,Grundy County,IA,Apr_14_2022,208.6
+19077,Guthrie County,IA,Apr_14_2022,219.9
+19079,Hamilton County,IA,Apr_14_2022,235.6
+19081,Hancock County,IA,Apr_14_2022,267.3
+19083,Hardin County,IA,Apr_14_2022,244.7
+19085,Harrison County,IA,Apr_14_2022,244.1
+19087,Henry County,IA,Apr_14_2022,278.5
+19089,Howard County,IA,Apr_14_2022,223.0
+19091,Humboldt County,IA,Apr_14_2022,273.1
+19093,Ida County,IA,Apr_14_2022,263.8
+19095,Iowa County,IA,Apr_14_2022,227.2
+19097,Jackson County,IA,Apr_14_2022,236.7
+19099,Jasper County,IA,Apr_14_2022,232.5
+19101,Jefferson County,IA,Apr_14_2022,189.9
+19103,Johnson County,IA,Apr_14_2022,226.2
+19105,Jones County,IA,Apr_14_2022,263.9
+19107,Keokuk County,IA,Apr_14_2022,202.0
+19109,Kossuth County,IA,Apr_14_2022,254.4
+19111,Lee County,IA,Apr_14_2022,233.4
+19113,Linn County,IA,Apr_14_2022,230.1
+19115,Louisa County,IA,Apr_14_2022,224.7
+19117,Lucas County,IA,Apr_14_2022,204.0
+19119,Lyon County,IA,Apr_14_2022,232.5
+19121,Madison County,IA,Apr_14_2022,193.0
+19123,Mahaska County,IA,Apr_14_2022,221.5
+19125,Marion County,IA,Apr_14_2022,227.5
+19127,Marshall County,IA,Apr_14_2022,239.1
+19129,Mills County,IA,Apr_14_2022,221.8
+19131,Mitchell County,IA,Apr_14_2022,233.7
+19133,Monona County,IA,Apr_14_2022,199.5
+19135,Monroe County,IA,Apr_14_2022,243.8
+19137,Montgomery County,IA,Apr_14_2022,222.6
+19139,Muscatine County,IA,Apr_14_2022,225.1
+19141,O'Brien County,IA,Apr_14_2022,250.6
+19143,Osceola County,IA,Apr_14_2022,234.0
+19145,Page County,IA,Apr_14_2022,221.0
+19147,Palo Alto County,IA,Apr_14_2022,229.1
+19149,Plymouth County,IA,Apr_14_2022,251.1
+19151,Pocahontas County,IA,Apr_14_2022,242.0
+19153,Polk County,IA,Apr_14_2022,254.6
+19155,Pottawattamie County,IA,Apr_14_2022,260.5
+19157,Poweshiek County,IA,Apr_14_2022,194.8
+19159,Ringgold County,IA,Apr_14_2022,231.9
+19161,Sac County,IA,Apr_14_2022,247.0
+19163,Scott County,IA,Apr_14_2022,237.4
+19165,Shelby County,IA,Apr_14_2022,237.1
+19167,Sioux County,IA,Apr_14_2022,229.1
+19169,Story County,IA,Apr_14_2022,203.7
+19171,Tama County,IA,Apr_14_2022,229.5
+19173,Taylor County,IA,Apr_14_2022,215.3
+19175,Union County,IA,Apr_14_2022,221.9
+19177,Van Buren County,IA,Apr_14_2022,196.3
+19179,Wapello County,IA,Apr_14_2022,256.7
+19181,Warren County,IA,Apr_14_2022,242.8
+19183,Washington County,IA,Apr_14_2022,256.8
+19185,Wayne County,IA,Apr_14_2022,196.4
+19187,Webster County,IA,Apr_14_2022,287.7
+19189,Winnebago County,IA,Apr_14_2022,285.4
+19191,Winneshiek County,IA,Apr_14_2022,191.5
+19193,Woodbury County,IA,Apr_14_2022,279.2
+19195,Worth County,IA,Apr_14_2022,237.8
+19197,Wright County,IA,Apr_14_2022,287.5
+20001,Allen County,KS,Apr_14_2022,319.7
+20003,Anderson County,KS,Apr_14_2022,269.2
+20005,Atchison County,KS,Apr_14_2022,266.2
+20007,Barber County,KS,Apr_14_2022,234.5
+20009,Barton County,KS,Apr_14_2022,251.7
+20011,Bourbon County,KS,Apr_14_2022,301.3
+20013,Brown County,KS,Apr_14_2022,280.2
+20015,Butler County,KS,Apr_14_2022,283.7
+20017,Chase County,KS,Apr_14_2022,255.3
+20019,Chautauqua County,KS,Apr_14_2022,259.4
+20021,Cherokee County,KS,Apr_14_2022,308.0
+20023,Cheyenne County,KS,Apr_14_2022,246.9
+20025,Clark County,KS,Apr_14_2022,252.8
+20027,Clay County,KS,Apr_14_2022,246.1
+20029,Cloud County,KS,Apr_14_2022,252.2
+20031,Coffey County,KS,Apr_14_2022,295.9
+20033,Comanche County,KS,Apr_14_2022,258.2
+20035,Cowley County,KS,Apr_14_2022,289.6
+20037,Crawford County,KS,Apr_14_2022,305.7
+20039,Decatur County,KS,Apr_14_2022,217.9
+20041,Dickinson County,KS,Apr_14_2022,259.9
+20043,Doniphan County,KS,Apr_14_2022,321.2
+20045,Douglas County,KS,Apr_14_2022,204.5
+20047,Edwards County,KS,Apr_14_2022,199.4
+20049,Elk County,KS,Apr_14_2022,225.3
+20051,Ellis County,KS,Apr_14_2022,249.9
+20053,Ellsworth County,KS,Apr_14_2022,330.1
+20055,Finney County,KS,Apr_14_2022,309.1
+20057,Ford County,KS,Apr_14_2022,315.8
+20059,Franklin County,KS,Apr_14_2022,271.3
+20061,Geary County,KS,Apr_14_2022,290.8
+20063,Gove County,KS,Apr_14_2022,297.8
+20065,Graham County,KS,Apr_14_2022,228.0
+20067,Grant County,KS,Apr_14_2022,308.0
+20069,Gray County,KS,Apr_14_2022,205.7
+20071,Greeley County,KS,Apr_14_2022,268.7
+20073,Greenwood County,KS,Apr_14_2022,298.4
+20075,Hamilton County,KS,Apr_14_2022,182.0
+20077,Harper County,KS,Apr_14_2022,303.5
+20079,Harvey County,KS,Apr_14_2022,278.4
+20081,Haskell County,KS,Apr_14_2022,242.2
+20083,Hodgeman County,KS,Apr_14_2022,229.7
+20085,Jackson County,KS,Apr_14_2022,294.7
+20087,Jefferson County,KS,Apr_14_2022,249.8
+20089,Jewell County,KS,Apr_14_2022,273.0
+20091,Johnson County,KS,Apr_14_2022,241.5
+20093,Kearny County,KS,Apr_14_2022,321.8
+20095,Kingman County,KS,Apr_14_2022,274.2
+20097,Kiowa County,KS,Apr_14_2022,269.5
+20099,Labette County,KS,Apr_14_2022,336.4
+20101,Lane County,KS,Apr_14_2022,192.2
+20103,Leavenworth County,KS,Apr_14_2022,236.4
+20105,Lincoln County,KS,Apr_14_2022,209.7
+20107,Linn County,KS,Apr_14_2022,290.1
+20109,Logan County,KS,Apr_14_2022,300.6
+20111,Lyon County,KS,Apr_14_2022,300.1
+20113,McPherson County,KS,Apr_14_2022,273.3
+20115,Marion County,KS,Apr_14_2022,279.4
+20117,Marshall County,KS,Apr_14_2022,262.8
+20119,Meade County,KS,Apr_14_2022,302.8
+20121,Miami County,KS,Apr_14_2022,225.8
+20123,Mitchell County,KS,Apr_14_2022,238.0
+20125,Montgomery County,KS,Apr_14_2022,295.5
+20127,Morris County,KS,Apr_14_2022,267.6
+20129,Morton County,KS,Apr_14_2022,239.7
+20131,Nemaha County,KS,Apr_14_2022,315.9
+20133,Neosho County,KS,Apr_14_2022,321.3
+20135,Ness County,KS,Apr_14_2022,284.0
+20137,Norton County,KS,Apr_14_2022,401.0
+20139,Osage County,KS,Apr_14_2022,244.6
+20141,Osborne County,KS,Apr_14_2022,233.6
+20143,Ottawa County,KS,Apr_14_2022,211.3
+20145,Pawnee County,KS,Apr_14_2022,330.1
+20147,Phillips County,KS,Apr_14_2022,260.0
+20149,Pottawatomie County,KS,Apr_14_2022,235.3
+20151,Pratt County,KS,Apr_14_2022,209.8
+20153,Rawlins County,KS,Apr_14_2022,268.0
+20155,Reno County,KS,Apr_14_2022,299.5
+20157,Republic County,KS,Apr_14_2022,290.3
+20159,Rice County,KS,Apr_14_2022,273.7
+20161,Riley County,KS,Apr_14_2022,182.2
+20163,Rooks County,KS,Apr_14_2022,278.0
+20165,Rush County,KS,Apr_14_2022,265.8
+20167,Russell County,KS,Apr_14_2022,273.9
+20169,Saline County,KS,Apr_14_2022,260.2
+20171,Scott County,KS,Apr_14_2022,263.7
+20173,Sedgwick County,KS,Apr_14_2022,280.1
+20175,Seward County,KS,Apr_14_2022,322.4
+20177,Shawnee County,KS,Apr_14_2022,272.2
+20179,Sheridan County,KS,Apr_14_2022,311.8
+20181,Sherman County,KS,Apr_14_2022,254.5
+20183,Smith County,KS,Apr_14_2022,179.5
+20185,Stafford County,KS,Apr_14_2022,273.3
+20187,Stanton County,KS,Apr_14_2022,212.9
+20189,Stevens County,KS,Apr_14_2022,266.7
+20191,Sumner County,KS,Apr_14_2022,249.4
+20193,Thomas County,KS,Apr_14_2022,305.3
+20195,Trego County,KS,Apr_14_2022,268.6
+20197,Wabaunsee County,KS,Apr_14_2022,236.2
+20199,Wallace County,KS,Apr_14_2022,288.5
+20201,Washington County,KS,Apr_14_2022,258.0
+20203,Wichita County,KS,Apr_14_2022,232.7
+20205,Wilson County,KS,Apr_14_2022,330.2
+20207,Woodson County,KS,Apr_14_2022,252.4
+20209,Wyandotte County,KS,Apr_14_2022,283.0
+21001,Adair County,KY,Apr_14_2022,307.3
+21003,Allen County,KY,Apr_14_2022,308.8
+21005,Anderson County,KY,Apr_14_2022,289.1
+21007,Ballard County,KY,Apr_14_2022,171.0
+21009,Barren County,KY,Apr_14_2022,293.5
+21011,Bath County,KY,Apr_14_2022,251.1
+21013,Bell County,KY,Apr_14_2022,340.1
+21015,Boone County,KY,Apr_14_2022,279.0
+21017,Bourbon County,KY,Apr_14_2022,301.1
+21019,Boyd County,KY,Apr_14_2022,348.3
+21021,Boyle County,KY,Apr_14_2022,279.6
+21023,Bracken County,KY,Apr_14_2022,261.7
+21025,Breathitt County,KY,Apr_14_2022,298.7
+21027,Breckinridge County,KY,Apr_14_2022,245.6
+21029,Bullitt County,KY,Apr_14_2022,262.4
+21031,Butler County,KY,Apr_14_2022,299.6
+21033,Caldwell County,KY,Apr_14_2022,323.6
+21035,Calloway County,KY,Apr_14_2022,208.2
+21037,Campbell County,KY,Apr_14_2022,245.4
+21039,Carlisle County,KY,Apr_14_2022,217.6
+21041,Carroll County,KY,Apr_14_2022,328.9
+21043,Carter County,KY,Apr_14_2022,321.6
+21045,Casey County,KY,Apr_14_2022,260.5
+21047,Christian County,KY,Apr_14_2022,232.6
+21049,Clark County,KY,Apr_14_2022,288.2
+21051,Clay County,KY,Apr_14_2022,395.1
+21053,Clinton County,KY,Apr_14_2022,358.1
+21055,Crittenden County,KY,Apr_14_2022,259.7
+21057,Cumberland County,KY,Apr_14_2022,337.2
+21059,Daviess County,KY,Apr_14_2022,305.8
+21061,Edmonson County,KY,Apr_14_2022,210.1
+21063,Elliott County,KY,Apr_14_2022,322.1
+21065,Estill County,KY,Apr_14_2022,291.3
+21067,Fayette County,KY,Apr_14_2022,293.1
+21069,Fleming County,KY,Apr_14_2022,264.2
+21071,Floyd County,KY,Apr_14_2022,351.8
+21073,Franklin County,KY,Apr_14_2022,269.1
+21075,Fulton County,KY,Apr_14_2022,202.2
+21077,Gallatin County,KY,Apr_14_2022,249.2
+21079,Garrard County,KY,Apr_14_2022,271.7
+21081,Grant County,KY,Apr_14_2022,281.9
+21083,Graves County,KY,Apr_14_2022,304.2
+21085,Grayson County,KY,Apr_14_2022,306.8
+21087,Green County,KY,Apr_14_2022,341.7
+21089,Greenup County,KY,Apr_14_2022,342.7
+21091,Hancock County,KY,Apr_14_2022,284.9
+21093,Hardin County,KY,Apr_14_2022,293.2
+21095,Harlan County,KY,Apr_14_2022,354.1
+21097,Harrison County,KY,Apr_14_2022,333.8
+21099,Hart County,KY,Apr_14_2022,284.2
+21101,Henderson County,KY,Apr_14_2022,306.4
+21103,Henry County,KY,Apr_14_2022,295.4
+21105,Hickman County,KY,Apr_14_2022,198.9
+21107,Hopkins County,KY,Apr_14_2022,333.9
+21109,Jackson County,KY,Apr_14_2022,320.7
+21111,Jefferson County,KY,Apr_14_2022,293.3
+21113,Jessamine County,KY,Apr_14_2022,279.7
+21115,Johnson County,KY,Apr_14_2022,272.6
+21117,Kenton County,KY,Apr_14_2022,251.7
+21119,Knott County,KY,Apr_14_2022,284.6
+21121,Knox County,KY,Apr_14_2022,369.1
+21123,LaRue County,KY,Apr_14_2022,258.4
+21125,Laurel County,KY,Apr_14_2022,330.2
+21127,Lawrence County,KY,Apr_14_2022,297.1
+21129,Lee County,KY,Apr_14_2022,397.1
+21131,Leslie County,KY,Apr_14_2022,377.0
+21133,Letcher County,KY,Apr_14_2022,329.4
+21135,Lewis County,KY,Apr_14_2022,340.1
+21137,Lincoln County,KY,Apr_14_2022,260.4
+21139,Livingston County,KY,Apr_14_2022,268.2
+21141,Logan County,KY,Apr_14_2022,307.8
+21143,Lyon County,KY,Apr_14_2022,348.6
+21145,McCracken County,KY,Apr_14_2022,283.4
+21147,McCreary County,KY,Apr_14_2022,331.7
+21149,McLean County,KY,Apr_14_2022,283.9
+21151,Madison County,KY,Apr_14_2022,297.7
+21153,Magoffin County,KY,Apr_14_2022,321.9
+21155,Marion County,KY,Apr_14_2022,332.0
+21157,Marshall County,KY,Apr_14_2022,269.8
+21159,Martin County,KY,Apr_14_2022,295.0
+21161,Mason County,KY,Apr_14_2022,282.1
+21163,Meade County,KY,Apr_14_2022,202.9
+21165,Menifee County,KY,Apr_14_2022,253.2
+21167,Mercer County,KY,Apr_14_2022,335.0
+21169,Metcalfe County,KY,Apr_14_2022,284.7
+21171,Monroe County,KY,Apr_14_2022,339.5
+21173,Montgomery County,KY,Apr_14_2022,269.1
+21175,Morgan County,KY,Apr_14_2022,380.7
+21177,Muhlenberg County,KY,Apr_14_2022,331.5
+21179,Nelson County,KY,Apr_14_2022,312.1
+21181,Nicholas County,KY,Apr_14_2022,282.3
+21183,Ohio County,KY,Apr_14_2022,304.5
+21185,Oldham County,KY,Apr_14_2022,273.7
+21187,Owen County,KY,Apr_14_2022,216.8
+21189,Owsley County,KY,Apr_14_2022,356.5
+21191,Pendleton County,KY,Apr_14_2022,238.4
+21193,Perry County,KY,Apr_14_2022,428.1
+21195,Pike County,KY,Apr_14_2022,327.2
+21197,Powell County,KY,Apr_14_2022,384.9
+21199,Pulaski County,KY,Apr_14_2022,278.2
+21201,Robertson County,KY,Apr_14_2022,303.1
+21203,Rockcastle County,KY,Apr_14_2022,302.0
+21205,Rowan County,KY,Apr_14_2022,272.2
+21207,Russell County,KY,Apr_14_2022,358.4
+21209,Scott County,KY,Apr_14_2022,301.0
+21211,Shelby County,KY,Apr_14_2022,270.7
+21213,Simpson County,KY,Apr_14_2022,302.1
+21215,Spencer County,KY,Apr_14_2022,275.1
+21217,Taylor County,KY,Apr_14_2022,367.4
+21219,Todd County,KY,Apr_14_2022,240.8
+21221,Trigg County,KY,Apr_14_2022,273.3
+21223,Trimble County,KY,Apr_14_2022,260.5
+21225,Union County,KY,Apr_14_2022,301.4
+21227,Warren County,KY,Apr_14_2022,322.7
+21229,Washington County,KY,Apr_14_2022,325.3
+21231,Wayne County,KY,Apr_14_2022,298.7
+21233,Webster County,KY,Apr_14_2022,302.0
+21235,Whitley County,KY,Apr_14_2022,396.3
+21237,Wolfe County,KY,Apr_14_2022,352.4
+21239,Woodford County,KY,Apr_14_2022,255.7
+22001,Acadia Parish,LA,Apr_14_2022,255.8
+22003,Allen Parish,LA,Apr_14_2022,307.1
+22005,Ascension Parish,LA,Apr_14_2022,275.1
+22007,Assumption Parish,LA,Apr_14_2022,253.8
+22009,Avoyelles Parish,LA,Apr_14_2022,288.4
+22011,Beauregard Parish,LA,Apr_14_2022,246.7
+22013,Bienville Parish,LA,Apr_14_2022,300.4
+22015,Bossier Parish,LA,Apr_14_2022,295.2
+22017,Caddo Parish,LA,Apr_14_2022,279.9
+22019,Calcasieu Parish,LA,Apr_14_2022,268.7
+22021,Caldwell Parish,LA,Apr_14_2022,361.4
+22023,Cameron Parish,LA,Apr_14_2022,171.8
+22025,Catahoula Parish,LA,Apr_14_2022,283.8
+22027,Claiborne Parish,LA,Apr_14_2022,209.2
+22029,Concordia Parish,LA,Apr_14_2022,264.3
+22031,De Soto Parish,LA,Apr_14_2022,266.7
+22033,East Baton Rouge Parish,LA,Apr_14_2022,251.9
+22035,East Carroll Parish,LA,Apr_14_2022,369.8
+22037,East Feliciana Parish,LA,Apr_14_2022,381.7
+22039,Evangeline Parish,LA,Apr_14_2022,251.0
+22041,Franklin Parish,LA,Apr_14_2022,366.9
+22043,Grant Parish,LA,Apr_14_2022,261.5
+22045,Iberia Parish,LA,Apr_14_2022,272.9
+22047,Iberville Parish,LA,Apr_14_2022,276.3
+22049,Jackson Parish,LA,Apr_14_2022,278.8
+22051,Jefferson Parish,LA,Apr_14_2022,262.9
+22053,Jefferson Davis Parish,LA,Apr_14_2022,221.1
+22055,Lafayette Parish,LA,Apr_14_2022,256.0
+22057,Lafourche Parish,LA,Apr_14_2022,284.3
+22059,LaSalle Parish,LA,Apr_14_2022,285.3
+22061,Lincoln Parish,LA,Apr_14_2022,261.3
+22063,Livingston Parish,LA,Apr_14_2022,263.6
+22065,Madison Parish,LA,Apr_14_2022,297.3
+22067,Morehouse Parish,LA,Apr_14_2022,275.4
+22069,Natchitoches Parish,LA,Apr_14_2022,265.0
+22071,Orleans Parish,LA,Apr_14_2022,224.9
+22073,Ouachita Parish,LA,Apr_14_2022,329.9
+22075,Plaquemines Parish,LA,Apr_14_2022,277.1
+22077,Pointe Coupee Parish,LA,Apr_14_2022,288.6
+22079,Rapides Parish,LA,Apr_14_2022,252.4
+22081,Red River Parish,LA,Apr_14_2022,249.8
+22083,Richland Parish,LA,Apr_14_2022,333.7
+22085,Sabine Parish,LA,Apr_14_2022,265.0
+22087,St. Bernard Parish,LA,Apr_14_2022,237.9
+22089,St. Charles Parish,LA,Apr_14_2022,260.1
+22091,St. Helena Parish,LA,Apr_14_2022,188.7
+22093,St. James Parish,LA,Apr_14_2022,273.8
+22095,St. John the Baptist Parish,LA,Apr_14_2022,245.6
+22097,St. Landry Parish,LA,Apr_14_2022,270.2
+22099,St. Martin Parish,LA,Apr_14_2022,242.3
+22101,St. Mary Parish,LA,Apr_14_2022,252.9
+22103,St. Tammany Parish,LA,Apr_14_2022,276.9
+22105,Tangipahoa Parish,LA,Apr_14_2022,257.4
+22107,Tensas Parish,LA,Apr_14_2022,227.5
+22109,Terrebonne Parish,LA,Apr_14_2022,279.2
+22111,Union Parish,LA,Apr_14_2022,312.7
+22113,Vermilion Parish,LA,Apr_14_2022,257.0
+22115,Vernon Parish,LA,Apr_14_2022,209.3
+22117,Washington Parish,LA,Apr_14_2022,280.2
+22119,Webster Parish,LA,Apr_14_2022,289.5
+22121,West Baton Rouge Parish,LA,Apr_14_2022,275.9
+22123,West Carroll Parish,LA,Apr_14_2022,334.6
+22125,West Feliciana Parish,LA,Apr_14_2022,181.8
+22127,Winn Parish,LA,Apr_14_2022,318.7
+23001,Androscoggin County,ME,Apr_14_2022,208.1
+23003,Aroostook County,ME,Apr_14_2022,193.4
+23005,Cumberland County,ME,Apr_14_2022,165.3
+23007,Franklin County,ME,Apr_14_2022,188.8
+23009,Hancock County,ME,Apr_14_2022,135.1
+23011,Kennebec County,ME,Apr_14_2022,189.9
+23013,Knox County,ME,Apr_14_2022,151.2
+23015,Lincoln County,ME,Apr_14_2022,150.7
+23017,Oxford County,ME,Apr_14_2022,195.7
+23019,Penobscot County,ME,Apr_14_2022,182.7
+23021,Piscataquis County,ME,Apr_14_2022,178.1
+23023,Sagadahoc County,ME,Apr_14_2022,143.9
+23025,Somerset County,ME,Apr_14_2022,193.1
+23027,Waldo County,ME,Apr_14_2022,152.9
+23029,Washington County,ME,Apr_14_2022,140.6
+23031,York County,ME,Apr_14_2022,191.4
+24001,Allegany County,MD,Apr_14_2022,243.4
+24003,Anne Arundel County,MD,Apr_14_2022,155.0
+24005,Baltimore County,MD,Apr_14_2022,159.9
+24009,Calvert County,MD,Apr_14_2022,120.5
+24011,Caroline County,MD,Apr_14_2022,181.3
+24013,Carroll County,MD,Apr_14_2022,127.4
+24015,Cecil County,MD,Apr_14_2022,150.8
+24017,Charles County,MD,Apr_14_2022,171.9
+24019,Dorchester County,MD,Apr_14_2022,242.1
+24021,Frederick County,MD,Apr_14_2022,176.2
+24023,Garrett County,MD,Apr_14_2022,197.2
+24025,Harford County,MD,Apr_14_2022,150.0
+24027,Howard County,MD,Apr_14_2022,135.0
+24029,Kent County,MD,Apr_14_2022,156.9
+24031,Montgomery County,MD,Apr_14_2022,161.0
+24033,Prince George's County,MD,Apr_14_2022,187.9
+24035,Queen Anne's County,MD,Apr_14_2022,141.1
+24037,St. Mary's County,MD,Apr_14_2022,166.6
+24039,Somerset County,MD,Apr_14_2022,203.3
+24041,Talbot County,MD,Apr_14_2022,150.0
+24043,Washington County,MD,Apr_14_2022,232.4
+24045,Wicomico County,MD,Apr_14_2022,189.9
+24047,Worcester County,MD,Apr_14_2022,165.5
+24510,Baltimore City,MD,Apr_14_2022,189.5
+25001,Barnstable County,MA,Apr_14_2022,165.9
+25003,Berkshire County,MA,Apr_14_2022,188.6
+25005,Bristol County,MA,Apr_14_2022,266.4
+25007,Dukes County,MA,Apr_14_2022,199.7
+25009,Essex County,MA,Apr_14_2022,261.6
+25011,Franklin County,MA,Apr_14_2022,153.3
+25013,Hampden County,MA,Apr_14_2022,286.6
+25015,Hampshire County,MA,Apr_14_2022,175.6
+25017,Middlesex County,MA,Apr_14_2022,205.5
+25019,Town and County of Nantucket,MA,Apr_14_2022,298.4
+25021,Norfolk County,MA,Apr_14_2022,188.7
+25023,Plymouth County,MA,Apr_14_2022,222.8
+25025,Suffolk County,MA,Apr_14_2022,266.0
+25027,Worcester County,MA,Apr_14_2022,233.1
+26001,Alcona County,MI,Apr_14_2022,166.0
+26003,Alger County,MI,Apr_14_2022,188.4
+26005,Allegan County,MI,Apr_14_2022,229.5
+26007,Alpena County,MI,Apr_14_2022,198.8
+26009,Antrim County,MI,Apr_14_2022,185.3
+26011,Arenac County,MI,Apr_14_2022,214.9
+26013,Baraga County,MI,Apr_14_2022,248.5
+26015,Barry County,MI,Apr_14_2022,232.7
+26017,Bay County,MI,Apr_14_2022,262.1
+26019,Benzie County,MI,Apr_14_2022,193.0
+26021,Berrien County,MI,Apr_14_2022,226.6
+26023,Branch County,MI,Apr_14_2022,260.2
+26025,Calhoun County,MI,Apr_14_2022,255.1
+26027,Cass County,MI,Apr_14_2022,214.4
+26029,Charlevoix County,MI,Apr_14_2022,187.3
+26031,Cheboygan County,MI,Apr_14_2022,182.0
+26033,Chippewa County,MI,Apr_14_2022,227.8
+26035,Clare County,MI,Apr_14_2022,218.0
+26037,Clinton County,MI,Apr_14_2022,267.3
+26039,Crawford County,MI,Apr_14_2022,182.9
+26041,Delta County,MI,Apr_14_2022,277.4
+26043,Dickinson County,MI,Apr_14_2022,291.8
+26045,Eaton County,MI,Apr_14_2022,243.4
+26047,Emmet County,MI,Apr_14_2022,190.8
+26049,Genesee County,MI,Apr_14_2022,249.8
+26051,Gladwin County,MI,Apr_14_2022,218.5
+26053,Gogebic County,MI,Apr_14_2022,233.0
+26055,Grand Traverse County,MI,Apr_14_2022,185.7
+26057,Gratiot County,MI,Apr_14_2022,265.0
+26059,Hillsdale County,MI,Apr_14_2022,226.6
+26061,Houghton County,MI,Apr_14_2022,218.9
+26063,Huron County,MI,Apr_14_2022,258.5
+26065,Ingham County,MI,Apr_14_2022,219.4
+26067,Ionia County,MI,Apr_14_2022,255.8
+26069,Iosco County,MI,Apr_14_2022,191.2
+26071,Iron County,MI,Apr_14_2022,238.9
+26073,Isabella County,MI,Apr_14_2022,222.6
+26075,Jackson County,MI,Apr_14_2022,248.6
+26077,Kalamazoo County,MI,Apr_14_2022,223.6
+26079,Kalkaska County,MI,Apr_14_2022,195.9
+26081,Kent County,MI,Apr_14_2022,253.7
+26083,Keweenaw County,MI,Apr_14_2022,241.5
+26085,Lake County,MI,Apr_14_2022,155.3
+26087,Lapeer County,MI,Apr_14_2022,231.6
+26089,Leelanau County,MI,Apr_14_2022,165.0
+26091,Lenawee County,MI,Apr_14_2022,249.0
+26093,Livingston County,MI,Apr_14_2022,240.6
+26095,Luce County,MI,Apr_14_2022,228.9
+26097,Mackinac County,MI,Apr_14_2022,222.8
+26099,Macomb County,MI,Apr_14_2022,263.7
+26101,Manistee County,MI,Apr_14_2022,150.5
+26103,Marquette County,MI,Apr_14_2022,224.5
+26105,Mason County,MI,Apr_14_2022,231.6
+26107,Mecosta County,MI,Apr_14_2022,199.0
+26109,Menominee County,MI,Apr_14_2022,246.9
+26111,Midland County,MI,Apr_14_2022,229.1
+26113,Missaukee County,MI,Apr_14_2022,192.5
+26115,Monroe County,MI,Apr_14_2022,252.7
+26117,Montcalm County,MI,Apr_14_2022,235.4
+26119,Montmorency County,MI,Apr_14_2022,184.0
+26121,Muskegon County,MI,Apr_14_2022,228.6
+26123,Newaygo County,MI,Apr_14_2022,234.4
+26125,Oakland County,MI,Apr_14_2022,228.9
+26127,Oceana County,MI,Apr_14_2022,239.4
+26129,Ogemaw County,MI,Apr_14_2022,205.3
+26131,Ontonagon County,MI,Apr_14_2022,172.4
+26133,Osceola County,MI,Apr_14_2022,213.3
+26135,Oscoda County,MI,Apr_14_2022,174.0
+26137,Otsego County,MI,Apr_14_2022,227.9
+26139,Ottawa County,MI,Apr_14_2022,256.6
+26141,Presque Isle County,MI,Apr_14_2022,164.0
+26143,Roscommon County,MI,Apr_14_2022,192.4
+26145,Saginaw County,MI,Apr_14_2022,258.5
+26147,St. Clair County,MI,Apr_14_2022,255.5
+26149,St. Joseph County,MI,Apr_14_2022,224.6
+26151,Sanilac County,MI,Apr_14_2022,210.9
+26153,Schoolcraft County,MI,Apr_14_2022,216.2
+26155,Shiawassee County,MI,Apr_14_2022,261.2
+26157,Tuscola County,MI,Apr_14_2022,252.6
+26159,Van Buren County,MI,Apr_14_2022,225.1
+26161,Washtenaw County,MI,Apr_14_2022,207.5
+26163,Wayne County,MI,Apr_14_2022,229.3
+26165,Wexford County,MI,Apr_14_2022,210.4
+27001,Aitkin County,MN,Apr_14_2022,185.9
+27003,Anoka County,MN,Apr_14_2022,276.1
+27005,Becker County,MN,Apr_14_2022,255.7
+27007,Beltrami County,MN,Apr_14_2022,254.7
+27009,Benton County,MN,Apr_14_2022,343.1
+27011,Big Stone County,MN,Apr_14_2022,277.5
+27013,Blue Earth County,MN,Apr_14_2022,265.4
+27015,Brown County,MN,Apr_14_2022,261.2
+27017,Carlton County,MN,Apr_14_2022,247.7
+27019,Carver County,MN,Apr_14_2022,253.9
+27021,Cass County,MN,Apr_14_2022,235.8
+27023,Chippewa County,MN,Apr_14_2022,260.8
+27025,Chisago County,MN,Apr_14_2022,256.7
+27027,Clay County,MN,Apr_14_2022,308.1
+27029,Clearwater County,MN,Apr_14_2022,244.3
+27031,Cook County,MN,Apr_14_2022,101.8
+27033,Cottonwood County,MN,Apr_14_2022,287.9
+27035,Crow Wing County,MN,Apr_14_2022,245.3
+27037,Dakota County,MN,Apr_14_2022,256.9
+27039,Dodge County,MN,Apr_14_2022,271.6
+27041,Douglas County,MN,Apr_14_2022,285.8
+27043,Faribault County,MN,Apr_14_2022,276.7
+27045,Fillmore County,MN,Apr_14_2022,227.2
+27047,Freeborn County,MN,Apr_14_2022,300.5
+27049,Goodhue County,MN,Apr_14_2022,283.5
+27051,Grant County,MN,Apr_14_2022,246.3
+27053,Hennepin County,MN,Apr_14_2022,236.8
+27055,Houston County,MN,Apr_14_2022,244.3
+27057,Hubbard County,MN,Apr_14_2022,229.7
+27059,Isanti County,MN,Apr_14_2022,248.4
+27061,Itasca County,MN,Apr_14_2022,244.4
+27063,Jackson County,MN,Apr_14_2022,217.6
+27065,Kanabec County,MN,Apr_14_2022,213.9
+27067,Kandiyohi County,MN,Apr_14_2022,310.4
+27069,Kittson County,MN,Apr_14_2022,241.7
+27071,Koochiching County,MN,Apr_14_2022,221.4
+27073,Lac qui Parle County,MN,Apr_14_2022,262.7
+27075,Lake County,MN,Apr_14_2022,194.4
+27077,Lake of the Woods County,MN,Apr_14_2022,204.3
+27079,Le Sueur County,MN,Apr_14_2022,224.4
+27081,Lincoln County,MN,Apr_14_2022,215.1
+27083,Lyon County,MN,Apr_14_2022,276.5
+27085,McLeod County,MN,Apr_14_2022,294.7
+27087,Mahnomen County,MN,Apr_14_2022,319.3
+27089,Marshall County,MN,Apr_14_2022,223.8
+27091,Martin County,MN,Apr_14_2022,284.1
+27093,Meeker County,MN,Apr_14_2022,255.4
+27095,Mille Lacs County,MN,Apr_14_2022,275.0
+27097,Morrison County,MN,Apr_14_2022,272.4
+27099,Mower County,MN,Apr_14_2022,296.1
+27101,Murray County,MN,Apr_14_2022,247.4
+27103,Nicollet County,MN,Apr_14_2022,233.2
+27105,Nobles County,MN,Apr_14_2022,321.4
+27107,Norman County,MN,Apr_14_2022,234.2
+27109,Olmsted County,MN,Apr_14_2022,260.7
+27111,Otter Tail County,MN,Apr_14_2022,230.8
+27113,Pennington County,MN,Apr_14_2022,252.0
+27115,Pine County,MN,Apr_14_2022,237.3
+27117,Pipestone County,MN,Apr_14_2022,217.9
+27119,Polk County,MN,Apr_14_2022,282.3
+27121,Pope County,MN,Apr_14_2022,269.5
+27123,Ramsey County,MN,Apr_14_2022,226.2
+27125,Red Lake County,MN,Apr_14_2022,230.8
+27127,Redwood County,MN,Apr_14_2022,257.6
+27129,Renville County,MN,Apr_14_2022,256.8
+27131,Rice County,MN,Apr_14_2022,267.6
+27133,Rock County,MN,Apr_14_2022,250.2
+27135,Roseau County,MN,Apr_14_2022,294.6
+27137,St. Louis County,MN,Apr_14_2022,236.6
+27139,Scott County,MN,Apr_14_2022,269.9
+27141,Sherburne County,MN,Apr_14_2022,280.3
+27143,Sibley County,MN,Apr_14_2022,236.7
+27145,Stearns County,MN,Apr_14_2022,315.4
+27147,Steele County,MN,Apr_14_2022,283.3
+27149,Stevens County,MN,Apr_14_2022,268.1
+27151,Swift County,MN,Apr_14_2022,246.9
+27153,Todd County,MN,Apr_14_2022,274.4
+27155,Traverse County,MN,Apr_14_2022,262.0
+27157,Wabasha County,MN,Apr_14_2022,258.1
+27159,Wadena County,MN,Apr_14_2022,307.9
+27161,Waseca County,MN,Apr_14_2022,297.1
+27163,Washington County,MN,Apr_14_2022,255.4
+27165,Watonwan County,MN,Apr_14_2022,273.4
+27167,Wilkin County,MN,Apr_14_2022,266.5
+27169,Winona County,MN,Apr_14_2022,252.5
+27171,Wright County,MN,Apr_14_2022,264.3
+27173,Yellow Medicine County,MN,Apr_14_2022,261.0
+28001,Adams County,MS,Apr_14_2022,233.0
+28003,Alcorn County,MS,Apr_14_2022,271.8
+28005,Amite County,MS,Apr_14_2022,264.5
+28007,Attala County,MS,Apr_14_2022,292.7
+28009,Benton County,MS,Apr_14_2022,274.5
+28011,Bolivar County,MS,Apr_14_2022,303.2
+28013,Calhoun County,MS,Apr_14_2022,323.0
+28015,Carroll County,MS,Apr_14_2022,257.1
+28017,Chickasaw County,MS,Apr_14_2022,326.7
+28019,Choctaw County,MS,Apr_14_2022,281.6
+28021,Claiborne County,MS,Apr_14_2022,238.3
+28023,Clarke County,MS,Apr_14_2022,272.2
+28025,Clay County,MS,Apr_14_2022,256.9
+28027,Coahoma County,MS,Apr_14_2022,292.1
+28029,Copiah County,MS,Apr_14_2022,254.4
+28031,Covington County,MS,Apr_14_2022,379.5
+28033,DeSoto County,MS,Apr_14_2022,270.9
+28035,Forrest County,MS,Apr_14_2022,293.7
+28037,Franklin County,MS,Apr_14_2022,249.4
+28039,George County,MS,Apr_14_2022,291.1
+28041,Greene County,MS,Apr_14_2022,234.6
+28043,Grenada County,MS,Apr_14_2022,265.7
+28045,Hancock County,MS,Apr_14_2022,256.6
+28047,Harrison County,MS,Apr_14_2022,257.7
+28049,Hinds County,MS,Apr_14_2022,225.3
+28051,Holmes County,MS,Apr_14_2022,261.3
+28053,Humphreys County,MS,Apr_14_2022,251.7
+28055,Issaquena County,MS,Apr_14_2022,197.4
+28057,Itawamba County,MS,Apr_14_2022,317.1
+28059,Jackson County,MS,Apr_14_2022,257.1
+28061,Jasper County,MS,Apr_14_2022,298.1
+28063,Jefferson County,MS,Apr_14_2022,211.6
+28065,Jefferson Davis County,MS,Apr_14_2022,256.4
+28067,Jones County,MS,Apr_14_2022,311.0
+28069,Kemper County,MS,Apr_14_2022,223.7
+28071,Lafayette County,MS,Apr_14_2022,282.7
+28073,Lamar County,MS,Apr_14_2022,274.1
+28075,Lauderdale County,MS,Apr_14_2022,253.6
+28077,Lawrence County,MS,Apr_14_2022,284.8
+28079,Leake County,MS,Apr_14_2022,281.0
+28081,Lee County,MS,Apr_14_2022,312.1
+28083,Leflore County,MS,Apr_14_2022,259.3
+28085,Lincoln County,MS,Apr_14_2022,243.3
+28087,Lowndes County,MS,Apr_14_2022,298.5
+28089,Madison County,MS,Apr_14_2022,226.0
+28091,Marion County,MS,Apr_14_2022,283.1
+28093,Marshall County,MS,Apr_14_2022,280.6
+28095,Monroe County,MS,Apr_14_2022,311.4
+28097,Montgomery County,MS,Apr_14_2022,302.5
+28099,Neshoba County,MS,Apr_14_2022,364.4
+28101,Newton County,MS,Apr_14_2022,286.4
+28103,Noxubee County,MS,Apr_14_2022,261.0
+28105,Oktibbeha County,MS,Apr_14_2022,223.8
+28107,Panola County,MS,Apr_14_2022,307.7
+28109,Pearl River County,MS,Apr_14_2022,271.0
+28111,Perry County,MS,Apr_14_2022,253.9
+28113,Pike County,MS,Apr_14_2022,247.8
+28115,Pontotoc County,MS,Apr_14_2022,321.1
+28117,Prentiss County,MS,Apr_14_2022,326.8
+28119,Quitman County,MS,Apr_14_2022,231.7
+28121,Rankin County,MS,Apr_14_2022,235.3
+28123,Scott County,MS,Apr_14_2022,232.1
+28125,Sharkey County,MS,Apr_14_2022,220.3
+28127,Simpson County,MS,Apr_14_2022,262.6
+28129,Smith County,MS,Apr_14_2022,258.3
+28131,Stone County,MS,Apr_14_2022,294.4
+28133,Sunflower County,MS,Apr_14_2022,229.7
+28135,Tallahatchie County,MS,Apr_14_2022,231.2
+28137,Tate County,MS,Apr_14_2022,259.4
+28139,Tippah County,MS,Apr_14_2022,333.6
+28141,Tishomingo County,MS,Apr_14_2022,317.5
+28143,Tunica County,MS,Apr_14_2022,263.6
+28145,Union County,MS,Apr_14_2022,328.7
+28147,Walthall County,MS,Apr_14_2022,252.7
+28149,Warren County,MS,Apr_14_2022,225.0
+28151,Washington County,MS,Apr_14_2022,237.1
+28153,Wayne County,MS,Apr_14_2022,297.4
+28155,Webster County,MS,Apr_14_2022,349.6
+28157,Wilkinson County,MS,Apr_14_2022,208.2
+28159,Winston County,MS,Apr_14_2022,290.7
+28161,Yalobusha County,MS,Apr_14_2022,337.0
+28163,Yazoo County,MS,Apr_14_2022,270.9
+29001,Adair County,MO,Apr_14_2022,217.1
+29003,Andrew County,MO,Apr_14_2022,268.6
+29005,Atchison County,MO,Apr_14_2022,270.3
+29007,Audrain County,MO,Apr_14_2022,225.9
+29009,Barry County,MO,Apr_14_2022,185.1
+29011,Barton County,MO,Apr_14_2022,242.0
+29013,Bates County,MO,Apr_14_2022,231.6
+29015,Benton County,MO,Apr_14_2022,214.9
+29017,Bollinger County,MO,Apr_14_2022,213.4
+29019,Boone County,MO,Apr_14_2022,240.2
+29021,Buchanan County,MO,Apr_14_2022,260.3
+29023,Butler County,MO,Apr_14_2022,238.0
+29025,Caldwell County,MO,Apr_14_2022,187.8
+29027,Callaway County,MO,Apr_14_2022,269.8
+29029,Camden County,MO,Apr_14_2022,200.4
+29031,Cape Girardeau County,MO,Apr_14_2022,237.6
+29033,Carroll County,MO,Apr_14_2022,256.5
+29035,Carter County,MO,Apr_14_2022,250.6
+29037,Cass County,MO,Apr_14_2022,236.0
+29039,Cedar County,MO,Apr_14_2022,203.6
+29041,Chariton County,MO,Apr_14_2022,228.8
+29043,Christian County,MO,Apr_14_2022,235.5
+29045,Clark County,MO,Apr_14_2022,233.9
+29047,Clay County,MO,Apr_14_2022,108.0
+29049,Clinton County,MO,Apr_14_2022,235.6
+29051,Cole County,MO,Apr_14_2022,262.2
+29053,Cooper County,MO,Apr_14_2022,233.8
+29055,Crawford County,MO,Apr_14_2022,225.6
+29057,Dade County,MO,Apr_14_2022,190.3
+29059,Dallas County,MO,Apr_14_2022,225.9
+29061,Daviess County,MO,Apr_14_2022,207.3
+29063,DeKalb County,MO,Apr_14_2022,175.7
+29065,Dent County,MO,Apr_14_2022,209.4
+29067,Douglas County,MO,Apr_14_2022,193.4
+29069,Dunklin County,MO,Apr_14_2022,255.9
+29071,Franklin County,MO,Apr_14_2022,218.1
+29073,Gasconade County,MO,Apr_14_2022,226.7
+29075,Gentry County,MO,Apr_14_2022,328.4
+29077,Greene County,MO,Apr_14_2022,238.8
+29079,Grundy County,MO,Apr_14_2022,252.3
+29081,Harrison County,MO,Apr_14_2022,218.0
+29083,Henry County,MO,Apr_14_2022,263.1
+29085,Hickory County,MO,Apr_14_2022,191.4
+29087,Holt County,MO,Apr_14_2022,239.6
+29089,Howard County,MO,Apr_14_2022,216.7
+29091,Howell County,MO,Apr_14_2022,224.4
+29093,Iron County,MO,Apr_14_2022,217.0
+29095,Jackson County,MO,Apr_14_2022,297.0
+29097,Jasper County,MO,Apr_14_2022,285.2
+29099,Jefferson County,MO,Apr_14_2022,239.9
+29101,Johnson County,MO,Apr_14_2022,225.0
+29103,Knox County,MO,Apr_14_2022,246.8
+29105,Laclede County,MO,Apr_14_2022,226.8
+29107,Lafayette County,MO,Apr_14_2022,238.3
+29109,Lawrence County,MO,Apr_14_2022,203.0
+29111,Lewis County,MO,Apr_14_2022,280.8
+29113,Lincoln County,MO,Apr_14_2022,256.3
+29115,Linn County,MO,Apr_14_2022,213.8
+29117,Livingston County,MO,Apr_14_2022,246.3
+29119,McDonald County,MO,Apr_14_2022,234.4
+29121,Macon County,MO,Apr_14_2022,240.4
+29123,Madison County,MO,Apr_14_2022,297.9
+29125,Maries County,MO,Apr_14_2022,183.9
+29127,Marion County,MO,Apr_14_2022,279.0
+29129,Mercer County,MO,Apr_14_2022,192.7
+29131,Miller County,MO,Apr_14_2022,238.1
+29133,Mississippi County,MO,Apr_14_2022,262.3
+29135,Moniteau County,MO,Apr_14_2022,236.4
+29137,Monroe County,MO,Apr_14_2022,251.4
+29139,Montgomery County,MO,Apr_14_2022,216.4
+29141,Morgan County,MO,Apr_14_2022,195.1
+29143,New Madrid County,MO,Apr_14_2022,294.6
+29145,Newton County,MO,Apr_14_2022,201.4
+29147,Nodaway County,MO,Apr_14_2022,259.8
+29149,Oregon County,MO,Apr_14_2022,192.0
+29151,Osage County,MO,Apr_14_2022,235.9
+29153,Ozark County,MO,Apr_14_2022,186.4
+29155,Pemiscot County,MO,Apr_14_2022,190.2
+29157,Perry County,MO,Apr_14_2022,260.7
+29159,Pettis County,MO,Apr_14_2022,288.3
+29161,Phelps County,MO,Apr_14_2022,228.5
+29163,Pike County,MO,Apr_14_2022,231.6
+29165,Platte County,MO,Apr_14_2022,99.4
+29167,Polk County,MO,Apr_14_2022,250.1
+29169,Pulaski County,MO,Apr_14_2022,167.6
+29171,Putnam County,MO,Apr_14_2022,211.9
+29173,Ralls County,MO,Apr_14_2022,238.1
+29175,Randolph County,MO,Apr_14_2022,243.0
+29177,Ray County,MO,Apr_14_2022,223.6
+29179,Reynolds County,MO,Apr_14_2022,184.7
+29181,Ripley County,MO,Apr_14_2022,202.4
+29183,St. Charles County,MO,Apr_14_2022,233.4
+29185,St. Clair County,MO,Apr_14_2022,223.7
+29186,Ste. Genevieve County,MO,Apr_14_2022,204.3
+29187,St. Francois County,MO,Apr_14_2022,283.7
+29189,St. Louis County,MO,Apr_14_2022,217.2
+29195,Saline County,MO,Apr_14_2022,275.4
+29197,Schuyler County,MO,Apr_14_2022,157.7
+29199,Scotland County,MO,Apr_14_2022,138.9
+29201,Scott County,MO,Apr_14_2022,290.2
+29203,Shannon County,MO,Apr_14_2022,196.8
+29205,Shelby County,MO,Apr_14_2022,262.2
+29207,Stoddard County,MO,Apr_14_2022,210.3
+29209,Stone County,MO,Apr_14_2022,181.0
+29211,Sullivan County,MO,Apr_14_2022,280.2
+29213,Taney County,MO,Apr_14_2022,237.9
+29215,Texas County,MO,Apr_14_2022,185.8
+29217,Vernon County,MO,Apr_14_2022,245.6
+29219,Warren County,MO,Apr_14_2022,228.1
+29221,Washington County,MO,Apr_14_2022,241.9
+29223,Wayne County,MO,Apr_14_2022,186.4
+29225,Webster County,MO,Apr_14_2022,228.0
+29227,Worth County,MO,Apr_14_2022,199.2
+29229,Wright County,MO,Apr_14_2022,209.6
+29510,City of St. Louis,MO,Apr_14_2022,187.2
+30001,Beaverhead County,MT,Apr_14_2022,225.4
+30003,Big Horn County,MT,Apr_14_2022,372.3
+30005,Blaine County,MT,Apr_14_2022,308.9
+30007,Broadwater County,MT,Apr_14_2022,203.8
+30009,Carbon County,MT,Apr_14_2022,191.0
+30011,Carter County,MT,Apr_14_2022,199.7
+30013,Cascade County,MT,Apr_14_2022,308.9
+30015,Chouteau County,MT,Apr_14_2022,175.7
+30017,Custer County,MT,Apr_14_2022,267.4
+30019,Daniels County,MT,Apr_14_2022,228.4
+30021,Dawson County,MT,Apr_14_2022,270.6
+30023,Deer Lodge County,MT,Apr_14_2022,279.6
+30025,Fallon County,MT,Apr_14_2022,237.9
+30027,Fergus County,MT,Apr_14_2022,227.1
+30029,Flathead County,MT,Apr_14_2022,280.5
+30031,Gallatin County,MT,Apr_14_2022,298.9
+30033,Garfield County,MT,Apr_14_2022,178.9
+30035,Glacier County,MT,Apr_14_2022,286.6
+30037,Golden Valley County,MT,Apr_14_2022,182.7
+30039,Granite County,MT,Apr_14_2022,157.4
+30041,Hill County,MT,Apr_14_2022,275.4
+30043,Jefferson County,MT,Apr_14_2022,212.0
+30045,Judith Basin County,MT,Apr_14_2022,110.6
+30047,Lake County,MT,Apr_14_2022,216.3
+30049,Lewis and Clark County,MT,Apr_14_2022,253.3
+30051,Liberty County,MT,Apr_14_2022,170.3
+30053,Lincoln County,MT,Apr_14_2022,236.6
+30055,McCone County,MT,Apr_14_2022,230.2
+30057,Madison County,MT,Apr_14_2022,210.0
+30059,Meagher County,MT,Apr_14_2022,219.7
+30061,Mineral County,MT,Apr_14_2022,248.1
+30063,Missoula County,MT,Apr_14_2022,228.5
+30065,Musselshell County,MT,Apr_14_2022,197.1
+30067,Park County,MT,Apr_14_2022,252.3
+30069,Petroleum County,MT,Apr_14_2022,71.9
+30071,Phillips County,MT,Apr_14_2022,268.6
+30073,Pondera County,MT,Apr_14_2022,196.8
+30075,Powder River County,MT,Apr_14_2022,199.2
+30077,Powell County,MT,Apr_14_2022,271.0
+30079,Prairie County,MT,Apr_14_2022,244.2
+30081,Ravalli County,MT,Apr_14_2022,160.7
+30083,Richland County,MT,Apr_14_2022,243.9
+30085,Roosevelt County,MT,Apr_14_2022,297.3
+30087,Rosebud County,MT,Apr_14_2022,294.4
+30089,Sanders County,MT,Apr_14_2022,177.2
+30091,Sheridan County,MT,Apr_14_2022,210.3
+30093,Silver Bow County,MT,Apr_14_2022,242.7
+30095,Stillwater County,MT,Apr_14_2022,158.7
+30097,Sweet Grass County,MT,Apr_14_2022,207.1
+30099,Teton County,MT,Apr_14_2022,207.9
+30101,Toole County,MT,Apr_14_2022,263.1
+30103,Treasure County,MT,Apr_14_2022,192.5
+30105,Valley County,MT,Apr_14_2022,230.4
+30107,Wheatland County,MT,Apr_14_2022,181.6
+30109,Wibaux County,MT,Apr_14_2022,210.5
+30111,Yellowstone County,MT,Apr_14_2022,265.9
+31001,Adams County,NE,Apr_14_2022,207.2
+31003,Antelope County,NE,Apr_14_2022,170.7
+31005,Arthur County,NE,Apr_14_2022,69.1
+31007,Banner County,NE,Apr_14_2022,119.5
+31009,Blaine County,NE,Apr_14_2022,144.1
+31011,Boone County,NE,Apr_14_2022,210.1
+31013,Box Butte County,NE,Apr_14_2022,216.6
+31015,Boyd County,NE,Apr_14_2022,210.5
+31017,Brown County,NE,Apr_14_2022,171.2
+31019,Buffalo County,NE,Apr_14_2022,241.6
+31021,Burt County,NE,Apr_14_2022,207.9
+31023,Butler County,NE,Apr_14_2022,237.4
+31025,Cass County,NE,Apr_14_2022,233.3
+31027,Cedar County,NE,Apr_14_2022,179.2
+31029,Chase County,NE,Apr_14_2022,189.6
+31031,Cherry County,NE,Apr_14_2022,94.4
+31033,Cheyenne County,NE,Apr_14_2022,227.3
+31035,Clay County,NE,Apr_14_2022,244.2
+31037,Colfax County,NE,Apr_14_2022,255.6
+31039,Cuming County,NE,Apr_14_2022,204.2
+31041,Custer County,NE,Apr_14_2022,188.4
+31043,Dakota County,NE,Apr_14_2022,344.6
+31045,Dawes County,NE,Apr_14_2022,158.5
+31047,Dawson County,NE,Apr_14_2022,223.0
+31049,Deuel County,NE,Apr_14_2022,179.5
+31051,Dixon County,NE,Apr_14_2022,209.7
+31053,Dodge County,NE,Apr_14_2022,276.4
+31055,Douglas County,NE,Apr_14_2022,261.6
+31057,Dundy County,NE,Apr_14_2022,206.1
+31059,Fillmore County,NE,Apr_14_2022,206.3
+31061,Franklin County,NE,Apr_14_2022,141.3
+31063,Frontier County,NE,Apr_14_2022,206.7
+31065,Furnas County,NE,Apr_14_2022,239.9
+31067,Gage County,NE,Apr_14_2022,166.8
+31069,Garden County,NE,Apr_14_2022,200.3
+31071,Garfield County,NE,Apr_14_2022,202.6
+31073,Gosper County,NE,Apr_14_2022,186.9
+31075,Grant County,NE,Apr_14_2022,170.1
+31077,Greeley County,NE,Apr_14_2022,174.0
+31079,Hall County,NE,Apr_14_2022,269.1
+31081,Hamilton County,NE,Apr_14_2022,241.7
+31083,Harlan County,NE,Apr_14_2022,111.8
+31085,Hayes County,NE,Apr_14_2022,115.0
+31087,Hitchcock County,NE,Apr_14_2022,191.9
+31089,Holt County,NE,Apr_14_2022,213.3
+31091,Hooker County,NE,Apr_14_2022,164.2
+31093,Howard County,NE,Apr_14_2022,184.5
+31095,Jefferson County,NE,Apr_14_2022,171.9
+31097,Johnson County,NE,Apr_14_2022,171.2
+31099,Kearney County,NE,Apr_14_2022,182.0
+31101,Keith County,NE,Apr_14_2022,191.6
+31103,Keya Paha County,NE,Apr_14_2022,146.4
+31105,Kimball County,NE,Apr_14_2022,211.7
+31107,Knox County,NE,Apr_14_2022,201.3
+31109,Lancaster County,NE,Apr_14_2022,244.6
+31111,Lincoln County,NE,Apr_14_2022,249.4
+31113,Logan County,NE,Apr_14_2022,197.9
+31115,Loup County,NE,Apr_14_2022,131.0
+31117,McPherson County,NE,Apr_14_2022,149.8
+31119,Madison County,NE,Apr_14_2022,275.9
+31121,Merrick County,NE,Apr_14_2022,219.6
+31123,Morrill County,NE,Apr_14_2022,267.8
+31125,Nance County,NE,Apr_14_2022,227.9
+31127,Nemaha County,NE,Apr_14_2022,213.0
+31129,Nuckolls County,NE,Apr_14_2022,235.5
+31131,Otoe County,NE,Apr_14_2022,208.8
+31133,Pawnee County,NE,Apr_14_2022,157.7
+31135,Perkins County,NE,Apr_14_2022,183.3
+31137,Phelps County,NE,Apr_14_2022,257.5
+31139,Pierce County,NE,Apr_14_2022,178.0
+31141,Platte County,NE,Apr_14_2022,258.4
+31143,Polk County,NE,Apr_14_2022,233.8
+31145,Red Willow County,NE,Apr_14_2022,217.2
+31147,Richardson County,NE,Apr_14_2022,229.8
+31149,Rock County,NE,Apr_14_2022,126.8
+31151,Saline County,NE,Apr_14_2022,266.9
+31153,Sarpy County,NE,Apr_14_2022,265.5
+31155,Saunders County,NE,Apr_14_2022,232.8
+31157,Scotts Bluff County,NE,Apr_14_2022,265.0
+31159,Seward County,NE,Apr_14_2022,195.0
+31161,Sheridan County,NE,Apr_14_2022,190.6
+31163,Sherman County,NE,Apr_14_2022,195.3
+31165,Sioux County,NE,Apr_14_2022,55.7
+31167,Stanton County,NE,Apr_14_2022,125.7
+31169,Thayer County,NE,Apr_14_2022,221.7
+31171,Thomas County,NE,Apr_14_2022,133.0
+31173,Thurston County,NE,Apr_14_2022,246.7
+31175,Valley County,NE,Apr_14_2022,180.9
+31177,Washington County,NE,Apr_14_2022,219.6
+31179,Wayne County,NE,Apr_14_2022,194.2
+31181,Webster County,NE,Apr_14_2022,204.2
+31183,Wheeler County,NE,Apr_14_2022,162.2
+31185,York County,NE,Apr_14_2022,286.6
+32001,Churchill County,NV,Apr_14_2022,263.7
+32003,Clark County,NV,Apr_14_2022,236.8
+32005,Douglas County,NV,Apr_14_2022,149.3
+32007,Elko County,NV,Apr_14_2022,220.3
+32009,Esmeralda County,NV,Apr_14_2022,124.9
+32011,Eureka County,NV,Apr_14_2022,81.3
+32013,Humboldt County,NV,Apr_14_2022,148.8
+32015,Lander County,NV,Apr_14_2022,212.9
+32017,Lincoln County,NV,Apr_14_2022,105.9
+32019,Lyon County,NV,Apr_14_2022,174.9
+32021,Mineral County,NV,Apr_14_2022,280.1
+32023,Nye County,NV,Apr_14_2022,160.4
+32027,Pershing County,NV,Apr_14_2022,316.6
+32029,Storey County,NV,Apr_14_2022,32.5
+32031,Washoe County,NV,Apr_14_2022,222.0
+32033,White Pine County,NV,Apr_14_2022,177.2
+32510,Consolidated Municipality of Carson City,NV,Apr_14_2022,266.9
+33001,Belknap County,NH,Apr_14_2022,222.0
+33003,Carroll County,NH,Apr_14_2022,192.0
+33005,Cheshire County,NH,Apr_14_2022,196.3
+33007,Coos County,NH,Apr_14_2022,220.4
+33009,Grafton County,NH,Apr_14_2022,198.6
+33011,Hillsborough County,NH,Apr_14_2022,234.5
+33013,Merrimack County,NH,Apr_14_2022,213.2
+33015,Rockingham County,NH,Apr_14_2022,217.1
+33017,Strafford County,NH,Apr_14_2022,224.9
+33019,Sullivan County,NH,Apr_14_2022,215.1
+34001,Atlantic County,NJ,Apr_14_2022,260.1
+34003,Bergen County,NJ,Apr_14_2022,242.7
+34005,Burlington County,NJ,Apr_14_2022,230.7
+34007,Camden County,NJ,Apr_14_2022,249.0
+34009,Cape May County,NJ,Apr_14_2022,238.5
+34011,Cumberland County,NJ,Apr_14_2022,264.4
+34013,Essex County,NJ,Apr_14_2022,267.8
+34015,Gloucester County,NJ,Apr_14_2022,239.8
+34017,Hudson County,NJ,Apr_14_2022,256.9
+34019,Hunterdon County,NJ,Apr_14_2022,199.5
+34021,Mercer County,NJ,Apr_14_2022,208.9
+34023,Middlesex County,NJ,Apr_14_2022,235.9
+34025,Monmouth County,NJ,Apr_14_2022,267.0
+34027,Morris County,NJ,Apr_14_2022,243.3
+34029,Ocean County,NJ,Apr_14_2022,268.2
+34031,Passaic County,NJ,Apr_14_2022,289.7
+34033,Salem County,NJ,Apr_14_2022,230.0
+34035,Somerset County,NJ,Apr_14_2022,207.8
+34037,Sussex County,NJ,Apr_14_2022,242.6
+34039,Union County,NJ,Apr_14_2022,261.9
+34041,Warren County,NJ,Apr_14_2022,228.2
+35001,Bernalillo County,NM,Apr_14_2022,216.6
+35003,Catron County,NM,Apr_14_2022,119.1
+35005,Chaves County,NM,Apr_14_2022,330.3
+35006,Cibola County,NM,Apr_14_2022,262.9
+35007,Colfax County,NM,Apr_14_2022,203.0
+35009,Curry County,NM,Apr_14_2022,257.9
+35011,De Baca County,NM,Apr_14_2022,327.2
+35013,Dona Ana County,NM,Apr_14_2022,288.9
+35015,Eddy County,NM,Apr_14_2022,291.0
+35017,Grant County,NM,Apr_14_2022,246.8
+35019,Guadalupe County,NM,Apr_14_2022,257.0
+35021,Harding County,NM,Apr_14_2022,132.8
+35023,Hidalgo County,NM,Apr_14_2022,261.3
+35025,Lea County,NM,Apr_14_2022,270.3
+35027,Lincoln County,NM,Apr_14_2022,267.9
+35028,Los Alamos County,NM,Apr_14_2022,142.0
+35029,Luna County,NM,Apr_14_2022,283.0
+35031,McKinley County,NM,Apr_14_2022,362.4
+35033,Mora County,NM,Apr_14_2022,168.8
+35035,Otero County,NM,Apr_14_2022,198.3
+35037,Quay County,NM,Apr_14_2022,242.3
+35039,Rio Arriba County,NM,Apr_14_2022,251.5
+35041,Roosevelt County,NM,Apr_14_2022,270.1
+35043,Sandoval County,NM,Apr_14_2022,228.6
+35045,San Juan County,NM,Apr_14_2022,328.7
+35047,San Miguel County,NM,Apr_14_2022,214.7
+35049,Santa Fe County,NM,Apr_14_2022,189.0
+35051,Sierra County,NM,Apr_14_2022,188.7
+35053,Socorro County,NM,Apr_14_2022,227.9
+35055,Taos County,NM,Apr_14_2022,162.9
+35057,Torrance County,NM,Apr_14_2022,173.5
+35059,Union County,NM,Apr_14_2022,192.9
+35061,Valencia County,NM,Apr_14_2022,242.2
+36001,Albany County,NY,Apr_14_2022,195.3
+36003,Allegany County,NY,Apr_14_2022,194.5
+36005,Bronx County,NY,Apr_14_2022,280.0
+36007,Broome County,NY,Apr_14_2022,241.9
+36009,Cattaraugus County,NY,Apr_14_2022,203.8
+36011,Cayuga County,NY,Apr_14_2022,217.6
+36013,Chautauqua County,NY,Apr_14_2022,186.1
+36015,Chemung County,NY,Apr_14_2022,257.7
+36017,Chenango County,NY,Apr_14_2022,199.3
+36019,Clinton County,NY,Apr_14_2022,211.1
+36021,Columbia County,NY,Apr_14_2022,170.8
+36023,Cortland County,NY,Apr_14_2022,227.8
+36025,Delaware County,NY,Apr_14_2022,178.6
+36027,Dutchess County,NY,Apr_14_2022,219.1
+36029,Erie County,NY,Apr_14_2022,230.0
+36031,Essex County,NY,Apr_14_2022,157.0
+36033,Franklin County,NY,Apr_14_2022,191.9
+36035,Fulton County,NY,Apr_14_2022,240.1
+36037,Genesee County,NY,Apr_14_2022,239.8
+36039,Greene County,NY,Apr_14_2022,184.5
+36041,Hamilton County,NY,Apr_14_2022,199.5
+36043,Herkimer County,NY,Apr_14_2022,229.6
+36045,Jefferson County,NY,Apr_14_2022,184.6
+36047,Kings County,NY,Apr_14_2022,272.5
+36049,Lewis County,NY,Apr_14_2022,235.4
+36051,Livingston County,NY,Apr_14_2022,186.6
+36053,Madison County,NY,Apr_14_2022,190.5
+36055,Monroe County,NY,Apr_14_2022,207.8
+36057,Montgomery County,NY,Apr_14_2022,243.8
+36059,Nassau County,NY,Apr_14_2022,300.5
+36061,New York County,NY,Apr_14_2022,259.4
+36063,Niagara County,NY,Apr_14_2022,230.7
+36065,Oneida County,NY,Apr_14_2022,238.2
+36067,Onondaga County,NY,Apr_14_2022,250.8
+36069,Ontario County,NY,Apr_14_2022,184.6
+36071,Orange County,NY,Apr_14_2022,279.2
+36073,Orleans County,NY,Apr_14_2022,214.9
+36075,Oswego County,NY,Apr_14_2022,231.5
+36077,Otsego County,NY,Apr_14_2022,169.1
+36079,Putnam County,NY,Apr_14_2022,242.8
+36081,Queens County,NY,Apr_14_2022,286.2
+36083,Rensselaer County,NY,Apr_14_2022,200.2
+36085,Richmond County,NY,Apr_14_2022,346.1
+36087,Rockland County,NY,Apr_14_2022,285.8
+36089,St. Lawrence County,NY,Apr_14_2022,199.9
+36091,Saratoga County,NY,Apr_14_2022,202.9
+36093,Schenectady County,NY,Apr_14_2022,214.2
+36095,Schoharie County,NY,Apr_14_2022,163.2
+36097,Schuyler County,NY,Apr_14_2022,199.4
+36099,Seneca County,NY,Apr_14_2022,178.6
+36101,Steuben County,NY,Apr_14_2022,210.6
+36103,Suffolk County,NY,Apr_14_2022,290.9
+36105,Sullivan County,NY,Apr_14_2022,245.6
+36107,Tioga County,NY,Apr_14_2022,226.4
+36109,Tompkins County,NY,Apr_14_2022,189.3
+36111,Ulster County,NY,Apr_14_2022,180.9
+36113,Warren County,NY,Apr_14_2022,215.9
+36115,Washington County,NY,Apr_14_2022,198.8
+36117,Wayne County,NY,Apr_14_2022,194.5
+36119,Westchester County,NY,Apr_14_2022,262.4
+36121,Wyoming County,NY,Apr_14_2022,208.6
+36123,Yates County,NY,Apr_14_2022,137.9
+37001,Alamance County,NC,Apr_14_2022,276.1
+37003,Alexander County,NC,Apr_14_2022,278.2
+37005,Alleghany County,NC,Apr_14_2022,265.0
+37007,Anson County,NC,Apr_14_2022,267.7
+37009,Ashe County,NC,Apr_14_2022,234.9
+37011,Avery County,NC,Apr_14_2022,259.9
+37013,Beaufort County,NC,Apr_14_2022,266.2
+37015,Bertie County,NC,Apr_14_2022,223.5
+37017,Bladen County,NC,Apr_14_2022,284.8
+37019,Brunswick County,NC,Apr_14_2022,209.2
+37021,Buncombe County,NC,Apr_14_2022,200.8
+37023,Burke County,NC,Apr_14_2022,277.2
+37025,Cabarrus County,NC,Apr_14_2022,257.0
+37027,Caldwell County,NC,Apr_14_2022,270.1
+37029,Camden County,NC,Apr_14_2022,161.5
+37031,Carteret County,NC,Apr_14_2022,203.1
+37033,Caswell County,NC,Apr_14_2022,233.4
+37035,Catawba County,NC,Apr_14_2022,298.2
+37037,Chatham County,NC,Apr_14_2022,172.3
+37039,Cherokee County,NC,Apr_14_2022,247.6
+37041,Chowan County,NC,Apr_14_2022,296.3
+37043,Clay County,NC,Apr_14_2022,233.5
+37045,Cleveland County,NC,Apr_14_2022,301.6
+37047,Columbus County,NC,Apr_14_2022,286.9
+37049,Craven County,NC,Apr_14_2022,237.7
+37051,Cumberland County,NC,Apr_14_2022,254.2
+37053,Currituck County,NC,Apr_14_2022,179.8
+37055,Dare County,NC,Apr_14_2022,199.5
+37057,Davidson County,NC,Apr_14_2022,256.9
+37059,Davie County,NC,Apr_14_2022,260.0
+37061,Duplin County,NC,Apr_14_2022,286.5
+37063,Durham County,NC,Apr_14_2022,222.6
+37065,Edgecombe County,NC,Apr_14_2022,262.5
+37067,Forsyth County,NC,Apr_14_2022,241.5
+37069,Franklin County,NC,Apr_14_2022,292.1
+37071,Gaston County,NC,Apr_14_2022,290.4
+37073,Gates County,NC,Apr_14_2022,164.2
+37075,Graham County,NC,Apr_14_2022,269.2
+37077,Granville County,NC,Apr_14_2022,236.1
+37079,Greene County,NC,Apr_14_2022,275.0
+37081,Guilford County,NC,Apr_14_2022,218.4
+37083,Halifax County,NC,Apr_14_2022,278.3
+37085,Harnett County,NC,Apr_14_2022,243.4
+37087,Haywood County,NC,Apr_14_2022,207.8
+37089,Henderson County,NC,Apr_14_2022,212.3
+37091,Hertford County,NC,Apr_14_2022,200.3
+37093,Hoke County,NC,Apr_14_2022,267.0
+37095,Hyde County,NC,Apr_14_2022,265.3
+37097,Iredell County,NC,Apr_14_2022,266.0
+37099,Jackson County,NC,Apr_14_2022,213.7
+37101,Johnston County,NC,Apr_14_2022,284.0
+37103,Jones County,NC,Apr_14_2022,234.8
+37105,Lee County,NC,Apr_14_2022,258.1
+37107,Lenoir County,NC,Apr_14_2022,281.6
+37109,Lincoln County,NC,Apr_14_2022,282.1
+37111,McDowell County,NC,Apr_14_2022,299.1
+37113,Macon County,NC,Apr_14_2022,219.0
+37115,Madison County,NC,Apr_14_2022,234.1
+37117,Martin County,NC,Apr_14_2022,270.5
+37119,Mecklenburg County,NC,Apr_14_2022,250.9
+37121,Mitchell County,NC,Apr_14_2022,229.2
+37123,Montgomery County,NC,Apr_14_2022,267.5
+37125,Moore County,NC,Apr_14_2022,239.8
+37127,Nash County,NC,Apr_14_2022,282.1
+37129,New Hanover County,NC,Apr_14_2022,215.9
+37131,Northampton County,NC,Apr_14_2022,221.7
+37133,Onslow County,NC,Apr_14_2022,262.0
+37135,Orange County,NC,Apr_14_2022,178.6
+37137,Pamlico County,NC,Apr_14_2022,204.0
+37139,Pasquotank County,NC,Apr_14_2022,213.3
+37141,Pender County,NC,Apr_14_2022,242.4
+37143,Perquimans County,NC,Apr_14_2022,204.1
+37145,Person County,NC,Apr_14_2022,235.4
+37147,Pitt County,NC,Apr_14_2022,289.2
+37149,Polk County,NC,Apr_14_2022,187.9
+37151,Randolph County,NC,Apr_14_2022,247.0
+37153,Richmond County,NC,Apr_14_2022,285.1
+37155,Robeson County,NC,Apr_14_2022,309.4
+37157,Rockingham County,NC,Apr_14_2022,241.5
+37159,Rowan County,NC,Apr_14_2022,289.5
+37161,Rutherford County,NC,Apr_14_2022,260.5
+37163,Sampson County,NC,Apr_14_2022,295.5
+37165,Scotland County,NC,Apr_14_2022,287.1
+37167,Stanly County,NC,Apr_14_2022,308.1
+37169,Stokes County,NC,Apr_14_2022,245.7
+37171,Surry County,NC,Apr_14_2022,292.9
+37173,Swain County,NC,Apr_14_2022,246.9
+37175,Transylvania County,NC,Apr_14_2022,178.4
+37177,Tyrrell County,NC,Apr_14_2022,242.8
+37179,Union County,NC,Apr_14_2022,257.0
+37181,Vance County,NC,Apr_14_2022,265.8
+37183,Wake County,NC,Apr_14_2022,261.2
+37185,Warren County,NC,Apr_14_2022,218.8
+37187,Washington County,NC,Apr_14_2022,260.4
+37189,Watauga County,NC,Apr_14_2022,221.5
+37191,Wayne County,NC,Apr_14_2022,253.3
+37193,Wilkes County,NC,Apr_14_2022,255.9
+37195,Wilson County,NC,Apr_14_2022,264.7
+37197,Yadkin County,NC,Apr_14_2022,287.4
+37199,Yancey County,NC,Apr_14_2022,280.8
+38001,Adams County,ND,Apr_14_2022,269.9
+38003,Barnes County,ND,Apr_14_2022,285.0
+38005,Benson County,ND,Apr_14_2022,288.1
+38007,Billings County,ND,Apr_14_2022,150.9
+38009,Bottineau County,ND,Apr_14_2022,252.5
+38011,Bowman County,ND,Apr_14_2022,273.8
+38013,Burke County,ND,Apr_14_2022,204.3
+38015,Burleigh County,ND,Apr_14_2022,365.0
+38017,Cass County,ND,Apr_14_2022,324.1
+38019,Cavalier County,ND,Apr_14_2022,217.4
+38021,Dickey County,ND,Apr_14_2022,304.8
+38023,Divide County,ND,Apr_14_2022,201.4
+38025,Dunn County,ND,Apr_14_2022,234.6
+38027,Eddy County,ND,Apr_14_2022,332.8
+38029,Emmons County,ND,Apr_14_2022,224.3
+38031,Foster County,ND,Apr_14_2022,306.9
+38033,Golden Valley County,ND,Apr_14_2022,269.7
+38035,Grand Forks County,ND,Apr_14_2022,318.4
+38037,Grant County,ND,Apr_14_2022,198.8
+38039,Griggs County,ND,Apr_14_2022,255.9
+38041,Hettinger County,ND,Apr_14_2022,331.3
+38043,Kidder County,ND,Apr_14_2022,204.0
+38045,LaMoure County,ND,Apr_14_2022,247.9
+38047,Logan County,ND,Apr_14_2022,235.1
+38049,McHenry County,ND,Apr_14_2022,227.3
+38051,McIntosh County,ND,Apr_14_2022,274.3
+38053,McKenzie County,ND,Apr_14_2022,217.0
+38055,McLean County,ND,Apr_14_2022,288.1
+38057,Mercer County,ND,Apr_14_2022,313.4
+38059,Morton County,ND,Apr_14_2022,357.9
+38061,Mountrail County,ND,Apr_14_2022,307.5
+38063,Nelson County,ND,Apr_14_2022,264.3
+38065,Oliver County,ND,Apr_14_2022,167.9
+38067,Pembina County,ND,Apr_14_2022,289.8
+38069,Pierce County,ND,Apr_14_2022,266.4
+38071,Ramsey County,ND,Apr_14_2022,313.5
+38073,Ransom County,ND,Apr_14_2022,285.7
+38075,Renville County,ND,Apr_14_2022,235.9
+38077,Richland County,ND,Apr_14_2022,251.0
+38079,Rolette County,ND,Apr_14_2022,424.9
+38081,Sargent County,ND,Apr_14_2022,258.9
+38083,Sheridan County,ND,Apr_14_2022,225.9
+38085,Sioux County,ND,Apr_14_2022,316.1
+38087,Slope County,ND,Apr_14_2022,84.0
+38089,Stark County,ND,Apr_14_2022,369.4
+38091,Steele County,ND,Apr_14_2022,201.1
+38093,Stutsman County,ND,Apr_14_2022,340.8
+38095,Towner County,ND,Apr_14_2022,289.6
+38097,Traill County,ND,Apr_14_2022,272.5
+38099,Walsh County,ND,Apr_14_2022,315.0
+38101,Ward County,ND,Apr_14_2022,307.1
+38103,Wells County,ND,Apr_14_2022,263.7
+38105,Williams County,ND,Apr_14_2022,278.5
+39001,Adams County,OH,Apr_14_2022,251.7
+39003,Allen County,OH,Apr_14_2022,268.2
+39005,Ashland County,OH,Apr_14_2022,223.7
+39007,Ashtabula County,OH,Apr_14_2022,204.4
+39009,Athens County,OH,Apr_14_2022,222.5
+39011,Auglaize County,OH,Apr_14_2022,253.6
+39013,Belmont County,OH,Apr_14_2022,234.1
+39015,Brown County,OH,Apr_14_2022,257.5
+39017,Butler County,OH,Apr_14_2022,242.5
+39019,Carroll County,OH,Apr_14_2022,195.2
+39021,Champaign County,OH,Apr_14_2022,224.5
+39023,Clark County,OH,Apr_14_2022,260.7
+39025,Clermont County,OH,Apr_14_2022,248.7
+39027,Clinton County,OH,Apr_14_2022,245.8
+39029,Columbiana County,OH,Apr_14_2022,239.4
+39031,Coshocton County,OH,Apr_14_2022,217.5
+39033,Crawford County,OH,Apr_14_2022,269.5
+39035,Cuyahoga County,OH,Apr_14_2022,218.3
+39037,Darke County,OH,Apr_14_2022,242.2
+39039,Defiance County,OH,Apr_14_2022,268.2
+39041,Delaware County,OH,Apr_14_2022,212.1
+39043,Erie County,OH,Apr_14_2022,262.0
+39045,Fairfield County,OH,Apr_14_2022,244.6
+39047,Fayette County,OH,Apr_14_2022,272.8
+39049,Franklin County,OH,Apr_14_2022,220.0
+39051,Fulton County,OH,Apr_14_2022,245.0
+39053,Gallia County,OH,Apr_14_2022,250.5
+39055,Geauga County,OH,Apr_14_2022,171.4
+39057,Greene County,OH,Apr_14_2022,222.2
+39059,Guernsey County,OH,Apr_14_2022,269.3
+39061,Hamilton County,OH,Apr_14_2022,230.0
+39063,Hancock County,OH,Apr_14_2022,225.8
+39065,Hardin County,OH,Apr_14_2022,225.7
+39067,Harrison County,OH,Apr_14_2022,214.9
+39069,Henry County,OH,Apr_14_2022,237.9
+39071,Highland County,OH,Apr_14_2022,245.5
+39073,Hocking County,OH,Apr_14_2022,236.0
+39075,Holmes County,OH,Apr_14_2022,116.2
+39077,Huron County,OH,Apr_14_2022,248.8
+39079,Jackson County,OH,Apr_14_2022,275.0
+39081,Jefferson County,OH,Apr_14_2022,225.2
+39083,Knox County,OH,Apr_14_2022,211.4
+39085,Lake County,OH,Apr_14_2022,213.0
+39087,Lawrence County,OH,Apr_14_2022,300.5
+39089,Licking County,OH,Apr_14_2022,235.9
+39091,Logan County,OH,Apr_14_2022,224.3
+39093,Lorain County,OH,Apr_14_2022,215.1
+39095,Lucas County,OH,Apr_14_2022,235.5
+39097,Madison County,OH,Apr_14_2022,216.2
+39099,Mahoning County,OH,Apr_14_2022,233.5
+39101,Marion County,OH,Apr_14_2022,305.0
+39103,Medina County,OH,Apr_14_2022,222.9
+39105,Meigs County,OH,Apr_14_2022,201.8
+39107,Mercer County,OH,Apr_14_2022,235.2
+39109,Miami County,OH,Apr_14_2022,240.3
+39111,Monroe County,OH,Apr_14_2022,254.3
+39113,Montgomery County,OH,Apr_14_2022,238.6
+39115,Morgan County,OH,Apr_14_2022,225.0
+39117,Morrow County,OH,Apr_14_2022,219.7
+39119,Muskingum County,OH,Apr_14_2022,293.4
+39121,Noble County,OH,Apr_14_2022,222.3
+39123,Ottawa County,OH,Apr_14_2022,209.1
+39125,Paulding County,OH,Apr_14_2022,247.0
+39127,Perry County,OH,Apr_14_2022,229.8
+39129,Pickaway County,OH,Apr_14_2022,299.7
+39131,Pike County,OH,Apr_14_2022,268.5
+39133,Portage County,OH,Apr_14_2022,210.4
+39135,Preble County,OH,Apr_14_2022,231.3
+39137,Putnam County,OH,Apr_14_2022,249.8
+39139,Richland County,OH,Apr_14_2022,260.4
+39141,Ross County,OH,Apr_14_2022,251.1
+39143,Sandusky County,OH,Apr_14_2022,237.6
+39145,Scioto County,OH,Apr_14_2022,274.0
+39147,Seneca County,OH,Apr_14_2022,231.1
+39149,Shelby County,OH,Apr_14_2022,227.6
+39151,Stark County,OH,Apr_14_2022,215.4
+39153,Summit County,OH,Apr_14_2022,207.9
+39155,Trumbull County,OH,Apr_14_2022,210.1
+39157,Tuscarawas County,OH,Apr_14_2022,223.8
+39159,Union County,OH,Apr_14_2022,265.0
+39161,Van Wert County,OH,Apr_14_2022,237.2
+39163,Vinton County,OH,Apr_14_2022,221.9
+39165,Warren County,OH,Apr_14_2022,246.1
+39167,Washington County,OH,Apr_14_2022,205.9
+39169,Wayne County,OH,Apr_14_2022,199.9
+39171,Williams County,OH,Apr_14_2022,245.4
+39173,Wood County,OH,Apr_14_2022,241.2
+39175,Wyandot County,OH,Apr_14_2022,248.8
+40001,Adair County,OK,Apr_14_2022,357.8
+40003,Alfalfa County,OK,Apr_14_2022,300.6
+40005,Atoka County,OK,Apr_14_2022,281.7
+40007,Beaver County,OK,Apr_14_2022,181.9
+40009,Beckham County,OK,Apr_14_2022,271.3
+40011,Blaine County,OK,Apr_14_2022,260.4
+40013,Bryan County,OK,Apr_14_2022,282.8
+40015,Caddo County,OK,Apr_14_2022,286.7
+40017,Canadian County,OK,Apr_14_2022,265.6
+40019,Carter County,OK,Apr_14_2022,296.7
+40021,Cherokee County,OK,Apr_14_2022,298.1
+40023,Choctaw County,OK,Apr_14_2022,276.7
+40025,Cimarron County,OK,Apr_14_2022,266.3
+40027,Cleveland County,OK,Apr_14_2022,278.7
+40029,Coal County,OK,Apr_14_2022,302.1
+40031,Comanche County,OK,Apr_14_2022,273.3
+40033,Cotton County,OK,Apr_14_2022,253.6
+40035,Craig County,OK,Apr_14_2022,336.5
+40037,Creek County,OK,Apr_14_2022,253.6
+40039,Custer County,OK,Apr_14_2022,272.1
+40041,Delaware County,OK,Apr_14_2022,257.0
+40043,Dewey County,OK,Apr_14_2022,217.3
+40045,Ellis County,OK,Apr_14_2022,200.1
+40047,Garfield County,OK,Apr_14_2022,248.5
+40049,Garvin County,OK,Apr_14_2022,253.5
+40051,Grady County,OK,Apr_14_2022,245.4
+40053,Grant County,OK,Apr_14_2022,237.9
+40055,Greer County,OK,Apr_14_2022,226.4
+40057,Harmon County,OK,Apr_14_2022,196.0
+40059,Harper County,OK,Apr_14_2022,191.4
+40061,Haskell County,OK,Apr_14_2022,219.9
+40063,Hughes County,OK,Apr_14_2022,194.1
+40065,Jackson County,OK,Apr_14_2022,267.3
+40067,Jefferson County,OK,Apr_14_2022,215.6
+40069,Johnston County,OK,Apr_14_2022,273.3
+40071,Kay County,OK,Apr_14_2022,281.8
+40073,Kingfisher County,OK,Apr_14_2022,263.9
+40075,Kiowa County,OK,Apr_14_2022,224.5
+40077,Latimer County,OK,Apr_14_2022,225.2
+40079,Le Flore County,OK,Apr_14_2022,249.7
+40081,Lincoln County,OK,Apr_14_2022,225.0
+40083,Logan County,OK,Apr_14_2022,225.3
+40085,Love County,OK,Apr_14_2022,301.4
+40087,McClain County,OK,Apr_14_2022,287.2
+40089,McCurtain County,OK,Apr_14_2022,245.8
+40091,McIntosh County,OK,Apr_14_2022,248.9
+40093,Major County,OK,Apr_14_2022,323.0
+40095,Marshall County,OK,Apr_14_2022,271.9
+40097,Mayes County,OK,Apr_14_2022,250.2
+40099,Murray County,OK,Apr_14_2022,295.6
+40101,Muskogee County,OK,Apr_14_2022,293.2
+40103,Noble County,OK,Apr_14_2022,271.8
+40105,Nowata County,OK,Apr_14_2022,275.8
+40107,Okfuskee County,OK,Apr_14_2022,294.6
+40109,Oklahoma County,OK,Apr_14_2022,248.5
+40111,Okmulgee County,OK,Apr_14_2022,251.2
+40113,Osage County,OK,Apr_14_2022,232.4
+40115,Ottawa County,OK,Apr_14_2022,293.1
+40117,Pawnee County,OK,Apr_14_2022,250.4
+40119,Payne County,OK,Apr_14_2022,223.4
+40121,Pittsburg County,OK,Apr_14_2022,246.6
+40123,Pontotoc County,OK,Apr_14_2022,314.3
+40125,Pottawatomie County,OK,Apr_14_2022,283.8
+40127,Pushmataha County,OK,Apr_14_2022,239.9
+40129,Roger Mills County,OK,Apr_14_2022,243.1
+40131,Rogers County,OK,Apr_14_2022,274.6
+40133,Seminole County,OK,Apr_14_2022,252.2
+40135,Sequoyah County,OK,Apr_14_2022,255.4
+40137,Stephens County,OK,Apr_14_2022,254.1
+40139,Texas County,OK,Apr_14_2022,299.8
+40141,Tillman County,OK,Apr_14_2022,210.3
+40143,Tulsa County,OK,Apr_14_2022,261.7
+40145,Wagoner County,OK,Apr_14_2022,266.8
+40147,Washington County,OK,Apr_14_2022,245.9
+40149,Washita County,OK,Apr_14_2022,240.7
+40151,Woods County,OK,Apr_14_2022,267.6
+40153,Woodward County,OK,Apr_14_2022,255.3
+41001,Baker County,OR,Apr_14_2022,198.7
+41003,Benton County,OR,Apr_14_2022,162.3
+41005,Clackamas County,OR,Apr_14_2022,143.4
+41007,Clatsop County,OR,Apr_14_2022,114.3
+41009,Columbia County,OR,Apr_14_2022,144.3
+41011,Coos County,OR,Apr_14_2022,165.1
+41013,Crook County,OR,Apr_14_2022,247.3
+41015,Curry County,OR,Apr_14_2022,145.7
+41017,Deschutes County,OR,Apr_14_2022,232.1
+41019,Douglas County,OR,Apr_14_2022,177.7
+41021,Gilliam County,OR,Apr_14_2022,148.0
+41023,Grant County,OR,Apr_14_2022,232.0
+41025,Harney County,OR,Apr_14_2022,216.6
+41027,Hood River County,OR,Apr_14_2022,151.7
+41029,Jackson County,OR,Apr_14_2022,192.8
+41031,Jefferson County,OR,Apr_14_2022,292.6
+41033,Josephine County,OR,Apr_14_2022,186.5
+41035,Klamath County,OR,Apr_14_2022,206.5
+41037,Lake County,OR,Apr_14_2022,178.3
+41039,Lane County,OR,Apr_14_2022,149.8
+41041,Lincoln County,OR,Apr_14_2022,140.1
+41043,Linn County,OR,Apr_14_2022,203.3
+41045,Malheur County,OR,Apr_14_2022,268.3
+41047,Marion County,OR,Apr_14_2022,197.8
+41049,Morrow County,OR,Apr_14_2022,254.2
+41051,Multnomah County,OR,Apr_14_2022,139.2
+41053,Polk County,OR,Apr_14_2022,177.1
+41055,Sherman County,OR,Apr_14_2022,178.7
+41057,Tillamook County,OR,Apr_14_2022,134.8
+41059,Umatilla County,OR,Apr_14_2022,286.4
+41061,Union County,OR,Apr_14_2022,186.9
+41063,Wallowa County,OR,Apr_14_2022,173.6
+41065,Wasco County,OR,Apr_14_2022,191.9
+41067,Washington County,OR,Apr_14_2022,141.4
+41069,Wheeler County,OR,Apr_14_2022,181.7
+41071,Yamhill County,OR,Apr_14_2022,165.5
+42001,Adams County,PA,Apr_14_2022,240.7
+42003,Allegheny County,PA,Apr_14_2022,217.5
+42005,Armstrong County,PA,Apr_14_2022,235.9
+42007,Beaver County,PA,Apr_14_2022,245.1
+42009,Bedford County,PA,Apr_14_2022,229.2
+42011,Berks County,PA,Apr_14_2022,243.1
+42013,Blair County,PA,Apr_14_2022,243.7
+42015,Bradford County,PA,Apr_14_2022,253.4
+42017,Bucks County,PA,Apr_14_2022,196.6
+42019,Butler County,PA,Apr_14_2022,237.0
+42021,Cambria County,PA,Apr_14_2022,265.7
+42023,Cameron County,PA,Apr_14_2022,183.3
+42025,Carbon County,PA,Apr_14_2022,247.8
+42027,Centre County,PA,Apr_14_2022,217.4
+42029,Chester County,PA,Apr_14_2022,175.6
+42031,Clarion County,PA,Apr_14_2022,214.2
+42033,Clearfield County,PA,Apr_14_2022,243.5
+42035,Clinton County,PA,Apr_14_2022,234.0
+42037,Columbia County,PA,Apr_14_2022,232.7
+42039,Crawford County,PA,Apr_14_2022,233.8
+42041,Cumberland County,PA,Apr_14_2022,201.2
+42043,Dauphin County,PA,Apr_14_2022,212.4
+42045,Delaware County,PA,Apr_14_2022,194.8
+42047,Elk County,PA,Apr_14_2022,238.4
+42049,Erie County,PA,Apr_14_2022,212.0
+42051,Fayette County,PA,Apr_14_2022,240.1
+42053,Forest County,PA,Apr_14_2022,309.1
+42055,Franklin County,PA,Apr_14_2022,260.2
+42057,Fulton County,PA,Apr_14_2022,283.7
+42059,Greene County,PA,Apr_14_2022,233.4
+42061,Huntingdon County,PA,Apr_14_2022,254.9
+42063,Indiana County,PA,Apr_14_2022,207.2
+42065,Jefferson County,PA,Apr_14_2022,207.5
+42067,Juniata County,PA,Apr_14_2022,192.5
+42069,Lackawanna County,PA,Apr_14_2022,208.1
+42071,Lancaster County,PA,Apr_14_2022,221.9
+42073,Lawrence County,PA,Apr_14_2022,221.6
+42075,Lebanon County,PA,Apr_14_2022,258.0
+42077,Lehigh County,PA,Apr_14_2022,242.7
+42079,Luzerne County,PA,Apr_14_2022,231.9
+42081,Lycoming County,PA,Apr_14_2022,251.2
+42083,McKean County,PA,Apr_14_2022,201.9
+42085,Mercer County,PA,Apr_14_2022,213.3
+42087,Mifflin County,PA,Apr_14_2022,266.2
+42089,Monroe County,PA,Apr_14_2022,217.7
+42091,Montgomery County,PA,Apr_14_2022,184.3
+42093,Montour County,PA,Apr_14_2022,248.4
+42095,Northampton County,PA,Apr_14_2022,261.3
+42097,Northumberland County,PA,Apr_14_2022,251.4
+42099,Perry County,PA,Apr_14_2022,190.9
+42101,Philadelphia County,PA,Apr_14_2022,195.8
+42103,Pike County,PA,Apr_14_2022,183.5
+42105,Potter County,PA,Apr_14_2022,193.6
+42107,Schuylkill County,PA,Apr_14_2022,243.7
+42109,Snyder County,PA,Apr_14_2022,200.8
+42111,Somerset County,PA,Apr_14_2022,254.8
+42113,Sullivan County,PA,Apr_14_2022,173.1
+42115,Susquehanna County,PA,Apr_14_2022,195.1
+42117,Tioga County,PA,Apr_14_2022,198.3
+42119,Union County,PA,Apr_14_2022,260.4
+42121,Venango County,PA,Apr_14_2022,222.0
+42123,Warren County,PA,Apr_14_2022,187.3
+42125,Washington County,PA,Apr_14_2022,246.1
+42127,Wayne County,PA,Apr_14_2022,198.0
+42129,Westmoreland County,PA,Apr_14_2022,228.8
+42131,Wyoming County,PA,Apr_14_2022,189.8
+42133,York County,PA,Apr_14_2022,264.4
+44001,Bristol County,RI,Apr_14_2022,281.7
+44003,Kent County,RI,Apr_14_2022,297.4
+44005,Newport County,RI,Apr_14_2022,245.9
+44007,Providence County,RI,Apr_14_2022,347.6
+44009,Washington County,RI,Apr_14_2022,260.1
+45001,Abbeville County,SC,Apr_14_2022,270.8
+45003,Aiken County,SC,Apr_14_2022,242.7
+45005,Allendale County,SC,Apr_14_2022,239.4
+45007,Anderson County,SC,Apr_14_2022,285.1
+45009,Bamberg County,SC,Apr_14_2022,243.5
+45011,Barnwell County,SC,Apr_14_2022,278.5
+45013,Beaufort County,SC,Apr_14_2022,224.1
+45015,Berkeley County,SC,Apr_14_2022,227.1
+45017,Calhoun County,SC,Apr_14_2022,191.3
+45019,Charleston County,SC,Apr_14_2022,271.9
+45021,Cherokee County,SC,Apr_14_2022,256.2
+45023,Chester County,SC,Apr_14_2022,312.9
+45025,Chesterfield County,SC,Apr_14_2022,258.5
+45027,Clarendon County,SC,Apr_14_2022,258.4
+45029,Colleton County,SC,Apr_14_2022,234.9
+45031,Darlington County,SC,Apr_14_2022,283.5
+45033,Dillon County,SC,Apr_14_2022,318.2
+45035,Dorchester County,SC,Apr_14_2022,343.4
+45037,Edgefield County,SC,Apr_14_2022,247.8
+45039,Fairfield County,SC,Apr_14_2022,267.1
+45041,Florence County,SC,Apr_14_2022,301.7
+45043,Georgetown County,SC,Apr_14_2022,252.7
+45045,Greenville County,SC,Apr_14_2022,329.1
+45047,Greenwood County,SC,Apr_14_2022,318.3
+45049,Hampton County,SC,Apr_14_2022,260.6
+45051,Horry County,SC,Apr_14_2022,272.3
+45053,Jasper County,SC,Apr_14_2022,195.8
+45055,Kershaw County,SC,Apr_14_2022,322.1
+45057,Lancaster County,SC,Apr_14_2022,255.7
+45059,Laurens County,SC,Apr_14_2022,275.7
+45061,Lee County,SC,Apr_14_2022,252.6
+45063,Lexington County,SC,Apr_14_2022,320.3
+45065,McCormick County,SC,Apr_14_2022,235.2
+45067,Marion County,SC,Apr_14_2022,278.5
+45069,Marlboro County,SC,Apr_14_2022,300.7
+45071,Newberry County,SC,Apr_14_2022,345.2
+45073,Oconee County,SC,Apr_14_2022,303.8
+45075,Orangeburg County,SC,Apr_14_2022,270.3
+45077,Pickens County,SC,Apr_14_2022,361.3
+45079,Richland County,SC,Apr_14_2022,294.1
+45081,Saluda County,SC,Apr_14_2022,193.2
+45083,Spartanburg County,SC,Apr_14_2022,296.7
+45085,Sumter County,SC,Apr_14_2022,260.6
+45087,Union County,SC,Apr_14_2022,282.8
+45089,Williamsburg County,SC,Apr_14_2022,280.8
+45091,York County,SC,Apr_14_2022,276.0
+46003,Aurora County,SD,Apr_14_2022,279.5
+46005,Beadle County,SD,Apr_14_2022,248.6
+46007,Bennett County,SD,Apr_14_2022,234.2
+46009,Bon Homme County,SD,Apr_14_2022,332.0
+46011,Brookings County,SD,Apr_14_2022,230.9
+46013,Brown County,SD,Apr_14_2022,265.0
+46015,Brule County,SD,Apr_14_2022,266.6
+46017,Buffalo County,SD,Apr_14_2022,315.5
+46019,Butte County,SD,Apr_14_2022,263.8
+46021,Campbell County,SD,Apr_14_2022,194.0
+46023,Charles Mix County,SD,Apr_14_2022,315.0
+46025,Clark County,SD,Apr_14_2022,214.1
+46027,Clay County,SD,Apr_14_2022,247.9
+46029,Codington County,SD,Apr_14_2022,300.3
+46031,Corson County,SD,Apr_14_2022,261.4
+46033,Custer County,SD,Apr_14_2022,226.3
+46035,Davison County,SD,Apr_14_2022,297.7
+46037,Day County,SD,Apr_14_2022,236.2
+46039,Deuel County,SD,Apr_14_2022,238.1
+46041,Dewey County,SD,Apr_14_2022,532.2
+46043,Douglas County,SD,Apr_14_2022,233.1
+46045,Edmunds County,SD,Apr_14_2022,245.5
+46047,Fall River County,SD,Apr_14_2022,268.7
+46049,Faulk County,SD,Apr_14_2022,245.8
+46051,Grant County,SD,Apr_14_2022,289.1
+46053,Gregory County,SD,Apr_14_2022,254.2
+46055,Haakon County,SD,Apr_14_2022,237.5
+46057,Hamlin County,SD,Apr_14_2022,243.5
+46059,Hand County,SD,Apr_14_2022,175.8
+46061,Hanson County,SD,Apr_14_2022,189.7
+46063,Harding County,SD,Apr_14_2022,154.9
+46065,Hughes County,SD,Apr_14_2022,246.2
+46067,Hutchinson County,SD,Apr_14_2022,237.7
+46069,Hyde County,SD,Apr_14_2022,235.2
+46071,Jackson County,SD,Apr_14_2022,188.1
+46073,Jerauld County,SD,Apr_14_2022,206.2
+46075,Jones County,SD,Apr_14_2022,196.0
+46077,Kingsbury County,SD,Apr_14_2022,266.2
+46079,Lake County,SD,Apr_14_2022,181.8
+46081,Lawrence County,SD,Apr_14_2022,254.2
+46083,Lincoln County,SD,Apr_14_2022,253.5
+46085,Lyman County,SD,Apr_14_2022,318.2
+46087,McCook County,SD,Apr_14_2022,239.9
+46089,McPherson County,SD,Apr_14_2022,178.6
+46091,Marshall County,SD,Apr_14_2022,158.9
+46093,Meade County,SD,Apr_14_2022,247.3
+46095,Mellette County,SD,Apr_14_2022,255.7
+46097,Miner County,SD,Apr_14_2022,205.8
+46099,Minnehaha County,SD,Apr_14_2022,295.4
+46101,Moody County,SD,Apr_14_2022,209.2
+46102,Oglala Lakota County,SD,Apr_14_2022,276.8
+46103,Pennington County,SD,Apr_14_2022,287.5
+46105,Perkins County,SD,Apr_14_2022,238.0
+46107,Potter County,SD,Apr_14_2022,327.0
+46109,Roberts County,SD,Apr_14_2022,233.5
+46111,Sanborn County,SD,Apr_14_2022,244.5
+46115,Spink County,SD,Apr_14_2022,221.9
+46117,Stanley County,SD,Apr_14_2022,205.3
+46119,Sully County,SD,Apr_14_2022,176.1
+46121,Todd County,SD,Apr_14_2022,292.1
+46123,Tripp County,SD,Apr_14_2022,253.4
+46125,Turner County,SD,Apr_14_2022,234.3
+46127,Union County,SD,Apr_14_2022,251.4
+46129,Walworth County,SD,Apr_14_2022,241.6
+46135,Yankton County,SD,Apr_14_2022,258.7
+46137,Ziebach County,SD,Apr_14_2022,240.6
+47001,Anderson County,TN,Apr_14_2022,286.8
+47003,Bedford County,TN,Apr_14_2022,300.8
+47005,Benton County,TN,Apr_14_2022,278.9
+47007,Bledsoe County,TN,Apr_14_2022,309.4
+47009,Blount County,TN,Apr_14_2022,293.9
+47011,Bradley County,TN,Apr_14_2022,306.4
+47013,Campbell County,TN,Apr_14_2022,307.0
+47015,Cannon County,TN,Apr_14_2022,286.1
+47017,Carroll County,TN,Apr_14_2022,322.5
+47019,Carter County,TN,Apr_14_2022,292.2
+47021,Cheatham County,TN,Apr_14_2022,268.2
+47023,Chester County,TN,Apr_14_2022,337.7
+47025,Claiborne County,TN,Apr_14_2022,284.8
+47027,Clay County,TN,Apr_14_2022,300.5
+47029,Cocke County,TN,Apr_14_2022,321.6
+47031,Coffee County,TN,Apr_14_2022,299.7
+47033,Crockett County,TN,Apr_14_2022,363.8
+47035,Cumberland County,TN,Apr_14_2022,266.1
+47037,Davidson County,TN,Apr_14_2022,276.1
+47039,Decatur County,TN,Apr_14_2022,319.9
+47041,DeKalb County,TN,Apr_14_2022,306.4
+47043,Dickson County,TN,Apr_14_2022,294.3
+47045,Dyer County,TN,Apr_14_2022,344.3
+47047,Fayette County,TN,Apr_14_2022,277.7
+47049,Fentress County,TN,Apr_14_2022,307.6
+47051,Franklin County,TN,Apr_14_2022,304.5
+47053,Gibson County,TN,Apr_14_2022,354.1
+47055,Giles County,TN,Apr_14_2022,319.3
+47057,Grainger County,TN,Apr_14_2022,290.7
+47059,Greene County,TN,Apr_14_2022,319.4
+47061,Grundy County,TN,Apr_14_2022,296.9
+47063,Hamblen County,TN,Apr_14_2022,303.4
+47065,Hamilton County,TN,Apr_14_2022,271.7
+47067,Hancock County,TN,Apr_14_2022,303.6
+47069,Hardeman County,TN,Apr_14_2022,303.0
+47071,Hardin County,TN,Apr_14_2022,341.1
+47073,Hawkins County,TN,Apr_14_2022,293.2
+47075,Haywood County,TN,Apr_14_2022,356.4
+47077,Henderson County,TN,Apr_14_2022,324.5
+47079,Henry County,TN,Apr_14_2022,255.6
+47081,Hickman County,TN,Apr_14_2022,271.1
+47083,Houston County,TN,Apr_14_2022,326.5
+47085,Humphreys County,TN,Apr_14_2022,260.5
+47087,Jackson County,TN,Apr_14_2022,271.8
+47089,Jefferson County,TN,Apr_14_2022,288.4
+47091,Johnson County,TN,Apr_14_2022,290.4
+47093,Knox County,TN,Apr_14_2022,271.1
+47095,Lake County,TN,Apr_14_2022,391.4
+47097,Lauderdale County,TN,Apr_14_2022,302.0
+47099,Lawrence County,TN,Apr_14_2022,323.5
+47101,Lewis County,TN,Apr_14_2022,291.0
+47103,Lincoln County,TN,Apr_14_2022,290.3
+47105,Loudon County,TN,Apr_14_2022,267.9
+47107,McMinn County,TN,Apr_14_2022,310.1
+47109,McNairy County,TN,Apr_14_2022,297.6
+47111,Macon County,TN,Apr_14_2022,343.1
+47113,Madison County,TN,Apr_14_2022,306.0
+47115,Marion County,TN,Apr_14_2022,306.4
+47117,Marshall County,TN,Apr_14_2022,301.4
+47119,Maury County,TN,Apr_14_2022,300.8
+47121,Meigs County,TN,Apr_14_2022,272.7
+47123,Monroe County,TN,Apr_14_2022,312.7
+47125,Montgomery County,TN,Apr_14_2022,240.2
+47127,Moore County,TN,Apr_14_2022,344.9
+47129,Morgan County,TN,Apr_14_2022,289.1
+47131,Obion County,TN,Apr_14_2022,357.9
+47133,Overton County,TN,Apr_14_2022,321.0
+47135,Perry County,TN,Apr_14_2022,288.4
+47137,Pickett County,TN,Apr_14_2022,350.2
+47139,Polk County,TN,Apr_14_2022,281.1
+47141,Putnam County,TN,Apr_14_2022,312.7
+47143,Rhea County,TN,Apr_14_2022,300.9
+47145,Roane County,TN,Apr_14_2022,295.6
+47147,Robertson County,TN,Apr_14_2022,299.9
+47149,Rutherford County,TN,Apr_14_2022,288.0
+47151,Scott County,TN,Apr_14_2022,409.5
+47153,Sequatchie County,TN,Apr_14_2022,280.6
+47155,Sevier County,TN,Apr_14_2022,308.3
+47157,Shelby County,TN,Apr_14_2022,251.4
+47159,Smith County,TN,Apr_14_2022,305.7
+47161,Stewart County,TN,Apr_14_2022,239.7
+47163,Sullivan County,TN,Apr_14_2022,289.4
+47165,Sumner County,TN,Apr_14_2022,277.9
+47167,Tipton County,TN,Apr_14_2022,285.9
+47169,Trousdale County,TN,Apr_14_2022,374.7
+47171,Unicoi County,TN,Apr_14_2022,288.9
+47173,Union County,TN,Apr_14_2022,270.3
+47175,Van Buren County,TN,Apr_14_2022,314.5
+47177,Warren County,TN,Apr_14_2022,314.8
+47179,Washington County,TN,Apr_14_2022,298.0
+47181,Wayne County,TN,Apr_14_2022,341.6
+47183,Weakley County,TN,Apr_14_2022,285.7
+47185,White County,TN,Apr_14_2022,300.8
+47187,Williamson County,TN,Apr_14_2022,260.3
+47189,Wilson County,TN,Apr_14_2022,287.9
+48001,Anderson County,TX,Apr_14_2022,165.1
+48003,Andrews County,TX,Apr_14_2022,202.8
+48005,Angelina County,TX,Apr_14_2022,177.8
+48007,Aransas County,TX,Apr_14_2022,174.4
+48009,Archer County,TX,Apr_14_2022,252.1
+48011,Armstrong County,TX,Apr_14_2022,278.2
+48013,Atascosa County,TX,Apr_14_2022,265.0
+48015,Austin County,TX,Apr_14_2022,191.2
+48017,Bailey County,TX,Apr_14_2022,210.7
+48019,Bandera County,TX,Apr_14_2022,155.8
+48021,Bastrop County,TX,Apr_14_2022,245.2
+48023,Baylor County,TX,Apr_14_2022,231.4
+48025,Bee County,TX,Apr_14_2022,255.0
+48027,Bell County,TX,Apr_14_2022,184.4
+48029,Bexar County,TX,Apr_14_2022,278.5
+48031,Blanco County,TX,Apr_14_2022,212.6
+48033,Borden County,TX,Apr_14_2022,149.8
+48035,Bosque County,TX,Apr_14_2022,217.8
+48037,Bowie County,TX,Apr_14_2022,215.6
+48039,Brazoria County,TX,Apr_14_2022,249.8
+48041,Brazos County,TX,Apr_14_2022,263.3
+48043,Brewster County,TX,Apr_14_2022,115.7
+48045,Briscoe County,TX,Apr_14_2022,299.5
+48047,Brooks County,TX,Apr_14_2022,227.7
+48049,Brown County,TX,Apr_14_2022,311.3
+48051,Burleson County,TX,Apr_14_2022,271.6
+48053,Burnet County,TX,Apr_14_2022,227.6
+48055,Caldwell County,TX,Apr_14_2022,325.3
+48057,Calhoun County,TX,Apr_14_2022,268.0
+48059,Callahan County,TX,Apr_14_2022,204.9
+48061,Cameron County,TX,Apr_14_2022,242.9
+48063,Camp County,TX,Apr_14_2022,218.5
+48065,Carson County,TX,Apr_14_2022,257.7
+48067,Cass County,TX,Apr_14_2022,240.5
+48069,Castro County,TX,Apr_14_2022,304.1
+48071,Chambers County,TX,Apr_14_2022,235.5
+48073,Cherokee County,TX,Apr_14_2022,151.3
+48075,Childress County,TX,Apr_14_2022,360.4
+48077,Clay County,TX,Apr_14_2022,198.1
+48079,Cochran County,TX,Apr_14_2022,310.2
+48081,Coke County,TX,Apr_14_2022,247.7
+48083,Coleman County,TX,Apr_14_2022,199.6
+48085,Collin County,TX,Apr_14_2022,205.3
+48087,Collingsworth County,TX,Apr_14_2022,240.1
+48089,Colorado County,TX,Apr_14_2022,176.7
+48091,Comal County,TX,Apr_14_2022,217.8
+48093,Comanche County,TX,Apr_14_2022,264.0
+48095,Concho County,TX,Apr_14_2022,395.8
+48097,Cooke County,TX,Apr_14_2022,177.7
+48099,Coryell County,TX,Apr_14_2022,230.8
+48101,Cottle County,TX,Apr_14_2022,221.7
+48103,Crane County,TX,Apr_14_2022,266.0
+48105,Crockett County,TX,Apr_14_2022,306.9
+48107,Crosby County,TX,Apr_14_2022,328.0
+48109,Culberson County,TX,Apr_14_2022,235.8
+48111,Dallam County,TX,Apr_14_2022,295.5
+48113,Dallas County,TX,Apr_14_2022,216.3
+48115,Dawson County,TX,Apr_14_2022,228.6
+48117,Deaf Smith County,TX,Apr_14_2022,259.1
+48119,Delta County,TX,Apr_14_2022,340.1
+48121,Denton County,TX,Apr_14_2022,191.2
+48123,DeWitt County,TX,Apr_14_2022,320.5
+48125,Dickens County,TX,Apr_14_2022,203.5
+48127,Dimmit County,TX,Apr_14_2022,567.9
+48129,Donley County,TX,Apr_14_2022,350.5
+48131,Duval County,TX,Apr_14_2022,301.5
+48133,Eastland County,TX,Apr_14_2022,153.5
+48135,Ector County,TX,Apr_14_2022,225.4
+48137,Edwards County,TX,Apr_14_2022,240.7
+48139,Ellis County,TX,Apr_14_2022,264.0
+48141,El Paso County,TX,Apr_14_2022,247.3
+48143,Erath County,TX,Apr_14_2022,203.4
+48145,Falls County,TX,Apr_14_2022,217.8
+48147,Fannin County,TX,Apr_14_2022,193.1
+48149,Fayette County,TX,Apr_14_2022,188.2
+48151,Fisher County,TX,Apr_14_2022,158.5
+48153,Floyd County,TX,Apr_14_2022,341.4
+48155,Foard County,TX,Apr_14_2022,175.8
+48157,Fort Bend County,TX,Apr_14_2022,226.3
+48159,Franklin County,TX,Apr_14_2022,204.8
+48161,Freestone County,TX,Apr_14_2022,196.1
+48163,Frio County,TX,Apr_14_2022,287.6
+48165,Gaines County,TX,Apr_14_2022,102.6
+48167,Galveston County,TX,Apr_14_2022,280.0
+48169,Garza County,TX,Apr_14_2022,203.9
+48171,Gillespie County,TX,Apr_14_2022,199.2
+48173,Glasscock County,TX,Apr_14_2022,141.2
+48175,Goliad County,TX,Apr_14_2022,156.7
+48177,Gonzales County,TX,Apr_14_2022,226.6
+48179,Gray County,TX,Apr_14_2022,282.5
+48181,Grayson County,TX,Apr_14_2022,199.0
+48183,Gregg County,TX,Apr_14_2022,187.0
+48185,Grimes County,TX,Apr_14_2022,293.4
+48187,Guadalupe County,TX,Apr_14_2022,228.3
+48189,Hale County,TX,Apr_14_2022,196.3
+48191,Hall County,TX,Apr_14_2022,369.1
+48193,Hamilton County,TX,Apr_14_2022,231.7
+48195,Hansford County,TX,Apr_14_2022,356.0
+48197,Hardeman County,TX,Apr_14_2022,141.1
+48199,Hardin County,TX,Apr_14_2022,208.8
+48201,Harris County,TX,Apr_14_2022,216.5
+48203,Harrison County,TX,Apr_14_2022,200.1
+48205,Hartley County,TX,Apr_14_2022,243.2
+48207,Haskell County,TX,Apr_14_2022,158.4
+48209,Hays County,TX,Apr_14_2022,250.9
+48211,Hemphill County,TX,Apr_14_2022,323.4
+48213,Henderson County,TX,Apr_14_2022,185.9
+48215,Hidalgo County,TX,Apr_14_2022,235.1
+48217,Hill County,TX,Apr_14_2022,243.4
+48219,Hockley County,TX,Apr_14_2022,334.9
+48221,Hood County,TX,Apr_14_2022,217.3
+48223,Hopkins County,TX,Apr_14_2022,194.5
+48225,Houston County,TX,Apr_14_2022,181.8
+48227,Howard County,TX,Apr_14_2022,185.6
+48229,Hudspeth County,TX,Apr_14_2022,202.4
+48231,Hunt County,TX,Apr_14_2022,159.8
+48233,Hutchinson County,TX,Apr_14_2022,321.5
+48235,Irion County,TX,Apr_14_2022,288.4
+48237,Jack County,TX,Apr_14_2022,168.8
+48239,Jackson County,TX,Apr_14_2022,220.5
+48241,Jasper County,TX,Apr_14_2022,171.2
+48243,Jeff Davis County,TX,Apr_14_2022,98.1
+48245,Jefferson County,TX,Apr_14_2022,187.5
+48247,Jim Hogg County,TX,Apr_14_2022,503.1
+48249,Jim Wells County,TX,Apr_14_2022,278.1
+48251,Johnson County,TX,Apr_14_2022,246.3
+48253,Jones County,TX,Apr_14_2022,228.5
+48255,Karnes County,TX,Apr_14_2022,369.6
+48257,Kaufman County,TX,Apr_14_2022,260.0
+48259,Kendall County,TX,Apr_14_2022,172.6
+48261,Kenedy County,TX,Apr_14_2022,205.4
+48263,Kent County,TX,Apr_14_2022,274.3
+48265,Kerr County,TX,Apr_14_2022,183.4
+48267,Kimble County,TX,Apr_14_2022,158.6
+48269,King County,TX,Apr_14_2022,187.5
+48271,Kinney County,TX,Apr_14_2022,201.8
+48273,Kleberg County,TX,Apr_14_2022,234.9
+48275,Knox County,TX,Apr_14_2022,134.0
+48277,Lamar County,TX,Apr_14_2022,192.2
+48279,Lamb County,TX,Apr_14_2022,336.7
+48281,Lampasas County,TX,Apr_14_2022,258.0
+48283,La Salle County,TX,Apr_14_2022,312.5
+48285,Lavaca County,TX,Apr_14_2022,210.6
+48287,Lee County,TX,Apr_14_2022,246.2
+48289,Leon County,TX,Apr_14_2022,213.6
+48291,Liberty County,TX,Apr_14_2022,205.3
+48293,Limestone County,TX,Apr_14_2022,216.8
+48295,Lipscomb County,TX,Apr_14_2022,222.7
+48297,Live Oak County,TX,Apr_14_2022,175.4
+48299,Llano County,TX,Apr_14_2022,179.0
+48301,Loving County,TX,Apr_14_2022,1094.7
+48303,Lubbock County,TX,Apr_14_2022,301.2
+48305,Lynn County,TX,Apr_14_2022,260.1
+48307,McCulloch County,TX,Apr_14_2022,163.0
+48309,McLennan County,TX,Apr_14_2022,227.3
+48311,McMullen County,TX,Apr_14_2022,226.1
+48313,Madison County,TX,Apr_14_2022,260.2
+48315,Marion County,TX,Apr_14_2022,171.2
+48317,Martin County,TX,Apr_14_2022,207.9
+48319,Mason County,TX,Apr_14_2022,183.7
+48321,Matagorda County,TX,Apr_14_2022,227.6
+48323,Maverick County,TX,Apr_14_2022,354.4
+48325,Medina County,TX,Apr_14_2022,198.1
+48327,Menard County,TX,Apr_14_2022,239.5
+48329,Midland County,TX,Apr_14_2022,229.3
+48331,Milam County,TX,Apr_14_2022,198.5
+48333,Mills County,TX,Apr_14_2022,302.7
+48335,Mitchell County,TX,Apr_14_2022,218.0
+48337,Montague County,TX,Apr_14_2022,235.6
+48339,Montgomery County,TX,Apr_14_2022,229.7
+48341,Moore County,TX,Apr_14_2022,266.9
+48343,Morris County,TX,Apr_14_2022,203.3
+48345,Motley County,TX,Apr_14_2022,238.3
+48347,Nacogdoches County,TX,Apr_14_2022,188.5
+48349,Navarro County,TX,Apr_14_2022,248.0
+48351,Newton County,TX,Apr_14_2022,100.4
+48353,Nolan County,TX,Apr_14_2022,208.0
+48355,Nueces County,TX,Apr_14_2022,227.9
+48357,Ochiltree County,TX,Apr_14_2022,246.0
+48359,Oldham County,TX,Apr_14_2022,266.6
+48361,Orange County,TX,Apr_14_2022,179.0
+48363,Palo Pinto County,TX,Apr_14_2022,240.7
+48365,Panola County,TX,Apr_14_2022,197.7
+48367,Parker County,TX,Apr_14_2022,240.9
+48369,Parmer County,TX,Apr_14_2022,245.9
+48371,Pecos County,TX,Apr_14_2022,173.0
+48373,Polk County,TX,Apr_14_2022,152.4
+48375,Potter County,TX,Apr_14_2022,249.9
+48377,Presidio County,TX,Apr_14_2022,145.7
+48379,Rains County,TX,Apr_14_2022,146.6
+48381,Randall County,TX,Apr_14_2022,198.1
+48383,Reagan County,TX,Apr_14_2022,223.2
+48385,Real County,TX,Apr_14_2022,234.6
+48387,Red River County,TX,Apr_14_2022,190.8
+48389,Reeves County,TX,Apr_14_2022,289.0
+48391,Refugio County,TX,Apr_14_2022,254.0
+48393,Roberts County,TX,Apr_14_2022,204.9
+48395,Robertson County,TX,Apr_14_2022,265.3
+48397,Rockwall County,TX,Apr_14_2022,253.2
+48399,Runnels County,TX,Apr_14_2022,225.1
+48401,Rusk County,TX,Apr_14_2022,198.5
+48403,Sabine County,TX,Apr_14_2022,117.8
+48405,San Augustine County,TX,Apr_14_2022,129.4
+48407,San Jacinto County,TX,Apr_14_2022,192.0
+48409,San Patricio County,TX,Apr_14_2022,165.6
+48411,San Saba County,TX,Apr_14_2022,204.5
+48413,Schleicher County,TX,Apr_14_2022,188.0
+48415,Scurry County,TX,Apr_14_2022,297.6
+48417,Shackelford County,TX,Apr_14_2022,207.4
+48419,Shelby County,TX,Apr_14_2022,176.5
+48421,Sherman County,TX,Apr_14_2022,164.8
+48423,Smith County,TX,Apr_14_2022,195.2
+48425,Somervell County,TX,Apr_14_2022,231.2
+48427,Starr County,TX,Apr_14_2022,307.3
+48429,Stephens County,TX,Apr_14_2022,196.1
+48431,Sterling County,TX,Apr_14_2022,189.8
+48433,Stonewall County,TX,Apr_14_2022,264.4
+48435,Sutton County,TX,Apr_14_2022,224.3
+48437,Swisher County,TX,Apr_14_2022,308.4
+48439,Tarrant County,TX,Apr_14_2022,257.0
+48441,Taylor County,TX,Apr_14_2022,224.2
+48443,Terrell County,TX,Apr_14_2022,155.9
+48445,Terry County,TX,Apr_14_2022,225.8
+48447,Throckmorton County,TX,Apr_14_2022,179.2
+48449,Titus County,TX,Apr_14_2022,263.6
+48451,Tom Green County,TX,Apr_14_2022,257.2
+48453,Travis County,TX,Apr_14_2022,174.8
+48455,Trinity County,TX,Apr_14_2022,178.1
+48457,Tyler County,TX,Apr_14_2022,156.3
+48459,Upshur County,TX,Apr_14_2022,188.6
+48461,Upton County,TX,Apr_14_2022,227.2
+48463,Uvalde County,TX,Apr_14_2022,395.5
+48465,Val Verde County,TX,Apr_14_2022,292.3
+48467,Van Zandt County,TX,Apr_14_2022,183.1
+48469,Victoria County,TX,Apr_14_2022,202.5
+48471,Walker County,TX,Apr_14_2022,252.9
+48473,Waller County,TX,Apr_14_2022,173.7
+48475,Ward County,TX,Apr_14_2022,235.2
+48477,Washington County,TX,Apr_14_2022,256.6
+48479,Webb County,TX,Apr_14_2022,337.6
+48481,Wharton County,TX,Apr_14_2022,219.5
+48483,Wheeler County,TX,Apr_14_2022,233.8
+48485,Wichita County,TX,Apr_14_2022,234.9
+48487,Wilbarger County,TX,Apr_14_2022,270.7
+48489,Willacy County,TX,Apr_14_2022,326.7
+48491,Williamson County,TX,Apr_14_2022,223.1
+48493,Wilson County,TX,Apr_14_2022,214.5
+48495,Winkler County,TX,Apr_14_2022,230.2
+48497,Wise County,TX,Apr_14_2022,242.2
+48499,Wood County,TX,Apr_14_2022,175.8
+48501,Yoakum County,TX,Apr_14_2022,150.5
+48503,Young County,TX,Apr_14_2022,217.3
+48505,Zapata County,TX,Apr_14_2022,259.3
+48507,Zavala County,TX,Apr_14_2022,341.7
+49001,Beaver County,UT,Apr_14_2022,112.4
+49003,Box Elder County,UT,Apr_14_2022,251.0
+49005,Cache County,UT,Apr_14_2022,289.2
+49007,Carbon County,UT,Apr_14_2022,254.3
+49009,Daggett County,UT,Apr_14_2022,38.9
+49011,Davis County,UT,Apr_14_2022,281.8
+49013,Duchesne County,UT,Apr_14_2022,61.0
+49015,Emery County,UT,Apr_14_2022,246.5
+49017,Garfield County,UT,Apr_14_2022,92.3
+49019,Grand County,UT,Apr_14_2022,234.2
+49021,Iron County,UT,Apr_14_2022,98.0
+49023,Juab County,UT,Apr_14_2022,240.2
+49025,Kane County,UT,Apr_14_2022,82.0
+49027,Millard County,UT,Apr_14_2022,247.6
+49029,Morgan County,UT,Apr_14_2022,233.2
+49031,Piute County,UT,Apr_14_2022,205.5
+49033,Rich County,UT,Apr_14_2022,137.3
+49035,Salt Lake County,UT,Apr_14_2022,294.7
+49037,San Juan County,UT,Apr_14_2022,260.1
+49039,Sanpete County,UT,Apr_14_2022,270.0
+49041,Sevier County,UT,Apr_14_2022,251.2
+49043,Summit County,UT,Apr_14_2022,320.9
+49045,Tooele County,UT,Apr_14_2022,296.0
+49047,Uintah County,UT,Apr_14_2022,49.2
+49049,Utah County,UT,Apr_14_2022,317.0
+49051,Wasatch County,UT,Apr_14_2022,314.4
+49053,Washington County,UT,Apr_14_2022,115.6
+49055,Wayne County,UT,Apr_14_2022,162.7
+49057,Weber County,UT,Apr_14_2022,272.7
+50001,Addison County,VT,Apr_14_2022,153.3
+50003,Bennington County,VT,Apr_14_2022,268.2
+50005,Caledonia County,VT,Apr_14_2022,190.5
+50007,Chittenden County,VT,Apr_14_2022,194.9
+50009,Essex County,VT,Apr_14_2022,208.5
+50011,Franklin County,VT,Apr_14_2022,196.2
+50013,Grand Isle County,VT,Apr_14_2022,145.0
+50015,Lamoille County,VT,Apr_14_2022,153.3
+50017,Orange County,VT,Apr_14_2022,169.5
+50019,Orleans County,VT,Apr_14_2022,233.6
+50021,Rutland County,VT,Apr_14_2022,217.0
+50023,Washington County,VT,Apr_14_2022,173.6
+50025,Windham County,VT,Apr_14_2022,159.2
+50027,Windsor County,VT,Apr_14_2022,160.8
+51001,Accomack,VA,Apr_14_2022,215.0
+51003,Albemarle,VA,Apr_14_2022,161.5
+51005,Alleghany,VA,Apr_14_2022,228.0
+51007,Amelia,VA,Apr_14_2022,200.4
+51009,Amherst,VA,Apr_14_2022,228.2
+51011,Appomattox,VA,Apr_14_2022,237.6
+51013,Arlington,VA,Apr_14_2022,179.5
+51015,Augusta,VA,Apr_14_2022,251.8
+51017,Bath,VA,Apr_14_2022,215.6
+51019,Bedford,VA,Apr_14_2022,214.4
+51021,Bland,VA,Apr_14_2022,281.5
+51023,Botetourt,VA,Apr_14_2022,223.5
+51025,Brunswick,VA,Apr_14_2022,198.7
+51027,Buchanan,VA,Apr_14_2022,232.2
+51029,Buckingham,VA,Apr_14_2022,229.9
+51031,Campbell,VA,Apr_14_2022,220.7
+51033,Caroline,VA,Apr_14_2022,222.3
+51035,Carroll,VA,Apr_14_2022,223.6
+51036,Charles City,VA,Apr_14_2022,166.0
+51037,Charlotte,VA,Apr_14_2022,209.6
+51041,Chesterfield,VA,Apr_14_2022,206.9
+51043,Clarke,VA,Apr_14_2022,178.8
+51045,Craig,VA,Apr_14_2022,218.1
+51047,Culpeper,VA,Apr_14_2022,216.4
+51049,Cumberland,VA,Apr_14_2022,133.2
+51051,Dickenson,VA,Apr_14_2022,231.5
+51053,Dinwiddie,VA,Apr_14_2022,186.4
+51057,Essex,VA,Apr_14_2022,206.2
+51059,Fairfax,VA,Apr_14_2022,155.1
+51061,Fauquier,VA,Apr_14_2022,183.2
+51063,Floyd,VA,Apr_14_2022,162.0
+51065,Fluvanna,VA,Apr_14_2022,188.4
+51067,Franklin,VA,Apr_14_2022,192.4
+51069,Frederick,VA,Apr_14_2022,230.3
+51071,Giles,VA,Apr_14_2022,242.5
+51073,Gloucester,VA,Apr_14_2022,195.8
+51075,Goochland,VA,Apr_14_2022,168.5
+51077,Grayson,VA,Apr_14_2022,259.7
+51079,Greene,VA,Apr_14_2022,200.1
+51081,Greensville,VA,Apr_14_2022,293.5
+51083,Halifax,VA,Apr_14_2022,207.7
+51085,Hanover,VA,Apr_14_2022,201.9
+51087,Henrico,VA,Apr_14_2022,196.1
+51089,Henry,VA,Apr_14_2022,233.0
+51091,Highland,VA,Apr_14_2022,167.1
+51093,Isle of Wight,VA,Apr_14_2022,196.2
+51095,James City,VA,Apr_14_2022,194.5
+51097,King and Queen,VA,Apr_14_2022,159.4
+51099,King George,VA,Apr_14_2022,186.7
+51101,King William,VA,Apr_14_2022,215.2
+51103,Lancaster,VA,Apr_14_2022,170.0
+51105,Lee,VA,Apr_14_2022,265.1
+51107,Loudoun,VA,Apr_14_2022,165.7
+51109,Louisa,VA,Apr_14_2022,176.4
+51111,Lunenburg,VA,Apr_14_2022,196.9
+51113,Madison,VA,Apr_14_2022,177.2
+51115,Mathews,VA,Apr_14_2022,162.9
+51117,Mecklenburg,VA,Apr_14_2022,199.1
+51119,Middlesex,VA,Apr_14_2022,172.9
+51121,Montgomery,VA,Apr_14_2022,189.4
+51125,Nelson,VA,Apr_14_2022,169.8
+51127,New Kent,VA,Apr_14_2022,200.4
+51131,Northampton,VA,Apr_14_2022,183.3
+51133,Northumberland,VA,Apr_14_2022,179.3
+51135,Nottoway,VA,Apr_14_2022,275.9
+51137,Orange,VA,Apr_14_2022,183.6
+51139,Page,VA,Apr_14_2022,234.0
+51141,Patrick,VA,Apr_14_2022,206.1
+51143,Pittsylvania,VA,Apr_14_2022,232.4
+51145,Powhatan,VA,Apr_14_2022,172.9
+51147,Prince Edward,VA,Apr_14_2022,219.7
+51149,Prince George,VA,Apr_14_2022,223.3
+51153,Prince William,VA,Apr_14_2022,202.7
+51155,Pulaski,VA,Apr_14_2022,212.5
+51157,Rappahannock,VA,Apr_14_2022,135.7
+51159,Richmond,VA,Apr_14_2022,282.6
+51161,Roanoke,VA,Apr_14_2022,224.0
+51163,Rockbridge,VA,Apr_14_2022,144.8
+51165,Rockingham,VA,Apr_14_2022,176.4
+51167,Russell,VA,Apr_14_2022,256.9
+51169,Scott,VA,Apr_14_2022,265.5
+51171,Shenandoah,VA,Apr_14_2022,247.7
+51173,Smyth,VA,Apr_14_2022,291.1
+51175,Southampton,VA,Apr_14_2022,189.6
+51177,Spotsylvania,VA,Apr_14_2022,197.7
+51179,Stafford,VA,Apr_14_2022,198.5
+51181,Surry,VA,Apr_14_2022,169.9
+51183,Sussex,VA,Apr_14_2022,217.2
+51185,Tazewell,VA,Apr_14_2022,251.5
+51187,Warren,VA,Apr_14_2022,213.1
+51191,Washington,VA,Apr_14_2022,255.7
+51193,Westmoreland,VA,Apr_14_2022,180.5
+51195,Wise,VA,Apr_14_2022,274.1
+51197,Wythe,VA,Apr_14_2022,260.9
+51199,York,VA,Apr_14_2022,144.1
+51510,Cty_Alexandria,VA,Apr_14_2022,192.7
+51520,Cty_Bristol,VA,Apr_14_2022,262.0
+51530,Cty_Buena Vista,VA,Apr_14_2022,308.9
+51540,Cty_Charlottesville,VA,Apr_14_2022,189.4
+51550,Cty_Chesapeake,VA,Apr_14_2022,204.3
+51570,Cty_Colonial Heights,VA,Apr_14_2022,278.8
+51580,Cty_Covington,VA,Apr_14_2022,226.8
+51590,Cty_Danville,VA,Apr_14_2022,276.1
+51595,Cty_Emporia,VA,Apr_14_2022,216.6
+51600,Cty_Fairfax,VA,Apr_14_2022,82.5
+51610,Cty_Falls Church,VA,Apr_14_2022,139.4
+51620,Cty_Franklin,VA,Apr_14_2022,309.4
+51630,Cty_Fredericksburg,VA,Apr_14_2022,182.4
+51640,Cty_Galax,VA,Apr_14_2022,402.6
+51650,Cty_Hampton,VA,Apr_14_2022,206.3
+51660,Cty_Harrisonburg,VA,Apr_14_2022,250.3
+51670,Cty_Hopewell,VA,Apr_14_2022,271.0
+51678,Cty_Lexington,VA,Apr_14_2022,379.8
+51680,Cty_Lynchburg,VA,Apr_14_2022,244.4
+51683,Cty_Manassas,VA,Apr_14_2022,222.2
+51685,Cty_Manassas Park,VA,Apr_14_2022,213.1
+51690,Cty_Martinsville,VA,Apr_14_2022,266.8
+51700,Cty_Newport News,VA,Apr_14_2022,202.4
+51710,Cty_Norfolk,VA,Apr_14_2022,174.1
+51720,Cty_Norton,VA,Apr_14_2022,327.8
+51730,Cty_Petersburg,VA,Apr_14_2022,264.5
+51735,Cty_Poquoson,VA,Apr_14_2022,191.3
+51740,Cty_Portsmouth,VA,Apr_14_2022,221.1
+51750,Cty_Radford,VA,Apr_14_2022,269.5
+51760,Cty_Richmond,VA,Apr_14_2022,194.5
+51770,Cty_Roanoke,VA,Apr_14_2022,214.4
+51775,Cty_Salem,VA,Apr_14_2022,223.4
+51790,Cty_Staunton,VA,Apr_14_2022,227.1
+51800,Cty_Suffolk,VA,Apr_14_2022,203.1
+51810,Cty_Virginia Beach,VA,Apr_14_2022,199.2
+51820,Cty_Waynesboro,VA,Apr_14_2022,235.4
+51830,Cty_Williamsburg,VA,Apr_14_2022,118.0
+51840,Cty_Winchester,VA,Apr_14_2022,225.1
+53001,Adams County,WA,Apr_14_2022,245.9
+53003,Asotin County,WA,Apr_14_2022,200.4
+53005,Benton County,WA,Apr_14_2022,256.7
+53007,Chelan County,WA,Apr_14_2022,260.6
+53009,Clallam County,WA,Apr_14_2022,147.0
+53011,Clark County,WA,Apr_14_2022,181.5
+53013,Columbia County,WA,Apr_14_2022,152.6
+53015,Cowlitz County,WA,Apr_14_2022,206.9
+53017,Douglas County,WA,Apr_14_2022,254.8
+53019,Ferry County,WA,Apr_14_2022,184.5
+53021,Franklin County,WA,Apr_14_2022,341.3
+53023,Garfield County,WA,Apr_14_2022,173.5
+53025,Grant County,WA,Apr_14_2022,262.7
+53027,Grays Harbor County,WA,Apr_14_2022,215.7
+53029,Island County,WA,Apr_14_2022,118.3
+53031,Jefferson County,WA,Apr_14_2022,92.4
+53033,King County,WA,Apr_14_2022,169.8
+53035,Kitsap County,WA,Apr_14_2022,145.4
+53037,Kittitas County,WA,Apr_14_2022,175.3
+53039,Klickitat County,WA,Apr_14_2022,156.3
+53041,Lewis County,WA,Apr_14_2022,217.1
+53043,Lincoln County,WA,Apr_14_2022,201.9
+53045,Mason County,WA,Apr_14_2022,184.5
+53047,Okanogan County,WA,Apr_14_2022,202.2
+53049,Pacific County,WA,Apr_14_2022,153.9
+53051,Pend Oreille County,WA,Apr_14_2022,181.7
+53053,Pierce County,WA,Apr_14_2022,213.2
+53055,San Juan County,WA,Apr_14_2022,68.9
+53057,Skagit County,WA,Apr_14_2022,171.1
+53059,Skamania County,WA,Apr_14_2022,124.4
+53061,Snohomish County,WA,Apr_14_2022,184.6
+53063,Spokane County,WA,Apr_14_2022,237.4
+53065,Stevens County,WA,Apr_14_2022,177.5
+53067,Thurston County,WA,Apr_14_2022,161.6
+53069,Wahkiakum County,WA,Apr_14_2022,118.1
+53071,Walla Walla County,WA,Apr_14_2022,250.0
+53073,Whatcom County,WA,Apr_14_2022,163.9
+53075,Whitman County,WA,Apr_14_2022,173.5
+53077,Yakima County,WA,Apr_14_2022,284.9
+54001,Barbour County,WV,Apr_14_2022,291.2
+54003,Berkeley County,WV,Apr_14_2022,299.6
+54005,Boone County,WV,Apr_14_2022,305.9
+54007,Braxton County,WV,Apr_14_2022,279.2
+54009,Brooke County,WV,Apr_14_2022,228.4
+54011,Cabell County,WV,Apr_14_2022,298.4
+54013,Calhoun County,WV,Apr_14_2022,257.8
+54015,Clay County,WV,Apr_14_2022,275.0
+54017,Doddridge County,WV,Apr_14_2022,254.5
+54019,Fayette County,WV,Apr_14_2022,307.8
+54021,Gilmer County,WV,Apr_14_2022,267.4
+54023,Grant County,WV,Apr_14_2022,325.8
+54025,Greenbrier County,WV,Apr_14_2022,274.3
+54027,Hampshire County,WV,Apr_14_2022,251.3
+54029,Hancock County,WV,Apr_14_2022,232.7
+54031,Hardy County,WV,Apr_14_2022,303.3
+54033,Harrison County,WV,Apr_14_2022,294.9
+54035,Jackson County,WV,Apr_14_2022,240.8
+54037,Jefferson County,WV,Apr_14_2022,248.8
+54039,Kanawha County,WV,Apr_14_2022,264.6
+54041,Lewis County,WV,Apr_14_2022,334.3
+54043,Lincoln County,WV,Apr_14_2022,270.6
+54045,Logan County,WV,Apr_14_2022,299.2
+54047,McDowell County,WV,Apr_14_2022,318.3
+54049,Marion County,WV,Apr_14_2022,267.3
+54051,Marshall County,WV,Apr_14_2022,292.9
+54053,Mason County,WV,Apr_14_2022,250.6
+54055,Mercer County,WV,Apr_14_2022,289.3
+54057,Mineral County,WV,Apr_14_2022,292.4
+54059,Mingo County,WV,Apr_14_2022,338.6
+54061,Monongalia County,WV,Apr_14_2022,233.4
+54063,Monroe County,WV,Apr_14_2022,314.4
+54065,Morgan County,WV,Apr_14_2022,237.6
+54067,Nicholas County,WV,Apr_14_2022,298.2
+54069,Ohio County,WV,Apr_14_2022,266.8
+54071,Pendleton County,WV,Apr_14_2022,281.1
+54073,Pleasants County,WV,Apr_14_2022,276.8
+54075,Pocahontas County,WV,Apr_14_2022,244.2
+54077,Preston County,WV,Apr_14_2022,277.2
+54079,Putnam County,WV,Apr_14_2022,295.2
+54081,Raleigh County,WV,Apr_14_2022,309.5
+54083,Randolph County,WV,Apr_14_2022,327.7
+54085,Ritchie County,WV,Apr_14_2022,255.7
+54087,Roane County,WV,Apr_14_2022,230.8
+54089,Summers County,WV,Apr_14_2022,223.1
+54091,Taylor County,WV,Apr_14_2022,270.5
+54093,Tucker County,WV,Apr_14_2022,292.1
+54095,Tyler County,WV,Apr_14_2022,256.1
+54097,Upshur County,WV,Apr_14_2022,282.0
+54099,Wayne County,WV,Apr_14_2022,249.1
+54101,Webster County,WV,Apr_14_2022,278.4
+54103,Wetzel County,WV,Apr_14_2022,287.6
+54105,Wirt County,WV,Apr_14_2022,248.6
+54107,Wood County,WV,Apr_14_2022,265.5
+54109,Wyoming County,WV,Apr_14_2022,342.9
+55001,Adams County,WI,Apr_14_2022,229.5
+55003,Ashland County,WI,Apr_14_2022,211.0
+55005,Barron County,WI,Apr_14_2022,298.0
+55007,Bayfield County,WI,Apr_14_2022,219.7
+55009,Brown County,WI,Apr_14_2022,318.1
+55011,Buffalo County,WI,Apr_14_2022,269.3
+55013,Burnett County,WI,Apr_14_2022,258.2
+55015,Calumet County,WI,Apr_14_2022,289.7
+55017,Chippewa County,WI,Apr_14_2022,288.9
+55019,Clark County,WI,Apr_14_2022,218.8
+55021,Columbia County,WI,Apr_14_2022,265.4
+55023,Crawford County,WI,Apr_14_2022,262.6
+55025,Dane County,WI,Apr_14_2022,230.7
+55027,Dodge County,WI,Apr_14_2022,309.8
+55029,Door County,WI,Apr_14_2022,251.7
+55031,Douglas County,WI,Apr_14_2022,269.0
+55033,Dunn County,WI,Apr_14_2022,293.2
+55035,Eau Claire County,WI,Apr_14_2022,289.1
+55037,Florence County,WI,Apr_14_2022,251.7
+55039,Fond du Lac County,WI,Apr_14_2022,307.8
+55041,Forest County,WI,Apr_14_2022,296.8
+55043,Grant County,WI,Apr_14_2022,246.9
+55045,Green County,WI,Apr_14_2022,249.3
+55047,Green Lake County,WI,Apr_14_2022,270.3
+55049,Iowa County,WI,Apr_14_2022,222.0
+55051,Iron County,WI,Apr_14_2022,258.1
+55053,Jackson County,WI,Apr_14_2022,274.0
+55055,Jefferson County,WI,Apr_14_2022,253.8
+55057,Juneau County,WI,Apr_14_2022,288.2
+55059,Kenosha County,WI,Apr_14_2022,260.9
+55061,Kewaunee County,WI,Apr_14_2022,285.6
+55063,La Crosse County,WI,Apr_14_2022,295.3
+55065,Lafayette County,WI,Apr_14_2022,219.6
+55067,Langlade County,WI,Apr_14_2022,271.0
+55069,Lincoln County,WI,Apr_14_2022,254.5
+55071,Manitowoc County,WI,Apr_14_2022,258.7
+55073,Marathon County,WI,Apr_14_2022,289.2
+55075,Marinette County,WI,Apr_14_2022,287.7
+55077,Marquette County,WI,Apr_14_2022,244.5
+55078,Menominee County,WI,Apr_14_2022,417.3
+55079,Milwaukee County,WI,Apr_14_2022,285.1
+55081,Monroe County,WI,Apr_14_2022,259.6
+55083,Oconto County,WI,Apr_14_2022,300.3
+55085,Oneida County,WI,Apr_14_2022,238.6
+55087,Outagamie County,WI,Apr_14_2022,289.4
+55089,Ozaukee County,WI,Apr_14_2022,249.8
+55091,Pepin County,WI,Apr_14_2022,270.1
+55093,Pierce County,WI,Apr_14_2022,270.4
+55095,Polk County,WI,Apr_14_2022,282.1
+55097,Portage County,WI,Apr_14_2022,254.5
+55099,Price County,WI,Apr_14_2022,243.4
+55101,Racine County,WI,Apr_14_2022,287.4
+55103,Richland County,WI,Apr_14_2022,223.8
+55105,Rock County,WI,Apr_14_2022,263.4
+55107,Rusk County,WI,Apr_14_2022,240.9
+55109,St. Croix County,WI,Apr_14_2022,272.9
+55111,Sauk County,WI,Apr_14_2022,246.7
+55113,Sawyer County,WI,Apr_14_2022,275.0
+55115,Shawano County,WI,Apr_14_2022,284.9
+55117,Sheboygan County,WI,Apr_14_2022,281.9
+55119,Taylor County,WI,Apr_14_2022,237.3
+55121,Trempealeau County,WI,Apr_14_2022,283.2
+55123,Vernon County,WI,Apr_14_2022,195.9
+55125,Vilas County,WI,Apr_14_2022,235.2
+55127,Walworth County,WI,Apr_14_2022,257.5
+55129,Washburn County,WI,Apr_14_2022,253.5
+55131,Washington County,WI,Apr_14_2022,279.8
+55133,Waukesha County,WI,Apr_14_2022,278.5
+55135,Waupaca County,WI,Apr_14_2022,267.3
+55137,Waushara County,WI,Apr_14_2022,261.6
+55139,Winnebago County,WI,Apr_14_2022,300.7
+55141,Wood County,WI,Apr_14_2022,286.9
+56001,Albany County,WY,Apr_14_2022,254.1
+56003,Big Horn County,WY,Apr_14_2022,218.7
+56005,Campbell County,WY,Apr_14_2022,260.8
+56007,Carbon County,WY,Apr_14_2022,312.1
+56009,Converse County,WY,Apr_14_2022,226.8
+56011,Crook County,WY,Apr_14_2022,177.5
+56013,Fremont County,WY,Apr_14_2022,350.5
+56015,Goshen County,WY,Apr_14_2022,275.0
+56017,Hot Springs County,WY,Apr_14_2022,261.0
+56019,Johnson County,WY,Apr_14_2022,218.5
+56021,Laramie County,WY,Apr_14_2022,262.6
+56023,Lincoln County,WY,Apr_14_2022,200.1
+56025,Natrona County,WY,Apr_14_2022,278.8
+56027,Niobrara County,WY,Apr_14_2022,278.0
+56029,Park County,WY,Apr_14_2022,231.3
+56031,Platte County,WY,Apr_14_2022,227.3
+56033,Sheridan County,WY,Apr_14_2022,264.0
+56035,Sublette County,WY,Apr_14_2022,195.5
+56037,Sweetwater County,WY,Apr_14_2022,261.3
+56039,Teton County,WY,Apr_14_2022,423.8
+56041,Uinta County,WY,Apr_14_2022,278.1
+56043,Washakie County,WY,Apr_14_2022,302.0
+56045,Weston County,WY,Apr_14_2022,229.1
