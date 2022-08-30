@@ -7,8 +7,8 @@
 This chapter will introduce the reader how to create linked micromap plots from scratch without using any of the existing micromap R packages. This may become necessary when the underlying areas are not supported by any shapefile or other boundary file, e.g., positions on a baseball field or locations of stores in a shopping mall, or when non-standard visualizations are required, e.g., the in-flow or out-flow of a spatial area. This chapter will focus on linked microposter plots, i.e., linked micromap plots where the areas of interest are the main viewing areas of a scientific poster.
 
 
-
 ## Introduction {#Ch10-Introduction}
+
 
 The linked micromap plot was first introduced in 1996 to highlight geographic patterns and associations among the variables in a spatial dataset [@CaPi1996]. It has been widely used to display geospatially-indexed summary statistics. For some in-depth discussion of linked micromap plots, the reader is referred to @SC2008, @CP2010, @SDWPM2014	, @SCMW2017, and the other chapters of this book.  
 
@@ -19,22 +19,22 @@ The following sections will illustrate how to create linked micromap plots from 
 <!-- The creation of linked microposter is based on the raw code from @LiSy2017ASA before compiling the R package. -->
 
 
-
 ## Main {#Ch10-Main}
 
 
 ### Data processing and preparation {#Ch10-Data}
 
 #### Eye tracking data
+
 Eye tracking data is obtained from measuring where people are looking at with an eye tracking device, either a mobile eye tracker or a static eye tracker. Static eye trackers are based on a desktop, hence they are often used to study eye motion on a computer screen. Mobile eye trackers are fixed on a user's head, so they are not limited within a restricted area and can be used for a variety of activities, such as playing soccer, driving, etc. The example data we use to demonstrate are from a 30 Hz mobile eye tracker that records 30 images per second. The two co-authors of @LiSy2017ASA looked at a series of statistical and other scientific posters. The original data is a video record indicating where people are looking at. The video data is processed with matlab and we are able to obtain a dataframe with x and y coordinates transformed to the same coordinate system in terms of the poster we defined. The details of processing the raw video data is described in @Li2017. Time series pupil radius data are also obtained from the eye tracker.
 
 The eye tracking data for the poster we use to demonstrate here is based on a controlled experiment where the participant was given instructions to look at the poster. 
 
 
-
 #### Shapefile preparation: AOI definition
 
-The shapefiles for the micro poster plot is the boundaries of the areas of interests (AOIs) for the poster, such as the title, logos, multiple text areas, images, and tables. 
+
+The shapefiles for the microposter plot is the boundaries of the areas of interests (AOIs) for the poster, such as the title, logos, multiple text areas, images, and tables. 
 
 <!-- The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package.  -->
 The rectangles that represent the AOIs are drawn by mouse clicking two vertices using the _locator_ function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. The AOIs are named by the analyst, 
@@ -50,35 +50,36 @@ Twelve AOIs are defined on the poster image and the shape data is saved as``AOIN
 
 
 ```{r Ch10-aoi-data, eval = TRUE, echo = FALSE}
-
 RegionName <- read.csv("data/Ch10/RegionName.csv")
 # load(file = "fig_10/RegionName.RData")
 
 knitr::kable(
   RegionName,
-  caption = "An example of shapefile for micromap plot.",
+  caption = "An example of a shapefile for a linked microposter plot.",
   booktabs = TRUE
 )
 ```
 
 
-Figure\@ref(fig:Ch10-poster-AOI) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs, so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
+Figure \@ref(fig:Ch10-poster-AOI) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs, so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot. The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
 
 
 ```{r Ch10-poster-AOI, fig.cap = 'Poster with defined AOIs.', out.width = '90%', eval = TRUE, echo = FALSE}
-
 options(knitr.graphics.auto_pdf = TRUE)
 knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
 
+
 #### Eye tracking data feature extractions
+
 
 The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create linked micromap plot, the data features should be extracted based on the defined Region of Interests or AOIs. Different features of eye tracking data are extracted in terms of the defined AOIs, such as how long the participant has spent and how many times the participant has visited each AOI, eye movement speed from one focus point to another in pixels within each AOIs and pupil radiuses for each visit at the corresponding AOI. 
 
-The resulting datasets described in the above sections are provided to create a sample linked micromap plot or linked micro poster plot:  _AOIName_\index{Datasets!AOIName} is the shapefile; _locations_testing_\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; _posterdat.all_\index{Datasets!posterdat.all} is the list with features extracted from _locations_testing_ dataset. _Posterdat.all_ contains three lists: 1. A dataframe with three columns: section (AOI names), visits or time the participant spent on each AOI (in seconds), and visits.num indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
+The resulting datasets described in the above sections are provided to create a sample linked micromap plot or linked microposter plot:  _AOIName_\index{Datasets!AOIName} is the shapefile; _locations_testing_\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; _posterdat.all_\index{Datasets!posterdat.all} is the list with features extracted from _locations_testing_ dataset. _Posterdat.all_ contains three lists: 1. A dataframe with three columns: section (AOI names), visits or time the participant spent on each AOI (in seconds), and visits.num indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
 
 
 ### Linked microposter plot creation
+
 
 After the eye tracking video data is processed and AOI shapefile is created, we can now start to create linked microposter plot following the steps below. 
 
@@ -90,7 +91,6 @@ A vector of panel plot types are created to store the designed panel types. Then
 
 
 ```{r Ch10-panel-design}
-
 panel.types <- c("poster", "legend", "dot", "dot", "boxplot")
 
 columns.att <- list(
@@ -147,6 +147,7 @@ poster <- imager::load.image(poster.loc)
 poster <- imager::grayscale(poster)
 ```
 
+
 3. **Load shapefile for poster.**
 
 The shape file, i.e. data for the definitions of AOIs, is loaded. The AOIs are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI "Blank" is added to the shape file with its vertices defined as 0s. A polygon for the entire poster is created after the creation and loading the polygons for all the AOIs.   
@@ -183,9 +184,7 @@ colnames(nationVBorders) <- c("x", "y")
 
 The user can specify how they want the rows to be sorted by, i.e., which column to order by. In this case, can choose one from the three variables we visualize: number of visits (visits.num), length of visits (visits) or pupil radiuses (pupildat) to sort by. The variable ``visits'' is chosen to sort the rows for the plot as an example. The code is also provided if one wants to sort the rows by the other two variables.  
 
-
 ```{r Ch10-sort-rows}
-
 sortby <- "visits"
 decreasing <- TRUE
 
@@ -212,8 +211,6 @@ if (sortby == "pupildat") {
 
 The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here we chose the automatic layout and set the partitioning to be 1. The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows for the aesthetics of the plot. The code for the functions _panelLayout_, _DetermineMedianRow_, and _ArrangePanels_, as well as the layout details list is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired.  
 
-
-
 ```{r Ch10-panel-layout}
 source("R/Ch10_SharedFunctions.R")
 stateDataId <- row.names(posterdat)
@@ -234,7 +231,7 @@ if (AutomaticLayout) {
   }
 }
 
-if ((AutomaticLayout == FALSE) && MedianRow) {
+if (!AutomaticLayout && MedianRow) {
   if ((rows %% 2 == 0) || (Layout[ceiling(length(Layout) / 2)] != 1)) {
     MedianRow <- FALSE
     warning("There is no median row.")
@@ -242,7 +239,7 @@ if ((AutomaticLayout == FALSE) && MedianRow) {
 }
 
 # determine the size of the rows
-if (MedianRow == FALSE) {
+if (!MedianRow) {
   rowsize <- rep(17.2 / rows, rows)
 } else {
   rowsize <- c(rep(17.2 / rows, floor(rows / 2)), 17.2 / (rows * 3.2), rep(17.2 / rows, floor(rows / 2)))
@@ -250,10 +247,9 @@ if (MedianRow == FALSE) {
 ```
 
 
-6. **create panel layouts and plot indexes.**
+6. **Create panel layouts and plot indexes.**
 
 Details is a list structure that contains the variables and values for the detailed layout of the plot. _ArrangePanels_ function is able to automatically determine the start and end rows for each plot groups given the input: iBegin and iEnd. The content are arranged into 3 perceptual groups. 
-
 
 ```{r Ch10-panel-layout-and-plot-indexes}
 
@@ -268,21 +264,21 @@ iEnd <- ArrangePanels(posterdat = posterdat, partitioning, AutomaticLayout, Layo
 nGroups <- length(iEnd)
 ```
 
+
 7. **Plot posters.**
 
-After all the settings are specified, we can now start to plot the linked microposter plot each column at a time, by starting from the leftmost column, i.e., the micro posters. The microposter plots code are structured similar to the _lmplot_ function provided by @PaOl2015.     
+After all the settings are specified, we can now start to create the linked microposter plot one column at a time, by starting from the leftmost column, i.e., the microposters. The microposter plots code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package by @PaOl2015.     
 
-A _microposters_ function is created to plot the poster column. If the user keep the similar data structure as the eye tracking data demonstrated, dataframe, column names, and image types, then there is no need to adjust this function to visualize other topic of interest, otherwise, one will need to adjust the data and column names accordingly. 
+A `microposters()` function is created to plot the poster column. If the user keep the similar data structure as the eye tracking data demonstrated, dataframe, column names, and image types, then there is no need to adjust this function to visualize other topic of interest, otherwise, one will need to adjust the data and column names accordingly. 
 
-The microposter column with small posters is plotted with highlights according to the context and labels. panel.col is the column number of this panel that is defined with the column attributes, the rest of the inputs are the attributes also specified in the above sections. First, the labels are specified. One can adjust the texts inside the function. Then the microposters with specific highlights are created by the perceptual groups divided with a for loop in the code. In this example, there are 3 perceptual groups and no median row. For each group, we color the AOIs presented in the group, the rest AOIs are either gray as background or colored in light yellow if they have been presented in the previous groups. The borders of each AOIs and the entire poster are plotted with thick black lines.In the function _microposters_, the explanations of the important variables are listed below: 
-* gsubs: the row index for current group;
-* back: the row index for the AOIs that are not presenting in the current group;
-* fore: the complement of "back", i.e., the row index for the AOIs that are presenting in the current group;
-* pen: the index to determine which color to use in the selected color scheme "hdColors".
-* past: index for cumulative AOIs shown above. 
+The microposter column with small posters is plotted with highlights according to the context and labels. `panel.col` is the column number of this panel that is defined with the column attributes, the rest of the inputs are the attributes also specified in the above sections. First, the labels are specified. One can adjust the texts inside the function. Then the microposters with specific highlights are created by the perceptual groups divided with a for loop in the code. In this example, there are 3 perceptual groups and no median row. For each group, we color the AOIs presented in the group, the rest AOIs are either gray as background or colored in light yellow if they have been presented in the previous groups. The borders of each AOIs and the entire poster are plotted with thick black lines. Within the `microposters()` function, the explanations of the most important variables are listed below: 
+* `gsubs`: the row index for current group;
+* `back`: the row index for the AOIs that are not presenting in the current group;
+* `fore`: the complement of `back`, i.e., the row index for the AOIs that are presenting in the current group;
+* `pen`: the index to determine which color to use in the selected color scheme `hdColors`.
+* `past`: index for cumulative AOIs shown above. 
 
-```{r Ch10-create-microposter}
-
+```{r Ch10-create-microposters-function}
 microposters <- function(panel.col,
                          cumulate = TRUE,
                          posterdat = posterdat,
@@ -297,13 +293,13 @@ microposters <- function(panel.col,
                          iEnd,
                          hdColors) {
 
-  # polygon id's one per polygon
+  # 7.1 Assign polygon ids (one per polygon)
   polygonId <- stateVBorders$section[is.na(stateVBorders$x)]
 
-  # panel titles
+  # 7.2 Plot panel titles
   panelSelect(panels, 1, panel.col)
   panelScale()
-  if (MedianRow == TRUE) {
+  if (MedianRow) {
     graphics::mtext(side = 3, line = details$line1, "Above Median Visits", cex = details$cex)
 
     if (cumulate) {
@@ -318,18 +314,18 @@ microposters <- function(panel.col,
   panelSelect(panels, nGroups, panel.col)
   panelScale()
 
-  if (MedianRow == TRUE) {
+  if (MedianRow) {
     graphics::mtext(side = 1, line = details$line3, "Below Median Visits", cex = details$cex)
   }
 
   rxpoly <- range(nationVBorders$x, na.rm = TRUE)
   rypoly <- range(nationVBorders$y, na.rm = TRUE)
 
-  # plot by perceptual groups
+  # 7.3 Plot by perceptual groups
   for (i in 1:nGroups) {
-    if (MedianRow == TRUE && i == ceiling(nGroups / 2)) {
+    if (MedianRow && i == ceiling(nGroups / 2)) {
 
-      # map not drawn, median region in adjacent panel
+      # 7.3.1 Map not drawn, median region plotted in adjacent panel
       panelSelect(panels, (nGroups + 1) / 2, panel.col)
       panelScale()
       panelFill(col = details$wgray)
@@ -337,16 +333,18 @@ microposters <- function(panel.col,
       graphics::text(0.5, 0.55, "Median", cex = details$cex)
       next
     }
-
+    
+    # 7.3.2 XXX
     panelSelect(panels, i, panel.col)
     panelScale(rxpoly, rypoly)
     gsubs <- iBegin[i]:iEnd[i]
     median_group <- iBegin[ceiling(nGroups / 2)]
 
-    if (MedianRow == TRUE) {
+    if (MedianRow) {
       if (i == ceiling(nGroups / 2) - 1) {
         gsubs <- c(gsubs, median_group)
       } # median region added here
+      
       if (i == ceiling(nGroups / 2) + 1) {
         gsubs <- c(gsubs, median_group)
       } # median region added here
@@ -366,31 +364,32 @@ microposters <- function(panel.col,
     # plot foreground regions for the panel in their special colors pens 1:5 and other in contour regions in light yellow
     fore <- !is.na(match(stateVBorders$section, panelNames))
     pen <- match(polygonId, panelNames, nomatch = 10)[!is.na(match(polygonId, panelNames))]
+    
     # outline regions
     if (MedianRow) {
       pen[which(pen == median_group)] <- length(hdColors)
     }
     graphics::polygon(stateVBorders$x[fore], stateVBorders$y[fore], col = scales::alpha(hdColors[pen], 0.7), border = FALSE)
+    
     # plot borders
     graphics::polygon(stateVBorders$x[fore], stateVBorders$y[fore], col = "black", density = 0, lwd = 1)
+    
     # plot past regions
     if (cumulate) {
       past <- !back & !fore
       graphics::polygon(stateVBorders$x[past], stateVBorders$y[past], col = scales::alpha(details$wyellow, 0.7), border = FALSE)
       graphics::polygon(stateVBorders$x[past], stateVBorders$y[past], col = "black", density = 0, lwd = 1)
     }
-    # outline poster
+    
+    # plot poster outline
     graphics::polygon(nationVBorders$x, nationVBorders$y, col = "black", density = 0, lwd = 1)
   }
 }
 ```
 
+Now we can apply the `microposters()` function to create our first column in the linked microposter plot, i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, five colors are used from the `Accent` color palette, since we have five rows at most for each perceptual group. Multiple microposter columns could be created if one wants to specify them.
 
-Now we can apply the function to create our first column: microposter column. The color series are selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, 5 colors are used in the ``Accent'' color series, since we have five rows at most for each perceptual group. Multiple microposter columns can be created if one specify them.
-
-
-```{r Ch10-create-microposters, fig.cap = 'Plot posters.'}
-
+```{r Ch10-create-microposters, fig.cap = 'Initial linked microposters plot column.'}
 hdColors <- rev(RColorBrewer::brewer.pal(5, "Accent"))
 
 if (sum(panel.types == "poster") >= 1) {
@@ -421,9 +420,7 @@ if (sum(panel.types == "poster") >= 1) {
 
 After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function _m.labels_ to make the plotting process cleaner and easier to reuse. The function is structured similarly as the _microposters_ function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. Then we create the labels with a for-loop in the code based on the perceptual groups. The ``Blank'' AOI is defined separately as we want it to be white color, which is not in the color series we chose. 
 
-
-```{r Ch10-crerate-label-function}
-
+```{r Ch10-create-labels-function}
 m.labels <- function(panel.col,
                      title,
                      header.size = 0.7,
@@ -439,16 +436,19 @@ m.labels <- function(panel.col,
                      iBegin,
                      iEnd,
                      hdColors) {
+  # 8.1 xxx
   stateNames <- posterdat$section
   panelSelect(panels, 1, panel.col)
   panelScale()
-
+  
+  # 8.2 yyy
   if (MedianRow) {
     graphics::mtext(side = 3, line = details$line2, title, cex = header.size)
   } else {
     graphics::mtext(side = 3, line = details$line1, title, cex = header.size)
   }
-
+  
+  # 8.3 Plot labels by perceptual groups
   for (i in 1:nGroups) {
     gsubs <- iBegin[i]:iEnd[i]
     gnams <- posterdat$section[gsubs]
@@ -459,7 +459,7 @@ m.labels <- function(panel.col,
     panelSelect(panels, i, panel.col)
     panelScale(c(0, 1), c(1 - details$ypad, nsubs + details$ypad))
 
-    if (MedianRow == TRUE && i == ((nGroups + 1) / 2)) {
+    if (MedianRow && i == ((nGroups + 1) / 2)) {
       pen <- length(hdColors)
     }
 
@@ -477,10 +477,9 @@ m.labels <- function(panel.col,
 }
 ```
 
+Now the `m.plot()` function can be executed and the labels and the legends columns can be plotted.
 
-Now the function can be executed and the labels and the legends column can be plotted.   
-```{r Ch10-plot-labels, eval = F}
-
+```{r Ch10-plot-labels, eval = FALSE}
 if (sum(panel.types == "legend") >= 1) {
   legends <- which(panel.types == "legend")
 
@@ -506,55 +505,9 @@ if (sum(panel.types == "legend") >= 1) {
 }
 ```
 
-```{r Ch10-create-microposters-and-labels, echo = F, fig.cap = 'Plot labels.'}
-
-hdColors <- rev(RColorBrewer::brewer.pal(5, "Accent"))
-
-if (sum(panel.types == "poster") >= 1) {
-  posters <- which(panel.types == "poster")
-
-  for (i in 1:length(posters)) {
-    microposters(
-      panel.col = columns.att[posters[i]]$poster$col.num,
-      cumulate = columns.att[posters[i]]$poster$cumulate,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      poster,
-      panels,
-      nGroups,
-      rows,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-if (sum(panel.types == "legend") >= 1) {
-  legends <- which(panel.types == "legend")
-
-  for (i in 1:length(legends)) {
-    m.labels(
-      panel.col = columns.att[legends[i]]$legend$col.num,
-      title = columns.att[legends[i]]$legend$header,
-      header.size = columns.att[legends[i]]$legend$header.size,
-      cex = columns.att[legends[i]]$legend$text.size,
-      dcex = columns.att[legends[i]]$legend$point.size,
-      font = columns.att[legends[i]]$legend$text.font,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
+```{r Ch10-create-microposters-and-labels, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters), now with labels added.'}
+<<Ch10-create-microposters>>
+<<Ch10-plot-labels>>
 ```
 
 
@@ -567,7 +520,6 @@ For the _m.dotplot_ function, the axis range as well as the panel grid are autom
 For the _m.boxplot_ function, the dataframe is specified within the data list, then the plotting parameters are defined for the boxplot. Similarly to the _m.dotplot_, the panel grid and axis lables are created. Then the boxplots are created manually by first plotting the outliers, and then the dots. 
 
 ```{r Ch10-dotplot-boxplot-functions}
-
 m.dotplot <- function(var,
                       posterdat,
                       panel.num,
@@ -623,7 +575,7 @@ m.dotplot <- function(var,
       }
     }
 
-    if (MedianRow == TRUE & i == ((nGroups + 1) / 2)) {
+    if (MedianRow & i == ((nGroups + 1) / 2)) {
       pen <- length(hdColors)
     }
     graphics::lines(var[gsubs], laby, col = "black", lwd = 1)
@@ -748,7 +700,7 @@ m.boxplot <- function(dat,
       }
     }
 
-    if (MedianRow == TRUE & i == ((nGroups + 1) / 2)) {
+    if (MedianRow && i == ((nGroups + 1) / 2)) {
       pen <- length(hdColors)
     }
 
@@ -795,8 +747,8 @@ m.boxplot <- function(dat,
 ```
 
 There are two columns visualized with dotplot: the length of time spent in each AOI and the number of times each AOI is visited. The two columns are plotted by calling the _m.dotplot_ function within the for loop. 
-```{r Ch10-dotplot, eval=F}
 
+```{r Ch10-add-dotplot, eval = FALSE}
 # Plot percent of visits___________________________________
 if (sum(panel.types == "dot") >= 1) {
   dots <- which(panel.types == "dot")
@@ -822,85 +774,14 @@ if (sum(panel.types == "dot") >= 1) {
 }
 ```
 
-```{r Ch10-dotplot-cum, echo=F, fig.cap = 'Add two dotplot columns.'}
-if (sum(panel.types == "poster") >= 1) {
-  posters <- which(panel.types == "poster")
-
-  for (i in 1:length(posters)) {
-    microposters(
-      panel.col = columns.att[posters[i]]$poster$col.num,
-      cumulate = columns.att[posters[i]]$poster$cumulate,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      poster,
-      panels,
-      nGroups,
-      rows,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-
-# Plot labels____________________________________________________________
-
-if (sum(panel.types == "legend") >= 1) {
-  legends <- which(panel.types == "legend")
-
-  for (i in 1:length(legends)) {
-    m.labels(
-      panel.col = columns.att[legends[i]]$legend$col.num,
-      title = columns.att[legends[i]]$legend$header,
-      header.size = columns.att[legends[i]]$legend$header.size,
-      cex = columns.att[legends[i]]$legend$text.size,
-      dcex = columns.att[legends[i]]$legend$point.size,
-      font = columns.att[legends[i]]$legend$text.font,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-
-
-# Plot percent of visits___________________________________
-if (sum(panel.types == "dot") >= 1) {
-  dots <- which(panel.types == "dot")
-
-  for (i in 1:length(dots)) {
-    m.dotplot(
-      var = columns.att[dots[i]]$dot$panel.data,
-      posterdat,
-      panel.num = columns.att[dots[i]]$dot$col.num,
-      title = columns.att[dots[i]]$dot$header,
-      cex = columns.att[dots[i]]$dot$text.size,
-      dcex = columns.att[dots[i]]$dot$point.size,
-      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-      axis.labels = columns.att[dots[i]]$dot$axis.labels,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
+```{r Ch10-dotplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters-and-labels), now with two dotplot columns added.'}
+<<Ch10-create-microposters-and-labels>>
+<<Ch10-add-dotplot>>
 ```
 
-Then the last column, the boxplot column, is plotted. 
-```{r Ch10-boxplot, eval=F}
+Then the final column, the boxplot column, is added.
+
+```{r Ch10-add-boxplot, eval = FALSE}
 # Plot Pupil Size
 if (sum(panel.types == "boxplot") >= 1) {
   bplot <- which(panel.types == "boxplot")
@@ -925,206 +806,18 @@ if (sum(panel.types == "boxplot") >= 1) {
 }
 ```
 
-```{r Ch10-boxplot-cum, echo=F, fig.cap = 'Add a boxplot column.'}
-if (sum(panel.types == "poster") >= 1) {
-  posters <- which(panel.types == "poster")
-
-  for (i in 1:length(posters)) {
-    microposters(
-      panel.col = columns.att[posters[i]]$poster$col.num,
-      cumulate = columns.att[posters[i]]$poster$cumulate,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      poster,
-      panels,
-      nGroups,
-      rows,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-
-# Plot labels____________________________________________________________
-
-if (sum(panel.types == "legend") >= 1) {
-  legends <- which(panel.types == "legend")
-
-  for (i in 1:length(legends)) {
-    m.labels(
-      panel.col = columns.att[legends[i]]$legend$col.num,
-      title = columns.att[legends[i]]$legend$header,
-      header.size = columns.att[legends[i]]$legend$header.size,
-      cex = columns.att[legends[i]]$legend$text.size,
-      dcex = columns.att[legends[i]]$legend$point.size,
-      font = columns.att[legends[i]]$legend$text.font,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-# Plot percent of visits___________________________________
-if (sum(panel.types == "dot") >= 1) {
-  dots <- which(panel.types == "dot")
-
-  for (i in 1:length(dots)) {
-    m.dotplot(
-      var = columns.att[dots[i]]$dot$panel.data,
-      posterdat,
-      panel.num = columns.att[dots[i]]$dot$col.num,
-      title = columns.att[dots[i]]$dot$header,
-      cex = columns.att[dots[i]]$dot$text.size,
-      dcex = columns.att[dots[i]]$dot$point.size,
-      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-      axis.labels = columns.att[dots[i]]$dot$axis.labels,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-# Plot Pupil Size
-if (sum(panel.types == "boxplot") >= 1) {
-  bplot <- which(panel.types == "boxplot")
-
-  for (i in 1:length(bplot)) {
-    m.boxplot(
-      dat = columns.att[bplot[i]]$boxplot$panel.data,
-      posterdat = posterdat.all,
-      panel.num = columns.att[bplot[i]]$boxplot$col.num,
-      text.size = columns.att[bplot[i]]$boxplot$text.size,
-      axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
-      axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
-      panels,
-      title = columns.att[bplot[i]]$boxplot$header,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
+```{r Ch10-dotplot-boxplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-cum), now with one boxplot column added.'}
+<<Ch10-dotplot-cum>>
+<<Ch10-add-boxplot>>
 ```
 
 
 10. **Add title.**
-So far, all the columns in the linked microposter plot are created, the plot can be finished up by adding the main title.  
+
+By now, all the columns in the linked microposter plot have been created. The plot can now be finalized by adding the main title.  
 
 
-```{r Ch10-title-cum, echo=F, fig.cap = 'Add figure main title.'}
-if (sum(panel.types == "poster") >= 1) {
-  posters <- which(panel.types == "poster")
-
-  for (i in 1:length(posters)) {
-    microposters(
-      panel.col = columns.att[posters[i]]$poster$col.num,
-      cumulate = columns.att[posters[i]]$poster$cumulate,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      poster,
-      panels,
-      nGroups,
-      rows,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-
-# Plot labels____________________________________________________________
-
-if (sum(panel.types == "legend") >= 1) {
-  legends <- which(panel.types == "legend")
-
-  for (i in 1:length(legends)) {
-    m.labels(
-      panel.col = columns.att[legends[i]]$legend$col.num,
-      title = columns.att[legends[i]]$legend$header,
-      header.size = columns.att[legends[i]]$legend$header.size,
-      cex = columns.att[legends[i]]$legend$text.size,
-      dcex = columns.att[legends[i]]$legend$point.size,
-      font = columns.att[legends[i]]$legend$text.font,
-      posterdat = posterdat,
-      stateVBorders,
-      nationVBorders,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-# Plot percent of visits___________________________________
-if (sum(panel.types == "dot") >= 1) {
-  dots <- which(panel.types == "dot")
-
-  for (i in 1:length(dots)) {
-    m.dotplot(
-      var = columns.att[dots[i]]$dot$panel.data,
-      posterdat,
-      panel.num = columns.att[dots[i]]$dot$col.num,
-      title = columns.att[dots[i]]$dot$header,
-      cex = columns.att[dots[i]]$dot$text.size,
-      dcex = columns.att[dots[i]]$dot$point.size,
-      axis.ticks = columns.att[dots[i]]$dot$axis.ticks,
-      axis.labels = columns.att[dots[i]]$dot$axis.labels,
-      panels,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
-# Plot Pupil Size
-if (sum(panel.types == "boxplot") >= 1) {
-  bplot <- which(panel.types == "boxplot")
-
-  for (i in 1:length(bplot)) {
-    m.boxplot(
-      dat = columns.att[bplot[i]]$boxplot$panel.data,
-      posterdat = posterdat.all,
-      panel.num = columns.att[bplot[i]]$boxplot$col.num,
-      text.size = columns.att[bplot[i]]$boxplot$text.size,
-      axis.ticks = columns.att[bplot[i]]$boxplot$axis.ticks,
-      axis.labels = columns.att[bplot[i]]$boxplot$axis.labels,
-      panels,
-      title = columns.att[bplot[i]]$boxplot$header,
-      nGroups,
-      MedianRow,
-      iBegin,
-      iEnd,
-      hdColors
-    )
-  }
-}
-
+```{r Ch10-add-title, eval = FALSE}
 main.title <- "Eye Tracking: Looking at Poster Statistics"
 title.cex <- 1.08
 
@@ -1137,23 +830,16 @@ invisible(panelScale(inches = TRUE))
 ```
 
 
-```{r Ch10-title, eval=F}
-main.title <- "Eye Tracking: Looking at Poster Statistics"
-title.cex <- 1.08
-
-panelSelect(panels, margin = "top")
-invisible(panelScale())
-graphics::text(0.5, 0.75, labels = main.title, cex = title.cex)
-
-panelSelect(panels, margin = "bottom")
-invisible(panelScale(inches = TRUE))
+```{r Ch10-dotplot-boxplot-title-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-boxplot-cum), now with the main title added.'}
+<<Ch10-dotplot-boxplot-cum>>
+<<Ch10-add-title>>
 ```
-
 
 Now we finished creating a non-traditional linked microposter plot with our own data, boundary, images in a different domain compared to the other chapters of the book. When one gets familiar with the steps on how to bring in data, boundary, images, and different plots and map overlays, the above steps and functions can be incorporated into a micromap plot function to simplify the creation of a non-traditional micromap plot.
 
 
 ## Summary and Further Reading {#Ch10-FurtherReading}
+
 
 Readers can find more plot types in Chapter \@ref(Ch5) and implement to a non-traditional micromap plot similar to how the boxplot and dotplot functions are incorporated in this chapter. To understand more of micromap plot creation basics, please read Chapter \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3).
 
