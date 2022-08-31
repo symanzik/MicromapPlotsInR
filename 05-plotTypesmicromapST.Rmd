@@ -3,6 +3,7 @@
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr., Daniel B. Carr}
 
+
 The **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN],
 accessible at https://cran.r-project.org/web/packages/micromapST/index.html,
 can be used for a large number of plot types that go
@@ -15,105 +16,229 @@ that makes use of these advanced plot types that are part of the
 
 ## Introduction {#Ch5b-Introduction}
 
-In Chapter \@ref{Ch3} you learned how to create a simple linked micromap plot using the R package **micromapST**. Glyphs used in those simple examples were dots, with and without confidence intervals, and horizontal bars. Many other glyphs have been built into the package, which we will illustrate in this chapter, using the same data displayed in the Chapter \@ref{Ch3} figures. In Table \@ref(tab:Ch5b-GlyphTable) all available glyphs are listed, along with the content of the various parameters required to define them. 
+
+In Chapter \@ref(Ch3), you learned how to create a simple linked micromap plot using the R package **micromapST**. Glyphs used in those simple examples were dots, with and without confidence intervals, and horizontal bars. Many other glyphs have been built into the package, which we will illustrate in this chapter, using the same data displayed in the Chapter \@ref(Ch3) figures. In Table \@ref(tab:Ch5b-GlyphTable) all available glyphs are listed, along with the content of the various parameters required to define them. 
+
 ```{r Ch5b-GlyphTable, echo = FALSE} 
+library(kableExtra)
 
-glyphname=c("arrow","bar","segbar","normbar","ctrbar","boxplot","dot","dotconf","dotse","scatdot","ts","tsconf")
-meaning=c("Arrow","Horizontal bar","Horizontal stacked bar","Horizontal stacked bar, normalized to total 100%","Horizontal stacked bar, centered on middle bar","Horizontal box plot","Dot",
-   "Dot with confidence interval line","Dot with line length of +/- standard error","Scatter plot of dots","Time series (line) plot","Time series (line) plot with confidence band")
-col1text=c("Beginning values","Bar end values","Values for first (leftmost) bar segment","Same as segbar","Same as segbar","NA","Values for dots","Values for dots","Values for dots","Values on horizontal (x) axis","NA","NA")
-col2text=c("Ending values (arrowhead)","NA","Values for last (rightmost) bar segment","Same as segbar","Same as segbar","NA","NA","Values of lower limits","Standard errors","Values on vertical (y) axis","NA","NA")
-col3text=c("NA","NA","NA","NA","NA","NA","NA","Values of upper limits","NA","NA","NA","NA")
-panelData=c("NA","NA","NA","NA","NA","Name of output list from call to boxplot(...,plot=FALSE)","NA","NA","NA","NA","Name of array with dimensions c(51,t,2) where t=# of time points, x values in [,,1], y values in [,,2]","Name of array with dimensions c(51,t,4) as specified for ts with added lower limit in [,,3], upper limit in [,,4]")
-temptext = data.frame(glyphname,meaning,col1text,col2text,col3text,panelData)
+glyphname <- c(
+  "arrow", "bar", "segbar", "normbar", "ctrbar",
+  "boxplot", "dot", "dotconf", "dotse", "scatdot",
+  "ts", "tsconf"
+)
+meaning <- c(
+  "Arrow",
+  "Horizontal bar",
+  "Horizontal stacked bar",
+  "Horizontal stacked bar, normalized to total 100%",
+  "Horizontal stacked bar, centered on middle bar",
+  "Horizontal box plot",
+  "Dot",
+  "Dot with confidence interval line",
+  "Dot with line length of +/- standard error",
+  "Scatter plot of dots",
+  "Time series (line) plot",
+  "Time series (line) plot with confidence band"
+)
+col1text <- c(
+  "Beginning values",
+  "Bar end values",
+  "Values for first (leftmost) bar segment",
+  "Same as segbar",
+  "Same as segbar",
+  "NA",
+  "Values for dots",
+  "Values for dots",
+  "Values for dots",
+  "Values on horizontal (x) axis",
+  "NA",
+  "NA"
+)
+col2text <- c(
+  "Ending values (arrowhead)",
+  "NA",
+  "Values for last (rightmost) bar segment",
+  "Same as segbar",
+  "Same as segbar",
+  "NA",
+  "NA",
+  "Values of lower limits",
+  "Standard errors",
+  "Values on vertical (y) axis",
+  "NA",
+  "NA"
+)
+col3text <- c(
+  "NA", "NA", "NA", "NA", "NA",
+  "NA", "NA", "Values of upper limits", "NA", "NA",
+  "NA", "NA"
+)
+panelData <- c(
+  "NA", "NA", "NA", "NA", "NA",
+  "Name of output list from call to boxplot(..., plot = FALSE)",
+  "NA", "NA", "NA", "NA",
+  "Name of array with dimensions c(51, t, 2) where t = # of time points, x values in [, , 1], y values in [,,2]",
+  "Name of array with dimensions c(51, t, 4) as specified for ts with added lower limit in [, , 3], upper limit in [, , 4]"
+)
+temptext <- data.frame(
+  glyphname, meaning, col1text, col2text, col3text, panelData
+)
 
-knitr::kable(temptext,booktabs=TRUE,caption="Glyphs available in micromapST and the specification of input data by column name, which indexes the input data frame. NA indicates that this column parameter is not used for that glyph.",col.names=c("Glyph name","Meaning","col1","col2","col3","panelData")
+landscape(
+  knitr::kable(
+    temptext,
+    booktabs = TRUE,
+    caption = "Glyphs available in micromapST and the specification of input data by column name, which indexes the input data frame. NA indicates that this column parameter is not used for that glyph.",
+    col.names = c("Glyph Name", "Meaning", "col1", "col2", "col3", "panelData")
+  ) %>%
+    kable_styling(
+      latex_options = "striped",
+      font_size = 7
+    ) %>%
+    column_spec(1, width = "0.5in") %>%
+    column_spec(2, width = "1in") %>%
+    column_spec(3, width = "1in") %>%
+    column_spec(4, width = "1in") %>%
+    column_spec(5, width = "1in") %>%
+    column_spec(6, width = "2in")
 )
 ```
 
 
 ## Time Series Data {#Ch5b-Time-Series-Data}
 
-The covid case rates used in Chapter \@ref{Ch3} were for a single time point. We can plot the entire time series of 27 data points by specifying the `ts` glyph in the `type=` parameter within the `panelDesc` data frame. The only limitation to the number of time points that can be plotted is the detail that can be seen in a line graph as wide as your panel. We have plotted up to 200 points on a linked micromap plot with a single glyph panel.
 
-As we see in the table, we first need to create an array of dimension `c(51,27,2)`, i.e., a matrix of 51 rows for states by 27 columns for the time points, with dates defined in `c(,,1)` and the rates to be plotted in `c(,,2)`. Below are the rate data for the first three states (Alaska (AK), Alabama (AL), Arizona (AZ)). 
+The covid case rates used in Chapter \@ref(Ch3) were for a single time point. We can plot the entire time series of 27 data points by specifying the `ts` glyph in the `type =` parameter within the `panelDesc` data frame. The only limitation to the number of time points that can be plotted is the detail that can be seen in a line graph as wide as your panel. We have plotted up to 200 points on a linked micromap plot with a single glyph panel.
 
-```{r}
+As we see in the table, we first need to create an array of dimension `c(51, 27, 2)`, i.e., a matrix of 51 rows for states by 27 columns for the time points, with dates defined in `c(, , 1)` and the rates to be plotted in `c(, , 2)`. Below are the rate data for the first three states (Alaska (AK), Alabama (AL), Arizona (AZ)). 
+
+```{r Ch5b-covid-case-rates-setup}
 # set up input array with dates & rates
-st_covid_case_rates <- read.csv("data/STCaseRatesPer1000.csv", row.names = 2)
+st_covid_case_rates <- read.csv(
+  "data/STCaseRatesPer1000.csv",
+  row.names = 2
+)
 st_postal <- rownames(st_covid_case_rates)
 temp_input <- st_covid_case_rates[, c(-1, -2, -3, -4)]
 temp_rates <- data.frame(temp_input)
 rownames(temp_rates) <- st_postal
 head(temp_rates, n = 3L)
 ```
-First we need to convert the character-format dates to numeric dates. There are several choices that would sort properly over time, e.g., Julian date, but we will use year abbreviation (20, 21, 22) plus a fraction of the year in each month, subtracting 0.5 from each month value so that the resulting value represents the middle of the month. For example, the original date `Feb 2020` is replaced by 20+(2-0.5)/12 = 20.125. This gives a consistent difference in dates from one month to the next and does not leave a gap between the end of one year and the beginning of the next.
 
-```{r}
-# format of dates is year-month in fractions of each year, subtracting 1/2 month because # measured mid-month
-temp_dates <- c(20.125, 20.218, 20.288, 20.375, 20.458, 20.541, 20.628, 20.708, 20.791, 20.875, 20.918, 21.042, 21.125, 21.218, 21.288, 21.375, 21.458, 21.541, 21.628, 21.708, 21.791, 21.875, 21.958, 22.042, 22.125, 22.218, 22.375)
+First we need to convert the character-format dates to numeric dates. There are several choices that would sort properly over time, e.g., Julian date, but we will use year abbreviation (20, 21, 22) plus a fraction of the year in each month, subtracting 0.5 from each month value so that the resulting value represents the middle of the month. For example, the original date `Feb 2020` is replaced by `20 + (2 - 0.5) / 12 = 20.125`. This gives a consistent difference in dates from one month to the next and does not leave a gap between the end of one year and the beginning of the next.
+
+```{r Ch5b-dates-setup}
+# format of dates is year-month in fractions of each year,
+# subtracting 1/2 month because # measured mid-month
+temp_dates <- c(
+  20.125, 20.218, 20.288, 20.375, 20.458, 20.541,
+  20.628, 20.708, 20.791, 20.875, 20.918, 21.042,
+  21.125, 21.218, 21.288, 21.375, 21.458, 21.541,
+  21.628, 21.708, 21.791, 21.875, 21.958, 22.042,
+  22.125, 22.218, 22.375
+)
 ```
 
 Now we can build the necessary array. Following the code is a sample of data in the array: date and rate values for the first three states, for their first 8 time points.
 
-```{r}
+```{r Ch5b-array-setup}
 # set up 3D array
 temp_array2 <- NULL
-temp_array2 <- array(dim = c(51, 27, 2), dimnames = list(st_postal))
+temp_array2 <- array(
+  dim = c(51, 27, 2),
+  dimnames = list(st_postal)
+)
 
-# loop thru each row (state) and put numeric dates in [,,1] and rates in [,,2]
-
+# loop thru each row (state) and put numeric dates in [, , 1] and rates in [, , 2]
 for (inx in seq(1, 51)) {
   temp_array2[inx, , 1] <- temp_dates
   temp_data <- as.numeric(temp_rates[inx, ])
   temp_array2[inx, , 2] <- temp_data
 }
-temp_array2[1:3, 1:8, ]
-```
-Next we define the micromap plot, using the postal abbreviations as the geographic identifier and sorting by the midpoint of the date range (March 2021) in descending order:
 
-```{r Ch5b-micromap8, fig.cap = 'Time Series plots of cumulative covid case rates by month, Feb 2020 - Apr 2022, sorted by March 2021 (median date) rates', fig.width = 7, fig.height = 9}
+temp_array2[1:3, 1:8, ]
+
+### Shorter R code without loops - please check
+
+temp_array3 <- array(
+  dim = c(51, 27, 2),
+  dimnames = list(st_postal)
+)
+
+# For each row (state), put dates in [, , 1] and numeric rates in [, , 2]
+temp_array3[, , 1] <- rep(temp_dates, each = 51)
+temp_array3[, , 2] <- sapply(temp_rates, as.numeric)
+
+temp_array3[1:3, 1:8, ]
+
+all(temp_array2 == temp_array3)
+```
+
+Next we define the micromap plot (shown in Figure \@ref(fig:Ch5b-micromap1) using the postal abbreviations as the geographic identifier and sorting by the midpoint of the date range (March 2021) in descending order:
+
+```{r Ch5b-micromap1, fig.cap = 'Time Series plots of cumulative covid case rates by month, Feb 2020 - Apr 2022, sorted by March 2021 (median date) rates.', fig.width = 7, fig.height = 9}
+library(micromapST)
+
 panel_desc_timeseries <- data.frame(
   type = c("map", "id", "ts"),
   lab1 = c("", "", "Cases/1000"),
   lab2 = c("", "", "Feb 2020-Apr 2022"),
   lab3 = c("", "", "Year & fractional month"),
-  panelData = c(NA, NA, "temp_array2")
+  panelData = c(NA, NA, "temp_array3")
 )
 
 # sort by midpoint of dates (= March 20, 2021)
-micromapST(temp_rates,
+micromapST(
+  statsDFrame = temp_rates,
+  panelDesc = panel_desc_timeseries,
   rowNames = "ab",
-  panel_desc_timeseries,
   sortVar = "Mar_20_2021",
   ascend = FALSE,
   plotNames = "full",
   title = c("Cumulative covid rates by month, Feb 2020 - Apr 2022")
 )
 ```
-In Figure \@ref{Ch3-LMMsorted} we noted the high covid case rates in North and South Dakota in November, 2020, Now, the full time series lines show that these two states had case increases earlier in the fall - by September, consistent with the hypothesis of a superspreader event there in August. We can also see the bump up in cases in early 2022 due to the rapid spread of a new covid variant.
+
+In Figure \@ref(fig:Ch3-LMMsorted), we noted the high covid case rates in North and South Dakota in November, 2020, Now, the full time series lines show that these two states had case increases earlier in the fall - by September, consistent with the hypothesis of a superspreader event there in August. We can also see the bump up in cases in early 2022 due to the rapid spread of a new covid variant.
 
 This full time series line plot contains a great deal of information but might be too complex for the intended audience to understand. We can simplify the plot by  replacing the lines by two arrows, one for the first half of the period and one for the second half. 
 
 Additional information may be gained by examining the distribution of case rates by county within each state. The boxplot gives a convenient summary of the county rates for this purpose. The first three records of the input to the boxplot, shown here, are for Alabama counties:
 
-```{r}
-st_covid_case_rates <- read.csv("data/STCaseRatesPer1000.csv", row.names = 2)
-cty_covid_case_rates <- read.csv("data/cnty_cRates_04_14_2022per1000.csv", row.names = 1)
+```{r Ch5b-covid-case-rates-setup2}
+st_covid_case_rates <- read.csv(
+  "data/STCaseRatesPer1000.csv",
+  row.names = 2
+)
+cty_covid_case_rates <- read.csv(
+  "data/cnty_cRates_04_14_2022per1000.csv",
+  row.names = 1
+)
 head(cty_covid_case_rates, 3L)
 ```
-To create the boxplot information for the linked micromap plot, call the `boxplot` function but save its output instead of printing it (`plot=FALSE`). For our example, we categorize (`split`) the county rates by state, resulting in boxplot parameters being calculated for every state. Results for the first 3 states (Alaska, Alabama, Arkansas) are shown below; each column of `covid_box_list$stats` contains the 5-value summary for each state (minimum, quartiles, maximum). Outliers are saved in `covid_box_list$out` and are indexed by `covid_box_list$group`. For example, the first five outliers on the file are for groups 1, 2, 2, 3 and 3, corresponding to states AK, AL, AL, AR and AR, respectively.
 
-```{r}
-covid_box_list <- boxplot(split(cty_covid_case_rates$Rates, cty_covid_case_rates$st_postal), plot = FALSE)
-covid_box_list$names[1:3] # print boxplot names, stats, outliers for 1st 3 states
+To create the boxplot information for the linked micromap plot, call the `boxplot` function but save its output instead of printing it (`plot = FALSE`). For our example, we categorize (`split`) the county rates by state, resulting in boxplot parameters being calculated for every state. Results for the first 3 states (Alaska, Alabama, Arkansas) are shown below; each column of `covid_box_list$stats` contains the 5-value summary for each state (minimum, quartiles, maximum). Outliers are saved in `covid_box_list$out` and are indexed by `covid_box_list$group`. For example, the first five outliers on the file are for groups 1, 2, 2, 3 and 3, corresponding to states AK, AL, AL, AR and AR, respectively.
+
+```{r Ch5b-covid-boxplot-setup}
+covid_box_list <- boxplot(split(
+  cty_covid_case_rates$Rates,
+  cty_covid_case_rates$st_postal
+),
+plot = FALSE
+)
+# print boxplot names, stats, outliers for 1st 3 states
+covid_box_list$names[1:3]
 covid_box_list$stats[, 1:3]
 covid_box_list$group[1:5]
 covid_box_list$out[1:5]
 ```
-Now that the boxplot values have been computed outside the package, we just need to include the name of the matrix with those values in the `panelData` parameter, as shown in Table {Ch5b-GlyphTable}. To help interpret the boxplot results, `refvals` and `refTexts` specify the U.S. overall case rate and text label, respectively, for a vertical reference line. By default, this is a green dashed line. 
 
-```{r Ch5b-micromap9, fig.cap = 'Time Series arrow plots of cumulative covid case rates, Feb 2020 - Mar 2021 and Mar 2021 - Apr 2022, and county rate boxplots', fig.width = 7, fig.height = 9}
+Now that the boxplot values have been computed outside the package, we just need to include the name of the matrix with those values in the `panelData` parameter, as shown in Table \@ref(tab:Ch5b-GlyphTable). To help interpret the boxplot results, `refvals` and `refTexts` specify the U.S. overall case rate and text label, respectively, for a vertical reference line. By default, this is a green dashed line. 
+
+```{r Ch5b-micromap2, fig.cap = 'Time Series arrow plots of cumulative covid case rates, Feb 2020 - Mar 2021 and Mar 2021 - Apr 2022, and county rate boxplots.', fig.width = 7, fig.height = 9}
+library(micromapST)
+
 panel_desc_arrow_boxplot <- data.frame(
   type = c("map", "id", "arrow", "arrow", "boxplot"),
   lab1 = c("", "", "State rates", "State rates", "County rates Apr 22"),
@@ -126,8 +251,9 @@ panel_desc_arrow_boxplot <- data.frame(
   panelData = c("", "", "", "", "covid_box_list")
 )
 
-micromapST(st_covid_case_rates,
-  panel_desc_arrow_boxplot,
+micromapST(
+  statsDFrame = st_covid_case_rates,
+  panelDesc = panel_desc_arrow_boxplot,
   sortVar = "Mar_20_2021",
   ascend = FALSE,
   title = c("State time trends for 2 time periods and county covid rates, Apr 2022")
@@ -136,23 +262,29 @@ micromapST(st_covid_case_rates,
 
 The set of arrows for the first half of the time period is consistent with the full time series plot, showing that North and South Dakota had the highest case rates from February 2020 to March 2021, although we lose the more precise estimate of when their rates started to increase. The second set of arrows shows the increase during the second half of the time period. Note that some states that had the greatest increase in this later period, as evidenced by their longer arrows, were different from the states with the greatest increase earlier. For example, see Rhode Island (RI), Kentucky (KY), Alaska (AK) and West Virginia (WV).
 
-The box plot values are displayed in a typical format. The box encompasses the middle 50% of the data, with a short vertical bar at the median. Outliers are indicated by open circles in the state's color. The box plots in Figure {Ch5b-micromap9} show that in general the county variation within state is small, but there are some county outliers, possibly due to small populations. For example, the most extreme outlier is Loving County TX, the least populous county in the U.S.
+The box plot values are displayed in a typical format. The box encompasses the middle 50% of the data, with a short vertical bar at the median. Outliers are indicated by open circles in the state's color. The box plots in Figure \@ref(fig:Ch5b-micromap2) show that in general the county variation within state is small, but there are some county outliers, possibly due to small populations. For example, the most extreme outlier is Loving County TX, the least populous county in the U.S.
+
 
 ## Scaled Response Data {#Ch5b-Scaled-Response-Data}
 
-Many surveys collect responses that have a rank order but are not strictly quantifiable. For example, the Likert scale [ref Likert 1932] is a commonly-used set of symmetric responses for the respondent's agreement or disagreement with a series of questions; a five-category scale would typically be "Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree" and "Strongly agree". The number of responses for each of these choices can be compared across categories of respondents, geographic areas, etc. 
 
-**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, normalized to 100% total bar length or centered on a particular cutpoint. Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [ref NCES 2012]. 
+Many surveys collect responses that have a rank order but are not strictly quantifiable. For example, the Likert scale [@Lik1932] is a commonly-used set of symmetric responses for the respondent's agreement or disagreement with a series of questions; a five-category scale would typically be "Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree" and "Strongly agree". The number of responses for each of these choices can be compared across categories of respondents, geographic areas, etc. 
 
-In Figure {Ch5b-micromap10}, the first column plots the average math scores for students in each state. The second column displays individual student scores categorized into proficiency classes: "Less than basic", "Basic", "Proficient" and "Advanced". Except for a few missing scores, each state's total is nearly 100%, so the basic horizontal stacked bar design (`type="segbar"`) is used. No scaling to 100% (`type="normbar"`) is needed. The states are sorted in ascending order of the average math scores.
+**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, normalized to 100% total bar length or centered on a particular cutpoint. Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [@NCES2011]. 
 
-```{r Ch5b-micromap10, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, measured by average scores and achievement category', fig.width = 7, fig.height = 9}
+In Figure \@ref(fig:Ch5b-micromap3), the first column plots the average math scores for students in each state. The second column displays individual student scores categorized into proficiency classes: "Less than basic", "Basic", "Proficient" and "Advanced". Except for a few missing scores, each state's total is nearly 100%, so the basic horizontal stacked bar design (`type = "segbar"`) is used. No scaling to 100% (`type = "normbar"`) is needed. The states are sorted in ascending order of the average math scores.
+
+```{r Ch5b-micromap3, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, measured by average scores and achievement category.', fig.width = 7, fig.height = 9}
 library(micromapST)
-# Figure 10 - dots and centered bar (source of code sample for section 4.7)
+# Figure - dots and centered bar (source of code sample for section 4.7)
 
-educ_8th_data <- read.csv("data/MathProficiency8thGr2011.csv", row.names = 1) 
+educ_8th_data <- read.csv(
+  "data/MathProficiency8thGr2011.csv",
+  row.names = 1
+)
 # columns = State abbrev, State name, Avg Score, 4 percents as above
 head(educ_8th_data)
+
 panel_desc_math_segbar <- data.frame(
   type = c("map", "id", "dot", "segbar"),
   lab1 = c("", "", "Avg. Scores", "Math Proficiency"),
@@ -161,18 +293,19 @@ panel_desc_math_segbar <- data.frame(
   col2 = c(NA, NA, NA, "PctAdvanced")
 )
 
-micromapST(educ_8th_data,
-  panel_desc_math_segbar,
+micromapST(
+  statsDFrame = educ_8th_data,
+  panelDesc = panel_desc_math_segbar,
   sortVar = "avgscore",
   title = "Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade"
 )
 ```
+
 The order of states ranges from Washington DC as worst to Massachusetts as best on the math tests that year, as measured by both average score and the percent of students with less than basic proficiency. (Of course, DC is a totally urban city and is not fairly compared to all other states which are a mix of urban, suburban and rural areas. However, this is how the data are reported.) 
 
-Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. Heiberger and Robbins [ref H & R 2014] suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [ref Cleveland and McGill 1984]. The `type="ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
+Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. Heiberger and Robbins [@HeRo2014] suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [@CleMc84]. The `type="ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
 
-```{r Ch5b-micromap11, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced', fig.width = 7, fig.height = 9}
-
+```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced.', fig.width = 7, fig.height = 9}
 library(micromapST)
 # Figure - dots and centered bar (source of code sample for section 4.7)
 
@@ -185,8 +318,9 @@ panel_desc_math_ctrbar <- data.frame(
   col2 = c(NA, NA, NA, "PctAdvanced")
 )
 
-micromapST(educ_8th_data,
-  panel_desc_math_ctrbar,
+micromapST(
+  statsDFrame = educ_8th_data,
+  panelDesc = panel_desc_math_ctrbar,
   sortVar = "avgscore",
   title = "Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade"
 )
@@ -194,22 +328,27 @@ micromapST(educ_8th_data,
 
 Centering between the second and third categories leads to the interpretation of the total length of the bars to the left and right of center as the percent of students who were less than proficient and at least proficient in eighth grade math, respectively. Centering in this way shows DC in a better light - although its average score is worst, its percent of students who were not proficient in math (represented by the length of the bar to the left of zero) was not much different from the next seven poorly-ranked states.
 
-Adding cumulative shading to this plot highlights the generally lower performance of students in southern states compared to northern states. The top four panels, representing the 20 lowest ranking states, include 15 states in the southern half of the country. The original report [ref NCES 2012] presented these results in a segmented bar chart centered in the same way as in Figure {Ch5b-micromap11}, but sorted by state name. No geographic patterns could be discerned.
+Adding cumulative shading to this plot highlights the generally lower performance of students in southern states compared to northern states. The top four panels, representing the 20 lowest ranking states, include 15 states in the southern half of the country. The original report [@NCES2011] presented these results in a segmented bar chart centered in the same way as in Figure \@ref(fig:Ch5b-micromap4), but sorted by state name. No geographic patterns could be discerned.
+
 
 ## Scatter Plots {#Ch5b-Scatter-Plots}
 
-One of the simplest types of graphs is the two-dimensional scatter plot, which displays pairwise values, usually denoted (x,y). However, this graphic presents challenges in the linked micromap design - each state's micromap row is too small to display a two-dimensional plot and, even if we could scale such a plot to be visible, we would lose the information about where that state's value fits within the entire bivariate distribution of all states. The solution implemented in **micromapST** is to display a scatter plot for each panel, i.e., for five states in the default design. Each scatter plot contains dots for every state, with only those dots representing the states in that panel colored in. The colors for the state dots match the colors for other column glyphs, the state name key and on the map, just as in every other micromap design.
 
-To simplify our example, we will plot the same data used in Section {Ch3-Geog}, Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [ref]. In Chapter {Ch3} we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot.
+One of the simplest types of graphs is the two-dimensional scatter plot, which displays pairwise values, usually denoted (x, y). However, this graphic presents challenges in the linked micromap design - each state's micromap row is too small to display a two-dimensional plot and, even if we could scale such a plot to be visible, we would lose the information about where that state's value fits within the entire bivariate distribution of all states. The solution implemented in **micromapST** is to display a scatter plot for each panel, i.e., for five states in the default design. Each scatter plot contains dots for every state, with only those dots representing the states in that panel colored in. The colors for the state dots match the colors for other column glyphs, the state name key and on the map, just as in every other micromap design.
 
-```{r Ch5b-micromap12, fig.cap = 'Scatter plot of % residents with income < 150% federal poverty level and % with 4+ years of college, sorted by % college', fig.width = 7, fig.height = 9}
+To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [@NRC2022]. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot.
 
+```{r Ch5b-micromap5, fig.cap = 'Scatter plot of % residents with income < 150% federal poverty level and % with 4+ years of college, sorted by % college.', fig.width = 7, fig.height = 9}
 library(micromapST)
 
 # Input data files.
 # Data Set # 1
-MD_pov_ed <- read.csv("data/MDPovEducACSData20162020.csv", row.names = 3)
+MD_pov_ed <- read.csv(
+  "data/MDPovEducACSData20162020.csv",
+  row.names = 3
+)
 head(MD_pov_ed)
+
 panel_desc_MD_poved <- data.frame(
   type = c("mapcum", "id", "scatdot"),
   lab1 = c("", "", "% College by % Pov"),
@@ -220,9 +359,10 @@ panel_desc_MD_poved <- data.frame(
 )
 
 # sort by % college
-micromapST(MD_pov_ed,
+micromapST(
+  statsDFrame = MD_pov_ed,
+  panelDesc = panel_desc_MD_poved,
   rowNames = "id",
-  panel_desc_MD_poved,
   sortVar = "PctBachDegree",
   ascend = FALSE,
   plotNames = "full",
@@ -230,9 +370,12 @@ micromapST(MD_pov_ed,
   title = c("Maryland counties: % Living < 150% of Poverty Level and % with 4+ Years of College")
 )
 ```
+
 This gives a clearer picture of the relationship between poverty and education in Maryland. Howard and Montgomery counties are outliers with high percents of college-educated residents. Excluding these outliers, the other counties do show a fairly strong negative correlation between poverty and college education. 
 
+
 ## Conclusions {#Ch5b-Conclusions}
+
 
 In summary, **micromapST** can produce glyphs for most common types of data:
 
@@ -243,5 +386,6 @@ In summary, **micromapST** can produce glyphs for most common types of data:
 - time series line plots.
 
 For each of these types of glyphs, there are options to control labeling and other features of the plot. Thus **micromapST** can readily produce publication-quality linked micromaps, letting the user focus more on the content of the graph and less on its aesthetics.
+
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
