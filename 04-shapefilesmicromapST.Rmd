@@ -129,9 +129,8 @@ The columns in the Name Table are:  [MAKE THIS A SMALL TABLE?]
 -    MapY - numeric - Y axis (vertical) location for label
 
 HOW TO REDUCE FONTSIZE OR PRINT LANDSCAPE SO ALL COLS FIT?
-```{r Ch4b-USFinalTable}
-
-knitr::kable(head(US_name_table[,c(1:3,6:14)], n = 12L), booktabs = TRUE, caption = "Final Name Table for the first 12 U.S. states", echo = FALSE)
+```{r Ch4b-USFinalTable, echo = FALSE}
+knitr::kable(head(US_name_table[,c(1:3,6:14)], n = 12L), booktabs = TRUE, caption = "Final Name Table for the first 12 U.S. states")
 ```
 
 Features in the Name Table not used in this example are the additional location identifier types of alternate abbreviation (“alt_abbr”) and alias wildcard matching (“alias”).
@@ -202,7 +201,7 @@ BuildBorderGroup(
 )
 ```
 
-``` {r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE}
+``` {r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE, eval = FALSE}
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
   "data/Ch4b/USst_SM_After rmapshaper.png",
