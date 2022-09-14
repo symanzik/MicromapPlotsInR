@@ -197,11 +197,14 @@ BuildBorderGroup(
   IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.2, # reduce vertices to 0.2% of original number
   MapHdr = c("", "States"),
-  debug = 0 # 512 + 128      generate PDF & PNG map plots at each stage.
+  debug = 0 # 512 + 128 # generate PDF & PNG map plots at each stage.
 )
+
+sf_use_s2(TRUE)
+## Spherical geometry (s2) switched on
 ```
 
-``` {r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE, eval = FALSE}
+``` {r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
   "data/Ch4b/USst_SM_After rmapshaper.png",
@@ -350,6 +353,9 @@ BuildBorderGroup(
   IDHdr = c("ADD"), # title over ID column
   ReducePC = 0.75 # percentage of vertices to keep after simplifying
 )
+
+sf_use_s2(TRUE)
+## Spherical geometry (s2) switched on
 ```
 Save and print the resulting image: 
 ``` {r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts', echo = FALSE}
