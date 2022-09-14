@@ -100,7 +100,7 @@ mmplot(
 Example moved from Chapter \@ref(Ch2).
 
 
-```{r Ch4-micromaChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+```{r Ch4-micromapChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 # VI. Use of external shapefiles
 
 library(rgeos)
@@ -121,7 +121,7 @@ summary(ChinaShapefile)
 ```
 
 
-```{r Ch4-micromaChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+```{r Ch4-micromapChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 gIsValid(spgeom = ChinaShapefile, byid = TRUE, reason = TRUE)
 
 ChinaShapefileThin <- thinnedSpatialPoly(
@@ -151,7 +151,7 @@ plot(ChinaShapefileThin)
 ```
 
 
-```{r Ch4-micromaChina3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+```{r Ch4-micromapChina3, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Read in the data
 
 religion <- read.csv(
@@ -179,7 +179,7 @@ ChinaPlot <- mmplot(
 ```
 
 
-```{r Ch4-micromaChina4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+```{r Ch4-micromapChina4, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Advanced micromap plot
 
 ChinaReligion <- mmplot(
@@ -274,7 +274,7 @@ ChinaReligion <- mmplot(
 ```
 
 
-```{r Ch4-micromaChina5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
+```{r Ch4-micromapChina5, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 ### Final advanced micromap plot with reduced margins
 
 ChinaReligion <- mmplot(
