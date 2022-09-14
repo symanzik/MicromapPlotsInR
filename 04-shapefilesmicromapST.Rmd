@@ -106,7 +106,7 @@ A more complicated issue is when the user only has a string name to identify eac
 
 If the areas are organized by regions like the U. S. states, then the regID and regName columns can be added to associate the areas (e.g., states) with the census regions. One option that uses these region definitions is `dataRegionsOnly = TRUE` in the **micromapST** function call. Including this option will cause only the regions with any data to be mapped.
 
-For this U.S. border group, the states of Alaska and Hawaii need to be scaled and moved to a better location to reduce the overall size of the map.  Alaska can be scaled down to 30% of it’s original size and moved to just below California. It is still recognizable.  Hawaii can be moved just to below New Mexico near Texas. The District of Columbia is too small to be seen in the micromap, so it was moved to the right of its original position and enlarged to 500% of its original size. In the tests of the border group, Rhode Island did not show its internal colors very well and so for this demonstration was enlarged to 150% of its original size and moved slightly eastward away from the mainland. See Table \@ref(table:Ch4b-USFinalTable) for the table entries corresponding to these changes. Rotation of areas is also possible but not needed in this example. The values specifying the degree of scaling, rotation and moving are included in the Name Table only if areas in the border group need to be modified. Areas that are unchanged will have these values set to NA in the table.
+For this U.S. border group, the states of Alaska and Hawaii need to be scaled and moved to a better location to reduce the overall size of the map.  Alaska can be scaled down to 30% of it’s original size and moved to just below California. It is still recognizable.  Hawaii can be moved just to below New Mexico near Texas. The District of Columbia is too small to be seen in the micromap, so it was moved to the right of its original position and enlarged to 500% of its original size. In the tests of the border group, Rhode Island did not show its internal colors very well and so for this demonstration was enlarged to 150% of its original size and moved slightly eastward away from the mainland. See Table \@ref(tab:Ch4b-USFinalTable) for the table entries corresponding to these changes. Rotation of areas is also possible but not needed in this example. The values specifying the degree of scaling, rotation and moving are included in the Name Table only if areas in the border group need to be modified. Areas that are unchanged will have these values set to NA in the table.
 
 Having moved some areas, the user may have trouble recognizing them in their new positions. **micromapST** has a feature that allows you to add a short label to moved areas to help the user identify them. This information is provided in MapL, MapX, and MapY columns (the label, X and Y coordinates for the label, respectively) in the Name Table. Note that these labels only appear on the first of the multiple maps in the linked micromap plot. Labels should be used sparingly so as not to overly clutter the map display. Any area’s row that does not require labeling or modification will have the values in those columns set to NA. Note that the location values used for the areas that are to be moved and for their the labels are always in the units of the original shapefile projection, in most cases, longitude and latitude degrees. This feature was used on the U. S. States border group to scale DC, RI, Alaska and Hawaii and to shift DC, Alaska and Hawaii to a better location on the map.
 
@@ -154,7 +154,7 @@ head(US_shp@data)
 ```
 This shapefile has 273 polygons elements, far more than the number of states, because most states are made up of multiple land masses. For example, Alaska has 81 sets of polygons and Hawaii has 27 sets of polygons. By the end of this process, all areas with multiple sets of polygons will be combined so there will be one element per area, possibly with multiple polygons. 
 
-The data slot shows there is a variable “NAME” in the shapefile that can be used to link the polygons to the Name Table area rows, as could the variable "State" ("Name" and "State" in Table \@ref(USFinalTable).  No additional Name Table column or shapefile data slot variable needs to be added. Just make sure the `BuildBorderGroup` function call contains `NameTableLink = "Name" and ShapeLinkName = "NAME”`, specifying the names of the linking variable in both sources, respectively.
+The data slot shows there is a variable “NAME” in the shapefile that can be used to link the polygons to the Name Table area rows, as could the variable "State" ("Name" and "State" in Table \@ref(tab:Ch4b-USFinalTable).  No additional Name Table column or shapefile data slot variable needs to be added. Just make sure the `BuildBorderGroup` function call contains `NameTableLink = "Name" and ShapeLinkName = "NAME”`, specifying the names of the linking variable in both sources, respectively.
 
 The shapefile is expected to be in the standard ERSI shapefile structure [ref]. The projection can be missing or should be specified as longitude/latitude, the projection most publicly available shapefiles use. All U.S. Census Bureau shapefiles are provided in longitude/latitude coordinates. If the shapefile’s projection is in the longitude/latitude coordinates, the user can  further specify the projection of the boundaries before they are converted to the **micromapST** format by using the `proj4` call parameter. This option was added because some states require that any maps of their state be presented in a particular projection. If no `proj4` parameter is present, the function will estimate an Albers equal area projection based on the centroid of the map with the extra latitudes set to ¼ of the height above and below the center latitude. This produces a good projection for use with linked micromaps and ensures the land areas are not distorted.  
 
@@ -182,7 +182,7 @@ The areaParms table contains three additional parameters that can be entered by 
 ### Compare U.S. results to default caricature map {#Ch4b-USExample-compare}
 Now let's apply these steps to the original U.S. state boundaries and compare the results to the default U.S. state map in **micromapST**.
 
-``` {r}
+```{r}
 library(micromapST)
 NTDir <- "data/Ch4b"
 BuildBorderGroup(
@@ -204,7 +204,7 @@ sf_use_s2(TRUE)
 ## Spherical geometry (s2) switched on
 ```
 
-``` {r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE}
+```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final', fig.show = "hold", out.width = '50%', echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
   "data/Ch4b/USst_SM_After rmapshaper.png",
@@ -213,7 +213,7 @@ knitr::include_graphics(c(
 knitr::include_graphics(c("data/Ch4b/USst_FP_Final_areaVisBorders.png", "data/Ch4b/MM-US States.png"), auto_pdf = TRUE)
 ```
 
-The progression from the original Census shapefile (Figure \@ref(Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(Ch4b-USExample-BBG). Note that the color shading is random to illustrate how a shaded map might look. The first intermediate map (upper left) is smoothed from the original but still has the problem of a very small continental U.S. The second step, moving and scaling Alaska and Hawaii, improved this. The final map (lower left) had an Albers projection applied. Compared to the caricature map (lower right), this map processed through `BuildBorderGroup` is not quite as smooth, but is adequate for small micromaps. This illustrates the trade-off: you might prefer a caricature-type of map for your geographic area but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
+The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(fig:Ch4b-USExample-BBG). Note that the color shading is random to illustrate how a shaded map might look. The first intermediate map (upper left) is smoothed from the original but still has the problem of a very small continental U.S. The second step, moving and scaling Alaska and Hawaii, improved this. The final map (lower left) had an Albers projection applied. Compared to the caricature map (lower right), this map processed through `BuildBorderGroup` is not quite as smooth, but is adequate for small micromaps. This illustrates the trade-off: you might prefer a caricature-type of map for your geographic area but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
 
 ## Linked micromap plots for a large number of areas {#Ch4b-Many-Areas}
 Sometimes the geographic area to be displayed has too many sub-areas to fit easily on a single-page linked micromap plot. What can be done? The output can be directed to a device that allows a longer display, such as a PDF or PNG file, which can be printed on multiple sheets of paper or displayed on a computer monitor, using scrolling to view one section of the plot at a time. Neither of these solutions is ideal, since one purpose of the linked micromap design is to facilitate pattern recognition across all of the geographic areas at once. An alternative approach, if possible, is to aggregate the original areas into a smaller number of meaningful units. We illustrate each of these approaches in this section.
@@ -223,7 +223,7 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 ### Creating long linked micromap plots {#Ch4b-Many-Areas-Long}
 The state of Kansas has 105 counties. We can use the built-in border group to create a linked micromap that might reasonably fit on a legal size sheet of paper. For illustration, we read in population estimates for 2021 and the area for each county [ref Wikipedia, Kansas counties, accessed 9/8/22]. We then calculated a new column in the spreadsheet, population density, which is the number of people per square mile. The linked micromap plot should identify the largest Kansas cities on the maps in counties with a high population density, which will be the sort variable.
 
-``` {r Ch4b-Kansas, fig.cap = 'Population density (#/sq mi) and area of Kansas counties', fig.width = 7, fig.height = 15}
+```{r Ch4b-Kansas, fig.cap = 'Population density (#/sq mi) and area of Kansas counties', fig.width = 7, fig.height = 15}
 KS_data <- read.csv("data/Ch4b/KansasData2021.csv")
 head(KS_data)
 
@@ -257,7 +257,7 @@ To build a border group of the ADDs, the first step is to aggregate the counties
 The state of Kentucky’s website provides the ADD name for each county or it can be built easily in a spreadsheet [ref URL, access date]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
 
 The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
-``` {r}
+```{r}
 library(readxl)
 library(rgdal)
 library(sp)
@@ -271,7 +271,7 @@ head(CoToADD, n = 6L)
 This table has 120 rows, one per county, and provides the ADD name for each county. For example, we can see from this short example that Allen and Barren counties are in an ADD called Barren River.
 
 The first step is to aggregate boundaries for counties into the larger ADDs:
-``` {r}
+```{r}
 #  Read in Kentucky 2000 census county boundaries shapefile.
 #  Build a list to use in the UNION of the counties into the ADDs.
 #  The MergeInx vector contains the index to the ADD name for
@@ -311,7 +311,7 @@ rgdal::writeOGR(KY_ADD_SPDF, dsn = Shp_dir, layer = "KYADD", driver = "ESRI Shap
 #
 ```
 
-``` {r Ch4b-KY-maps, fig.cap = "Kentucky counties and Area Development Districts", fig.show = "hold", out.width = "50%", echo = FALSE} 
+```{r Ch4b-KY-maps, fig.cap = "Kentucky counties and Area Development Districts", fig.show = "hold", out.width = "50%", echo = FALSE} 
 pdf("data/Ch4b/Ky_ADD_SPDF.pdf", width = 3, height = 2)
 plot(KY_ADD_SPDF)
 dev.off()
@@ -333,14 +333,14 @@ knitr::include_graphics(c("data/Ch4b/KY_shp.png", "data/Ch4b/KY_ADD_SPDF.png"), 
 
 Now we can build a new border group for use in **micromapST**. Since there were no modifications (e.g., scaling or moving) of the boundaries, the basic Name Table is all that is needed:
 
-``` {r}
+```{r}
 temp_name_table <- read_xlsx("data/Ch4b/KYADD_NameTable-Basic.xlsx")
 head(temp_name_table, n = 6L)
 ```
 
 Once the shapefile for the Kentucky ADD boundaries is formed, the call to the `BuildBorderGroup` function can be executed.
 
-``` {r}
+```{r}
 #  BuildBorderGroup function call
 BuildBorderGroup(
   ShapeFile = "KYADD",
@@ -358,7 +358,7 @@ sf_use_s2(TRUE)
 ## Spherical geometry (s2) switched on
 ```
 Save and print the resulting image: 
-``` {r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts', echo = FALSE}
+```{r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts', echo = FALSE}
 BGDir <- "data/Ch4b"
 BGFile <- "KYADD2BG.rda"
 load(file = paste0(BGDir, "/", BGFile))
@@ -379,7 +379,7 @@ dev.off()
 knitr::include_graphics("data/Ch4b/KYADD.png", auto_pdf = TRUE)
 ```
 
-The original Kentucky ADD map in Figure \@ref(Ch4b-KY-maps) didn't have any very small areas and didn't require any scaling or moving. It probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
+The original Kentucky ADD map in Figure \@ref(fig:Ch4b-KY-maps) didn't have any very small areas and didn't require any scaling or moving. It probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
 
 ## Discussion {#Ch4b-Discussion}
 The **micromapST** package is quite flexible and can generate many types of graphics to explore and communicate data. However, its use was at first limited to U.S states. More recent versions included other built-in boundary files, including counties within a few U.S. states and other countries, but the latest version allows the user to create linked micromap plots with their own geography. The new `BuildBorderGroup` function has options to read in shapefiles directly and link them to a user-provided data table. Because the linked micromaps are very small, this function can smooth the original borders to better display the interior shading at that scale. This new capability widens the scope of linked micromap plots that can be produced by **micromapST**.
