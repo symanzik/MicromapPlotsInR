@@ -267,13 +267,13 @@ sf_use_s2(TRUE)
 par(mar = c(0, 0, 0, 0))
 
 knitr::include_graphics(c(
-  "data/Ch4b/USst_SM_After rmapshaper",
-  "data/Ch4b/USst_SM_After Name Table modifications"
+  "data/Ch4b/USst_SM_After_rmapshaper.png",
+  "data/Ch4b/USst_SM_After_Name_Table_modifications.png"
 ), auto_pdf = TRUE)
 
 knitr::include_graphics(c(
-  "data/Ch4b/USst_FP_Final_areaVisBorders",
-  "data/Ch4b/MM-US States"
+  "data/Ch4b/USst_FP_Final_areaVisBorders.png",
+  "data/Ch4b/MM-US_States.png"
 ), auto_pdf = TRUE)
 ```
 
@@ -410,8 +410,8 @@ dev.off()
 
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
-  "data/Ch4b/KY_shp", 
-  "data/Ch4b/KY_ADD_SPDF"), 
+  "data/Ch4b/KY_shp.png", 
+  "data/Ch4b/KY_ADD_SPDF.png"), 
 auto_pdf = TRUE)
 ```
 
@@ -468,7 +468,7 @@ polygon(areaVisBorders$x, areaVisBorders$y, border = "black", lwd = .9)
 dev.off()
 
 par(mar = c(0, 0, 0, 0))
-knitr::include_graphics("data/Ch4b/KYADD", auto_pdf = TRUE)
+knitr::include_graphics("data/Ch4b/KYADD.png", auto_pdf = TRUE)
 ```
 
 The original Kentucky ADD map in Figure \@ref(fig:Ch4b-KY-maps) didn't have any very small areas and didn't require any scaling or moving. It probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
