@@ -19,7 +19,7 @@ The micromap design includes multiple map images, one for each perceptual group 
 
 In addition to speed, by reducing the number of coordinates in the boundary file to only the essential ones, the boundary data can be greatly reduced in both size and complexity. For example, the U.S. Census Bureau 2000 shapefile of the boundaries for the U. S. states and DC is 2,360,011 bytes. After the simplification process described in this chapter, the U.S. state dataset is only 29,092 bytes, a 98.77% reduction.
 
-The boundary data used for the default map of U.S. states in **micromapST** is based on Mark Monmonier's "visibility map" [ref: Mapping it out: Expository Cartography for Humanities and Social Sciences], a caricature map of the U. S. states and DC. By highly smoothing the state boundaries and slightly enlarging several small states, these maps are not only fast to draw but minimize the boundary ink that can hamper identification of the interior color shading for small areas. This is especially a problem in coastal areas, where the complexity of coastlines can lead to black border lines folding in on themselves, resulting in the border ink masking the interior color. Of course, the degree of smoothing necessary depends on the size of the final map. As an example, the outline of the state in the linked micromap of Maryland counties (Figure \@ref(fig:Ch3-LMMMDpoved)) includes the Chesapeake Bay with some coastline detail whereas the boundary of Maryland within the larger U.S. map does not.
+The boundary data used for the default map of U.S. states in **micromapST** is based on Mark Monmonier's "visibility map" [@Mon93], a caricature map of the U. S. states and DC. By highly smoothing the state boundaries and slightly enlarging several small states, these maps are not only fast to draw but minimize the boundary ink that can hamper identification of the interior color shading for small areas. This is especially a problem in coastal areas, where the complexity of coastlines can lead to black border lines folding in on themselves, resulting in the border ink masking the interior color. Of course, the degree of smoothing necessary depends on the size of the final map. As an example, the outline of the state in the linked micromap of Maryland counties (Figure \@ref(fig:Ch3-LMMMDpoved)) includes the Chesapeake Bay with some coastline detail whereas the boundary of Maryland within the larger U.S. map does not.
 
 In the next section, we describe the boundary files included in the **micromapST** package. Then in following sections, you will learn how to read and process your own boundary files for use in **micromapST**.
 
@@ -30,7 +30,7 @@ In the next section, we describe the boundary files included in the **micromapST
 We will refer to a collection of boundaries for a geographic entity as a "border group", giving it a dataframe name ending in "BG". The following border groups were created by request over the years and are available in the current version (2.0.0) of **micromapST**:
 
 -   USStatesBG, data from the original micromapST package for the 50 U.S. states and the District of Columbia;
--   USSeerBG, data for the 21 cancer registry areas of the U.S. National Cancer Institute [ref SEER];
+-   USSeerBG, data for the 21 cancer registry areas of the U.S. National Cancer Institute [@NCISEER2022About];
 -   KansasBG, data for the 105 counties in the state of Kansas;
 -   NewYorkBG, data for the 62 counties in the state of New York;
 -   MarylandBG, data for the 24 counties in the state of Maryland;
@@ -49,9 +49,9 @@ For simplicity, hereafter we will refer generically to U.S. states, even though 
 ### Introduction {#Ch4b-NewBGs-Intro}
 
 
-The experience of the developers when manually creating the border groups listed in Section \@ref(Ch4b-BuiltinGeographies) has been combined into a single function in the new **micromapST** package, `BuildBorderGroup`. The user provides a file of the location information (a Name Table) and a shapefile containing all of the area boundaries. The shapefile was originally developed by ESRI for use in their GIS packages but has since become a publicly-available spatial file format [ref SHP ESRI]. 
+The experience of the developers when manually creating the border groups listed in Section \@ref(Ch4b-BuiltinGeographies) has been combined into a single function in the new **micromapST** package, `BuildBorderGroup`. The user provides a file of the location information (a Name Table) and a shapefile containing all of the area boundaries. The shapefile was originally developed by the Environmental Systems Research Institute, Inc. (ESRI) for use in their GIS packages but has since become a publicly-available spatial file format [@ESRI1998]. 
 
-To illustrate the process of building a border group, we will use the U.S. Census Bureau’s state boundary files as defined in 2000 [ref Census URL].  The resulting map will be compared to the map based on the USStatesBG border group, the familiar caricature which is the default map in the package. Noting differences between these maps can inform the user's decision about the degree of smoothing that is enough so that all area colors are visible but not so much that areas are unrecognizable.
+To illustrate the process of building a border group, we will use the U.S. Census Bureau’s state boundary files as defined in 2000 [@USCensus2021Shape].  The resulting map will be compared to the map based on the USStatesBG border group, the familiar caricature which is the default map in the package. Noting differences between these maps can inform the user's decision about the degree of smoothing that is enough so that all area colors are visible but not so much that areas are unrecognizable.
 
 Throughout this chapter, we will utilize the `BuildBorderGroup` function's option to write out four intermediate map images as the process proceeds (`debug = xxx` where xxx = 512 for the default PDF format, 128 for PNG format, 640 for both). We will read and display these intermediate images so that the impact of each step on the final map image can be assessed. 
 
@@ -61,7 +61,7 @@ Throughout this chapter, we will utilize the `BuildBorderGroup` function's optio
 
 The original Census boundaries for U.S. states illustrate challenges to clear map display common to many other mapping tasks, particularly when the final map will be very small, as in a linked micromap plot.
 
-```{r Ch4b-USmapRAW, fig.cap = 'U.S. state boundaries plotted with latitude/longitude coordinates as provided by the Census Bureau [ref].', fig.width = 8, fig.height = 2}
+```{r Ch4b-USmapRAW, fig.cap = 'U.S. state boundaries plotted with latitude/longitude coordinates as provided by the U.S. Census Bureau [@USCensus2021Shape].', fig.width = 8, fig.height = 2}
 library(rgdal)
 
 shp_dir <- "data/Ch4b"
@@ -95,7 +95,7 @@ The steps implemented by `BuildBorderGroup` in **micromapST** are as follows:
    
 -   Read your shapefile into R and process its polygons;
     -   Validate that polygons are complete, shared boundaries align, etc.;
-    -   Simplify the polygon boundaries by applying `rmapshaper` [ref pkg & CRAN];
+    -   Simplify the polygon boundaries by applying `rmapshaper` [@TeRu2022];
 -   Link the Name Table to the shapefile polygons
 -   Apply the Albers equal-area (default) or other specified projection to the polygons;
 -   Create internal dataframe tables required by **micromapST**
@@ -132,7 +132,7 @@ knitr::kable(
   )
 ```
 
-U.S. states have standardized names, abbreviations (postal codes) and numeric identifiers (Federal Information Processing Standard (fips) codes [ref]). However, this is not always the case for other countries or for non-standard U.S. geographies, so **micromapST** allows the user to specify the primary abbreviation “Abbr” and an alternate abbreviation “Alt_Abbr” for the areas if there are two sets of commonly-acceptable abbreviations. The user can then choose which one to use to link to the shapefile, with corresponding `rowNames = ”ab”` or `rowNames = “alt_ab”` labels on the plot.
+U.S. states have standardized names, abbreviations (postal codes), and numeric identifiers (Federal Information Processing Standard (FIPS) codes [@USCensus2022ANSI]). However, this is not always the case for other countries or for non-standard U.S. geographies, so **micromapST** allows the user to specify the primary abbreviation “Abbr” and an alternate abbreviation “Alt_Abbr” for the areas if there are two sets of commonly-acceptable abbreviations. The user can then choose which one to use to link to the shapefile, with corresponding `rowNames = ”ab”` or `rowNames = “alt_ab”` labels on the plot.
 
 A more complicated issue is when the user only has a string name to identify each area, e.g., names of NCI cancer registries. In this case, **micromapST** can perform a wildcard match of a field in the Name Table, provided in the "Alias" column, against the user-provided area name. The user can request the wildcard matching by specifying `rowNames = ”alias”`. This is a very unusual situation and the designers do not expect it to be used by average users. 
 
@@ -232,11 +232,11 @@ This shapefile has 273 polygons elements, far more than the number of states, be
 
 The data slot shows there is a variable “NAME” in the shapefile that can be used to link the polygons to the Name Table area rows, as could the variable "State" ("Name" and "State" in Table \@ref(tab:Ch4b-USFinalTable).  No additional Name Table column or shapefile data slot variable needs to be added. Just make sure the `BuildBorderGroup` function call contains `NameTableLink = "Name" and ShapeLinkName = "NAME”`, specifying the names of the linking variable in both sources, respectively.
 
-The shapefile is expected to be in the standard ERSI shapefile structure [ref]. The projection can be missing or should be specified as longitude/latitude, the projection most publicly available shapefiles use. All U.S. Census Bureau shapefiles are provided in longitude/latitude coordinates. If the shapefile’s projection is in the longitude/latitude coordinates, the user can  further specify the projection of the boundaries before they are converted to the **micromapST** format by using the `proj4` call parameter. This option was added because some states require that any maps of their state be presented in a particular projection. If no `proj4` parameter is present, the function will estimate an Albers equal area projection based on the centroid of the map with the extra latitudes set to ¼ of the height above and below the center latitude. This produces a good projection for use with linked micromaps and ensures the land areas are not distorted.  
+The shapefile is expected to be in the standard ESRI shapefile structure [@ESRI1998]. The projection can be missing or should be specified as longitude/latitude, the projection most publicly available shapefiles use. All U.S. Census Bureau shapefiles are provided in longitude/latitude coordinates. If the shapefile’s projection is in the longitude/latitude coordinates, the user can  further specify the projection of the boundaries before they are converted to the **micromapST** format by using the `proj4` call parameter. This option was added because some states require that any maps of their state be presented in a particular projection. If no `proj4` parameter is present, the function will estimate an Albers equal area projection based on the centroid of the map with the extra latitudes set to ¼ of the height above and below the center latitude. This produces a good projection for use with linked micromaps and ensures the land areas are not distorted.  
 
-Once the shapefile is read, the contents are validated using several R packages:  cleangeo [ref], maptools [ref], rgeos [ref] tools. This assures that polygons are complete, i.e., without gaps in their perimeter, shared boundaries do not contain gaps or overlaps, and areas (polygons) do not overlap. Any of these problems can cause processing errors later if not repaired at this point.
+Once the shapefile is read, the contents are validated using several R packages:  cleangeo [@Blondel2021], maptools [@BiLe2022], rgeos [@BiRu2021] tools. This assures that polygons are complete, i.e., without gaps in their perimeter, shared boundaries do not contain gaps or overlaps, and areas (polygons) do not overlap. Any of these problems can cause processing errors later if not repaired at this point.
 
-The shapefile is then passed through `rmapshaper` [ref] to reduce its complexity to a specified percentage of the original size. We recommend the default 1.25% as a starting point, but this value may need to be adjusted to give you a border group suitable for your area. `rmapshaper` is set to not allow any areas to be eliminated but it may reduce an area so much that its overall shape changes. For example, DC may be changed to a triangular area instead of maintaining its original rectangular shape. Check your area boundaries to make sure all the areas are still recognizable. If you have problems getting a good representation with the `BuildBorderGroup` function, simplify the shapefile with an exterior package (GIS program or MapShaper website). Then bring it back to the `BuildBorderGroup` function and set the `ReducePC` call parameter to 100 to keep the function from trying to simplify the boundaries again.
+The shapefile is then passed through the `rmapshaper` R package [@TeRu2022] to reduce its complexity to a specified percentage of the original size. We recommend the default 1.25% as a starting point, but this value may need to be adjusted to give you a border group suitable for your area. `rmapshaper` is set to not allow any areas to be eliminated but it may reduce an area so much that its overall shape changes. For example, DC may be changed to a triangular area instead of maintaining its original rectangular shape. Check your area boundaries to make sure all the areas are still recognizable. If you have problems getting a good representation with the `BuildBorderGroup` function, simplify the shapefile with an exterior package (GIS program or MapShaper website). Then bring it back to the `BuildBorderGroup` function and set the `ReducePC` call parameter to 100 to keep the function from trying to simplify the boundaries again.
 
 
 ### Link the Name Table and Shapefile {#Ch4b-USExample-link}
@@ -318,7 +318,7 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 ### Creating Long Linked Micromap Plots {#Ch4b-Many-Areas-Long}
 
 
-The state of Kansas has 105 counties. We can use the built-in border group to create a linked micromap that might reasonably fit on a legal size sheet of paper. For illustration, we read in population estimates for 2021 and the area for each county [ref Wikipedia, Kansas counties, accessed 9/8/22]. We then calculated a new column in the spreadsheet, population density, which is the number of people per square mile. The linked micromap plot should identify the largest Kansas cities on the maps in counties with a high population density, which will be the sort variable.
+The state of Kansas has 105 counties. We can use the built-in border group to create a linked micromap that might reasonably fit on a legal size sheet of paper. For illustration, we read in population estimates for 2021 and the area for each county [@Wikipedia2022KansasCounties]. We then calculated a new column in the spreadsheet, population density, which is the number of people per square mile. The linked micromap plot should identify the largest Kansas cities on the maps in counties with a high population density, which will be the sort variable.
 
 ```{r Ch4b-Kansas, fig.cap = 'Population density (#/sq mi) and area of Kansas counties.', fig.width = 7, fig.height = 14}
 KS_data <- read.csv("data/Ch4b/KansasData2021.csv")
@@ -332,10 +332,9 @@ panelDesc09 <- data.frame(
   col1 = c(NA, NA, "pop_density", "area_sqmi")
 )
 
-par(mar = c(0, 0, 0, 0))
-
-micromapST(KS_data, 
-  panelDesc09,
+micromapST(
+  statsDFrame = KS_data, 
+  panelDesc = panelDesc09,
   sortVar = c("pop_density"), 
   ascend = FALSE,
   title = "Population density and area for Kansas counties, 2021",
@@ -347,19 +346,19 @@ micromapST(KS_data,
 )
 ``` 
 
-Note that a new option is introduced in this example. `axisScale = "sn"` requests that the axis tick marks be spaced and labeled according to Wilkinson's algorithm [ref Wilkinson, The Grammar of Graphics, 2005]. This format only affects a few numbers on the axis, e.g., "1k" and "1.25k", but shows the possible improvement for an axis with large values to display.
+Note that a new option is introduced in this example. `axisScale = "sn"` requests that the axis tick marks be spaced and labeled according to Wilkinson's algorithm [@Wilk99]. This format only affects a few numbers on the axis, e.g., "1k" and "1.25k", but shows the possible improvement for an axis with large values to display.
 
-By sorting on population density, the top panels show the largest Metropolitan Statistical Areas in Kansas as defined by OMB based on population and density [ref Wikipedia]. The top two panels identify Kansas City (Johnson and Wyandotte counties), Wichita, Topeka, Lawrence (University of Kansas), Leavenworth, Manhattan (Kansas State University) and Salina. It is also apparent that population density decreases steadily from the eastern to the western border of Kansas. 
+By sorting on population density, the top panels show the largest Metropolitan Statistical Areas in Kansas as defined by OMB based on population and density [@Wikipedia2021KansasStatAreas]. The top two panels identify Kansas City (Johnson and Wyandotte counties), Wichita, Topeka, Lawrence (University of Kansas), Leavenworth, Manhattan (Kansas State University) and Salina. It is also apparent that population density decreases steadily from the eastern to the western border of Kansas. 
 
 
 ### Aggregating to a Smaller Number of Areas {#Ch4b-Many-Areas-Aggregate}
 
 
-When the map contains too many areas to use with linked micromaps, the counties or provinces can be combined to reduce the number of areas in the map. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. For example, the state of Kentucky contains 120 counties, too many for a 8.5" x 11" graphic. The state defined Area Development Districts (ADDs) [ref http://www.kcadd.org/] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [ref Huang 2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
+When the map contains too many areas to use with linked micromaps, the counties or provinces can be combined to reduce the number of areas in the map. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. For example, the state of Kentucky contains 120 counties, too many for a 8.5" x 11" graphic. The state defined Area Development Districts (ADDs) [@KCADDnd] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
 
 To build a border group of the ADDs, the first step is to aggregate the counties of the state into the ADDs outside of the **micromapST** package. Then this new shapefile (or SpatialPolygons) along with a Name Table can be converted into a border group.  
 
-The state of Kentucky’s website provides the ADD name for each county or it can be built easily in a spreadsheet [ref URL, access date]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
+The state of Kentucky’s website provides the ADD name for each county or it can be built easily in a spreadsheet [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
 
 The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
 
@@ -515,28 +514,3 @@ The **micromapST** package is quite flexible and can generate many types of grap
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
-
-National Cancer Institute; Surveillance, Epidemiology, and End Results (SEER) Program. https://seer.cancer.gov/about/ .
-
-https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.2000.html US state boundary files
-
-Monmonier M (1993). Mapping it out: Expository Cartography for Humanities and Social Sciences. University of Chicago Press.
-
-ESRI (1998). ESRI Shapefile Technical Description. https://www.esri.com/content/dam/esrisites/sitecore-archive/Files/Pdfs/library/whitepapers/pdfs/shapefile.pdf 
-
-rmapshaper - reference CRAN?
-rgeos
-cleangeo
-
-American National Standards Institute (ANSI) and Federal Information Processing Series (FIPS) Codes. fips codes https://www.census.gov/library/reference/code-lists/ansi.html 
-
-Wikipedia, Kansas counties, accessed 9/8/22: https://en.wikipedia.org/wiki/List_of_counties_in_Kansas
-
-Wilkinson, L., The Grammar of Graphics (1999). Springer. 
-
-Wikipedia, Metropolitan Statistical Areas in Kansas, accessed 9/8/22: https://en.wikipedia.org/wiki/Kansas_statistical_areas
-
-KY ADDS  http://www.kcadd.org/
-
-Huang, B., Pollock, E., Zhu, L., Athens, J.P., Gangnon, R., Feuer, E.J., Tucker, T.C. (2018). Cancer Causes and Control, 29:279-287.

@@ -78,7 +78,7 @@ panelData <- c(
   "NA", "NA", "NA", "NA", "NA",
   "Name of output list from call to boxplot(..., plot = FALSE)",
   "NA", "NA", "NA", "NA",
-  "Name of array with dimensions c(51, t, 2) where t = # of time points, x values in [, , 1], y values in [,,2]",
+  "Name of array with dimensions c(51, t, 2) where t = # of time points, x values in [, , 1], y values in [, , 2]",
   "Name of array with dimensions c(51, t, 4) as specified for ts with added lower limit in [, , 3], upper limit in [, , 4]"
 )
 temptext <- data.frame(
@@ -303,7 +303,7 @@ micromapST(
 
 The order of states ranges from Washington DC as worst to Massachusetts as best on the math tests that year, as measured by both average score and the percent of students with less than basic proficiency. (Of course, DC is a totally urban city and is not fairly compared to all other states which are a mix of urban, suburban and rural areas. However, this is how the data are reported.) 
 
-Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. Heiberger and Robbins [@HeRo2014] suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [@CleMc84]. The `type="ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
+Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. @HeRo2014 suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [@CleMc84]. The `type = "ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
 
 ```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced.', fig.width = 7, fig.height = 9}
 library(micromapST)
