@@ -47,7 +47,7 @@ header-includes:
 \makeatother
 
 
-```{r Setup2, include=FALSE}
+```{r Setup2, include = FALSE}
 options(
   htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
 )
@@ -61,17 +61,21 @@ lapply(c('xfun'), function(pkg) {
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
+
 # Preface {-}
+
 
 This is the preface for the `Micromap Plots in R` book.
 
 
-## Why read this book {-}
+## Why Read thisBbook {-}
+
 
 You will learn a lot about all types of micromap plots.
 
 
-## Structure of the book {-}
+## Structure of the Book {-}
+
 
 Chapter \@ref(Ch1) provides a general overview on all types of micromap plots and provides
 an overview of the following chapters of the book.
@@ -80,7 +84,8 @@ Chapter \@ref(Ch2) introduces the **micromap**\index{R Packages!micromap} R pack
 Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R package.
 
 
-## Software information and conventions {-}
+## Software Information and Conventions {-}
+
 
 I used the **knitr**\index{R Packages!knitr} R package [@R-knitr] and 
 the **bookdown**\index{R Packages!bookdown} R package [@R-bookdown] to compile the book. 
@@ -96,6 +101,7 @@ Package names are in bold text (e.g., **rmarkdown**), and inline code and filena
 
 
 ## Acknowledgments {-}
+
 
 A lot of people helped me when I was writing the book. More to come later.
 

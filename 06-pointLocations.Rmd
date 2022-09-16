@@ -3,6 +3,7 @@
 
 \chapterauthor{Martin Holdrege, J{\"u}rgen Symanzik}
 
+
 A few stand-alone attempts have been made in the past to create linked micromap plots 
 for point locations such as climate stations and cities, rather than for areal locations 
 (i.e., polygons). 
@@ -85,7 +86,7 @@ in Asia, and their associated populations.
 
 First the necessary packages need to be loaded. 
 
-```{r message = FALSE, warning=FALSE}
+```{r Ch6-libraries, message = FALSE, warning = FALSE}
 library(micromap)
 library(maptools)
 library(sf)
@@ -96,7 +97,7 @@ source("R/Ch6_functions.R") # maybe these will be integrated into a package
 Next we load the the point location data. This dataframe contains four
 columns that we will use: `city`, `population`, `lat`, and `long`.
 
-```{r}
+```{r Ch6-LoadCities}
 cities <- readRDS("data/Ch6-data/asian_cities.RDS")
 ```
 
@@ -104,7 +105,7 @@ We can convert the population column to be in units of millions of people,
 so that the the numbers are more readable in the final
 micromap. 
 
-```{r}
+```{r Ch6-LoadPopulation}
 cities$population <- cities$population/10^6 
 ```
 
@@ -136,7 +137,7 @@ important in section \@ref(Ch6-Example2Combine) when two different `sf` objects 
 combined. 
 
 
-```{r}
+```{r Ch6-CreateCircles-Asia}
 circles_sf <- points2circles(cities, coords = c("long", "lat"), 
                              radius = 5, crs = "+proj=longlat +ellps=WGS84 +no_defs")
 #                             radius = 5, crs = "EPSG:4326")
@@ -156,10 +157,11 @@ X, Y, Z). The
 `sf` object first needs to be converted to a `Spatial` object (from the `sp` package),
 before it can be be passed to `create_map_table()`.
 
-```{r}
-circles_df <- create_map_table(as(circles_sf, 'Spatial'), 
-                               IDcolumn = "city")
-
+```{r Ch6-CreateMapTableAsia}
+circles_df <- create_map_table(
+  tmp.map = as(circles_sf, 'Spatial'),
+  IDcolumn = "city"
+)
 ```
 
 ### Create micromap
@@ -172,7 +174,7 @@ how to add a base map, so that the maps are more readable.
 ```{r Ch6-micromap1, fig.cap = 'Micromap showing the 10 largest cities in asia. Note that locations of cities are shown, but there are no country polygons to indicate the location of cities', fig.width = 4, fig.height = 3}
 mmplot(stat.data=cities,
        map.data=circles_df,
-        panel.types=c("labels", "dot", "map"),
+       panel.types=c("labels", "dot", "map"),
        panel.data=list("city","population", NA),
        ord.by="population", grouping=5,
        map.link=c("city","ID"))
@@ -192,7 +194,7 @@ a warning (e.g., don't use wrld_simpl from maptools and don't rely on raster
 package?, see note here: https://cran.r-project.org/web/packages/rgeos/index.html
 regarding the fact that `rgeos` is being retired in 2023)**
 
-```{r warning = FALSE, message = FALSE}
+```{r Ch6-WrldSimpl, warning = FALSE, message = FALSE}
 data('wrld_simpl')
 # note this throws a warning: https://gis.stackexchange.com/questions/379693/crop-wrld-simpl-gives-error-after-r-update
 asia <- raster::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
@@ -201,14 +203,14 @@ class(asia)
 
 Before the `circles_sf` and `asia` objects can be combined, the latter needs to be converted from a `SpatialPolygonsDataFrame` object to an `sf` object. 
 
-```{r}
+```{r Ch6-AsiaAsSF}
 asia_sf <- st_as_sf(asia)
 ```
 
 Before trying to combine the objects also check wether they have the same coordinate reference
 system (CRS).
 
-```{r}
+```{r Ch6-CheckAsiaCRS}
 st_crs(asia_sf) == st_crs(circles_sf)
 # this was FALSE after package updates - thus the different CRS above
 # it may be a good idea to obtain FALSE here and then update the CRS afterwards
@@ -221,7 +223,7 @@ column of that name to the `asia_sf`, and then bind the two datsets together. Wh
 contains names that uniquely identifies the polygons for which data will be shown (see Chapter X). No data
 will be shown. Note when selecting a specific column of a `sf` object, by using `x["column_name"]`, an `sf` object is returned with the desired column as well as the `geometry` column. In other words, the `geometry` column is 'sticky' and comes along when selecting columns in this way, so that the associated spatial information isn't lost.
 
-```{r}
+```{r Ch6-ExtendAsia}
 asia_sf$city <- NA
 comb_sf <- rbind(asia_sf['city'], circles_sf['city'])
 ```
@@ -231,9 +233,11 @@ The next step is to flatten the spatial object into a dataframe so that it can b
 in the `mmplot()` function.
 
 
-```{r}
-comb_df <- create_map_table(as(comb_sf, 'Spatial'), 
-                            IDcolumn = "city")
+```{r Ch6-CreateMapTableCities}
+comb_df <- create_map_table(
+  tmp.map = as(comb_sf, 'Spatial'),
+  IDcolumn = "city"
+)
 
 head(comb_df, 3)
 ```
@@ -257,7 +261,7 @@ Other `mmplot` arguments used here are described in Chapters X and Y [insert ref
 ```{r Ch6-micromap2, fig.cap = 'Micromap showing the 10 largest cities in asia', fig.width = 5, fig.height = 3}
 mmplot(stat.data=cities,
        map.data=comb_df,
-        panel.types=c("labels", "dot", "map"),
+       panel.types=c("labels", "dot", "map"),
        panel.data=list("city","population", NA),
        ord.by="population", grouping=5,
        map.link=c("city","ID"),
@@ -289,7 +293,7 @@ which provides the name of the county seat, as well as its elevation, population
 coordinates (in the `geometry` column), and the name of the county. 
 
 
-```{r}
+```{r Ch6-ReadRDS}
 seats1 <- readRDS("data/Ch6-data/utah_counties.RDS")
 class(seats1)
 names(seats1)
@@ -298,7 +302,7 @@ names(seats1)
 Next we want to load the spatial dataset showing the polygons of counties
 in Utah, which we can use as a basemap for the micromap. 
 
-```{r cache = TRUE, message = FALSE, results='hide'}
+```{r Ch6-UTCounites, cache = TRUE, message = FALSE, results='hide'}
 county_polygon <- tigris::counties("Utah", cb = TRUE,
                                    year = 2020)
 ```
@@ -306,7 +310,7 @@ county_polygon <- tigris::counties("Utah", cb = TRUE,
 We need to check whether the base map
 and point locations have the same coordinate reference system
 
-```{r}
+```{r Ch6-CheckCountiesCRS}
 st_crs(county_polygon) == st_crs(seats1)
 ```
 
@@ -314,7 +318,7 @@ Since they are different, one of the objects needs to be re-projected.
 Here we're re-projecting the `seats1` object, so that it has the same coordinate
 reference systems as the `county_polygon` object. 
 
-```{r }
+```{r Ch6-TransformCountiesCRS}
 seats2 <- st_transform(seats1, crs = st_crs(county_polygon))
 ```
 
@@ -348,7 +352,7 @@ Here there are several county seats we could consider moving.
 First we create a vector of names of counties who's county seats we want to move, 
 and then calculate the polygon centroid using the `st_centroid()` function.  
 
-```{r warning = FALSE}
+```{r Ch6-CountiesCentroids, warning = FALSE}
 county_names <- c("Weber", "Morgan", "Davis", "Salt Lake", "Summit", "Wasatch",
                   "Box Elder")
 
@@ -361,7 +365,7 @@ Now we replace the coordinates of the county seats with the centroids of the cou
 Note here we're arranging county names in alphabetical order so that
 that the correct coordinates are replaced. 
 
-```{r}
+```{r Ch6-CountiesReplacement}
 county_names <- sort(county_names)
 seats_adjust1 <- seats2 %>% 
   arrange(county)
@@ -372,13 +376,11 @@ seats_adjust1$geometry[seats_adjust1$county %in% county_names] <-
 Figure \@ref(fig:Ch6-CountyMap2) shows the effect of adjusting these points. 
 
 ```{r Ch6-CountyMap2, fig.cap="Original locations of county seats in blue, and adjusted locations in red."}
-
 plot(county_polygon$geometry)
 plot(seats2$geometry[seats2$county %in% county_names], add = TRUE, 
      pch = 19, col = 'blue')
 plot(seats_adjust1$geometry[seats_adjust1$county %in% county_names], 
      add = TRUE, pch = 19, col = 'red')
-
 ```
 
 We leave it as an exercise to the reader to adjust the locations of other
@@ -388,7 +390,7 @@ county seats to further improve the final map.
 
 Now that we have adjusted the point locations, we need to create circles around the points, that will be displayed on the micromap. 
 
-```{r fig.cap="Circles drawn around thelocations of county seats. No that overlap between individual circles is fairly limited, because some locations have been adjusted."}
+```{r Ch6-PlotCircles, fig.cap="Circles drawn around thelocations of county seats. No that overlap between individual circles is fairly limited, because some locations have been adjusted."}
 seats_circles <- points2circles(seats_adjust1, radius = 8)
 plot(seats_circles$geometry)
 ```
@@ -399,7 +401,7 @@ with `county_polygons`.
 To be able to bind the two objects the `county_polygon` object needs to
 have an empty county_seats column.
 
-```{r}
+```{r Ch6-ExtendCounties}
 county_polygon$county_seat <- NA
 seat_map <- rbind(county_polygon['county_seat'], 
                   seats_circles['county_seat'])
@@ -409,9 +411,11 @@ The `seat_map` object is simple features dataframe (class `sf`), which needs to 
 to a `Spatial` object before it can be flattened into a regular data frame using
 `create_map_table` function.
 
-```{r}
-seat_map_df <- create_map_table(as(seat_map, 'Spatial'), 
-                                IDcolumn = "county_seat") 
+```{r Ch6-CreateMapTableCounties}
+seat_map_df <- create_map_table(
+  tmp.map = as(seat_map, 'Spatial'),
+  IDcolumn = "county_seat"
+) 
 ```
 
 
@@ -475,23 +479,23 @@ the capacity of the stadium, number of total spectators over the 2018 season,
 the average number of spectators at a match, and the
 coordinates (`geometry` column).
 
-```{r}
+```{r Ch6-ReadStadiums}
 stadiums <- readRDS("data/Ch6-data/stadiums.RDS")
 names(stadiums)
 ```
 
 Next we "draw" circles around the points. 
 
-```{r}
+```{r Ch6-CreateCirclesStadiums}
 stadium_circles <- points2circles(stadiums, radius = 8)
 ```
 
 ### Acquire the underlying map
 
-We can extract anbasemap of the UK, and crop it to the extent we are 
+We can extract a basemap of the UK, and crop it to the extent we are 
 interested. 
 
-```{r}
+```{r Ch6-ExtractUKBasemap}
 uk_map <- wrld_simpl[wrld_simpl@data$NAME == "United Kingdom", ]
 uk_map_crop <- raster::crop(uk_map, raster::extent(-5, 50, 0, 56))
 ```
@@ -499,7 +503,7 @@ uk_map_crop <- raster::crop(uk_map, raster::extent(-5, 50, 0, 56))
 Transform the data from `spatial` object to an `sf' object, and add
 the empty "ID" column. 
 
-```{r}
+```{r Ch6-TransformUKBasemap}
 uk_map_sf <- st_as_sf(uk_map_crop)
 uk_map_sf$stadium <- NA
 ```
@@ -509,24 +513,23 @@ uk_map_sf$stadium <- NA
 
 Compare CRS - and adjust again.
 
-```{r}
+```{r Ch6-CheckCRSStadiums}
 st_crs(uk_map_sf) == st_crs(stadium_circles)
 ```
 
-
-```{r }
+```{r Ch6-TransformCRSStadiums}
 stadium_circles2 <- st_transform(stadium_circles, crs = st_crs(uk_map_sf))
 ```
 
-
-
 Here we bind the the base map and the point locations together.
 
-```{r}
+```{r Ch6-CreateMapTableExtendedStadiums}
 stadiums_map1 <- rbind(uk_map_sf['stadium'], stadium_circles2['stadium'])
 
-stadiums_map_df <- create_map_table(as(stadiums_map1, 'Spatial'), 
-                                    IDcolumn = "stadium")
+stadiums_map_df <- create_map_table(
+  tmp.map = as(stadiums_map1, 'Spatial'),
+  IDcolumn = "stadium"
+)
 ```
 
 ### Create initial micromap
@@ -568,7 +571,7 @@ The default arguments may need to be adjustment to obtain satisfactory repulsion
 between points (see function documentation for details).
 Note that points that are already far apart are not moved. 
 
-```{r}
+```{r Ch6-RepelPointsStadium}
 stadiums_repel <- point_repel(stadiums, rep.fact = 50, adj.max = 1)
 par(mfrow = c(1, 2))
 plot(stadiums$geometry, main = 'Original point locations')
@@ -577,7 +580,7 @@ plot(stadiums_repel$geometry, main = 'Repelled points')
 
 Now circles need to be drawn around the points.
 
-```{r}
+```{r Ch6-CreateCirclesAndMapTableStadiums}
 stadium_circles_repel <- points2circles(stadiums_repel, radius = 8)
 
 stadium_circles_repel2 <- st_transform(stadium_circles_repel, crs = st_crs(uk_map_sf))
@@ -585,15 +588,17 @@ stadium_circles_repel2 <- st_transform(stadium_circles_repel, crs = st_crs(uk_ma
 stadiums_map_repel <- rbind(uk_map_sf['stadium'], 
                             stadium_circles_repel2['stadium'])
 
-stadiums_map_repel_df <- create_map_table(as(stadiums_map_repel, 'Spatial'), 
-                                    IDcolumn = "stadium")
+stadiums_map_repel_df <- create_map_table(
+  tmp.map = as(stadiums_map_repel, 'Spatial'),
+  IDcolumn = "stadium"
+)
 ```
 
 
 ```{r Ch6-micromap5, fig.cap = 'Micromap showing stadium locations. Here the stadium locations have been moved slightly so that complete overlap of points does not occur. Micromaps can contain two label columns, as seen here where both the stadium name and team name are provided.', fig.width = 7.5, fig.height = 7}
 mmplot(stat.data = st_drop_geometry(stadiums),
        map.data = stadiums_map_repel_df,
-      panel.types = c("labels", "dot", "map", "labels"),
+       panel.types = c("labels", "dot", "map", "labels"),
        panel.data = list("stadium","capacity", NA, "team"),
        ord.by = "capacity", grouping=5,
        map.link = c('stadium', "ID"),

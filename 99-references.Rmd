@@ -4,7 +4,7 @@
 # References {-}
 '`
 
-```{r include=FALSE}
+```{r Ch99-PackageReferences, include = FALSE}
 # generate a BibTeX database automatically for some R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
