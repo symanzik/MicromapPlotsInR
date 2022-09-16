@@ -142,23 +142,50 @@ For this U.S. border group, the states of Alaska and Hawaii need to be scaled an
 
 Having moved some areas, the user may have trouble recognizing them in their new positions. **micromapST** has a feature that allows you to add a short label to moved areas to help the user identify them. This information is provided in MapL, MapX, and MapY columns (the label, X and Y coordinates for the label, respectively) in the Name Table. Note that these labels only appear on the first of the multiple maps in the linked micromap plot. Labels should be used sparingly so as not to overly clutter the map display. Any area’s row that does not require labeling or modification will have the values in those columns set to NA. Note that the location values used for the areas that are to be moved and for their the labels are always in the units of the original shapefile projection, in most cases, longitude and latitude degrees. This feature was used on the U. S. States border group to scale DC, RI, Alaska and Hawaii and to shift DC, Alaska and Hawaii to a better location on the map.
 
-The columns in the Name Table are:  [MAKE THIS A SMALL TABLE?] 
+The columns in the Name Table are shown in Table \@ref(tab:Ch4b-NameTable).
 
--    Name	- character – full name of area
--    Abbr	- character – abbreviated name of area. Should be just a few letters.
--    ID	- numeric – a numerical code representing the area.
--    Alt_Abbr	- character – an alternate commonly acceptable abbreviated name of the area.
--    Alias	- character – a string used in a wildcard (*string*) match of the Location ID.
--    Link	- character – a string value to use to build a linkage between a row in the Name Table and the shapefile polygons for an area.
--    regID - numeric - code representing the region
--    regName - character - name of region
--    Xoffset - numeric - change in horizontal direction for a moved area (negative is left)
--    Yoffset - numeric - change in vertical direction for a moved area (negative is down)
--    Scale - numeric - relative size of modified area, where 1 = no change at all
--    Rotate - numeric - amount to rotate the area (in degrees)
--    MapL - character - label for modified area
--    MapX - numeric - X axis (horizontal) location for label
--    MapY - numeric - Y axis (vertical) location for label
+```{r Ch4b-NameTable, echo = FALSE} 
+library(kableExtra)
+
+name_table_text <- c(
+  "Name", "character", "Full name of area",
+  "Abbr", "character", "Abbreviated name of area. Should be just a few letters",
+  "ID", "numeric", "A numerical code representing the area",
+  "Alt_Abbr", "character", "An alternate commonly acceptable abbreviated name of the area",
+  "Alias", "character", "A string used in a wildcard (*string*) match of the Location ID",
+  "Link", "character", "A string value to use to build a linkage between a row in the Name Table and the shapefile polygons for an area",
+  "regID", "numeric", "Code representing the region",
+  "regName", "character", "Name of region",
+  "Xoffset", "numeric", "Change in horizontal direction for a moved area (negative is left)",
+  "Yoffset", "numeric", "Change in vertical direction for a moved area (negative is down)",
+  "Scale", "numeric", "Relative size of modified area, where 1 = no change at all",
+  "Rotate", "numeric", "Amount to rotate the area (in degrees)",
+  "MapL", "character", "Label for modified area",
+  "MapX", "numeric", "X axis (horizontal) location for label",
+  "MapY", "numeric", "Y axis (vertical) location for label"
+)
+
+name_table_content <- data.frame(
+  Name = name_table_text[(0:14) * 3 + 1],
+  Type = name_table_text[(0:14) * 3 + 2],
+  Meaning = name_table_text[(0:14) * 3 + 3]
+)
+
+knitr::kable(
+  name_table_content,
+  booktabs = TRUE,
+  caption = "PLEASE ADD A MEANINGFUL CAPTION HERE AND UPDATE COLUMN NAMERS BELOW.",
+  col.names = c("Name", "Type", "Meaning")
+) %>%
+  kable_styling(
+    latex_options = "striped",
+    font_size = 10
+  ) %>%
+  column_spec(1, width = "0.75in") %>%
+  column_spec(2, width = "0.75in") %>%
+  column_spec(3, width = "3in")
+```
+
 
 ```{r Ch4b-USFinalTable, echo = FALSE}
 library(kableExtra)
@@ -305,11 +332,16 @@ panelDesc09 <- data.frame(
   col1 = c(NA, NA, "pop_density", "area_sqmi")
 )
 
-micromapST(KS_data, panelDesc09,
-  sortVar = c("pop_density"), ascend = FALSE,
+par(mar = c(0, 0, 0, 0))
+
+micromapST(KS_data, 
+  panelDesc09,
+  sortVar = c("pop_density"), 
+  ascend = FALSE,
   title = "Population density and area for Kansas counties, 2021",
   axisScale = "sn",
-  rowNames = "full", rowNamesCol = "name",
+  rowNames = "full", 
+  rowNamesCol = "name",
   bordGrp = "KansasBG",
   plotNames = "full"
 )
@@ -410,9 +442,11 @@ dev.off()
 
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
-  "data/Ch4b/KY_shp.png", 
-  "data/Ch4b/KY_ADD_SPDF.png"), 
-auto_pdf = TRUE)
+  "data/Ch4b/KY_shp.png",
+  "data/Ch4b/KY_ADD_SPDF.png"
+),
+auto_pdf = TRUE
+)
 ```
 
 
