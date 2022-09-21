@@ -1,52 +1,52 @@
 "Abbr","Name","ID","L2_ID","L2_ID_Name","regID","regName","Xoffset","Yoffset","Scale","Rotate","MapLabel","Link","Alt_Abbr","Alias","Key","DoAdj","MapL","MapX","MapY","Ord","area","CCode"
 "AL","Alabama","01","2","South","2","South",NA,NA,NA,NA,NA,"0000000000000ALABAMA","AL","Alabama","AL",FALSE,NA,NA,NA,42,12.9948828580118,1
-"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK,-114.76,26.12","00000000000000ALASKA","AK","Alaska","AK",TRUE,"AK",-2324845.5061373,-1126175.31537335,34,273.976559871675,4
+"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK,-114.76,26.12","00000000000000ALASKA","AK","Alaska","AK",TRUE,"AK",-2324845.5061373,-1126175.31537335,34,273.976559871675,1
 "AZ","Arizona","04","4","West","4","West",NA,NA,NA,NA,NA,"0000000000000ARIZONA","AZ","Arizona","AZ",FALSE,NA,NA,NA,46,29.6666104516736,2
 "AR","Arkansas","05","2","South","2","South",NA,NA,NA,NA,NA,"000000000000ARKANSAS","AR","Arkansas","AR",FALSE,NA,NA,NA,3,13.7057478567635,3
-"CA","California","06","4","West","4","West",NA,NA,NA,NA,NA,"0000000000CALIFORNIA","CA","California","CA",FALSE,NA,NA,NA,30,41.6449637273516,6
+"CA","California","06","4","West","4","West",NA,NA,NA,NA,NA,"0000000000CALIFORNIA","CA","California","CA",FALSE,NA,NA,NA,30,41.6449637273516,4
 "CO","Colorado","08","4","West","4","West",NA,NA,NA,NA,NA,"000000000000COLORADO","CO","Colorado","CO",FALSE,NA,NA,NA,47,28.012593910665,3
-"CT","Connecticut","09","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000CONNECTICUT","CT","Connecticut","CT",FALSE,NA,NA,NA,6,1.50814400993958,5
-"DE","Delaware","10","2","South","2","South",NA,NA,NA,NA,NA,"000000000000DELAWARE","DE","Delaware","DE",FALSE,NA,NA,NA,4,0.468214089808004,1
-"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC,-71.5,35.5","DISTRICT OF COLUMBIA","DC","District of Columbia","DC",TRUE,"DC",1807029.26263931,-186318.504027669,28,0.0213792736929991,6
+"CT","Connecticut","09","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000CONNECTICUT","CT","Connecticut","CT",FALSE,NA,NA,NA,6,1.50814400993958,2
+"DE","Delaware","10","2","South","2","South",NA,NA,NA,NA,NA,"000000000000DELAWARE","DE","Delaware","DE",FALSE,NA,NA,NA,4,0.468214089808004,2
+"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC,-71.5,35.5","DISTRICT OF COLUMBIA","DC","District of Columbia","DC",TRUE,"DC",1807029.26263931,-186318.504027669,28,0.0213792736929991,1
 "FL","Florida","12","2","South","2","South",NA,NA,NA,NA,NA,"0000000000000FLORIDA","FL","Florida","FL",FALSE,NA,NA,NA,49,13.9245095074807,3
 "GA","Georgia","13","2","South","2","South",NA,NA,NA,NA,NA,"0000000000000GEORGIA","GA","Georgia","GA",FALSE,NA,NA,NA,16,14.8318943365545,2
-"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI,-101.18,25.63","00000000000000HAWAII","HI","Hawaii","HI",TRUE,"HI",-972556.539272243,-1423583.28401923,7,0.908283211563283,1
+"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI,-101.18,25.63","00000000000000HAWAII","HI","Hawaii","HI",TRUE,"HI",-972556.539272243,-1423583.28401923,7,0.908283211563283,2
 "ID","Idaho","16","4","West","4","West",NA,NA,NA,NA,NA,"000000000000000IDAHO","ID","Idaho","ID",FALSE,NA,NA,NA,17,24.276958932673,2
 "IL","Illinois","17","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"000000000000ILLINOIS","IL","Illinois","IL",FALSE,NA,NA,NA,19,15.593214401335,4
-"IN","Indiana","18","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"0000000000000INDIANA","IN","Indiana","IN",FALSE,NA,NA,NA,33,9.61174336883002,3
+"IN","Indiana","18","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"0000000000000INDIANA","IN","Indiana","IN",FALSE,NA,NA,NA,33,9.61174336883002,2
 "IA","Iowa","19","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"0000000000000000IOWA","IA","Iowa","IA",FALSE,NA,NA,NA,9,15.9668529788195,1
 "KS","Kansas","20","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000000000KANSAS","KS","Kansas","KS",FALSE,NA,NA,NA,14,22.036164866865,2
-"KY","Kentucky","21","2","South","2","South",NA,NA,NA,NA,NA,"000000000000KENTUCKY","KY","Kentucky","KY",FALSE,NA,NA,NA,37,10.8534834293925,2
+"KY","Kentucky","21","2","South","2","South",NA,NA,NA,NA,NA,"000000000000KENTUCKY","KY","Kentucky","KY",FALSE,NA,NA,NA,37,10.8534834293925,3
 "LA","Louisiana","22","2","South","2","South",NA,NA,NA,NA,NA,"00000000000LOUISIANA","LA","Louisiana","LA",FALSE,NA,NA,NA,51,12.032732682273,5
-"ME","Maine","23","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000000000MAINE","ME","Maine","ME",FALSE,NA,NA,NA,36,9.49271266788288,2
-"MD","Maryland","24","2","South","2","South",NA,NA,NA,NA,NA,"000000000000MARYLAND","MD","Maryland","MD",FALSE,NA,NA,NA,10,2.68099866236849,4
-"MA","Massachusetts","25","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000MASSACHUSETTS","MA","Massachusetts","MA",FALSE,NA,NA,NA,11,2.4381805535269,2
-"MI","Michigan","26","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"000000000000MICHIGAN","MI","Michigan","MI",FALSE,NA,NA,NA,45,14.794946960204,2
-"MN","Minnesota","27","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000000MINNESOTA","MN","Minnesota","MN",FALSE,NA,NA,NA,39,24.879204829153,4
-"MS","Mississippi","28","2","South","2","South",NA,NA,NA,NA,NA,"000000000MISSISSIPPI","MS","Mississippi","MS",FALSE,NA,NA,NA,35,11.5730582754312,2
+"ME","Maine","23","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000000000MAINE","ME","Maine","ME",FALSE,NA,NA,NA,36,9.49271266788288,1
+"MD","Maryland","24","2","South","2","South",NA,NA,NA,NA,NA,"000000000000MARYLAND","MD","Maryland","MD",FALSE,NA,NA,NA,10,2.68099866236849,5
+"MA","Massachusetts","25","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000MASSACHUSETTS","MA","Massachusetts","MA",FALSE,NA,NA,NA,11,2.4381805535269,3
+"MI","Michigan","26","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"000000000000MICHIGAN","MI","Michigan","MI",FALSE,NA,NA,NA,45,14.794946960204,4
+"MN","Minnesota","27","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000000MINNESOTA","MN","Minnesota","MN",FALSE,NA,NA,NA,39,24.879204829153,3
+"MS","Mississippi","28","2","South","2","South",NA,NA,NA,NA,NA,"000000000MISSISSIPPI","MS","Mississippi","MS",FALSE,NA,NA,NA,35,11.5730582754312,4
 "MO","Missouri","29","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"000000000000MISSOURI","MO","Missouri","MO",FALSE,NA,NA,NA,23,18.351119533595,5
 "MT","Montana","30","4","West","4","West",NA,NA,NA,NA,NA,"0000000000000MONTANA","MT","Montana","MT",FALSE,NA,NA,NA,29,45.3551712415684,3
 "NE","Nebraska","31","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"000000000000NEBRASKA","NE","Nebraska","NE",FALSE,NA,NA,NA,20,21.4584717144126,6
 "NV","Nevada","32","4","West","4","West",NA,NA,NA,NA,NA,"00000000000000NEVADA","NV","Nevada","NV",FALSE,NA,NA,NA,41,29.7139136370585,3
-"NH","New Hampshire","33","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000NEW HAMPSHIRE","NH","New Hampshire","NH",FALSE,NA,NA,NA,24,2.58576304750909,6
+"NH","New Hampshire","33","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000NEW HAMPSHIRE","NH","New Hampshire","NH",FALSE,NA,NA,NA,24,2.58576304750909,5
 "NJ","New Jersey","34","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000000NEW JERSEY","NJ","New Jersey","NJ",FALSE,NA,NA,NA,40,1.95463601710331,6
 "NM","New Mexico","35","4","West","4","West",NA,NA,NA,NA,NA,"0000000000NEW MEXICO","NM","New Mexico","NM",FALSE,NA,NA,NA,27,31.1883333406105,5
-"NY","New York","36","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000000NEW YORK","NY","New York","NY",FALSE,NA,NA,NA,15,14.1178562697741,4
+"NY","New York","36","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"000000000000NEW YORK","NY","New York","NY",FALSE,NA,NA,NA,15,14.1178562697741,5
 "NC","North Carolina","37","2","South","2","South",NA,NA,NA,NA,NA,"000000NORTH CAROLINA","NC","North Carolina","NC",FALSE,NA,NA,NA,25,13.1159266613647,5
-"ND","North Dakota","38","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000NORTH DAKOTA","ND","North Dakota","ND",FALSE,NA,NA,NA,44,21.8750911924045,6
+"ND","North Dakota","38","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000NORTH DAKOTA","ND","North Dakota","ND",FALSE,NA,NA,NA,44,21.8750911924045,4
 "OH","Ohio","39","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"0000000000000000OHIO","OH","Ohio","OH",FALSE,NA,NA,NA,38,11.5179833402965,1
-"OK","Oklahoma","40","2","South","2","South",NA,NA,NA,NA,NA,"000000000000OKLAHOMA","OK","Oklahoma","OK",FALSE,NA,NA,NA,43,18.086212140647,4
+"OK","Oklahoma","40","2","South","2","South",NA,NA,NA,NA,NA,"000000000000OKLAHOMA","OK","Oklahoma","OK",FALSE,NA,NA,NA,43,18.086212140647,6
 "OR","Oregon","41","4","West","4","West",NA,NA,NA,NA,NA,"00000000000000OREGON","OR","Oregon","OR",FALSE,NA,NA,NA,32,28.012987647922,1
 "PA","Pennsylvania","42","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"00000000PENNSYLVANIA","PA","Pennsylvania","PA",FALSE,NA,NA,NA,8,12.5148696529165,3
-"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,NA,"00000000RHODE ISLAND","RI","Rhode Island","RI",TRUE,NA,NA,NA,13,0.260788932948894,6
-"SC","South Carolina","45","2","South","2","South",NA,NA,NA,NA,NA,"000000SOUTH CAROLINA","SC","South Carolina","SC",FALSE,NA,NA,NA,26,8.04176313355715,3
-"SD","South Dakota","46","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000SOUTH DAKOTA","SD","South Dakota","SD",FALSE,NA,NA,NA,31,22.7483364733319,5
-"TN","Tennessee","47","2","South","2","South",NA,NA,NA,NA,NA,"00000000000TENNESSEE","TN","Tennessee","TN",FALSE,NA,NA,NA,5,11.0589614671775,4
-"TX","Texas","48","2","South","2","South",NA,NA,NA,NA,NA,"000000000000000TEXAS","TX","Texas","TX",FALSE,NA,NA,NA,50,64.2546111697366,2
+"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,NA,"00000000RHODE ISLAND","RI","Rhode Island","RI",TRUE,NA,NA,NA,13,0.260788932948894,2
+"SC","South Carolina","45","2","South","2","South",NA,NA,NA,NA,NA,"000000SOUTH CAROLINA","SC","South Carolina","SC",FALSE,NA,NA,NA,26,8.04176313355715,6
+"SD","South Dakota","46","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000SOUTH DAKOTA","SD","South Dakota","SD",FALSE,NA,NA,NA,31,22.7483364733319,2
+"TN","Tennessee","47","2","South","2","South",NA,NA,NA,NA,NA,"00000000000TENNESSEE","TN","Tennessee","TN",FALSE,NA,NA,NA,5,11.0589614671775,6
+"TX","Texas","48","2","South","2","South",NA,NA,NA,NA,NA,"000000000000000TEXAS","TX","Texas","TX",FALSE,NA,NA,NA,50,64.2546111697366,1
 "UT","Utah","49","4","West","4","West",NA,NA,NA,NA,NA,"0000000000000000UTAH","UT","Utah","UT",FALSE,NA,NA,NA,18,22.9863406856355,1
 "VT","Vermont","50","1","Northeast","1","Northeast",NA,NA,NA,NA,NA,"0000000000000VERMONT","VT","Vermont","VT",FALSE,NA,NA,NA,1,2.7057038705575,1
-"VA","Virginia","51","2","South","2","South",NA,NA,NA,NA,NA,"000000000000VIRGINIA","VA","Virginia","VA",FALSE,NA,NA,NA,12,11.2045090301208,3
+"VA","Virginia","51","2","South","2","South",NA,NA,NA,NA,NA,"000000000000VIRGINIA","VA","Virginia","VA",FALSE,NA,NA,NA,12,11.2045090301208,2
 "WA","Washington","53","4","West","4","West",NA,NA,NA,NA,NA,"0000000000WASHINGTON","WA","Washington","WA",FALSE,NA,NA,NA,22,20.7121362935523,5
 "WV","West Virginia","54","2","South","2","South",NA,NA,NA,NA,NA,"0000000WEST VIRGINIA","WV","West Virginia","WV",FALSE,NA,NA,NA,2,6.2523217523045,6
-"WI","Wisconsin","55","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000000WISCONSIN","WI","Wisconsin","WI",FALSE,NA,NA,NA,48,16.4627504356768,5
+"WI","Wisconsin","55","3","Midwest","3","Midwest",NA,NA,NA,NA,NA,"00000000000WISCONSIN","WI","Wisconsin","WI",FALSE,NA,NA,NA,48,16.4627504356768,2
 "WY","Wyoming","56","4","West","4","West",NA,NA,NA,NA,NA,"0000000000000WYOMING","WY","Wyoming","WY",FALSE,NA,NA,NA,21,27.953053302307,4

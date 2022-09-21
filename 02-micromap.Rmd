@@ -144,6 +144,20 @@ we first load the **micromap**\index{R Packages!micromap} R package and the
 _USstates_\index{Datasets!USstates} data set, verify that this object indeed is a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
 at some of the data in the `data` component of this object, and finally plot it.
+For figures that only contain maps, it is often helpful to remove all 
+margin space on all four sides of the plot 
+via `par(mar = c(0, 0, 0, 0))`
+to maximize the plot, i.e., the actual map.
+The reader will notice that the **micromap**\index{R Packages!micromap} R package
+depends on the **maptools**\index{R Packages!maptools} [@BiLe2014], 
+**RColorBrewer**\index{R Packages!RColorBrewer} [@Neuwirth2022], 
+**rgdal**\index{R Packages!rgdal} [@BKR2022], 
+**sp**\index{R Packages!sp} [@PeBi2022], 
+and **sf**\index{R Packages!sf} [@Pebesma2022] R packages
+and also suggests the use of the **rgeos**\index{R Packages!rgeos} [@BiRu2021]
+R package. All of these R packages should
+be installed locally so they can be loaded automatically when the
+**micromap**\index{R Packages!micromap} R package is loaded.
 
 
 ```{r Ch2-USstates, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary data set for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
@@ -154,6 +168,7 @@ data(USstates)
 class(USstates)
 head(USstates@data)
 
+par(mar = c(0, 0, 0, 0))
 plot(USstates)
 ```
 
@@ -168,12 +183,13 @@ component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object
 can be used as an ID column. 
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
-this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
+this is usually the `ST` variable that contains the 51 abbreviations for the 50 US states (and for Washington, D.C.).
 The resulting `state_polys_table` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
 Note that there are typically more rows in this data frame than there are spatial subregions.
 This is because many spatial subregions consist of more than just one boundary, e.g., in the
-presence of islands or if a land mass is split into more than one area, e.g., as in Michigan in the US.
+presence of islands or in case a land mass is split into more than one area, e.g., 
+as in the state of Michigan in the US.
 
 
 ```{r Ch2-linkingdataframesUSstates}
@@ -192,7 +208,7 @@ names(state_polys_table)
 
 _edPov_\index{Datasets!edPov} is a data frame that contains
 education and poverty level data for the 50 states (and Washington, D.C.).
-This data frame has 51 rows, one for each of the 50 states (and for D.C.).
+This data frame has 51 rows, one for each of the 50 states (and one for Washington, D.C.).
 We have to identify one variable from this data frame that can be used for linking the
 two data sets. Here, this is the `StateAb` variable.
 
@@ -237,11 +253,12 @@ and the second variable name (`ID`) must come from the `state_polys_table` data 
 contains the spatial boundary information.
 Changing the order of these two variable names typically results in an error.
 
-The `panel.types` and `panel.data` are closely related. As the name suggests, `panel.types` is a vector
+The `panel.types` and `panel.data` arguments are closely related. 
+As the name suggests, `panel.types` is a vector
 that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
-Here, we have the `dot_legend` in the first column, `labels` in the second column,
-two columns with statistical data represented as dot plots\index{Dot plot} (`dot`),
-and the micromaps in the fifth and final (`map`) column.
+Here, we have a `dot_legend` in the first column, `labels` in the second column,
+the statistical data represented as dot plots\index{Dot plot} (`dot`) in the third and fourth columns,
+and the micromaps in the fifth, i.e., final, (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 A list is necessary for this argument as some of the data itself can be lists as we will
 see in the R code for Figures \@ref(fig:Ch2-creatingdraftWV) 
@@ -262,18 +279,29 @@ Two more arguments have to be specified: `ord.by` specifies the sorting variable
 rows in the linked micromap plot\index{Linked micromap plot}. Here, `pov` 
 from the `stat.data` argument is used. The sorting of the rows goes from smallest (on top) to
 largest (at the bottom). Finally, `grouping` specifies  the number of rows
-in each of the perceptual groups (here `5` rows). If a single integer value is provided, 
+in each of the perceptual groups. If a single integer value is provided, 
 that value is used for all perceptual groups. If a vector of integer values is provided,
 each perceptual group may have a different number of rows as 
-shown in the R code for Figure \@ref(fig:Ch2-refining3).
+shown in the R code for Figure \@ref(fig:Ch2-refining3). 
+Here, `grouping` is set to `5`, meaning there are five rows of data in each perceptual group.
 
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
 overall --- ten with five subregions and one with just one subregion. This is due to the fact
 that there are 51 subregions overall: The 50 US states and Washington, D.C.
+This results in only one row of data and one subregion highlighted in the final (bottom) perceptual
+group. There is no automatic balancing of the number of rows in each perceptual group.
+A layout such as the default one shown in Figure \@ref(fig:Ch2-creatingdraft) 
+should be avoided in general. Table XXX in Chapter \@ref(Ch1) provides 
+suggestions how to group data for various numbers of subregions.
+We will also address this as one of the refinement steps in the next section.
+
 We abstain from interpreting this figure at this stage, but we will provide some
 helpful interpretation once we have created the last refined version of this figure
-in the next step.
+at the end of the next section. However, we encourage the reader to take a look
+at the consecutive maps at this time and determine whether any spatial
+patterns may be visible and to assess the statistical relationship
+between the two variables shown in the third and fourth columns of the plot.
 
 
 ```{r Ch2-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
@@ -293,24 +321,24 @@ mmplot(
 
 
 We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
-step and refine it in multiple small steps. This refinement should only be started once
+section and refine it in multiple small steps. This refinement should only be started once
 functional R code has been obtained in the previous step.
 
 First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subregions is odd such as for the 51 states (and D.C.) here.
+number of subregions is odd such as for the 50 states (and Washington, D.C.).
 Here, Wyoming is the state shown in the median row. It has the 
 26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
 It does not appear in a map by itself, but rather is added to the perceptual
 groups above and below the median row in a neutral color, 
-thus increasing the number of subregions shown in each of these two maps by one (i.e., six here)
+thus increasing the number of subregions shown in each of these two maps by one (i.e., six here).
 Also, we reverse the sorting order via `rev.ord = TRUE`. 
 Now the sorting of the rows goes from largest (on top) to
 smallest (at the bottom).
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-refining1).
 While we keep `pov` as the sorting variable in this first refined version,
-the reader is encouraged to use `ed` as sorting variables and see how
+the reader is encouraged to use `ed` as sorting variable and see how
 the spatial patterns highlighted in the maps change. This can be done
 for the original sorting order or for the reversed sorting order.
 The rows can even be sorted by `region` or alphabetically 
@@ -399,7 +427,7 @@ mmplot(
 
 After this experiment with a different grouping, we revert back to the more traditional grouping
 of ten perceptual groups with five rows each and a median row that is frequently used
-for the 50 US states (and D.C.). What we want to discuss next is the choice of colors
+for the 50 US states (and Washington, D.C.). What we want to discuss next is the choice of colors
 for the subregions in each map (and thus for the `dot_legend` appearance in the
 `panel.type` argument as well). The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
@@ -795,8 +823,6 @@ These will be used for the construction of boxplots\index{Boxplot}.
 (ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary data set for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} in this section.
 
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
-library(micromap)
-
 wv_watershed <- readOGR(
   dsn = "data/WV_Watershed", 
   layer = "RandomWatershed2_stats_smooth", 
@@ -825,7 +851,7 @@ component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object
 can be used as an ID column. 
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
-this is usually the `ST` variable that contains the 50 abbreviations for the US states (and for D.C.).
+this is usually the `ST` variable that contains the 51 abbreviations for the 50 US states (and for Washington, D.C.).
 The resulting `state_polys_table` is a regular data frame that can be used for creating a
 linked micromap plot\index{Linked micromap plot} in the next step.
 Note that there are typically more rows in this data frame than there are spatial subregions.
@@ -849,7 +875,7 @@ names(wv_polys_table)
 
 _edPov_\index{Datasets!edPov} is a data frame that contains
 education and poverty level data for the 50 states (and Washington, D.C.).
-This data frame has 51 rows, one for each of the 50 states (and for D.C.).
+This data frame has 51 rows, one for each of the 50 states (and for Washington, D.C.).
 We have to identify one variable from this data frame that can be used for linking the
 two data sets. Here, this is the `StateAb` variable.
 
@@ -1013,7 +1039,7 @@ functional R code has been obtained in the previous step.
 
 First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subregions is odd such as for the 51 states (and D.C.) here.
+number of subregions is odd such as for the 50 states (and Washington, D.C.) here.
 Here, Wyoming is the state shown in the median row. It has the 
 26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
 It does not appear in a map by itself, but rather is added to the perceptual
