@@ -293,7 +293,7 @@ sf_use_s2(TRUE)
 ## Spherical geometry (s2) switched on
 ```
 
-```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input, after simplifying and final.', fig.show = "hold", out.width = '50%', echo = FALSE}
+```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input (top left), after simplifying (top right), final with XXX projection (bottom left), and final with YYY projection (bottom right).', fig.show = "hold", out.width = '50%', echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 
 knitr::include_graphics(c(
@@ -357,11 +357,11 @@ By sorting on population density, the top panels show the largest Metropolitan S
 ### Aggregating to a Smaller Number of Areas {#Ch4b-Many-Areas-Aggregate}
 
 
-When the map contains too many areas to use with linked micromaps, the counties or provinces can be combined to reduce the number of areas in the map. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. For example, the state of Kentucky contains 120 counties, too many for a 8.5" x 11" graphic. The state defined Area Development Districts (ADDs) [@KCADDnd] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
+When the map contains too many areas to use with linked micromaps, the counties or provinces can be combined to reduce the number of areas in the map. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. For example, the state of Kentucky contains 120 counties, too many for a 8.5" x 11" graphic. The state defined Area Development Districts (ADDs) [@KLRC1972;@KCADDnd] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
 
 To build a border group of the ADDs, the first step is to aggregate the counties of the state into the ADDs outside of the **micromapST** package. Then this new shapefile (or SpatialPolygons) along with a Name Table can be converted into a border group.  
 
-The state of Kentucky’s website provides the ADD name for each county or it can be built easily in a spreadsheet [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
+The state of Kentucky's website provides the ADD name for each county or it can be built easily in a spreadsheet [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
 
 The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
 
