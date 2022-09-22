@@ -98,7 +98,7 @@ The next example is from FDEP and uses several statistical panels to summarize w
 library(micromap)
 
 # data frames
-FL_pesticide <- readRDS("FL_pesticide.rds")
+FL_pesticide <- readRDS("data/FL_pesticide.RDS")
 FL_basins <- readRDS("data/Florida_Basins.rds")
 
 # code to handle NA values in rankings
