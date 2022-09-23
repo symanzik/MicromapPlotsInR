@@ -321,8 +321,9 @@ mmplot(
 
 
 We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
-section and refine it in multiple small steps. This refinement should only be started once
-functional R code has been obtained in the previous step.
+section and refine it in multiple small steps. This refinement process should only be started once
+functional R code has been obtained in the previous step and an initial 
+linked micromap plot\index{Linked micromap plot} has been created.
 
 First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
@@ -346,7 +347,7 @@ by `state` or `StateAb` even though such an alphabetical sorting
 in most cases is not very meaningful, at least not for this specific example.
 
 
-```{r Ch2-refining1, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 9}
+```{r Ch2-refining1, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh perceptual group and the reverse ordering of the `pov` data in the first statistical graphics column.', fig.width = 7, fig.height = 9}
 mmplot(
   stat.data = edPov,
   map.data = state_polys_table,
@@ -362,11 +363,11 @@ mmplot(
 
 
 We continue with this first refined linked micromap plot\index{Linked micromap plot}
-and make further modifications. Next, we change the order of the two statistical columns,
+and make further modifications. Next, we change the order of the two statistical graphics columns,
 i.e., we place `ed` to the left of `pov` and use `ed` as the sorting variable (in reverse order).
 While any column of the linked micromap plot\index{Linked micromap plot} or even
 variables not shown in it can be used as sorting variables, in most cases,
-the first (leftmost) statistical column is used for sorting purposes.
+the first (leftmost) statistical graphics column is used for sorting purposes.
 Moreover, we place the maps on the left side of the plot. As previously stated,
 the `panel.types` and `panel.data` arguments of the `micromap::mmplot()` function
 are closely related. Thus, if we change the order of one, the order of the
@@ -482,9 +483,9 @@ mmplot(
 ```
 
 
-So far, there are no labels for the columns and no titles for the statistical columns shown.
-Tic marks and tic mark labels, in particular in the second statistical column, could be improved,
-background colors in the statistical columns and maps could be modified, 
+So far, there are no labels for the columns and no titles for the statistical graphics columns shown.
+Tic marks and tic mark labels, in particular in the second statistical graphics column, could be improved,
+background colors in the statistical graphics columns and maps could be modified, 
 font and symbol sizes could be modified, and the widths of the columns could be adjusted.
 All of this is done via the `panel.att` argument that controls the panel specific attributes of
 each column in the linked micromap plot.\index{Linked micromap plot}
@@ -492,7 +493,7 @@ The content of this argument typically is a list of lists where the attributes
 for each column of the linked micromap plot\index{Linked micromap plot} are modified via a separate list.
 These inner lists are numbered from 1 to the number of elements in the `panel.types` vector
 where `1` is related to `map`, `2` to `dot_legend`, `3` to `labels`, and `4` and `5` to `dot`, i.e.,
-the dot plots\index{Dot plot} in the two statistical columns,
+the dot plots\index{Dot plot} in the two statistical graphics columns,
 in the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining5).
 
@@ -579,7 +580,8 @@ mmplot(
 
 In the final revised linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
-First, we make use of the `labeling::extended()` function of the **labeling**\index{R Packages!labeling} R package.
+First, we make use of the `labeling::extended()` function of 
+the **labeling**\index{R Packages!labeling} R package [@Talbot2020].
 This function is provided with the minimum and maximum values of a variable and the tentative
 number of tic marks and tic marks labels for that variable and it then creates a vector with
 near-optimal axis labels. The argument `m` is used as a guideline for the number of axis labels,
@@ -592,7 +594,7 @@ indicate which subregions are above or below the median value
 of the variable specified in the `ord.by` argument (here `ed`).
 Similar to the setting `fill.regions = "aggregate"`,
 the subregions from all previous perceptual groups are filled in the
-subsequent perceptual groups. This filing proceeds from
+subsequent perceptual groups. This filling proceeds from
 the top perceptual group to the median row 
 and from the bottom perceptual group to the median row
 by sequentially
@@ -656,12 +658,12 @@ mmplot(
       right.margin = 0,
       left.margin = -0.6,
       point.size = 1.5,
-      xaxis.ticks = as.list(extended(
+      xaxis.ticks = as.list(labeling::extended(
         dmin = min(edPov$ed),
         dmax = max(edPov$ed),
         m = 5
       )),
-      xaxis.labels = as.list(extended(
+      xaxis.labels = as.list(labeling::extended(
         dmin = min(edPov$ed),
         dmax = max(edPov$ed),
         m = 5
@@ -675,12 +677,12 @@ mmplot(
       right.margin = 0.25,
       left.margin = -0.6,
       point.size = 1.5,
-      xaxis.ticks = as.list(extended(
+      xaxis.ticks = as.list(labeling::extended(
         dmin = min(edPov$pov),
         dmax = max(edPov$pov),
         m = 4
       )),
-      xaxis.labels = as.list(extended(
+      xaxis.labels = as.list(labeling::extended(
         dmin = min(edPov$pov),
         dmax = max(edPov$pov),
         m = 4
@@ -726,7 +728,8 @@ As expected, the overall correlation between these two variables is negative,
 but given these two major outliers and several minor outliers
 (such as Indiana and Nevada that both have a relatively low percentage living below poverty level
 despite being among the bottom-10 states with respect to the percentage of
-adults with four or more years of college), the correlation coefficient $r$ is relatively weak
+adults with four or more years of college), the correlation is relatively weak.
+The correlation coefficient $r$ is
 only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 
@@ -766,7 +769,7 @@ that has to be split into the geographic information and the statistical data co
 Numerous R packages, such as **rgdal**\index{R Packages!rgdal} and
 **shapefiles**\index{R Packages!shapefiles}, support the use of shapefiles\index{Shapefiles} in R.
 It is worthwhile to mention here that geography and attributes that are
-stored in simple features\index{Simple features} (sf) format [@OGC2022] instead of
+stored in a simple features\index{Simple features} (sf) format [@OGC2022] instead of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 no longer have to be split. Rather, the **micromap**\index{R Packages!micromap} R package
 can handle these directly as can be seen in the R code for Figure \@ref(fig:Ch11-micromapWVDEP).
@@ -776,7 +779,7 @@ for the data columns of the linked micromap plot\index{Linked micromap plot}:
 a boxplot\index{Boxplot} and a dot plot with confidence bounds\index{Dot plot with confidence bounds}. 
 Different arguments are used to fine-tune this linked micromap plot\index{Linked micromap plot}.
 Finally, we will demonstrate how to add an overall statistics or criteria line to the 
-statistical columns of the linked micromap plot\index{Linked micromap plot}.
+statistical graphics columns of the linked micromap plot\index{Linked micromap plot}.
 
 
 ### Identifying and Geoprocessing of Spatial Boundary Data {#Ch2-IdentifyingWV}
@@ -1059,7 +1062,7 @@ by `state` or `StateAb` even though such an alphabetical sorting
 in most cases is not very meaningful, at least not for this specific example.
 
 
-```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical column.', fig.width = 7, fig.height = 7}
+```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical graphics column.', fig.width = 7, fig.height = 7}
 # Refined Plot
 mmplot(
   stat.data = wv_data,
