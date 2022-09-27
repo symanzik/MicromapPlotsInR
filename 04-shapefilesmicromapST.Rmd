@@ -292,7 +292,28 @@ BuildBorderGroup(
   MapMaxH = 2, # Maximum Height for micromap drawing (inches)
   IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.2, # reduce vertices to 0.2% of original number
-  debug = 0 # 512 + 128 # generate 4 intermediate PNG map plots
+  debug = 512 + 128 # generate 4 intermediate PNG map plots
+)
+```
+
+```{r Ch4b-BuildBorderGroupUS-pdf, echo = FALSE, results = 'hide'}
+# Same as Ch4b-BuildBorderGroupUS, but now with pdf output
+
+BuildBorderGroup(
+  ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
+  ShapeFileDir = shape_file_dir, # Directory containing the shapefile
+  ShapeLinkName = "NAME", # Variable name containing link to NameTable
+  NameTableDir = name_table_dir, # Directory containing the NameTable
+  NameTableFile = "USNameTable.xlsx", # NameTable file
+  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table
+  BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
+  BorderGroupDir = output_dir_US, # Output directory for resulting files
+  MapHdr = c("", "States"),
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  ReducePC = 0.2, # reduce vertices to 0.2% of original number
+  debug = 512 + 0 # generate 4 intermediate PDF map plots
 )
 ```
 
@@ -300,12 +321,12 @@ BuildBorderGroup(
 par(mar = c(0, 0, 0, 0))
 
 knitr::include_graphics(c(
-  "data/Ch4b/USst_SM_After_rmapshaper.png",
-  "data/Ch4b/USst_SM_After_Name_Table_modifications.png"
+  paste0(output_dir_US, "/USst_SM_After_rmapshaper.png"),
+  paste0(output_dir_US, "/USst_SM_After_Name_Table_modifications.png")
 ), auto_pdf = TRUE)
 
 knitr::include_graphics(c(
-  "data/Ch4b/USst_FP_Final_areaVisBorders.png",
+  paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),
   "data/Ch4b/MM-US_States.png"
 ), auto_pdf = TRUE)
 ```
