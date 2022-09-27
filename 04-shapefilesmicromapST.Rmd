@@ -464,6 +464,8 @@ Once the shapefile for the Kentucky ADD boundaries is formed, the call to the `B
 
 
 ```{r Ch4b-BuildBorderGroupKY, results = 'hide'}
+set.seed(123)
+
 #  BuildBorderGroup function call
 BuildBorderGroup(
   ShapeFile = "KYADD",
