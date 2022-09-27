@@ -1,16 +1,16 @@
-"Name","Abbr","ID","Alias","Link","Alt_Abbr","L2_ID","L2_ID_Name","regID","regName","Key","Xoffset","Yoffset","Scale","Rotate","DoAdj","MapL","MapX","MapY","MapLabel","Ord","area","CCode"
-"Barren River","BR","2102","Barren","00000BARREN RIVER","BR",2,"L2_2",2,"RegN2","BR",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,14,1.05949936935745,1
-"Big Sandy","BS","2103","Sandy","00000000BIG SANDY","BS",3,"L2_3",3,"RegN3","BS",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,5,0.509604366927005,3
-"Bluegrass","BG","2101","Blueg","00000000BLUEGRASS","BG",1,"L2_1",1,"RegN1","BG",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,8,1.1310698892085,3
-"Buffalo Trace","BT","2104","Buffalo","0000BUFFALO TRACE","BT",4,"L2_4",4,"RegN4","BT",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,3,0.400296557056471,4
-"Cumberland Valley","CV","2105","Valley","CUMBERLAND VALLEY","CV",5,"L2_5",5,"RegN5","CV",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,9,0.837978663673879,4
-"Fivco","FI","2106","Fiv","000000000000FIVCO","FI",6,"L2_6",6,"RegN6","FI",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,13,0.431134657442904,1
-"Gateway","GA","2107","Gatew","0000000000GATEWAY","GA",7,"L2_7",7,"RegN7","GA",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,10,0.359751338543002,2
-"Green River","GR","2108","Green","000000GREEN RIVER","GR",8,"L2_8",8,"RegN8","GR",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,12,0.766811668938497,2
-"Kentucky River","KR","2110","Kentucky","000KENTUCKY RIVER","KR",10,"L2_10",10,"RegN10","KR",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,6,0.652463768585994,1
-"Kipda","KI","2109","Kipda","000000000000KIPDA","KI",9,"L2_9",9,"RegN9","KI",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,7,0.500174008240711,1
-"Lake Cumberland","LC","2111","Lake","00LAKE CUMBERLAND","LC",11,"L2_11",11,"RegN11","LC",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,1,1.00753732426214,2
-"Lincoln Trail","LT","2112","Lincoln","0000LINCOLN TRAIL","LT",12,"L2_12",12,"RegN12","LT",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,4,0.889369241850766,4
-"Northern Kentucky","NK","2113","Northern","NORTHERN KENTUCKY","NK",13,"L2_13",13,"RegN13","NK",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,2,0.420328779584511,2
-"Pennyrile","PE","2114","Penny","00000000PENNYRILE","PE",14,"L2_14",14,"RegN14","PE",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,11,0.995030959911848,3
-"Purchase","PU","2115","Purch","000000000PURCHASE","PU",15,"L2_15",15,"RegN15","PU",NA,NA,NA,NA,FALSE,NA,NA,NA,NA,15,0.570275191641864,1
+"Name","Abbr","ID","Alias","Alt_Abbr","L2_ID","L2_ID_Name","regID","regName","Key","Xoffset","Yoffset","Scale","Rotate","DoAdj","MapL","MapX","MapY"
+"Barren River","BR","2102","Barren","BR",2,"L2_2",2,"RegN2","BR",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Big Sandy","BS","2103","Sandy","BS",3,"L2_3",3,"RegN3","BS",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Bluegrass","BG","2101","Blueg","BG",1,"L2_1",1,"RegN1","BG",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Buffalo Trace","BT","2104","Buffalo","BT",4,"L2_4",4,"RegN4","BT",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Cumberland Valley","CV","2105","Valley","CV",5,"L2_5",5,"RegN5","CV",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Fivco","FI","2106","Fiv","FI",6,"L2_6",6,"RegN6","FI",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Gateway","GA","2107","Gatew","GA",7,"L2_7",7,"RegN7","GA",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Green River","GR","2108","Green","GR",8,"L2_8",8,"RegN8","GR",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Kentucky River","KR","2110","Kentucky","KR",10,"L2_10",10,"RegN10","KR",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Kipda","KI","2109","Kipda","KI",9,"L2_9",9,"RegN9","KI",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Lake Cumberland","LC","2111","Lake","LC",11,"L2_11",11,"RegN11","LC",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Lincoln Trail","LT","2112","Lincoln","LT",12,"L2_12",12,"RegN12","LT",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Northern Kentucky","NK","2113","Northern","NK",13,"L2_13",13,"RegN13","NK",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Pennyrile","PE","2114","Penny","PE",14,"L2_14",14,"RegN14","PE",NA,NA,NA,NA,FALSE,NA,NA,NA
+"Purchase","PU","2115","Purch","PU",15,"L2_15",15,"RegN15","PU",NA,NA,NA,NA,FALSE,NA,NA,NA
