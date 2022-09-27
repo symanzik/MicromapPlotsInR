@@ -289,10 +289,6 @@ BuildBorderGroup(
   MapHdr = c("", "States"),
   debug = 0 # 512 + 128 # generate 4 intermediate PNG map plots
 )
-
-library(sf)
-sf_use_s2(TRUE)
-## Spherical geometry (s2) switched on
 ```
 
 ```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input (top left), after simplifying (top right), final with XXX projection (bottom left), and final with YYY projection (bottom right).', fig.show = "hold", out.width = '50%', echo = FALSE}
@@ -478,9 +474,6 @@ BuildBorderGroup(
   IDHdr = c("ADD"), # title over ID column
   ReducePC = 0.75 # percentage of vertices to keep after simplifying
 )
-
-sf_use_s2(TRUE)
-## Spherical geometry (s2) switched on
 ```
 
 Save and print the resulting image: 
