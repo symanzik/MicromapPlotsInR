@@ -272,6 +272,8 @@ Now let's apply these steps to the original U.S. state boundaries and compare th
 ```{r Ch4b-BuildBorderGroupUS, results = 'hide'}
 library(micromapST)
 
+set.seed(12345)
+
 NTDir <- "data/Ch4b"
 BuildBorderGroup(
   ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
