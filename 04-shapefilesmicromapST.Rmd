@@ -272,26 +272,31 @@ Now let's apply these steps to the original U.S. state boundaries and compare th
 ```{r Ch4b-BuildBorderGroupUS, results = 'hide'}
 library(micromapST)
 
-set.seed(12345)
+set.seed(123)
 
-NTDir <- "data/Ch4b"
+shape_file_dir <- "data/Ch4b"
+name_table_dir <- "data/Ch4b"
+output_dir_US <- "output/Ch4b/US"
+
 BuildBorderGroup(
   ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
+  ShapeFileDir = shape_file_dir, # Directory containing the shapefile
   ShapeLinkName = "NAME", # Variable name containing link to NameTable
-  NameTableDir = NTDir, # Directory containing the NameTable
+  NameTableDir = name_table_dir, # Directory containing the NameTable
   NameTableFile = "USNameTable.xlsx", # NameTable file
-  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table.
+  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
+  BorderGroupDir = output_dir_US, # Output directory for resulting files
+  MapHdr = c("", "States"),
   MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
   MapMaxH = 2, # Maximum Height for micromap drawing (inches)
   IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.2, # reduce vertices to 0.2% of original number
-  MapHdr = c("", "States"),
   debug = 0 # 512 + 128 # generate 4 intermediate PNG map plots
 )
 ```
 
-```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input (top left), after simplifying (top right), final with XXX projection (bottom left), and final with YYY projection (bottom right).', fig.show = "hold", out.width = '50%', echo = FALSE}
+```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input (top left), after simplifying (top right), final with XXX projection (bottom left), and final with YYY projection (bottom right).', fig.show = 'hold', out.width = '50%', echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 
 knitr::include_graphics(c(
@@ -385,13 +390,16 @@ The first step is to aggregate boundaries for counties into the larger ADDs:
 #  The MergeInx vector contains the index to the ADD name for
 #  each polygon in the shapefile in the shapefile order.
 #
+
 # Build shapefile from county shapefile via aggregation
-KYADD_dir <- "data/Ch4b" # Base Directory
+
+shape_file_dir <- "data/Ch4b"
+name_table_dir <- "data/Ch4b"
+output_dir_KY <- "output/Ch4b/KY" 
 
 #   read in county boundaries for Kentucky from census files for 2000.
 KY_shp_file <- "co21_d00" # Census 2000 files for Kentucky counties.
-Shp_dir <- "data/Ch4b"
-KY_shp <- readOGR(Shp_dir, KY_shp_file, verbose = FALSE)
+KY_shp <- readOGR(shape_file_dir, KY_shp_file, verbose = FALSE)
 KY_shp_data <- KY_shp@data
 
 #  shapefile has "NAME" field in data.frame that can be used to match
@@ -411,35 +419,39 @@ row.names(KY_ADD_DF) <- KY_ADD_DF$rn
 KY_ADD_SPDF <- SpatialPolygonsDataFrame(KY_ADD_shp, KY_ADD_DF)
 
 # save SpatialPolygonsDataFrame as shapefile
-rgdal::writeOGR(KY_ADD_SPDF, dsn = Shp_dir, layer = "KYADD", driver = "ESRI Shapefile", overwrite_layer = TRUE)
+rgdal::writeOGR(obj = KY_ADD_SPDF, 
+                dsn = output_dir_KY, 
+                layer = "KYADD", 
+                driver = "ESRI Shapefile", 
+                overwrite_layer = TRUE)
 #
 ```
 
-```{r Ch4b-KY-maps, fig.cap = "Kentucky counties (left) and Area Development Districts (right).", fig.show = "hold", out.width = "50%", echo = FALSE}
-pdf("data/Ch4b/Ky_ADD_SPDF.pdf", width = 4, height = 2)
+```{r Ch4b-KY-maps, fig.cap = 'Kentucky counties (left) and Area Development Districts (right).', fig.show = 'hold', out.width = '50%', echo = FALSE}
+pdf(paste0(output_dir_KY, "/Ky_ADD_SPDF.pdf"), width = 4, height = 2)
 par(mar = c(0, 0, 0, 0))
 plot(KY_ADD_SPDF)
 dev.off()
 
-png("data/Ch4b/KY_ADD_SPDF.png", width = 4, height = 2, units = "in", res = 300)
+png(paste0(output_dir_KY, "/KY_ADD_SPDF.png"), width = 4, height = 2, units = "in", res = 300)
 par(mar = c(0, 0, 0, 0))
 plot(KY_ADD_SPDF)
 dev.off()
 
-pdf("data/Ch4b/Ky_shp.pdf", width = 4, height = 2)
+pdf(paste0(output_dir_KY, "/Ky_shp.pdf"), width = 4, height = 2)
 par(mar = c(0, 0, 0, 0))
 plot(KY_shp)
 dev.off()
 
-png("data/Ch4b/KY_shp.png", width = 4, height = 2, units = "in", res = 300)
+png(paste0(output_dir_KY, "/KY_shp.png"), width = 4, height = 2, units = "in", res = 300)
 par(mar = c(0, 0, 0, 0))
 plot(KY_shp)
 dev.off()
 
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(c(
-  "data/Ch4b/KY_shp.png",
-  "data/Ch4b/KY_ADD_SPDF.png"
+  paste0(output_dir_KY, "/KY_shp.png"),
+  paste0(output_dir_KY, "/KY_ADD_SPDF.png")
 ),
 auto_pdf = TRUE
 )
@@ -465,11 +477,13 @@ set.seed(123)
 #  BuildBorderGroup function call
 BuildBorderGroup(
   ShapeFile = "KYADD",
+  ShapeFileDir = output_dir_KY,
   ShapeLinkName = "rn", # name in shapefile to link to Name Table
-  NameTableLink = "Name", # column name in Name Table for linking
-  NameTableDir = KYADD_dir, # directory where all files are
+  NameTableDir = name_table_dir, # directory where all files are
   NameTableFile = "KYADD_NameTable-Basic.xlsx", # Name Table file name
+  NameTableLink = "Name", # column name in Name Table for linking
   BorderGroupName = "KYADD2BG", # name of border group to use
+  BorderGroupDir = output_dir_KY,
   MapHdr = c("", "KY ADD"), # title over map column
   IDHdr = c("ADD"), # title over ID column
   ReducePC = 0.75 # percentage of vertices to keep after simplifying
@@ -479,25 +493,24 @@ BuildBorderGroup(
 Save and print the resulting image: 
 
 ```{r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts.', echo = FALSE}
-BGDir <- "data/Ch4b"
-BGFile <- "KYADD2BG.rda"
-load(file = paste0(BGDir, "/", BGFile))
+border_group_file <- "KYADD2BG.rda"
+load(file = paste0(output_dir_KY, "/", border_group_file))
 
 xLim <- range(areaVisBorders$x, na.rm = TRUE)
 yLim <- range(areaVisBorders$y, na.rm = TRUE)
 
-pdf(paste0(BGDir, "/KYADD.pdf"), width = 8, height = 4)
+pdf(paste0(output_dir_KY, "/KYADD.pdf"), width = 8, height = 4)
 plot(0, 0, xlim = xLim, ylim = yLim, axes = FALSE, type = "n", xlab = "", ylab = "")
 polygon(areaVisBorders$x, areaVisBorders$y, border = "black", lwd = .9)
 dev.off()
 
-png(paste0(BGDir, "/KYADD.png"), width = 8, height = 4, units = "in", res = 300)
+png(paste0(output_dir_KY, "/KYADD.png"), width = 8, height = 4, units = "in", res = 300)
 plot(0, 0, xlim = xLim, ylim = yLim, type = "n", axes = FALSE, ylab = "", xlab = "")
 polygon(areaVisBorders$x, areaVisBorders$y, border = "black", lwd = .9)
 dev.off()
 
 par(mar = c(0, 0, 0, 0))
-knitr::include_graphics("data/Ch4b/KYADD.png", auto_pdf = TRUE)
+knitr::include_graphics(paste0(output_dir_KY, "/KYADD.png"), auto_pdf = TRUE)
 ```
 
 The original Kentucky ADD map in Figure \@ref(fig:Ch4b-KY-maps) didn't have any very small areas and didn't require any scaling or moving. It probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
