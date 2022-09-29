@@ -11,7 +11,7 @@ accessible at https://cran.r-project.org/web/packages/micromapST/index.html. In 
 ## Introduction {#Ch4b-Introduction}
 
 
-Although the original package was written to display U.S. states exclusively, over time other geographies have been added at the request of users. In the latest version of **micromapST** (2.0.0), the process used to create these other boundary files has been codified into a new function to allow the user to create linked micromap plots with their geographic areas of choice.
+Although the original package was written to display U.S. states exclusively, over time other geographies have been added at the request of users. In the latest version of **micromapST** (2.0), the process used to create these other boundary files has been codified into a new function to allow the user to create linked micromap plots with their geographic areas of choice.
 
 The resulting map serves as the visual element linking graphed data to spatial aspects of the data, and so must be accurate enough to allow the user to identify the geographic space it represents. This is a challenge, as the maps in a linked micromap design are typically exceedingly small, about 1” x 1.5”, but the overall map area and its sub-units need to be recognizable. 
 
@@ -27,7 +27,7 @@ In the next section, we describe the boundary files included in the **micromapST
 ## Boundary Files Included in **micromapST** {#Ch4b-BuiltinGeographies}
 
 
-We will refer to a collection of boundaries for a geographic entity as a "border group", giving it a dataframe name ending in "BG". The following border groups were created by request over the years and are available in the current version (2.0.0) of **micromapST**:
+We will refer to a collection of boundaries for a geographic entity as a "border group", giving it a dataframe name ending in "BG". The following border groups were created by request over the years and are available in the current version (2.0) of **micromapST**:
 
 -   USStatesBG, data from the original micromapST package for the 50 U.S. states and the District of Columbia;
 -   USSeerBG, data for the 21 cancer registry areas of the U.S. National Cancer Institute [@NCISEER2022About];
@@ -53,7 +53,13 @@ The experience of the developers when manually creating the border groups listed
 
 To illustrate the process of building a border group, we will use the U.S. Census Bureau’s state boundary files as defined in 2000 [@USCensus2021Shape].  The resulting map will be compared to the map based on the USStatesBG border group, the familiar caricature which is the default map in the package. Noting differences between these maps can inform the user's decision about the degree of smoothing that is enough so that all area colors are visible but not so much that areas are unrecognizable.
 
-Throughout this chapter, we will utilize the `BuildBorderGroup` function's option to write out four intermediate map images as the process proceeds (`debug = xxx` where xxx = 512 for the default PDF format, 640 for PNG format). We will read and display these intermediate images so that the impact of each step on the final map image can be assessed. 
+Throughout this chapter, we will utilize the `BuildBorderGroup` function's option to write out the final plus three intermediate map images as the process proceeds. We will read and display these intermediate images so that the impact of each step on the final map image can be assessed. User options for choosing what images to save are specified by `debug = x` in the `BuildBorderGroup` call, where x =
+
+-    0 for none (default),
+-  512 saves all 4 map images in PDF format,
+-  640 saves all 4 map images in PNG format,
+- 1024 saves only the final map image in PDF format,
+- 1152 saves only the final map image in PNG format.
 
 
 ### Challenges {#Ch4b-NewBGs-Challenges}
@@ -116,7 +122,7 @@ Most of the time, we will need to smooth our shapefile to some extent so that it
 ### Build a U.S. Name Table {#Ch4b-USExample-NameTable}
 
 
-The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column.  Each row in the Name Table represents one area, in this example a state. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states and DC.
+The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column.  Each row in the Name Table represents one area, in this example a state. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states.
 
 ```{r Ch4b-USbasictable, echo = FALSE}
 library(kableExtra)
@@ -138,11 +144,11 @@ A more complicated issue is when the user only has a string name to identify eac
 
 If the areas are organized by regions like the U. S. states, then the regID and regName columns can be added to associate the areas (e.g., states) with the census regions. One option that uses these region definitions is `dataRegionsOnly = TRUE` in the **micromapST** function call. Including this option will cause only the regions with any data to be mapped.
 
-For this U.S. border group, the states of Alaska and Hawaii need to be scaled and moved to a better location to reduce the overall size of the map.  Alaska can be scaled down to 30% of its original size and moved to just below California. It is still recognizable.  Hawaii can be moved to just below New Mexico near Texas. The District of Columbia is too small to be seen in the micromap, so it was moved to the right of its original position and enlarged to 400% of its original size. In the tests of the border group, Rhode Island did not show its internal colors very well and so for this demonstration was enlarged to 150% of its original size and moved slightly eastward away from the mainland. See Table \@ref(tab:Ch4b-USFinalTable) for the table entries corresponding to these changes. Rotation of areas is also possible but not needed in this example. The values specifying the degree of scaling, rotation and moving are included in the Name Table only if areas in the border group need to be modified. Areas that are unchanged will have these values set to NA in the table.
+For this U.S. border group, the states of Alaska and Hawaii need to be scaled and moved to a better location to reduce the overall size of the map.  Alaska can be scaled down to 30% of its original size and moved to just below California. It is still recognizable.  Hawaii can be moved to just below New Mexico near Texas. The District of Columbia is too small to be seen in the micromap, so it was moved to the right of its original position and enlarged to 400% of its original size. In the tests of the border group, Rhode Island did not show its internal colors very well and so for this demonstration was enlarged to 150% of its original size and moved slightly eastward. See Table \@ref(tab:Ch4b-USFinalTable) for the table entries corresponding to these changes. Rotation of areas is also possible but not needed in this example. The values specifying the degree of scaling, rotation and moving are included in the Name Table only if areas in the border group need to be modified. Areas that are unchanged will have these values set to NA in the table.
 
 Having moved some areas, the user may have trouble recognizing them in their new positions. **micromapST** has a feature that allows you to add a short label to moved areas to help the user identify them. This information is provided in MapL, MapX, and MapY columns (the label, X and Y coordinates for the label, respectively) in the Name Table. Note that these labels only appear on the first of the multiple maps in the linked micromap plot. Labels should be used sparingly so as not to overly clutter the map display. Any area’s row that does not require labeling or modification will have the values in those columns set to NA. Note that the location values used for the areas that are to be moved and for their labels are always in the units of the original shapefile projection, in most cases, longitude and latitude degrees. This feature was used on the U. S. States border group to scale DC, Rhode Island, Alaska and Hawaii and to shift DC, Alaska and Hawaii to a better location on the map.
 
-The columns in the Name Table are shown in Table \@ref(tab:Ch4b-NameTable).
+The columns in the Name Table are shown in Table \@ref(tab:Ch4b-NameTable), with the final Name Table for the U.S. in Table \@ref(tab:Ch4b-USFinalTable).
 
 ```{r Ch4b-NameTable, echo = FALSE} 
 library(kableExtra)
@@ -272,66 +278,42 @@ Now let's apply these steps to the original U.S. state boundaries and compare th
 ```{r Ch4b-BuildBorderGroupUS, results = 'hide'}
 library(micromapST)
 
-set.seed(123)
-
-shape_file_dir <- "data/Ch4b"
-name_table_dir <- "data/Ch4b"
-output_dir_US <- "output/Ch4b/US"
-
+NTDir <- "data/Ch4b"
 BuildBorderGroup(
   ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
-  ShapeFileDir = shape_file_dir, # Directory containing the shapefile
   ShapeLinkName = "NAME", # Variable name containing link to NameTable
-  NameTableDir = name_table_dir, # Directory containing the NameTable
+  NameTableDir = NTDir, # Directory containing the NameTable
   NameTableFile = "USNameTable.xlsx", # NameTable file
-  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table
+  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table.
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
-  BorderGroupDir = output_dir_US, # Output directory for resulting files
-  MapHdr = c("", "States"),
   MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
   MapMaxH = 2, # Maximum Height for micromap drawing (inches)
   IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.2, # reduce vertices to 0.2% of original number
-  debug = 512 + 128 # generate 4 intermediate PNG map plots
-)
-```
-
-```{r Ch4b-BuildBorderGroupUS-pdf, echo = FALSE, results = 'hide'}
-# Same as Ch4b-BuildBorderGroupUS, but now with pdf output
-
-BuildBorderGroup(
-  ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
-  ShapeFileDir = shape_file_dir, # Directory containing the shapefile
-  ShapeLinkName = "NAME", # Variable name containing link to NameTable
-  NameTableDir = name_table_dir, # Directory containing the NameTable
-  NameTableFile = "USNameTable.xlsx", # NameTable file
-  NameTableLink = "Name", # The column in the NameTable to use to link the SPDF to the Name Table
-  BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
-  BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
-  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
-  ReducePC = 0.2, # reduce vertices to 0.2% of original number
-  debug = 512 + 0 # generate 4 intermediate PDF map plots
+  debug = 0 #  = 512 + 128 to generate 4 intermediate PNG map plots
 )
+
+library(sf)
+sf_use_s2(TRUE)
+## Spherical geometry (s2) switched on
 ```
 
-```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Input (top left), after simplifying (top right), final with XXX projection (bottom left), and final with YYY projection (bottom right).', fig.show = 'hold', out.width = '50%', echo = FALSE}
+```{r Ch4b-USExample-BBG, fig.cap = 'U.S. state maps: Simplified (upper left), after moving and scaling (upper right), final (lower left) and micromapST default map (lower right).', fig.show = "hold", out.width = '50%', echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 
 knitr::include_graphics(c(
-  paste0(output_dir_US, "/USst_SM_After_rmapshaper.png"),
-  paste0(output_dir_US, "/USst_SM_After_Name_Table_modifications.png")
+  "data/Ch4b/USst_SM_After_rmapshaper.png",
+  "data/Ch4b/USst_SM_After_Name_Table_modifications.png"
 ), auto_pdf = TRUE)
 
 knitr::include_graphics(c(
-  paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),
+  "data/Ch4b/USst_FP_Final_areaVisBorders.png",
   "data/Ch4b/MM-US_States.png"
 ), auto_pdf = TRUE)
 ```
 
-The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(fig:Ch4b-USExample-BBG). Note that the color shading is random to illustrate how a shaded map might look. The first intermediate map (upper left) is smoothed from the original but still has the problem of a very small continental U.S. The second step, moving and scaling Alaska and Hawaii, improved this. The final map (lower left) had an Albers projection applied. Compared to the caricature map (lower right), this map processed through `BuildBorderGroup` is not quite as smooth, but is adequate for small micromaps. This illustrates the trade-off: you might prefer a caricature-type map for your geographic area but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
+The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(fig:Ch4b-USExample-BBG). The color shading is random to illustrate how a shaded map might look. The first intermediate map (upper left) is smoothed from the original but still has the problem of a very small continental U.S. The second step, moving and scaling Alaska and Hawaii, improved this. The final map (lower left) had an Albers projection applied. Compared to the caricature map (lower right), this map processed through `BuildBorderGroup` is not quite as smooth, but is adequate for small micromaps. This illustrates the trade-off: you might prefer a caricature-type map for your geographic area but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
 
 
 ## Linked Micromap Plots for a Large Number of Areas {#Ch4b-Many-Areas}
@@ -344,94 +326,136 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 
 ### Creating Long Linked Micromap Plots {#Ch4b-Many-Areas-Long}
 
+We will use cancer data from the state of Kentucky, with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [ref https://www.kcr.uky.edu/, Kentucky Cancer Registry, accessed 9/27/22]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later. In an effort to reduce these high rates, the state public health department would probably be interested in examining geographic patterns within the state. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most.
 
-The state of Kansas has 105 counties. We can use the built-in border group to create a linked micromap that might reasonably fit on a legal size sheet of paper. For illustration, we read in population estimates for 2021 and the area for each county [@Wikipedia2022KansasCounties]. We then calculated a new column in the spreadsheet, population density, which is the number of people per square mile. The linked micromap plot should identify the largest Kansas cities on the maps in counties with a high population density, which will be the sort variable.
+After reading the Kentucky county shapefile, we need to call `BuildBorderGroup` to create the internal tables needed for **micromapST**. We will request some smoothing of the boundaries and plot the resulting map. 
 
-```{r Ch4b-Kansas, fig.cap = 'Population density (#/sq mi) and area of Kansas counties.', fig.width = 7, fig.height = 14}
-KS_data <- read.csv("data/Ch4b/KansasData2021.csv")
-head(KS_data)
-
-# set up 4 column page layout - Mapcum, ID, Dot, Dot
-panelDesc09 <- data.frame(
-  type = c("mapcum", "id", "dot", "dot"),
-  lab1 = c("", "", "Pop. Density", "Area (sq mi)"),
-  lab2 = c("", "", "#/sq. mi.", ""),
-  col1 = c(NA, NA, "pop_density", "area_sqmi")
-)
-
-micromapST(
-  statsDFrame = KS_data, 
-  panelDesc = panelDesc09,
-  sortVar = c("pop_density"), 
-  ascend = FALSE,
-  title = "Population density and area for Kansas counties, 2021",
-  axisScale = "sn",
-  rowNames = "full", 
-  rowNamesCol = "name",
-  bordGrp = "KansasBG",
-  plotNames = "full"
-)
-``` 
-
-Note that a new option is introduced in this example. `axisScale = "sn"` requests that the axis tick marks be spaced and labeled according to Wilkinson's algorithm [@Wilk99]. This format only affects a few numbers on the axis, e.g., "1k" and "1.25k", but shows the possible improvement for an axis with large values to display.
-
-By sorting on population density, the top panels show the largest Metropolitan Statistical Areas in Kansas as defined by OMB based on population and density [@Wikipedia2021KansasStatAreas]. The top two panels identify Kansas City (Johnson and Wyandotte counties), Wichita, Topeka, Lawrence (University of Kansas), Leavenworth, Manhattan (Kansas State University) and Salina. It is also apparent that population density decreases steadily from the eastern to the western border of Kansas. 
-
-
-### Aggregating to a Smaller Number of Areas {#Ch4b-Many-Areas-Aggregate}
-
-
-When the map contains too many areas to use with linked micromaps, the counties or provinces can be combined to reduce the number of areas in the map. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. For example, the state of Kentucky contains 120 counties, too many for a 8.5" x 11" graphic. The state defined Area Development Districts (ADDs) [@KLRC1972;@KCADDnd] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
-
-To build a border group of the ADDs, the first step is to aggregate the counties of the state into the ADDs outside of the **micromapST** package. Then this new shapefile (or SpatialPolygons) along with a Name Table can be converted into a border group.  
-
-The state of Kentucky's website provides the ADD name for each county or it can be built easily in a spreadsheet [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provided the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
-
-The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
-
-```{r Ch4b-Create-KY-ADDs}
+``` {r}
+library(micromapST)
 library(readxl)
 library(rgdal)
 library(sp)
 library(maptools)
 
-# Read in .xlsx table of counties and ADD and make it a data frame
+KYADD_dir <- "data/Ch4b" # Base Directory
+
+#  Read in Kentucky 2000 census county boundaries shapefile.
+KY_shp_file <- "co21_d00" # Census 2000 files Kentucky counties.
+KY_spdf <- readOGR(KYADD_dir, KY_shp_file, verbose = FALSE)
+KY_spdf_data <- KY_spdf@data
+
+#  shapefile has "NAME" field in data.frame that can be used to match
+#  "Name" in the Name Table
+BuildBorderGroup(
+  ShapeFile = KY_spdf,
+  ShapeLinkName = "NAME", # name in shapefile to link to Name Table
+  NameTableLink = "Name", # column name in Name Table for linking
+  NameTableDir = KYADD_dir, # directory where all files are
+  NameTableFile = "/KY_Co_To_ADD.xlsx", # Name Table file name
+  BorderGroupName = "KY_countiesBG", # name of new border group
+  MapHdr = c("", "KY counties"), # title over map column
+  IDHdr = c("County"), # title over ID column
+  ReducePC = 0.25, # percentage of vertices to keep after simplifying
+  debug = 0
+)
+```
+
+``` {r Ch4b-KY-counties, fig.cap = 'Kentucky counties, smoothed by `BuildBorderGroup`', fig.width = 6, fig.height = 3}
+load(paste0(KYADD_dir,"/KY_countiesBG.rda"))   # this loads new BG
+PlotVis(areaVisBorders)
+
+```
+
+Note that the smoothing did not eliminate the small non-contiguous segment of Fulton County at the far western end of the state. This is not an island but land separated from the rest of the county by the Kentucky Bend of the Mississippi River.
+
+JUERGEN: I COMMENTED OUT THIS CODE BUT LEFT IN JUST IN CASE YOU WANT TO CREATE THE IMAGES USING THE DEBUG OPTION. DELETE THIS CODE IF YOU DON'T.
+``` {r} 
+#{Ch4b-KY-counties, fig.cap = "Kentucky counties before (left) and after (right) BuildBorderGroup", out.width = "50%", echo = FALSE}
+
+#pdf("data/Ch4b/KY_countiesBG.pdf", width = 4, height = 2)
+#par(mar = c(0, 0, 0, 0))
+#plot(KY_spdf)
+#dev.off()
+
+#png("data/Ch4b/KY_countiesBG.png", width = 4, height = 2, units = "in", res = 300)
+#par(mar = c(0, 0, 0, 0))
+#plot(KY_spdf)
+#dev.off()
+
+#par(mar = c(0, 0, 0, 0))
+#knitr::include_graphics(c(
+#  "data/Ch4b/KY_countiesBG.png"
+#),
+#auto_pdf = TRUE
+#)
+```
+
+Now we set up the linked micromap plot to display the county rates with their 95% confidence intervals, sorted in descending order. The data are invasive cervical cancer incidence rates, age-adjusted to the 2000 standard million population, downloaded from the Kentucky Cancer Registry website (https://www.kcr.uky.edu/) In order to have sufficient vertical space for the micromaps, we specify the output plot dimensions as 7" by 15". 
+
+
+``` {r Ch4b-KY-county-LMM, fig.cap = "Invasive cervical cancer incidence rates in Kentucky Counties, 2014-2018, age-adjusted to 2000 standard million population", fig.width = 7, fig.height = 15}
+#  Read in KY cervical cancer incidence rate data (skip 1st 2 header rows)
+KY_cervca <- read.csv(paste0(KYADD_dir,"/Invasive-Cancer-Incidence-Rates-by-County-in-Kentucky-Cervix-Uteri-2014-2018.csv"), skip = 2)
+head(KY_cervca)
+
+panelDesc09 <- data.frame(
+  type = c("mapcum", "id", "dotconf"),
+  lab1 = c("", "", "Adj. Rate"),
+  lab2 = c("", "", "per 100,000"),
+  col1 = c(NA, NA, "adj_rate"),
+  col2 = c(NA, NA, "confint_lower"),
+  col3 = c(NA, NA, "confint_upper"),
+  refVals = c(NA, NA, 7.7),
+  refTexts = c(NA, NA, "US rate")
+)
+
+micromapST(
+  statsDFrame = KY_cervca, 
+  panelDesc = panelDesc09,
+  sortVar = c("adj_rate"), 
+  ascend = FALSE,
+  title = "Cervical Cancer Incidence Rates for Kentucky Counties, 2014-2018",
+  rowNames = "full", 
+  rowNamesCol = "county_name",
+  bordGrp = "KY_countiesBG",
+  bordDir = KYADD_dir,
+  plotNames = "full"
+)
+
+```
+
+Clearly this tests the limits of map visibility, but it does work, although the package warns that the calculated panel height is 0.5", less than the minimum height of 1". However, there are more serious problems with the data than with the small map images. Nearly half of the counties had fewer than five cases and so their data were suppressed (or shown as 0). Furthermore, most of the other counties had unstable rates as evidenced by very wide confidence intervals. With so much missing data on the display, there is no discernible geographic pattern. 
+
+### Aggregating counties to Area Development Districts in Kentucky {#Ch4b-Aggregate}
+
+
+When the data are unstable due to small numbers, aggregation over some dimension of the data can help. The original Kentucky cancer data were already aggregated over time (5 years) so perhaps we can aggregate over space. Geographic aggregation will also help by reducing the number of areas to display on the micromap. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. 
+
+Kentucky defined Area Development Districts (ADDs) [@KCADDnd] 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
+
+To build a border group of the ADDs, the first step is to aggregate the county polygons of the state into ADD polygons outside of the **micromapST** package. Then this new shapefile (or SpatialPolygons), along with a Name Table, can be converted into a border group for use by the package.  
+
+The state of Kentucky’s website provides the ADD name for each county [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provides the boundaries and the data slot variables provide the county ID (“COUNTY”) and name (“NAME”).
+
+The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
+
+```{r Ch4b-Aggregate-KY-ADDs}
+# Read in .xlsx table of counties and ADDs and make it a data frame
 CoToADD <- read_xlsx("data/Ch4b/KY_Co_To_ADD.xlsx")
 CoToADD <- as.data.frame(CoToADD, stringsAsFactors = FALSE)
 head(CoToADD, n = 6L)
 ```
 
-This table has 120 rows, one per county, and provides the ADD name for each county. For example, we can see from this short example that Allen and Barren counties are in an ADD called Barren River.
+This table has 120 rows, one per county, and provides the ADD name for each county. We can see from this short example that Allen and Barren counties are in an ADD called Barren River.
 
-The first step is to aggregate boundaries for counties into the larger ADDs:
+The first step is to aggregate boundaries for counties into the larger ADDs based on the county-to-ADD translation table. County names will be matched between the files ("NAME" in the shapefile, "Name" in the above table) to identify the ADD to which each county belongs. Then the county polygons are merged into ADD polygons and the new ADD shapefile is written out. 
 
-```{r Ch4b-Aggregate-KY-ADDs}
-#  Read in Kentucky 2000 census county boundaries shapefile.
-#  Build a list to use in the UNION of the counties into the ADDs.
-#  The MergeInx vector contains the index to the ADD name for
-#  each polygon in the shapefile in the shapefile order.
-#
-
-# Build shapefile from county shapefile via aggregation
-
-shape_file_dir <- "data/Ch4b"
-name_table_dir <- "data/Ch4b"
-output_dir_KY <- "output/Ch4b/KY" 
-
-#   read in county boundaries for Kentucky from census files for 2000.
-KY_shp_file <- "co21_d00" # Census 2000 files for Kentucky counties.
-KY_shp <- readOGR(shape_file_dir, KY_shp_file, verbose = FALSE)
-KY_shp_data <- KY_shp@data
-
-#  shapefile has "NAME" field in data.frame that can be used to match
-#  entries in the county to ADD table.
-#  match the county names in the spreadsheet to the county name in the shapefile
-Merge_inx <- match(KY_shp_data$NAME, CoToADD$County)
-
-# get list of ADD_NAMEs for the union (one per county)
+``` {r}
+# Match on county name, then merge polygons based on ADD
+Merge_inx <- match(KY_spdf@data$NAME,CoToADD$Name)
 Merge_list <- CoToADD$ADD[Merge_inx] #   Convert county list into ADD list for merge
-KY_ADD_shp <- maptools::unionSpatialPolygons(KY_shp, Merge_list) # merge polygons into ADD groups.
-# now have a Spatial Polygons structure.
+KY_ADD_shp <- maptools::unionSpatialPolygons(KY_spdf, Merge_list) 
+# result is a Spatial Polygons structure.
 
 KY_ADD_DF <- data.frame(rn = row.names(KY_ADD_shp), stringsAsFactors = FALSE)
 KY_ADD_DF$stID <- "21" # fips code for KY
@@ -440,102 +464,105 @@ row.names(KY_ADD_DF) <- KY_ADD_DF$rn
 KY_ADD_SPDF <- SpatialPolygonsDataFrame(KY_ADD_shp, KY_ADD_DF)
 
 # save SpatialPolygonsDataFrame as shapefile
-rgdal::writeOGR(obj = KY_ADD_SPDF, 
-                dsn = output_dir_KY, 
-                layer = "KYADD", 
-                driver = "ESRI Shapefile", 
-                overwrite_layer = TRUE)
-#
-```
+rgdal::writeOGR(KY_ADD_SPDF, 
+  dsn = Shp_dir, 
+  layer = "KYADD", 
+  driver = "ESRI Shapefile", 
+  overwrite_layer = TRUE)
 
-```{r Ch4b-KY-maps, fig.cap = 'Kentucky counties (left) and Area Development Districts (right).', fig.show = 'hold', out.width = '50%', echo = FALSE}
-pdf(paste0(output_dir_KY, "/Ky_ADD_SPDF.pdf"), width = 4, height = 2)
-par(mar = c(0, 0, 0, 0))
-plot(KY_ADD_SPDF)
-dev.off()
-
-png(paste0(output_dir_KY, "/KY_ADD_SPDF.png"), width = 4, height = 2, units = "in", res = 300)
-par(mar = c(0, 0, 0, 0))
-plot(KY_ADD_SPDF)
-dev.off()
-
-pdf(paste0(output_dir_KY, "/Ky_shp.pdf"), width = 4, height = 2)
-par(mar = c(0, 0, 0, 0))
-plot(KY_shp)
-dev.off()
-
-png(paste0(output_dir_KY, "/KY_shp.png"), width = 4, height = 2, units = "in", res = 300)
-par(mar = c(0, 0, 0, 0))
-plot(KY_shp)
-dev.off()
-
-par(mar = c(0, 0, 0, 0))
-knitr::include_graphics(c(
-  paste0(output_dir_KY, "/KY_shp.png"),
-  paste0(output_dir_KY, "/KY_ADD_SPDF.png")
-),
-auto_pdf = TRUE
-)
 ```
 
 
 ### Building the New Border Group for the Aggregated Kentucky ADDs {#Ch4b-Building-Aggregate-BG}
 
-
 Now we can build a new border group for use in **micromapST**. Since there were no modifications (e.g., scaling or moving) of the boundaries, the basic Name Table is all that is needed:
 
 ```{r Ch4b-ReadKY-ADD-Table}
-temp_name_table <- read_xlsx("data/Ch4b/KYADD_NameTable-Basic.xlsx")
+temp_name_table <- as.data.frame(read_xlsx(paste0(KYADD_dir,"/KYADD_NameTable-Basic.xlsx")))
 head(temp_name_table, n = 6L)
 ```
 
-Once the shapefile for the Kentucky ADD boundaries is formed, the call to the `BuildBorderGroup` function can be executed. Again, the output from the `BuildBorderGroup` function extends over several pages and is not shown here.
+Next, `BuildBorderGroup` is called using this Name Table and the ADD border group created in the the previous section (\@ref(Ch4b-aggregate). Again, the output from the `BuildBorderGroup` function extends over several pages and is not shown here.
 
 
 ```{r Ch4b-BuildBorderGroupKY, results = 'hide'}
-set.seed(123)
-
 #  BuildBorderGroup function call
 BuildBorderGroup(
   ShapeFile = "KYADD",
-  ShapeFileDir = output_dir_KY,
   ShapeLinkName = "rn", # name in shapefile to link to Name Table
-  NameTableDir = name_table_dir, # directory where all files are
-  NameTableFile = "KYADD_NameTable-Basic.xlsx", # Name Table file name
   NameTableLink = "Name", # column name in Name Table for linking
-  BorderGroupName = "KYADD2BG", # name of border group to use
-  BorderGroupDir = output_dir_KY,
+  NameTableDir = KYADD_dir, # directory where all files are
+  NameTableFile = "KYADD_NameTable-Basic.xlsx", # Name Table file name
+  BorderGroupName = "KYADDBG", # name of border group to use
   MapHdr = c("", "KY ADD"), # title over map column
   IDHdr = c("ADD"), # title over ID column
-  ReducePC = 0.75 # percentage of vertices to keep after simplifying
+  ReducePC = 0.75, # percentage of vertices to keep after simplifying
+  debug = 0
 )
+
+sf_use_s2(TRUE)
+## Spherical geometry (s2) switched on
 ```
 
 Save and print the resulting image: 
 
 ```{r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts.', echo = FALSE}
-border_group_file <- "KYADD2BG.rda"
-load(file = paste0(output_dir_KY, "/", border_group_file))
+BGDir <- "data/Ch4b"
+BGFile <- "KYADD2BG.rda"
+load(file = paste0(BGDir, "/", BGFile))
 
 xLim <- range(areaVisBorders$x, na.rm = TRUE)
 yLim <- range(areaVisBorders$y, na.rm = TRUE)
 
-pdf(paste0(output_dir_KY, "/KYADD.pdf"), width = 8, height = 4)
+pdf(paste0(BGDir, "/KYADD.pdf"), width = 8, height = 4)
 plot(0, 0, xlim = xLim, ylim = yLim, axes = FALSE, type = "n", xlab = "", ylab = "")
 polygon(areaVisBorders$x, areaVisBorders$y, border = "black", lwd = .9)
-dev.off()
+x <- dev.off()
 
-png(paste0(output_dir_KY, "/KYADD.png"), width = 8, height = 4, units = "in", res = 300)
+png(paste0(BGDir, "/KYADD.png"), width = 8, height = 4, units = "in", res = 300)
 plot(0, 0, xlim = xLim, ylim = yLim, type = "n", axes = FALSE, ylab = "", xlab = "")
 polygon(areaVisBorders$x, areaVisBorders$y, border = "black", lwd = .9)
-dev.off()
+x <- dev.off()
 
 par(mar = c(0, 0, 0, 0))
-knitr::include_graphics(paste0(output_dir_KY, "/KYADD.png"), auto_pdf = TRUE)
+knitr::include_graphics("data/Ch4b/KYADD.png", auto_pdf = TRUE)
 ```
 
-The original Kentucky ADD map in Figure \@ref(fig:Ch4b-KY-maps) didn't have any very small areas and didn't require any scaling or moving. It probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
+The original Kentucky ADD map didn't require any scaling or moving, so probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
 
+Now we can create the same linked micromap plot as in Figure \@ref(fig:Ch4b-KY-county-LMM). `panelDesc` is exactly the same as before but is shown here for completeness:
+
+
+``` {r Ch4b-KY-ADD-LMM, fig.cap = "Invasive cervical cancer incidence rates in Kentucky Area Development Districts, 2014-2018, age-adjusted to 2000 standard million population", fig.width = 7, fig.height = 10}
+#  Read in KY cervical cancer incidence rate data (skip 1st 2 header rows)
+KYADD_cervca <- read.csv(paste0(KYADD_dir,"/Invasive-Cancer-Incidence-Rates-by-ADD-in-Kentucky-Cervix-Uteri-2014-2018.csv"), skip = 2)
+head(KYADD_cervca)
+# panelDesc is the same as before; repeated here for clarity
+panelDesc10 <- data.frame(
+  type = c("mapcum", "id", "dotconf"),
+  lab1 = c("", "", "Adj. Rate"),
+  lab2 = c("", "", "per 100,000"),
+  col1 = c(NA, NA, "adj_rate"),
+  col2 = c(NA, NA, "confint_lower"),
+  col3 = c(NA, NA, "confint_upper"),
+  refVals = c(NA, NA, 7.7),
+  refTexts = c(NA, NA, "US rate")
+)
+
+micromapST(
+  statsDFrame = KYADD_cervca, 
+  panelDesc = panelDesc10,
+  sortVar = c("adj_rate"), 
+  ascend = FALSE,
+  title = "Cervical Cancer Incidence Rates for Kentucky ADDs, 2014-2018",
+  rowNames = "full", 
+  rowNamesCol = "ADD_name",
+  bordGrp = "KYADDBG",
+  bordDir = KYADD_dir,
+  plotNames = "full"
+)
+```
+This is much clearer. All ADDs have sufficient data to display. Eight of the highest 10 rates have confidence intervals that do not include the U.S. rate, while all five of the lowest rates do include it. Buffalo Trace's confidence is very wide because it has the lowest population of any ADD. We also can see a clear geographic pattern, with the highest rates occurring in what is known to be the poorest part of the state. 
 
 ## Discussion {#Ch4b-Discussion}
 
