@@ -100,7 +100,7 @@ statistical variables or changes to different graph types for some of the variab
 ```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package [@Iannone2022]).', fig.width = 5, fig.height = 5, echo = FALSE}
 library(DiagrammeR)
 
-grViz(
+DiagrammeR::grViz(
   diagram = "digraph flowchart {
   node [fontname = arial, shape = oval, color = grey, style = filled]
   tab1 [label = '@@1']
@@ -453,17 +453,17 @@ at the supporting web page at https://colorbrewer2.org/.
 @SDWPM2014 used a five-class greyscale sequential color scheme\index{Color scheme!Sequential}
 from **RColorBrewer**\index{R Packages!RColorBrewer} in reverse sorting (where
 the darkest grey color comes first) for publication in a greyscale publication,\index{Colors!Greyscale publication}
-obtained via `colors = brewer.pal(n = 5, name = "Greys")[5:1]`.
+obtained via `colors = RColorBrewer::brewer.pal(n = 5, name = "Greys")[5:1]`.
 @SBDSS2016 used a five-class divergent red-yellow-blue (RdYlBu) color scheme\index{Color scheme!Divergent}
 from **RColorBrewer**\index{R Packages!RColorBrewer}
 that is colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
-obtained via `colors = brewer.pal(n = 5, name = "RdYlBu")`.
+obtained via `colors = RColorBrewer::brewer.pal(n = 5, name = "RdYlBu")`.
 In the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining4), we use a
 five-class divergent brown-blue-green (BrBG) color scheme\index{Color scheme!Divergent}
 from **RColorBrewer**\index{R Packages!RColorBrewer}
 that is also colorblind safe\index{Colors!Colorblind safe} and print friendly,\index{Colors!Print friendly}
-obtained via `colors = brewer.pal(n = 5, name = "BrBG")`.
+obtained via `colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG")`.
 
 
 ```{r Ch2-refining4, fig.cap = 'Fourth refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the use of a divergent brown-blue-green color scheme\\index{Color scheme!Divergent} and the conversion back to the traditional grouping for 51 subregions.', fig.width = 7, fig.height = 9}
@@ -477,7 +477,7 @@ mmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(n = 5, name = "BrBG"),
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(list(3, align = "left"))
 )
 ```
@@ -528,7 +528,7 @@ mmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(n = 5, name = "BrBG"),
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(
     list(
       1,
@@ -622,7 +622,7 @@ mmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = brewer.pal(n = 5, name = "BrBG"),
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
   panel.att = list(
     list(
       1,
@@ -697,8 +697,9 @@ mmplot(
 What remains to be done is a summary and interpretation of the 
 final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
 This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
-(in the fourth column) and the percentage living below poverty level (in the fifth column) 
-in the 50 US states and Washington, D.C.
+(in the first statistical graphics column which is the fourth column overall) 
+and the percentage living below poverty level (in the second statistical graphics column 
+which is the fifth column overall) in the 50 US states and Washington, D.C.
 
 The percentage of adults with four or more years of college is used as the sorting variable
 for the rows in the plot -- with highest percentages shown at the top and lowest percentages
@@ -714,10 +715,11 @@ West Virginia is the state with the lowest percentage of only about 15%
 of adults with four or more years of college. Overall,
 primarily southern and central states can be seen in the maps below the median state.
 
-The percentage living below poverty level (in the fifth column) shows a different pattern.
+The percentage living below poverty level (in the fifth column overall) shows a different pattern.
 States with a high percentage of adults with four or more years of college have
 a low percentage living below poverty level. 
-Visually, the dots in the fourth and fifth column diverge, forming some crude reflected V-shape.
+Visually, the dots in the fourth and fifth column diverge, forming some crude caret shape
+(resembling an upside down V-shape).
 Washington, D.C., is a major outlier as it has the highest 
 percentage of adults with four or more years of college (almost 40%)
 but also the highest percentage living below poverty level (more than 20%).
@@ -728,7 +730,7 @@ As expected, the overall correlation between these two variables is negative,
 but given these two major outliers and several minor outliers
 (such as Indiana and Nevada that both have a relatively low percentage living below poverty level
 despite being among the bottom-10 states with respect to the percentage of
-adults with four or more years of college), the correlation is relatively weak.
+adults with four or more years of college), the (negative) correlation is relatively weak.
 The correlation coefficient $r$ is
 only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
@@ -826,7 +828,7 @@ These will be used for the construction of boxplots\index{Boxplot}.
 (ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary data set for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} in this section.
 
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
-wv_watershed <- readOGR(
+wv_watershed <- rgdal::readOGR(
   dsn = "data/WV_Watershed", 
   layer = "RandomWatershed2_stats_smooth", 
   verbose = FALSE
@@ -1081,7 +1083,7 @@ mmplot(
   grouping = 5, 
   plot.pGrp.spacing = 1.2,
   median.row = FALSE,
-  colors = brewer.pal(n = 5, name = "YlGnBu")[5:1],
+  colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1],
   panel.att = list(
     list(
       1,
