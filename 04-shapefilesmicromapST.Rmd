@@ -349,7 +349,7 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 ### Creating Long Linked Micromap Plots {#Ch4b-Many-Areas-Long}
 
 
-We will use cancer data from the state of Kentucky, with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [ref https://www.kcr.uky.edu/, Kentucky Cancer Registry, accessed 9/27/22]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later. In an effort to reduce these high rates, the state public health department would probably be interested in examining geographic patterns within the state. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most.
+We will use cancer data from the state of Kentucky, with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [@UofKYMCC2022]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later. In an effort to reduce these high rates, the state public health department would probably be interested in examining geographic patterns within the state. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most.
 
 After reading the Kentucky county shapefile, we need to call `BuildBorderGroup` to create the internal tables needed for **micromapST**. We will request some smoothing of the boundaries and plot the resulting map. 
 
@@ -538,7 +538,7 @@ temp_name_table <- as.data.frame(read_xlsx("data/Ch4b/KYADD_NameTable-Basic.xlsx
 head(temp_name_table, n = 6L)
 ```
 
-Next, `BuildBorderGroup` is called using this Name Table and the ADD border group created in the the previous section (\@ref(Ch4b-aggregate). Again, the output from the `BuildBorderGroup` function extends over several pages and is not shown here.
+Next, `BuildBorderGroup` is called using this Name Table and the ADD border group created in the the previous section (\@ref(Ch4b-Aggregate)). Again, the output from the `BuildBorderGroup` function extends over several pages and is not shown here.
 
 ```{r Ch4b-CreateKYADDBorderGroup, results = 'hide'}
 #  BuildBorderGroup function call
@@ -606,7 +606,7 @@ The original Kentucky ADD map didn't require any scaling or moving, so probably 
 Now we can create the same linked micromap plot as in Figure \@ref(fig:Ch4b-KY-county-LMM). `panelDesc` is exactly the same as before but is shown here for completeness:
 
 
-```{r Ch4b-KY-ADD-LMM, fig.cap = 'Invasive cervical cancer incidence rates in Kentucky Area Development Districts, 2014-2018, age-adjusted to 2000 standard million population.', fig.width = 7, fig.height = 8}
+```{r Ch4b-KY-ADD-LMM, fig.cap = 'Invasive cervical cancer incidence rates in Kentucky Area Development Districts, 2014-2018, age-adjusted to 2000 standard million population.', fig.width = 7, fig.height = 7}
 #  Read in KY cervical cancer incidence rate data (skip 1st 2 header rows)
 KYADD_cervca <- read.csv(
   "data/Ch4b/Invasive-Cancer-Incidence-Rates-by-ADD-in-Kentucky-Cervix-Uteri-2014-2018.csv",
