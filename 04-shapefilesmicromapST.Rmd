@@ -335,6 +335,36 @@ knitr::include_graphics(c(
 ), auto_pdf = TRUE)
 ```
 
+```{r Ch4b-USExample-BBG-letters, fig.cap = 'U.S. state maps: Simplified (A), after moving and scaling (B), final (C) and micromapST default map (D).', out.width = '100%', echo = FALSE}
+# Based on
+# https://stackoverflow.com/questions/65456227/include-multiple-figures-with-knitrinclude-graphics-in-a-single-chunk-an-eac
+
+library(cowplot)
+library(ggplot2)
+
+par(mar = c(0, 0, 0, 0))
+scaling <- 1.0
+
+fig1 <- ggdraw() +
+  draw_image(paste0(output_dir_US, "/USst_SM_After_rmapshaper.png"),
+    scale = scaling
+  )
+fig2 <- ggdraw() +
+  draw_image(paste0(output_dir_US, "/USst_SM_After_Name_Table_modifications.png"),
+    scale = scaling
+  )
+fig3 <- ggdraw() +
+  draw_image(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),
+    scale = scaling
+  )
+fig4 <- ggdraw() +
+  draw_image("data/Ch4b/MM-US_States.png",
+    scale = scaling
+  )
+
+plot_grid(fig1, fig2, fig3, fig4, ncol = 2, labels = "AUTO")
+```
+
 The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(fig:Ch4b-USExample-BBG). The color shading is random to illustrate how a shaded map might look. The first intermediate map (upper left) is smoothed from the original but still has the problem of a very small continental U.S. The second step, moving and scaling Alaska and Hawaii, improved this. The final map (lower left) had an Albers projection applied. Compared to the caricature map (lower right), this map processed through `BuildBorderGroup` is not quite as smooth, but is adequate for small micromaps. This illustrates the trade-off: you might prefer a caricature-type map for your geographic area but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
 
 
@@ -349,7 +379,7 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 ### Creating Long Linked Micromap Plots {#Ch4b-Many-Areas-Long}
 
 
-We will use cancer data from the state of Kentucky, with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [@UofKYMCC2022]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later. In an effort to reduce these high rates, the state public health department would probably be interested in examining geographic patterns within the state. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most.
+We will use cancer data from the state of Kentucky, with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [@UofKYMCC2022]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later [@NCI2021Cervical]. In an effort to reduce these high rates, the state public health department would probably be interested in examining geographic patterns within the state. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most.
 
 After reading the Kentucky county shapefile, we need to call `BuildBorderGroup` to create the internal tables needed for **micromapST**. We will request some smoothing of the boundaries and plot the resulting map. 
 
