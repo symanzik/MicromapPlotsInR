@@ -31,7 +31,7 @@ Eye tracking data is obtained from measuring where people are looking at with an
 The eye tracking data for the poster we use to demonstrate here is based on a controlled experiment where the participant was given instructions to look at the poster. 
 
 
-#### Shapefile preparation: AOI definition {#Ch10-shapefile}
+#### Shapefile Preparation: AOI Definition {#Ch10-shapefile}
 
 
 The shapefile for the microposter plot is the boundaries of the areas of interests (AOIs) for the poster, such as the title, logos, multiple text areas, images, and tables. 
@@ -70,7 +70,7 @@ knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
 
 
-#### Eye tracking data feature extractions {#Ch10-feature_extractions}
+#### Eye Tracking Data Feature Extractions {#Ch10-feature_extractions}
 
 
 The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create a linked micromap plot, the data features should be extracted based on the defined Region of Interests or AOIs. Different features of eye tracking data are extracted in terms of the defined AOIs, such as how long the participant has spent and how many times the participant has visited each AOI, eye movement speed from one focus point to another in pixels within each AOIs and pupil radiuses for each visit at the corresponding AOI. 
@@ -78,7 +78,7 @@ The processed video data is still considered raw eye tracking data, which is a t
 The resulting datasets described in the above sections are provided to create a sample linked micromap plot or linked microposter plot:  `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
 
 
-### Linked microposter plot creation {#Ch10-linked_microposter_creation}
+### Linked Microposter Plot Creation {#Ch10-linked_microposter_creation}
 
 
 After the eye tracking video data is processed and AOI shapefile is created, we can now start to create linked microposter plot following the steps below. 
@@ -140,7 +140,7 @@ if (length(panel_types) < columns) {
 ```
 
 
-2. **Load images and data.**
+2. **Load Images and Data.**
 
 After specifying the panels, the image/poster and data need to be loaded. The poster image is changed to grayscale. We used **imager**\index{R Packages!imager} R package for the poster image processing such as changing the colored poster to grayscale in order to lay other colors on top of it. The user can replace poster with other images and replace eye tracking data with other data types. 
 
@@ -159,7 +159,7 @@ poster <- imager::grayscale(poster)
 ```
 
 
-3. **Load shapefile for poster.**
+3. **Load Shapefile for Poster.**
 
 The shape file, i.e. the definitions of AOIs' data, is loaded in 3.1. The AOIs are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI "Blank" is added to the shape file with its vertices defined as 0s in 3.2. A polygon for the entire poster is created in 3.3 after the creation and loading the polygons for all the AOIs.   
 
@@ -193,7 +193,7 @@ colnames(poster_vis_borders) <- c("x", "y")
 ```
 
 
-4. **Sort rows according to data columns.**
+4. **Sort Rows According to Data Columns.**
 
 The user can specify how they want the rows to be ordered in 4.1, i.e., which column to sort by. In this case, one can choose a variable from the three variables we visualize: number of visits (_visits\_num_), length of visits (_visits\_len_) or pupil radiuses (_pupil\_data_) to sort by. The code for rearranging the datasets sorted by specific columns is in code section 4.2. It is executed using if statements based on the different data structures of the variables. The variable _visits\_len_ is chosen to sort the rows for the plot as an example. 
 
@@ -229,7 +229,7 @@ if (sortby == "pupil_data") {
 ```
 
 
-5. **Determine panel layouts.**
+5. **Determine Panel Layouts.**
 
 The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here we chose the automatic layout and set the partitioning to be 1 (the first partitioning way defined in the function `ArrangePanels()`). The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows for the aesthetics of the plot. The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()`, as well as the layout details list is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired.  
 
@@ -276,7 +276,7 @@ if (!median_row) {
 ```
 
 
-6. **Create panel layouts and plot indexes.**
+6. **Create Panel Layouts and Plot Indexes.**
 
 _Details_ is a list structure that contains the variables and values for the detailed layout of the plot. `ArrangePanels()` function is able to automatically determine the start and end rows for each plot groups given the input: _row\_begin_ and _row\_end_. The data is arranged into 3 perceptual groups. 
 
@@ -312,7 +312,7 @@ n_groups <- length(row_end)
 ```
 
 
-7. **Plot posters.**
+7. **Plot Posters.**
 
 After all the settings are specified, we can now start to create the linked microposter plot one column at a time, by starting from the leftmost column, i.e., the microposters. The microposter plots code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package by @PaOl2015.     
 
@@ -514,7 +514,7 @@ if (sum(panel_types == "poster") >= 1) {
 ```
 
 
-8. **Plot labels.**
+8. **Plot Labels.**
 
 After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indices are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs by using the same color scheme and plotting order. The `Blank` AOI is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
 
@@ -1030,7 +1030,7 @@ if (sum(panel_types == "boxplot") >= 1) {
 ```
 
 
-10. **Add title.**
+10. **Add Title.**
 
 By now, all the columns in the linked microposter plot have been created. The plot can now be finalized by adding the main title.  
 
