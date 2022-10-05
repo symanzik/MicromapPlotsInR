@@ -91,7 +91,6 @@ A vector of panel plot types are created to store the designed panel types (code
 
 
 ```{r Ch10-panel-design}
-
 # 1.1 Specify panel types
 panel_types <- c("poster", "legend", "dot", "dot", "boxplot")
 
@@ -150,7 +149,7 @@ library(imager)
 # 2.1 Load data
 load(file = "data/Ch10/posterdat.all.rda")
 poster_loc <- "img/Ch10-poster_colored.jpg"
-names(posterdat.all[[1]]) = c("section", "visits_len", "visits_num")
+names(posterdat.all[[1]]) <- c("section", "visits_len", "visits_num")
 poster_dataset <- posterdat.all[[1]]
 names(columns_att) <- panel_types
 # 2.2 Load image and convert to gray scale
@@ -202,7 +201,7 @@ The user can specify how they want the rows to be ordered in 4.1, i.e., which co
 # 4.1 Specify which column to sortby
 sortby <- "visits_len"
 decreasing <- TRUE
-pupil_data = poster_dataset[[3]]
+pupil_data <- poster_dataset[[3]]
 # 4.2 Order rows: rearrange the datasets by a specific variable
 # 4.2.1 Order by pupil radius
 if (sortby == "pupil_data") {
@@ -225,7 +224,6 @@ if (sortby == "pupil_data") {
   poster_dataset <- poster_dataset[ordered_rows, ]
   pupil_data <- pupil_data[ordered_rows]
 }
-
 ```
 
 
@@ -281,14 +279,13 @@ if (!median_row) {
 _Details_ is a list structure that contains the variables and values for the detailed layout of the plot. `ArrangePanels()` function is able to automatically determine the start and end rows for each plot groups given the input: _row\_begin_ and _row\_end_. The data is arranged into 3 perceptual groups. 
 
 ```{r Ch10-panel-layout-and-plot-indexes}
-
 # 6.1 Determine panel layouts
 panel_width <- c(2.9, 2.9, 2.9, 2.9, 2.9)
 panels <- panelLayout(
   nrow = rows, 
   ncol = columns, 
   topMargin = details$top, 
-  bottomMargin = details$bot, 
+  bottomMargin = details$bot - 0.7,
   leftMargin = details$left, 
   rightMargin = details$right, 
   rowSep = rep(0.01, rows + 1), 
@@ -297,7 +294,7 @@ panels <- panelLayout(
   colSep = rep(0.05, (columns + 1))
 )
 # 6.2 Set panel row indices
-row_begin <- ArrangePanels(posterdat  = poster_dataset, 
+row_begin <- ArrangePanels(posterdat = poster_dataset, 
                            partitioning = partitioning, 
                            AutomaticLayout = automatic_layout, 
                            Layout = layout, 
@@ -308,7 +305,6 @@ row_end <- ArrangePanels(posterdat = poster_dataset,
                          Layout = layout, 
                          MedianRow = median_row)[[2]]
 n_groups <- length(row_end)
-
 ```
 
 
@@ -486,9 +482,8 @@ plot_microposters <- function(panel_col,
 
 Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot, i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, five colors are used from the `Accent` color palette, since we have five rows at most for each perceptual group. Multiple microposter columns could be created if needed.
 
-```{r Ch10-create-microposters, fig.cap = 'Linked microposters plot poster column.'}
+```{r Ch10-create-microposters, fig.cap = 'Linked microposters plot poster column.', fig.width = 7}
 color_scheme <- rev(RColorBrewer::brewer.pal(5, "Accent"))
-
 
 if (sum(panel_types == "poster") >= 1) {
   posters <- which(panel_types == "poster")
@@ -635,7 +630,7 @@ if (sum(panel_types == "legend") >= 1) {
 }
 ```
 
-```{r Ch10-create-microposters-and-labels, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters), now with labels added.'}
+```{r Ch10-create-microposters-and-labels, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters), now with labels added.', fig.width = 7}
 <<Ch10-create-microposters>>
 <<Ch10-plot-labels>>
 ```
@@ -651,7 +646,6 @@ For the `plot_boxplot()` function, the dataframe is specified within the data li
 
 
 ```{r Ch10-dotplot-boxplot-functions}
-
 # A Dotplot
 plot_dotplot <- function(var = var,
                       poster_dataset,
@@ -678,7 +672,7 @@ plot_dotplot <- function(var = var,
   } else {
     countGrid <- axis_ticks
   }
-  # B.9.2 Set up panels as big frame for the entire plot 
+  # A.9.2 Set up panels as big frame for the entire plot 
   panelSelect(panels, 1, panel_num)
   panelScale()
   graphics::mtext(side = 3, 
@@ -760,8 +754,7 @@ plot_dotplot <- function(var = var,
   }
 }
 
-
-# B. boxplot
+# B. Boxplot
 plot_boxplot <- function(dat,
                       poster_dataset,
                       panel_num,
@@ -783,7 +776,6 @@ plot_boxplot <- function(dat,
     dat <- poster_dataset[[3]]
   }
   aoi_names <- poster_dataset[[1]]$section
-  
   
   # B.9.2 Set up box plot parameters
   thin_box <- .2
@@ -808,7 +800,6 @@ plot_boxplot <- function(dat,
   medy <- median_line * c(-.5, .5)
   ry <- c(0, 1) # used in y scaling for grid lines
   
-
   # B.9.3 Gather stats and put in AOI order
   boxlist <- graphics::boxplot(dat, plot = FALSE)
   # For the moment match on names
@@ -921,13 +912,15 @@ plot_boxplot <- function(dat,
           graphics::points(vals, rep(ht, length(vals)),
             pch = 1,
             col = ifelse(use_black, "black", "#FFFFFF"),
-            cex = cex_outlier, lwd = lwd_outlier
+            cex = cex_outlier, 
+            lwd = lwd_outlier
           )
         } else {
           graphics::points(vals, rep(ht, length(vals)),
             pch = 1,
             col = ifelse(use_black, "black", color_scheme[kp]),
-            cex = cex_outlier, lwd = lwd_outlier
+            cex = cex_outlier, 
+            lwd = lwd_outlier
           )
         }
       }
@@ -944,7 +937,8 @@ plot_boxplot <- function(dat,
                           col = "#FFFFFF", 
                           border = NA)
         graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
-          col = "black", lwd = lwd_median
+                           col = "black", 
+                           lwd = lwd_median
         )
       } else {
         graphics::polygon(thin[, m], 
@@ -956,8 +950,8 @@ plot_boxplot <- function(dat,
                           col = color_scheme[kp], 
                           border = NA)
         graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
-          col = "black", lwd = lwd_median
-        )
+                           col = "black", 
+                           lwd = lwd_median)
       }
     }
   }
@@ -992,7 +986,7 @@ if (sum(panel_types == "dot") >= 1) {
 }
 ```
 
-```{r Ch10-dotplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters-and-labels), now with two dotplot columns added.'}
+```{r Ch10-dotplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters-and-labels), now with two dotplot columns added.', fig.width = 7}
 <<Ch10-create-microposters-and-labels>>
 <<Ch10-add-dotplot>>
 ```
@@ -1024,7 +1018,7 @@ if (sum(panel_types == "boxplot") >= 1) {
 }
 ```
 
-```{r Ch10-dotplot-boxplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-cum), now with one boxplot column added.'}
+```{r Ch10-dotplot-boxplot-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-cum), now with one boxplot column added.', fig.width = 7}
 <<Ch10-dotplot-cum>>
 <<Ch10-add-boxplot>>
 ```
