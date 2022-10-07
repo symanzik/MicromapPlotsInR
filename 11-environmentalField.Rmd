@@ -102,14 +102,20 @@ FL_pesticide <- readRDS("data/FL_pesticide.RDS")
 FL_basins <- readRDS("data/Florida_Basins.rds")
 
 # code to handle NA values in rankings
-FL_pesticide$Ranked_Imida <- rank(FL_pesticide$Imidacloprid, na.last = FALSE, ties.method = "first")
+FL_pesticide$Ranked_Imida <- rank(
+  FL_pesticide$Imidacloprid,
+  na.last = FALSE,
+  ties.method = "first"
+)
 
 mmplot(
   stat.data = FL_pesticide,
   map.data = FL_basins,
   map.link = c("GROUP_NAME", "ID"),
-  panel.types = c("dot_legend", "labels", "labels", "dot", 
-                  "dot", "box_summary", "map"),
+  panel.types = c(
+    "dot_legend", "labels", "labels", "dot",
+    "dot", "box_summary", "map"
+  ),
   panel.data = list(
     NA, "GROUP_NAME", "Sum_PNT_COUNT", "Imidacloprid", "Percent_Ag_Ur_Tr",
     list("Imida_Min", "Imida_25", "Imida_Med", "Imida_75", "Imida_Max"),
@@ -120,8 +126,7 @@ mmplot(
   grouping = c(6, 6, 5, 6, 6),
   vertical.align = "center",
   plot.panel.spacing = 2,
-    colors = c("red", "orange", "yellow", "green", "blue", "purple"),
-  
+  colors = c("red", "orange", "yellow", "green", "blue", "purple"),
   panel.att = list(
     list(
       1,
