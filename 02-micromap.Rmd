@@ -767,9 +767,20 @@ that are created with the **micromap**\index{R Packages!micromap} R package,
 these external shapefiles\index{Shapefiles} have to be read in as a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 that has to be split into the geographic information and the statistical data components.
-Numerous R packages, such as **rgdal**\index{R Packages!rgdal} [@BKR2022] and
-**shapefiles**\index{R Packages!shapefiles} [@Stabler2022], support the use of shapefiles\index{Shapefiles} in R.
-It is worthwhile to mention here that geography and attributes that are
+Numerous R packages, such as 
+**raster**\index{R Packages!raster} [@Hijmans2022raster],
+**rgdal**\index{R Packages!rgdal} [@BKR2022],
+**sf**\index{R Packages!sf} [@Pebesma2022],
+**shapefiles**\index{R Packages!shapefiles} [@Stabler2022], 
+and **terra**\index{R Packages!terra} [@Hijmans2022terra],
+support the use of shapefiles\index{Shapefiles} in R.
+Only the **raster**\index{R Packages!raster} and **rgdal**\index{R Packages!rgdal}
+R packages directly create a SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
+For functions from the other packages, an additional transformation step would be needed.
+The **rgdal**\index{R Packages!rgdal} R package will be retired by the end of 2023.
+Therefore, we use the `raster::shapefile()` function here.
+
+It is worthwhile to mention that geography and attributes that are
 stored in a simple features\index{Simple features} (sf) format [@OGC2022] instead of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 no longer have to be split. Rather, the **micromap**\index{R Packages!micromap} R package
@@ -790,8 +801,9 @@ The _WV\_Watershed_\index{Datasets!WV\_Watershed} dataset
 from the **micromapExtra**\index{R Packages!micromapExtra} R package
 is stored in external shapefiles\index{Shapefiles} that can be
 read in as a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
-via the `rgdal::readOGR()` function from the
-**rgdal**\index{R Packages!rgdal} R package [@BKR2022] as discussed in the previous section. It contains
+via the `raster::shapefile()` function from the
+**raster**\index{R Packages!raster} R package [@Hijmans2022raster] 
+as discussed in the previous section. It contains
 25 aggregated watersheds and subbasins in West Virginia in the United States. 
 These watersheds were introduced and discussed in more detail in @MPRG2016.
 In addition to the geographic information, this dataset also contains
@@ -829,9 +841,10 @@ These will be used for the construction of boxplots\index{Boxplot}.
 
 
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
-wv_watershed <- rgdal::readOGR(
-  dsn = "data/WV_Watershed", 
-  layer = "RandomWatershed2_stats_smooth", 
+library(raster)
+
+wv_watershed <- raster::shapefile(
+  x = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp", 
   verbose = FALSE
 )
 
@@ -865,9 +878,8 @@ wv_polys_table <- create_map_table(
   tmp.map = wv_watershed,
   IDcolumn = "Random_Wat"
 )
-# ID variable is Random_Wat
-head(wv_polys_table)
 
+head(wv_polys_table)
 class(wv_polys_table)
 dim(wv_polys_table)
 names(wv_polys_table)
@@ -882,7 +894,7 @@ on `r dim(wv_polys_table)[1]` line segments.
 We have already extracted the statistical data into the `wv_data` data frame.
 Same as for the spatial component, 
 the `Random_Wat` variable serves as the linking variable between the two data frames.
-As before, we want to verify that there is indeed at least one matching ID 
+As in Section \@ref(#Ch2-Linking), we want to verify that there is indeed at least one matching ID 
 in the `wv_polys_table` data frame for each ID in the `wv_data` data frame.
 In fact, everything is matching here.
 
@@ -916,8 +928,8 @@ Changing the order of these two variable names typically results in an error.
 
 As discussed in Section \@ref(Ch2-Creating),
 the `panel.types` and `panel.data` are closely related. 
-Even though we want to ultimately display boxplots and dot plots in the
-statistical graphics columns of the linked micromap plot\index{Linked micromap plot},
+Even though we want to ultimately display boxplots and dot plots with confidence bounds in the
+statistical graphics columns of the linked micromap plot,\index{Linked micromap plot}
 it often is prudent to start with simple dot plots\index{Dot plot}.
 Therefore, we start with these initial settings for the 
 `panel.types` vector: We have the `dot_legend` in the first column, `labels` in the second column,
@@ -925,7 +937,7 @@ two columns with statistical data represented as dot plots\index{Dot plot} (`dot
 and the micromaps in the fifth and final (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 Here, we use `Random_Wat` for the second column and `cond_med1` and `Cond_med`
-for the third and fourth column. No further data has to be used to the
+for the third and fourth column. No further data has to be used for the
 first and fifth columns, so `NA` is assigned here.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
