@@ -65,17 +65,19 @@ Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create 
 linked micromap plot\index{Linked micromap plot} 
 with the **micromap**\index{R Packages!micromap} R package:
 
-1. **Identifying and Geoprocessing of Spatial Boundary Data** (see Section \@ref(Ch2-Identifying) for details): 
+1. **Identifying and Geoprocessing of Spatial Boundary Data** 
+(see Sections \@ref(Ch2-Identifying) and \@ref(Ch2-IdentifyingWV) for details): 
 In addition to a data frame that contains the statistical data,
 the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
 to be colored in the maps. This spatial boundary data typically comes in the form of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
 boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
-provided as external shapefiles\index{Shapefiles}. We will also see in Chapter \@ref(Ch4) how
+provided as external shapefiles\index{Shapefiles}. In particular, we will see in that chapter how
 to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
 to the main area of the map.
 
-2. **Linking Spatial Boundary Data and Statistical Data** (see Section \@ref(Ch2-Linking) for details): 
+2. **Linking Spatial Boundary Data and Statistical Data** 
+(see Sections \@ref(Ch2-Linking) and \@ref(Ch2-LinkingWV) for details): 
 To link spatial boundary data and statistical data, 
 the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first has to be transformed into a regular data frame
 via the `micromap::create_map_table()` function.
@@ -83,14 +85,16 @@ Next, we have to identify one variable from the statistical data frame
 and one variable from the newly created data frame with the boundary information that 
 allow us to link statistical data and boundary data for each subregion.
 
-3. **Creating a Draft Linked Micromap Plot** (see Section \@ref(Ch2-Creating) for details): 
+3. **Creating a Draft Linked Micromap Plot** 
+(see Sections \@ref(Ch2-Creating) and \@ref(Ch2-CreatingWV) for details): 
 While not necessary, it is always a good idea to first create a minimal
 linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
 are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
 step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
 to find possible errors in the R code.
 
-4. **Refining the Linked Micromap Plot** (see Section \@ref(Ch2-Refining) for details): 
+4. **Refining the Linked Micromap Plot** 
+(see Sections \@ref(Ch2-Refining) and \@ref(Ch2-RefiningWV) for details): 
 Once a draft linked micromap plot\index{Linked micromap plot} has been
 created, this plot usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
 change of the layout and of perceptual groups, addition of labels and legends, and possibly the addition of additional
@@ -260,8 +264,8 @@ the statistical data represented as dot plots\index{Dot plot} (`dot`) in the thi
 and the micromaps in the fifth, i.e., final, (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 A list is necessary for this argument as some of the data itself can be lists as we will
-see in the R code for Figures \@ref(fig:Ch2-creatingdraftWV) 
-and \@ref(fig:Ch2-refining1WV) later on.
+see in the R code for Figures \@ref(fig:Ch2-refining1WV) 
+and \@ref(fig:Ch2-refining2WV) later on.
 
 The `dot_legend` simply shows a plotting symbol in a certain color that represents that row in
 the linked micromap plot\index{Linked micromap plot}. Thus, no further data is needed and `NA`
@@ -577,7 +581,7 @@ mmplot(
 ```
 
 
-In the final revised linked micromap plot\index{Linked micromap plot} shown in
+In the final refined linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
 First, we make use of the `labeling::extended()` function of 
 the **labeling**\index{R Packages!labeling} R package [@Talbot2020].
@@ -694,7 +698,7 @@ mmplot(
 
 
 What remains to be done is a summary and interpretation of the 
-final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
+final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
 This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
 (in the first statistical graphics column which is the fourth column overall) 
 and the percentage living below poverty level (in the second statistical graphics column 
@@ -762,11 +766,11 @@ two files with suffix `.sbn` and `.sbx` that store the spatial index of the feat
 and a file with suffix `.xml` that contains metadata for the shapefile.
 Additional suffixes may be used for a certain shapefile\index{Shapefiles} as outlined in @ESRI2016.
 
-For use in linked micromap plot\index{Linked micromap plot}
+For use in linked micromap plots\index{Linked micromap plot}
 that are created with the **micromap**\index{R Packages!micromap} R package,
-these external shapefiles\index{Shapefiles} have to be read in as a
+these external shapefiles\index{Shapefiles} typically are read in as a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
-that has to be split into the geographic information and the statistical data components.
+and are then split into the geographic information and the statistical data components.
 Numerous R packages, such as 
 **raster**\index{R Packages!raster} [@Hijmans2022raster],
 **rgdal**\index{R Packages!rgdal} [@BKR2022],
@@ -776,7 +780,7 @@ and **terra**\index{R Packages!terra} [@Hijmans2022terra],
 support the use of shapefiles\index{Shapefiles} in R.
 Only the **raster**\index{R Packages!raster} and **rgdal**\index{R Packages!rgdal}
 R packages directly create a SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
-For functions from the other packages, an additional transformation step would be needed.
+For functions from the other R packages, an additional transformation step would be needed.
 The **rgdal**\index{R Packages!rgdal} R package will be retired by the end of 2023.
 Therefore, we use the `raster::shapefile()` function here.
 
@@ -865,7 +869,7 @@ dim(wv_data)
 ### Linking Spatial Boundary Data and Statistical Data {#Ch2-LinkingWV}
 
 
-Similar to Section \@ref(#Ch2-Linking),
+Similar to Section \@ref(Ch2-Linking),
 the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
 into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
 via the `micromap::create_map_table()` function. The `Random_Wat` variable from the `data`
@@ -894,7 +898,7 @@ on `r dim(wv_polys_table)[1]` line segments.
 We have already extracted the statistical data into the `wv_data` data frame.
 Same as for the spatial component, 
 the `Random_Wat` variable serves as the linking variable between the two data frames.
-As in Section \@ref(#Ch2-Linking), we want to verify that there is indeed at least one matching ID 
+As in Section \@ref(Ch2-Linking), we want to verify that there is indeed at least one matching ID 
 in the `wv_polys_table` data frame for each ID in the `wv_data` data frame.
 In fact, everything is matching here.
 
@@ -907,7 +911,7 @@ all(sort(wv_data$Random_Wat) == sort(unique(wv_polys_table$ID)))
 ### Creating a Draft Linked Micromap Plot {#Ch2-CreatingWV}
 
 
-Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
+We can now create a minimal draft linked micromap plot\index{Linked micromap plot} using the
 `micromap::mmplot()` function, based on the previously created 
 `wv_polys_table` and `wv_data` data frames.
 Similar to our first example in Section \@ref(Ch2-Creating),
@@ -921,23 +925,25 @@ The `map.link` argument is needed to tell the function how to link the statistic
 and the spatial boundary data. A vector with the names of the two linking variables 
 identified in the previous step is needed for this argument.
 As explained in Section \@ref(Ch2-Creating),
-the first variable name (`Random_Wat`) must come from the statistical data (`wv_data`)
-and the second variable name (`ID`) must come from the `wv_polys_table` data frame that
-contains the spatial boundary information.
+the first variable name (`Random_Wat`) must come from the statistical data data frame (`wv_data`)
+and the second variable name (`ID`) must come from the data frame that
+contains the spatial boundary information (`wv_polys_table`).
 Changing the order of these two variable names typically results in an error.
 
 As discussed in Section \@ref(Ch2-Creating),
 the `panel.types` and `panel.data` are closely related. 
-Even though we want to ultimately display boxplots and dot plots with confidence bounds in the
+Even though we want to ultimately display boxplots\index{Boxplot} 
+and dot plots with confidence bounds\index{Dot plot with confidence bounds} in the
 statistical graphics columns of the linked micromap plot,\index{Linked micromap plot}
 it often is prudent to start with simple dot plots\index{Dot plot}.
 Therefore, we start with these initial settings for the 
 `panel.types` vector: We have the `dot_legend` in the first column, `labels` in the second column,
-two columns with statistical data represented as dot plots\index{Dot plot} (`dot`),
-and the micromaps in the fifth and final (`map`) column.
+two columns with statistical data represented as dot plots\index{Dot plot} (`dot`)
+in the third and fourth columns,
+and the micromaps (`map`) in the final fifth column.
 This is matched with a list of data that is used for each of the five columns.
 Here, we use `Random_Wat` for the second column and `cond_med1` and `Cond_med`
-for the third and fourth column. No further data has to be used for the
+for the third and fourth columns. No further data has to be used for the
 first and fifth columns, so `NA` is assigned here.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
@@ -955,10 +961,6 @@ in the next step.
 
 
 ```{r Ch2-creatingdraftWVdot, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame.', fig.width = 7, fig.height = 7}
-# Chunk 2. code below for publication plot of conductivity descriptive statistics
-# and estimates together
-### add.line=129 for estimated median conductvity
-# Draft plot
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -971,9 +973,29 @@ mmplot(
 ```
 
 
+### Refining the Linked Micromap Plot {#Ch2-RefiningWV}
+
+
+We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
+step and refine it in two main steps. As mentioned in Section \@ref(Ch2-Refining),
+this refinement should only be started once
+functional R code has been obtained in the previous step.
+
+A problem that did not exist in the first example in Section \@ref(Ch2-Refining) is the
+length of many subregion names that considerably exceed the allocated space for this column
+as can be seen in Figure \@ref(fig:Ch2-creatingdraftWVdot). Instead of using full terms,
+we shorten the names of the subbasins, in particular those seven names that combine smaller
+hydrologic unit codes\index{Hydrologic unit code}
+(HUC) with larger neighboring HUCs (here HUC 8 at the subbasin level) in the West Virginia sampling frame.
+Overall, the following abbreviations are introduced and added as part of the new `short_name` variable
+to the `wv_data` data frame: 
+L. (Lower), M. (Middle), U. (Upper), N. (North), S. (South),
+Br. (Branch), Dunk. (Dunkard), Mononga. (Monongahela), Shen. (Shenandoah), and Youg. (Youghiogheny).
+Shortening the subregion names often is recommended to avoid that the names column 
+occupies too much space in the final linked micromap plot\index{Linked micromap plot}.
+
+
 ```{r Ch2-shortennamesWV}
-# shorten names of Random_Watersheds that combine 7 smaller HUC08s with larger
-# neighboring HUC08s in WV Sampling Frame
 wv_data$short_name <- as.factor(wv_data$Random_Wat)
 
 levels(wv_data$short_name) <- list(
@@ -1006,11 +1028,32 @@ levels(wv_data$short_name) <- list(
 ```
 
 
-```{r Ch2-creatingdraftWV, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 7}
-# Chunk 2. code below for publication plot of conductivity descriptive statistics
-# and estimates together
-### add.line=129 for estimated median conductvity
-# Draft plot
+In the first refined linked micromap plot\index{Linked micromap plot}, shown in 
+Figure \@ref(fig:Ch2-refining1WV), we make use of these abbreviations 
+via the newly added `short_name` variable of the `wv_data` data frame.
+Moreover, we introduce initial boxplots\index{Boxplot} and 
+dot plots with confidence bounds\index{Dot plot with confidence bounds} 
+in the two statistical graphics columns.
+This is done via `box_summary` and `dot_cl` for the `panel.types`.
+A boxplot\index{Boxplot} requires five components 
+(minimum, first quartile, median, third quartile, and maximum)
+and a dot plots with confidence bounds\index{Dot plot with confidence bounds}
+requires three components
+(median, lower 95% confidence bound, and upper 95% confidence bound)
+for each subregion. These have to be passed on as lists to
+the `panel.data` argument list. Here, we make use of these
+components from the conductivity variable, specifically using
+`list("cond_min", "condq1", "cond_med1", "condq3", "cond_max")`
+for the boxplot\index{Boxplot} and
+`list("Cond_med", "Cond_LCB95", "Cond_UCB95")`
+for the dot plots with confidence bounds.\index{Dot plot with confidence bounds}
+It should be noted that these eight components have been precalculated
+for each subregion and are variables of the `wv_data` data frame. 
+The `micromap::mmplot()` function does not calculate these summary
+statistics by itself from a provided data frame.
+
+
+```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are the introduction of abbreviated subregion names and initial boxplots\\index{Boxplot} and dot plots with confidence bounds\\index{Dot plot with confidence bounds} in the two statistical graphics columns.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1023,45 +1066,32 @@ mmplot(
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
-  ord.by = "Cond_med", 
-  rev.ord = TRUE,
-  grouping = 5,
-  median.row = FALSE
+  ord.by = "Cond_med",
+  grouping = 5
 )
 ```
 
 
-### Refining the Linked Micromap Plot {#Ch2-RefiningWV}
+In the second (and final) refined linked micromap plot\index{Linked micromap plot}, shown in 
+Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
+refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
+This includes a reverse sorting (`rev.ord = TRUE`) that places the largest median conductivity on top, 
+a specific color scheme (`colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1]`),
+numerous changes to the sizes and spacing of the perceptual groups and columns,
+and the addition of titles, scales, and axis labels.
+We keep the maps on the right side in the fifth column. 
+A square plot symbol (instead of a circular one) is used in the first column 
+via `point.type = 15` in the first list of the `panel.att` list.
+The thickness of the boxes in the third column (i.e., the first statistical graphics column)
+is reduced via `graph.bar.size = 0.7` in the third list of the `panel.att` list.
+The dashed black line in the fourth column (i.e., the second statistical graphics column)
+is created via the settings `add.line = 129, add.line.col = "black", add.line.typ = "dashed"`
+in the fourth list of the `panel.att` list.
+The value `129` represents the estimated median conductivity 
+across all 4th order streams (or less).
 
 
-We continue with the draft linked micromap plot\index{Linked micromap plot} from the previous
-step and refine it in multiple small steps. This refinement should only be started once
-functional R code has been obtained in the previous step.
-
-First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
-a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subregions is odd such as for the 50 states (and Washington, D.C.) here.
-Here, Wyoming is the state shown in the median row. It has the 
-26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
-It does not appear in a map by itself, but rather is added to the perceptual
-groups above and below the median row in a neutral color, 
-thus increasing the number of subregions shown in each of these two maps by one (i.e., six here)
-Also, we reverse the sorting order via `rev.ord = TRUE`. 
-Now the sorting of the rows goes from largest (on top) to
-smallest (at the bottom).
-The resulting linked micromap plot\index{Linked micromap plot} is shown in
-Figure \@ref(fig:Ch2-refining1).
-While we keep `pov` as the sorting variable in this first refined version,
-the reader is encouraged to use `ed` as sorting variables and see how
-the spatial patterns highlighted in the maps change. This can be done
-for the original sorting order or for the reversed sorting order.
-The rows can even be sorted by `region` or alphabetically 
-by `state` or `StateAb` even though such an alphabetical sorting
-in most cases is not very meaningful, at least not for this specific example.
-
-
-```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh preceptual group and the reverse ordering of the `pov` data in the first statistical graphics column.', fig.width = 7, fig.height = 7}
-# Refined Plot
+```{r Ch2-refining2WV, fig.cap = 'Second (and final) refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are related to sorting, coloring, spacing, and labeling. An overall statistics (or criteria) line has been added to the second statistical graphics column.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1078,7 +1108,6 @@ mmplot(
   rev.ord = TRUE,
   grouping = 5, 
   plot.pGrp.spacing = 1.2,
-  median.row = FALSE,
   colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1],
   panel.att = list(
     list(
@@ -1091,7 +1120,7 @@ mmplot(
     list(
       2,
       header = "WVDEP\nSubbasins", 
-      panel.width = 1.25, # increased panel.width to 1.1 from .8
+      panel.width = 1.25,
       align = "left", 
       text.size = 0.8
     ),
@@ -1136,8 +1165,10 @@ mmplot(
 )
 ```
 
+XXXX 
+
 What remains to be done is a summary and interpretation of the 
-final revised linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
+final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining2WV).
 This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
 (in the fourth column) and the percentage living below poverty level (in the fifth column) 
 in the 50 US states and Washington, D.C.
