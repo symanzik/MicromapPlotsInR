@@ -25,6 +25,7 @@ site: bookdown::bookdown_site
 description: A book example for a Chapman & Hall book.
 graphics: yes
 documentclass: krantz
+classoption: krantz2
 header-includes:
   - \usepackage{lipsum}
   - \usepackage{suffix}
