@@ -30,7 +30,6 @@ mmplot(
   ord.by = "x50",
   grouping = c(4, 3, 4),
   vertical.align = "center",
-  median.row = FALSE,
   colors = brewer.pal(3, "Spectral"),
   rev.ord = TRUE,
   panel.att = list(
@@ -277,14 +276,11 @@ mmplot(
   ord.by = "Cond_med",
   rev.ord = TRUE,
   grouping = 5,
-  median.row = FALSE,
-  plot.height = 9,
-  plot.width = 6.8,
   colors = brewer.pal(6, "Blues")[-1],
   panel.att = list(
     list(
       1,
-      panel.width = 1,
+      panel.width = 1.3,
       point.type = 20,
       point.size = 2,
       point.border = FALSE,
