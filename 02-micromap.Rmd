@@ -23,7 +23,7 @@ Write chapter introduction here.
 
 Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
 and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
-(or no) association in statistical panels of dot plots.\index{Dot plot}
+(or no) association in statistical panels of dotplots.\index{Dotplot}
 
 
 -	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
@@ -260,7 +260,7 @@ The `panel.types` and `panel.data` arguments are closely related.
 As the name suggests, `panel.types` is a vector
 that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
 Here, we have a `dot_legend` in the first column, `labels` in the second column,
-the statistical data represented as dot plots\index{Dot plot} (`dot`) in the third and fourth columns,
+the statistical data represented as dotplots\index{Dotplot} (`dot`) in the third and fourth columns,
 and the micromaps in the fifth, i.e., final, (`map`) column.
 This is matched with a list of data that is used for each of the five columns.
 A list is necessary for this argument as some of the data itself can be lists as we will
@@ -496,7 +496,7 @@ The content of this argument typically is a list of lists where the attributes
 for each column of the linked micromap plot\index{Linked micromap plot} are modified via a separate list.
 These inner lists are numbered from 1 to the number of elements in the `panel.types` vector
 where `1` is related to `map`, `2` to `dot_legend`, `3` to `labels`, and `4` and `5` to `dot`, i.e.,
-the dot plots\index{Dot plot} in the two statistical graphics columns,
+the dotplots\index{Dotplot} in the two statistical graphics columns,
 in the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining5).
 
@@ -699,7 +699,7 @@ mmplot(
 
 What remains to be done is a summary and interpretation of the 
 final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining6).
-This plot shows dot plots of two statistical variables, the percentage of adults with four or more years of college
+This plot shows dotplots of two statistical variables, the percentage of adults with four or more years of college
 (in the first statistical graphics column which is the fourth column overall) 
 and the percentage living below poverty level (in the second statistical graphics column 
 which is the fifth column overall) in the 50 US states and Washington, D.C.
@@ -792,7 +792,7 @@ can handle these directly as can be seen in the R code for Figure \@ref(fig:Ch11
 
 Moreover, in this example we introduce two new statistical displays
 for the statistical graphics columns of the linked micromap plot\index{Linked micromap plot}:
-a boxplot\index{Boxplot} and a dot plot with confidence bounds\index{Dot plot with confidence bounds}. 
+a boxplot\index{Boxplot} and a dotplot with confidence bounds\index{Dotplot with confidence bounds}. 
 Different arguments are used to fine-tune this linked micromap plot\index{Linked micromap plot}.
 Finally, we will demonstrate how to add an overall statistics (or criteria) line to the 
 statistical graphics columns of the linked micromap plot\index{Linked micromap plot}.
@@ -833,7 +833,7 @@ Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95
 the lower 95% confidence bound, and the upper 95% confidence bound of a variable
 (here, conductivity) in each of the 25 watersheds, respectively.
 These will be used for the construction of 
-dot plots with confidence bounds\index{Dot plot with confidence bounds}.
+dotplots with confidence bounds\index{Dotplot with confidence bounds}.
 
 Variable names starting with a lowercase letter, e.g., 
 `cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
@@ -933,12 +933,12 @@ Changing the order of these two variable names typically results in an error.
 As discussed in Section \@ref(Ch2-Creating),
 the `panel.types` and `panel.data` arguments are closely related. 
 Even though we want to ultimately display boxplots\index{Boxplot} 
-and dot plots with confidence bounds\index{Dot plot with confidence bounds} in the
+and dotplots with confidence bounds\index{Dotplot with confidence bounds} in the
 statistical graphics columns of the linked micromap plot,\index{Linked micromap plot}
-it often is prudent to start with simple dot plots\index{Dot plot}.
+it often is prudent to start with simple dotplots\index{Dotplot}.
 Therefore, we start with these initial settings for the 
 `panel.types` vector: We have the `dot_legend` in the first column, `labels` in the second column,
-two columns with statistical data represented as dot plots\index{Dot plot} (`dot`)
+two columns with statistical data represented as dotplots\index{Dotplot} (`dot`)
 in the third and fourth columns,
 and the micromaps (`map`) in the final fifth column.
 This is matched with a list of data that is used for each of the five columns.
@@ -1032,12 +1032,12 @@ In the first refined linked micromap plot\index{Linked micromap plot}, shown in
 Figure \@ref(fig:Ch2-refining1WV), we make use of these abbreviations 
 via the newly added `short_name` variable of the `wv_data` data frame.
 Moreover, we introduce initial boxplots\index{Boxplot} and 
-dot plots with confidence bounds\index{Dot plot with confidence bounds} 
+dotplots with confidence bounds\index{Dotplot with confidence bounds} 
 in the two statistical graphics columns.
 This is done via `box_summary` and `dot_cl` for the `panel.types` argument.
 A boxplot\index{Boxplot} requires five components 
 (minimum, first quartile, median, third quartile, and maximum)
-and a dot plot with confidence bounds\index{Dot plot with confidence bounds}
+and a dotplot with confidence bounds\index{Dotplot with confidence bounds}
 requires three components
 (median, lower 95% confidence bound, and upper 95% confidence bound)
 for each subregion. These have to be passed on as lists to
@@ -1046,14 +1046,14 @@ components from the conductivity variable, specifically using
 `list("cond_min", "condq1", "cond_med1", "condq3", "cond_max")`
 for the boxplots\index{Boxplot} and
 `list("Cond_med", "Cond_LCB95", "Cond_UCB95")`
-for the dot plots with confidence bounds.\index{Dot plot with confidence bounds}
+for the dotplots with confidence bounds.\index{Dotplot with confidence bounds}
 It should be noted that these eight components have been precalculated
 for each subregion and are variables of the `wv_data` data frame. 
 The `micromap::mmplot()` function does not calculate these summary
 statistics by itself from a provided data frame.
 
 
-```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are the introduction of abbreviated subregion names and initial boxplots\\index{Boxplot} and dot plots with confidence bounds\\index{Dot plot with confidence bounds} in the two statistical graphics columns.', fig.width = 7, fig.height = 7}
+```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are the introduction of abbreviated subregion names and initial boxplots\\index{Boxplot} and dotplots with confidence bounds\\index{Dotplot with confidence bounds} in the two statistical graphics columns.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1172,7 +1172,7 @@ This plot is related to conductivity in 25 aggregated watersheds and
 subbasins of 4th order streams (or less) in West Virginia in the United States. 
 The first stastical graphics column shows boxplots\index{Boxplot} for the 
 observed conductivities for each of these watersheds. The second statistical graphics column 
-shows dot plots with confidence bounds\index{Dot plot with confidence bounds} 
+shows dotplots with confidence bounds\index{Dotplot with confidence bounds} 
 that are the population estimates representing the median, the lower 95% confidence bound, 
 and the upper 95% confidence bound for each of these watersheds.
 
@@ -1200,7 +1200,7 @@ the estimated median conductivity. Not surprisingly, the correlation coefficient
 about `r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
 
 
-## Discussion and Further Reading {#Ch2-FurtherReading}
+## Summary and Further Reading {#Ch2-SummaryFurtherReading}
 
 
 In this chapter, we have discussed the four main steps that are required 
@@ -1221,9 +1221,9 @@ linked micromap plots\index{Linked micromap plot} that are based on the modified
 shapefiles.\index{Shapefiles}
 In Chapter \@ref(Ch5), we will discuss how to display different types
 of statistical graphics in the statistical graphics columns
-in addition to dot plots\index{Dot plot},
+in addition to dotplots,\index{Dotplot}
 boxplots\index{Boxplot}, and
-dot plots with confidence bounds\index{Dot plot with confidence bounds}
+dotplots with confidence bounds\index{Dotplot with confidence bounds}
 that were introduced in this chapter.
 
 Chapter \@ref(Ch6) discusses linked micromap plots\index{Linked micromap plot}
@@ -1253,13 +1253,21 @@ Similarly, the height is somewhat determined by the number of perceptual groups.
 A linked micromap plot\index{Linked micromap plot} with only two or three perceptual groups
 has to be less tall than one with nine or ten perceptual groups.
 
-
-XXX
-
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
+Some additional examples of linked micromap plots\index{Linked micromap plot}
+created with the **micromap**\index{R Packages!micromap} R package are related
+to pesticides in 
+Florida Department of Environmental Protection (FDEP) drainage basins [@SWSCSS2018],
+to variables from the Virginia Stream Condition Index (VSCI) and the 
+Virginia Coastal Plain Macroinvertebrate Index (VCPMI) [@VirginiaDEQ2020],
+and to housing and immigration variables from the subboroughs in New York City [@Medri2021] --- all 
+within the United States.
+International examples are related
+to population data in selected countries from South America [@SDWPM2014],
+to suicide data by prefecture in Japan [@KIT2015],
+and to the spatial distributions of religions in China [@SBDSS2016].
+Some of these required additional modifications of
+external shapefiles\index{Shapefiles}
+as discussed in Chapter \@ref(Ch4).
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
