@@ -83,7 +83,7 @@ lmplot(
 ```
 
 
-## Further Reading {#Ch5-FurtherReading}
+## Summary and Further Reading {#Ch5-SummaryFurtherReading}
 
 
 Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
