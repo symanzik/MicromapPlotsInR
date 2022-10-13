@@ -98,7 +98,7 @@ for other indexing options.
 ## Citations and References {#Ch1-CitationsReferences}
 
 
-Here are some examples for citations: @R-bookdown and @xie2015 are references from the preface.
+Here are some examples for citations: @Xie2022knitr and @Xie2022bookdown are references from the preface.
 These citations appear as nouns in the text.
 
 These are some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].

@@ -6,10 +6,14 @@
 
 The **micromap**\index{R Packages!micromap} R package [@PaOl2015],
 accessible at https://cran.r-project.org/web/packages/micromap/index.html,
-will be introduced in this chapter. The reader will learn how to create a 
+will be introduced in this chapter. The reader will be introduced to the
+four main steps that are required to create a 
 basic linked micromap plot\index{Linked micromap plot} via this R package. 
 Details will be provided how to optimize and fine-tune such a basic plot 
-into a publication-worthy final linked micromap plot.
+into a publication-worthy final linked micromap plot.\index{Linked micromap plot}
+Example linked micromap plots\index{Linked micromap plot} are created
+for education and poverty data for the 50 states (and Washington, D.C.) of the
+United States (U.S.) and for watersheds in West Virginia (one of the 50 U.S. states).
 
 
 ## Introduction {#Ch2-Introduction}
@@ -124,7 +128,7 @@ DiagrammeR::grViz(
 ```
 
 
-## Example 1: A Linked Micromap Plot for the 50 US States and Washington, D.C. {#Ch2-Example1}
+## Example 1: A Linked Micromap Plot for the 50 U.S. States and Washington, D.C. {#Ch2-Example1}
 
 
 In this first linked micromap plot\index{Linked micromap plot}
@@ -138,7 +142,7 @@ We follow the four steps outlined in Section \@ref(Ch2-Steps).
 
 
 _USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
-the 50 states (and Washington, D.C.) of the United States (U.S.) 
+the 50 U.S. states (and Washington, D.C.) 
 that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
 of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
 contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
@@ -187,7 +191,7 @@ component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object
 can be used as an ID column. 
 A matching ID column has to be identified in the statistical dataset. These two ID columns
 have to be used for linking the two data sets. For the _USstates_\index{Datasets!USstates} dataset,
-this is usually the `ST` variable that contains the 51 abbreviations for the 50 US states (and for Washington, D.C.).
+this is usually the `ST` variable that contains the 51 abbreviations for the 50 U.S. states (and for Washington, D.C.).
 
 
 ```{r Ch2-linkingdataframesUSstates}
@@ -210,8 +214,8 @@ linked micromap plot\index{Linked micromap plot} in the next step.
 on `r dim(state_polys_table)[1]` line segments.
 
 _edPov_\index{Datasets!edPov} is a data frame that contains
-education and poverty level data for the 50 states (and Washington, D.C.).
-This data frame has 51 rows, one for each of the 50 states (and one for Washington, D.C.).
+education and poverty level data for the 50 U.S. states (and Washington, D.C.).
+This data frame has 51 rows, one for each of the 50 U.S. states (and one for Washington, D.C.).
 We have to identify one variable from this data frame that can be used for linking the
 two data sets. Here, this is the `StateAb` variable.
 
@@ -221,7 +225,7 @@ Mismatching or missing IDs in the statistical data frame may cause
 that data for some subregions do not appear
 on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
 While this often can be contributed to missing data in the statistical data frame, e.g., there is
-only data for the 50 states but not for Washington, D.C., mismatching identifiers also can be
+only data for the 50 U.S. states but not for Washington, D.C., mismatching identifiers also can be
 the underlying reason (e.g., if the statistical data frame uses `D.C.` as ID while
 the spatial data frame uses `DC`). Here, everything is matching.
 
@@ -291,7 +295,7 @@ Here, `grouping` is set to `5`, meaning there are five rows of data in each perc
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
 overall --- ten with five subregions and one with just one subregion. This is due to the fact
-that there are 51 subregions overall: The 50 US states and Washington, D.C.
+that there are 51 subregions overall: The 50 U.S. states and Washington, D.C.
 This results in only one row of data and one subregion highlighted in the final (bottom) perceptual
 group. There is no automatic balancing of the number of rows in each perceptual group.
 A layout such as the default one shown in Figure \@ref(fig:Ch2-creatingdraft) 
@@ -330,7 +334,7 @@ linked micromap plot\index{Linked micromap plot} has been created.
 
 First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
-number of subregions is odd such as for the 50 states (and Washington, D.C.).
+number of subregions is odd such as for the 50 U.S. states (and Washington, D.C.).
 Here, Wyoming is the state shown in the median row. It has the 
 26$^{th}$ highest (or lowest) value for the sorting variable, i.e., `pov`.
 It does not appear in a map by itself, but rather is added to the perceptual
@@ -404,7 +408,7 @@ mmplot(
 
 We continue making changes to the second refined linked micromap plot\index{Linked micromap plot}.
 We change the grouping to nine perceptual groups overall (and no median row)
-via `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` and `median.row = FALSE`
+via `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` and `median.row = FALSE` (which is the default and could be omitted)
 and vertically align the rows in each perceptual block via `vertical.align = "center"`.
 Finally, we start making changes to individual columns of the plot via
 the `panel.att` argument. Here, the third column that shows the `labels` is aligned on the left.
@@ -431,7 +435,7 @@ mmplot(
 
 After this experiment with a different grouping, we revert back to the more traditional grouping
 of ten perceptual groups with five rows each and a median row that is frequently used
-for the 50 US states (and Washington, D.C.). What we want to discuss next is the choice of colors
+for the 50 U.S. states (and Washington, D.C.). What we want to discuss next is the choice of colors
 for the subregions in each map (and thus for the `dot_legend` appearance in the
 `panel.type` argument as well). The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
@@ -702,7 +706,7 @@ final refined linked micromap plot\index{Linked micromap plot} shown in Figure \
 This plot shows dotplots of two statistical variables, the percentage of adults with four or more years of college
 (in the first statistical graphics column which is the fourth column overall) 
 and the percentage living below poverty level (in the second statistical graphics column 
-which is the fifth column overall) in the 50 US states and Washington, D.C.
+which is the fifth column overall) in the 50 U.S. states and Washington, D.C.
 
 The percentage of adults with four or more years of college is used as the sorting variable
 for the rows in the plot -- with highest percentages shown at the top and lowest percentages
@@ -947,9 +951,10 @@ for the third and fourth columns. No further data has to be used for the
 first and fifth columns, so `NA` is assigned here.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
-rows in the linked micromap plot\index{Linked micromap plot}. Here, `Cond_med` 
+rows in the linked micromap plot\index{Linked micromap plot}. Here, `cond_med1` 
 from the `wv_data` argument is used. The sorting of the rows goes from smallest (on top) to
-largest (at the bottom). Finally, `grouping` specifies  the number of rows
+largest (at the bottom) median observed conductivity in a certain subbasin. 
+Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups (here `5` rows). This implies that the 25 subbasins
 will be split into five perceptual groups showing five subbasins each.
 
@@ -967,7 +972,7 @@ mmplot(
   map.link = c("Random_Wat", "ID"),
   panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
   panel.data = list(NA, "Random_Wat", "cond_med1", "Cond_med", NA),
-  ord.by = "Cond_med", 
+  ord.by = "cond_med1", 
   grouping = 5
 )
 ```
@@ -1066,7 +1071,7 @@ mmplot(
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
-  ord.by = "Cond_med",
+  ord.by = "cond_med1",
   grouping = 5
 )
 ```
@@ -1075,7 +1080,7 @@ mmplot(
 In the second (and final) refined linked micromap plot\index{Linked micromap plot}, shown in 
 Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
 refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
-This includes a reverse sorting (`rev.ord = TRUE`) that places the largest median conductivity on top, 
+This includes a reverse sorting (`rev.ord = TRUE`) that places the largest observed median conductivity on top, 
 a specific color scheme (`colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1]`),
 numerous changes to the sizes and spacing of the perceptual groups and columns,
 and the addition of titles, scales, and axis labels.
@@ -1087,8 +1092,9 @@ is reduced via `graph.bar.size = 0.7` in the third list of the `panel.att` list.
 The dashed black line in the fourth column (i.e., the second statistical graphics column)
 is created via the settings `add.line = 129, add.line.col = "black", add.line.typ = "dashed"`
 in the fourth list of the `panel.att` list.
-The value `129` represents the estimated median conductivity 
-across all 4th order streams (or less).
+The value `129` microSiemens per cm ($\mu$S/cm) represents the estimated median conductivity 
+across all 4th order streams (or less). The Greek letter $\mu$ in the two axis titles is 
+produced via its unicode, i.e., `\u03BC`.
 
 
 ```{r Ch2-refining2WV, fig.cap = 'Second (and final) refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are related to sorting, coloring, spacing, and labeling. An overall statistics (or criteria) line has been added to the second statistical graphics column.', fig.width = 7, fig.height = 7}
@@ -1104,7 +1110,7 @@ mmplot(
     list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
     NA
   ),
-  ord.by = "Cond_med", 
+  ord.by = "cond_med1", 
   rev.ord = TRUE,
   grouping = 5, 
   plot.pGrp.spacing = 1.2,
@@ -1132,7 +1138,7 @@ mmplot(
       xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
       xaxis.labels = c(0, 1, 2, 3, 4, 5),
       xaxis.labels.size = 1.25,
-      xaxis.title = "Conductivity [in 1,000]", 
+      xaxis.title = "Conductivity [1,000 \u03BCS/cm]", 
       xaxis.title.size = 1.25, 
       panel.width = 2,
       right.margin = 0,
@@ -1145,8 +1151,8 @@ mmplot(
       xaxis.ticks = list(0, 150, 300, 450, 600, 750),
       xaxis.labels = list(0, 150, 300, 450, 600, 750),
       xaxis.labels.size = 1.25,
-      xaxis.title = "Conductivity",
-      add.line = 129, 
+      xaxis.title = "Conductivity [\u03BCS/cm]",
+      add.line = 129,
       add.line.col = "black", 
       add.line.typ = "dashed",
       xaxis.title.size = 1.25, 
@@ -1170,29 +1176,30 @@ What remains to be done is a summary and interpretation of the
 final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining2WV).
 This plot is related to conductivity in 25 aggregated watersheds and 
 subbasins of 4th order streams (or less) in West Virginia in the United States. 
-The first stastical graphics column shows boxplots\index{Boxplot} for the 
+
+The first statistical graphics column shows boxplots\index{Boxplot} for the 
 observed conductivities for each of these watersheds. The second statistical graphics column 
 shows dotplots with confidence bounds\index{Dotplot with confidence bounds} 
 that are the population estimates representing the median, the lower 95% confidence bound, 
 and the upper 95% confidence bound for each of these watersheds.
+The rows in the plot are sorted from highest (on top) to lowest (at the bottom) 
+median observed conductivity in a certain subbasin.
 
-The rows in the plot are sorted from highest (on top) to lowest (at the bottom) estimated conductivity
-that is shown in the second statistical graphics column.
 Each consecutive map shows which subregions have been colored previously in the map(s) above. 
-There is a weak spatial pattern with the highest estimated conductivities in the northern and 
+There is a weak spatial pattern with the highest median observed conductivities in the northern and 
 western subbasins of West Virginia. There is a notable spatial cluster in the 
-central-eastern subbasins of West Virginia with the five lowest estimated conductivities
+central-eastern subbasins of West Virginia with the five lowest median observed conductivities
 shown in the perceptual group at the bottom of the plot.
 
 The second statistical graphics column reveals that there is a remarkable relationship between 
 the widths of the confidence bounds and the estimated conductivities. The higher the 
-estimated conductivity, the wider the confidence bound in general.  The value 129, 
+estimated conductivity, the wider the confidence bound in general.  The value 129 $\mu$S/cm, 
 representing the estimated median conductivity across all 4th order streams (or less), 
 has been overlaid on this column.
 
 Such a pattern cannot be noticed in the boxplots in the first statistical graphics column. 
-Here, some extreme outliers dominate, e.g., observed conductivities of about 5,000 
-in the Little Kanawha subbasin and of about 4,000 in the Lower (L.) Kanawha subbasin.
+Here, some extreme outliers dominate, e.g., observed conductivities of about 5,000 $\mu$S/cm
+in the Little Kanawha subbasin and of about 4,000 $\mu$S/cm in the Lower (L.) Kanawha subbasin.
 
 While this is hard to visually detect due to these extreme outliers, there is a 
 considerable positive correlation between the observed median conductivity and 
@@ -1235,11 +1242,12 @@ in the environmental field. We will see the example with the
 watersheds in West Virginia, first introduced in Section \@ref(Ch2-Example2),
 again in that chapter. These three chapters primarily make 
 use of the **micromap**\index{R Packages!micromap} R package
-although the **micromapST**\index{R Packages!micromapST} R package
+although the **micromapST**\index{R Packages!micromapST} R package [@PeCa2022CRAN201]
 could be used in a similar way.
 
 We want to finish this chapter with some practical recommendations.
-When working with Rmarkdown or bookdown, REFERENCES
+When working with **R Markdown**\index{R Markdown} [@XAG2018;@XDR2021] and/or 
+the **bookdown**\index{R Packages!bookdown} R package [@Xie2022bookdown],
 sizing the figures with the linked micromap plots\index{Linked micromap plot} for the United States
 as `fig.width = 7, fig.height = 9` works well.
 For linked micromap plots\index{Linked micromap plot} used in journal publications,

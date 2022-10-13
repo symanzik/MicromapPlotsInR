@@ -12,7 +12,6 @@ output:
     df_print: paged
 knit: "bookdown::render_book"
 bibliography:
-- book.bib
 - packages.bib
 - referencesMicromaps.bib
 biblio-style: apa
@@ -88,9 +87,9 @@ Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R 
 ## Software Information and Conventions {-}
 
 
-I used the **knitr**\index{R Packages!knitr} R package [@R-knitr] and 
-the **bookdown**\index{R Packages!bookdown} R package [@R-bookdown] to compile the book. 
-Also see the [@xie2015] book.
+I used the **knitr**\index{R Packages!knitr} R package [@Xie2022knitr] and 
+the **bookdown**\index{R Packages!bookdown} R package [@Xie2022bookdown] to compile the book. 
+Also see the [@Xie2015] book.
 
 My R session information is shown below:
 
