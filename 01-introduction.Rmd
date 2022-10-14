@@ -1,10 +1,72 @@
 \mainmatter
 
 
-# Introduction {#Ch1}
+# An Introduction to Micromaps {#Ch1}
 
 
 \chapterauthor{J{\"u}rgen Symanzik}
+
+
+Welcome to the _Micromap Plots in R Book_. In this chapter, we provide a basic
+overview of micromap visualizations, introduce the nomenclature used
+throughout the book, and introduce the primary software used
+for micromap visualizations. Also provided are an outlook on the
+chapters of this book and how to best use the accompanying R code,
+webpage, and newly developed R package.
+
+
+## Introduction {#Ch1-Introduction}
+
+
+Micromap visualizations\index{Micromap visualizations} are an important tool
+for the visualization of statistical data in a geographic context,
+providing a rich context for interpretation.
+Micromap visualizations\index{Micromap visualizations} consist of a series of small maps, the _micromaps_,
+that are used to show spatial patterns and that are also used to highlight 
+or link to underlying statistical data. 
+There exist three main types of micromaps, i.e.,
+linked micromap plots\index{Linked micromap plot},
+introduced in Section \@ref(Ch1-LinkedMicromapPlots),
+conditioned micromaps\index{Conditioned micromaps},
+introduced in Section \@ref(Ch1-ConditionedMicromaps), and
+comparative micromaps\index{Comparative micromaps}
+introduced in Section \@ref(Ch1-ComparativeMicromaps).
+Our nomenclature will closely follow the one from @SCMW2017.
+Alternatives can sometimes be found in the literature,
+but should be easy to match with the terminology used in this book.
+
+After introducing these three main types of micromaps,
+we take a closer look at software and online developments
+for micromaps in Section \@ref(Ch1-SoftwareOnlineDevelopments)
+that cover almost 40 years of micromap developments.
+What follows in Section \@ref(Ch1-Outlook)
+is an outlook on the 14 chapters in this book.
+Finally, Section \@ref(Ch1-HowToUse) will provide
+some recommendations how to best use this book and
+the accompanying R code, webpage, and the newly developed
+**micromapExtra**\index{R Packages!micromapExtra} R package.
+
+
+## Linked Micromap Plots {#Ch1-LinkedMicromapPlots}
+
+
+## Conditioned Micromaps {#Ch1-ConditionedMicromaps}
+
+
+## Comparative Micromaps {#Ch1-ComparativeMicromaps}
+
+
+## Software and Online Developments {#Ch1-SoftwareOnlineDevelopments}
+
+
+## Outlook on the Book Chapters {#Ch1-Outlook}
+
+
+## How to Use this Book and the Accompanying R Code, Webpage, and R Package {#Ch1-HowToUse}
+
+
+
+## INSTRUCTIONS FOR CHAPTER AUTHORS: Use of Bookdown {#Ch1-InstructionsChapterAuthors}
 
 
 Please look at the source code for this chapter (i.e., the file `01-introduction.Rmd`) carefully. 
