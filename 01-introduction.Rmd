@@ -22,20 +22,20 @@ Micromap visualizations\index{Micromap visualizations} are an important tool
 for the visualization of statistical data in a geographic context,
 providing a rich context for interpretation.
 Micromap visualizations\index{Micromap visualizations} consist of a series of small maps, the _micromaps_,
-that are used to show spatial patterns and that are also used to highlight 
+that are used to show spatial patterns. These maps are also used to highlight 
 or link to underlying statistical data. 
-There exist three main types of micromaps, i.e.,
-linked micromap plots\index{Linked micromap plot},
+There exist three major classes of micromaps, i.e.,
+linked micromap plots,\index{Linked micromap plot}
 introduced in Section \@ref(Ch1-LinkedMicromapPlots),
-conditioned micromaps\index{Conditioned micromaps},
+conditioned micromaps,\index{Conditioned micromaps}
 introduced in Section \@ref(Ch1-ConditionedMicromaps), and
-comparative micromaps\index{Comparative micromaps}
+comparative micromaps,\index{Comparative micromaps}
 introduced in Section \@ref(Ch1-ComparativeMicromaps).
 Our nomenclature will closely follow the one from @SCMW2017.
 Alternatives can sometimes be found in the literature,
 but should be easy to match with the terminology used in this book.
 
-After introducing these three main types of micromaps,
+After introducing the three main types of micromaps,
 we take a closer look at software and online developments
 for micromaps in Section \@ref(Ch1-SoftwareOnlineDevelopments)
 that cover almost 40 years of micromap developments.
@@ -48,6 +48,176 @@ the accompanying R code, webpage, and the newly developed
 
 
 ## Linked Micromap Plots {#Ch1-LinkedMicromapPlots}
+
+
+Linked micromap plots\index{Linked micromap plot} were introduced as the first
+of the three major classes for micromaps. 
+They were originally presented at the Joint Statistical Meetings (JSM) 
+in Chicago, Illinois, in 1996 [@OCCP1996].
+A series of applications was published soon thereafter,
+dealing with unemployment data of the United States and Washington, D.C. [@CaPi1996],
+carbon dioxide (CO~2~) emissions in
+Organization for Economic Co-operation and Development (OECD) countries
+and wheat price and labor force statistics in the United States and Washington, D.C. [@COCPC1998],
+and of various climate variables in Omernik ecoregions 
+(that were named after James M. Omernik) [@COPC1998;@COPC2000].
+
+The early linked micromap plots\index{Linked micromap plot} development was
+based on several other visualization developments of the 1980s and 1990s. In particular,
+their development was heavily inspired by concepts developed for the conversion of 
+statistical tables into graphical displays [@Carr1994a;@CN95],
+the small multiples principle that was made widely popular by Edward R. Tufte [@Tu83;@Tu90;@Tu97],
+as well as early map caricatures, such as Mark S. Monmonier's state visibilty map [@Mon93].
+
+@SC2008 pointed out three main advantages of 
+linked micromap plots\index{Linked micromap plot} over
+traditionally used choropleth maps where the map regions are filled by a
+continuous or discrete color scheme.
+First, small map regions (such as Washington, D.C., in a map of the 
+United States) may be hard to see in a choropleth map.
+In linked micromap plots,\index{Linked micromap plot} small map regions
+are often enlarged, resulting in some kind of map caricatures 
+where such a region is enlarged and often also pulled to the outside of the main map.
+Further changes of the underlying maps often take place, such as moving
+far-away subregions closer to the main geographic region (such as Alaska and Hawaii
+for the United States)
+and simplifying the boundaries of the subregions (think of river boundaries or rugged coastlines)
+for faster plotting
+and obtaining a less dominant, i.e., thinner, borderline.
+
+Second, when converting data from an ordered statistical variable into five to eight
+discrete colors for coloring the map area in a choropleth map, 
+there is an immediate loss of information.
+The exact numerical values of the variable are lost, the ranking of the values is lost,
+and the relative proximities of the values translated into a certain color class 
+that represents an interval of values is lost. This problem is solved by
+using row-label statistical displays such as dotplots\index{Dotplot}
+that link to the map in linked micromap plots,\index{Linked micromap plot}
+rather than showing the statistical data directly on the map.
+
+Third, it is difficult to show more than one statistical variables directly
+on a map. This becomes even more difficult when trying to display confidence
+bounds or the minimum, first quartile, median, third quartile, and maximum
+that make up the summary statistics visually displayed in a boxplot.\index{Boxplot}
+This problem is resolved in linked micromap plots\index{Linked micromap plot}
+by linking the statistical graphic display to certain spatial areas,
+rather than displaying the statistical information directly on the map.
+Also, multiple types of statistical graphic displays can be shown simultaneously
+in a linked micromap plot.\index{Linked micromap plot}
+
+Readers who are interested to learn more about the background and history
+of linked micromap plots\index{Linked micromap plot} are encouraged
+to read the book chapters and encyclopedia entries by 
+@SC2008 and @SCMW2017, respectively. Even more, 
+for readers who want to learn the full background behind all three main types
+of micromaps, we strongly recommend to read the excellent book by @CP2010.
+
+
+NOTE:
+New Jersey shapefiles obtained from
+https://www2.census.gov/geo/tiger/PREVGENZ/co/co00shp/
+on 10/17/2022
+
+NJ car crash data
+https://www.sciencedirect.com/science/article/pii/S2665963821000762
+
+
+
+```{r Ch1-NJ-Layout1, fig.cap = 'New Jersey', fig.width = 3, fig.height = 5}
+library(raster)
+library(dplyr)
+library(micromap)
+
+nj_shapefile <- raster::shapefile(
+  x = "data/NJ_Shapefiles/co34_d00.shp", 
+  verbose = FALSE
+)
+proj4string(nj_shapefile) <- "+proj=longlat +ellps=WGS84"
+
+par(mar = c(0, 0, 0, 0))
+plot(nj_shapefile)
+
+
+library(usmap)
+
+data(countypop)
+data("countypov")
+
+class(countypop)
+head(countypop)
+nj_countypop <- countypop[countypop$abbr == "NJ", ]
+nj_countypov <- countypov[countypop$abbr == "NJ", ]
+
+nj_countypopfips <- cbind(nj_countypop, substr(countypop[countypop$abbr == "NJ", ]$fips, 3, 5))
+names(nj_countypopfips)[5] <- "COUNTY"
+
+nj_countypovfips <- cbind(nj_countypov, substr(countypov[countypop$abbr == "NJ", ]$fips, 3, 5))
+names(nj_countypovfips)[5] <- "COUNTY"
+
+nj_data <- nj_shapefile@data
+
+nj_polys_table <- create_map_table(
+  tmp.map = nj_shapefile,
+  IDcolumn = "COUNTY"
+)
+
+nj_data_new <- inner_join(nj_data, nj_countypopfips) %>%
+  inner_join(nj_countypovfips)
+
+
+library(tidyverse)
+library(spatstat)
+library(sf)
+library(njtr1)
+library(corrplot)
+library(viridis)
+
+library(stringr)
+
+# Get 2019 accidents
+ac19 <- get_njtr1(year = 2019, type = "Accidents", geo = TRUE) %>%
+  filter(is.na(latitude) == FALSE) %>%
+  mutate(longitude = longitude*(-1)) %>%
+  st_as_sf(coords = c("longitude","latitude"),crs = 4326, remove = FALSE) %>%
+  st_transform(3424)
+
+# Get 2020 accidents
+ac20 <- get_njtr1(year = 2020, type = "Accidents", geo = TRUE) %>%
+  filter(is.na(latitude) == FALSE) %>%
+  mutate(longitude = longitude*(-1)) %>%
+  st_as_sf(coords = c("longitude","latitude"),crs = 4326, remove = FALSE) %>%
+  st_transform(3424)
+
+ac19_county <- ac19 %>% st_drop_geometry() %>% group_by(county_name) %>% tally() %>% mutate(NAME = str_to_title(county_name), ac19 = n) %>% select(NAME = NAME, ac19 = ac19)
+
+ac20_county <- ac20 %>% st_drop_geometry() %>% group_by(county_name) %>% tally() %>% mutate(NAME = str_to_title(county_name), ac20 = n) %>% select(NAME = NAME, ac20 = ac20)
+
+ac19_county$ac19 - ac20_county$ac20 
+
+
+nj_data_new2 <- inner_join(nj_data_new, ac19_county) %>%
+  inner_join(ac20_county) %>%
+  mutate(acbypop19 = ac19 / pop_2015,
+         acbypop20 = ac20 / pop_2015,
+         acdiff = ac19 - ac20,
+         acdiffbypop = acdiff / pop_2015)
+
+nj_data_new2
+
+# ac19_county <- ac19_ts %>% group_by(county_name) %>% tally()
+
+mmplot(
+  stat.data = nj_data_new2,
+  map.data = nj_polys_table,
+  map.link = c("COUNTY", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "dot", "map"),
+  panel.data = list(NA, "NAME", "acdiffbypop", "acbypop19", "acbypop20", NA),
+  ord.by = "acdiffbypop", 
+  grouping = c(4, 4, 5, 4, 4)
+)
+
+
+```
 
 
 ## Conditioned Micromaps {#Ch1-ConditionedMicromaps}
