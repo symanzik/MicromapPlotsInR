@@ -381,14 +381,8 @@ are closely related. Thus, if we change the order of one, the order of the
 other one has to be changed accordingly. 
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-refining2).
-There is no strong recommendation where the column with the maps should be placed.
-This often depends on personal preferences of the authors.
-There exist examples in the literature where the maps are placed on the left,
-e.g., in @Mast2013LinkedMicromaps and @DaWo2021, 
-on the right, 
-e.g., in @Wartenberg2009,
-and even in the middle,
-e.g., in @TaSt2019.
+As stated in Section \@ref(Ch1-LinkedMicromapPlots),
+there is no strong recommendation where the column with the maps should be placed.
 
 
 ```{r Ch2-refining2, fig.cap = 'Second refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are related to the order of the five columns in the plot. Most notable, the map column is shown on the left here.', fig.width = 7, fig.height = 9}

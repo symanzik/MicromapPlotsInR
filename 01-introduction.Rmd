@@ -112,111 +112,265 @@ to read the book chapters and encyclopedia entries by
 for readers who want to learn the full background behind all three main types
 of micromaps, we strongly recommend to read the excellent book by @CP2010.
 
+We will use two mock-up linked micromap plots\index{Linked micromap plot},
+shown in Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2),
+to introduce the main nomenclature for linked micromap plots\index{Linked micromap plot}
+and how to interpret such plots. These two figures are based
+on actual boundaries for New Jersey in the United States, obtained from
+@USCensus2013Shapefiles. The statistical data were entirely made up for demonstration purposes.
 
-NOTE:
-New Jersey shapefiles obtained from
-https://www2.census.gov/geo/tiger/PREVGENZ/co/co00shp/
-on 10/17/2022
+In general, linked micromap plots\index{Linked micromap plot} consist of four to seven columns.
+One to four of these columns are statistical graphics columns that can be used to display
+various statistical displays such as dotplots\index{Dotplot} (with and without confidence bounds), 
+boxplots\index{Boxplot},
+scatterplots\index{Scatterplot}, time series\index{Time Series}, and other graphical displays 
+of observed or estimated statistical data. Sometimes, a global summary statistic is
+also shown in these columns. The three remaining columns are used for the maps,
+the subregion identifiers, and a plot symbol. The subregions are sorted according to a
+sorting variable that may or may not be one of the variables that are displayed
+in the statistical graphics columns. There exists no fixed order how the columns have to be arranged.
+In particular, there is no strong recommendation where the column with the maps should be placed.
+This often depends on personal preferences of the authors and plot designers.
+There exist examples in the literature where the maps were placed on the left,
+e.g., in @Mast2013LinkedMicromaps and @DaWo2021, 
+on the right, 
+e.g., in @Wartenberg2009,
+and even in the middle,
+e.g., in @TaSt2019.
 
-NJ car crash data
-https://www.sciencedirect.com/science/article/pii/S2665963821000762
+The rows in linked micromap plots\index{Linked micromap plot} are arranged in
+perceptual groups. Ideally, each perceptual group should contain the same
+number of subregions, but that is not always possible. 
+Table XXX provides suggestion for the number of subregions in each perceptual group,
+depending on the total number of subregions in the area of interest.
+In practice, having close to five subregions in most of the perceptual groups
+is ideal from a cognitive perspective.
+
+Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) show six-column
+linked micromap plots\index{Linked micromap plot} for New Jersey.
+The first column shows the maps, the second column shows the plot symbol,
+and the third column shows the subregion identifiers, here the county names in New Jersey.
 
 
 
-```{r Ch1-NJ-Layout1, fig.cap = 'New Jersey', fig.width = 3, fig.height = 5}
-library(raster)
-library(dplyr)
+
+```{r Ch1-NJ-Layout1, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 7, fig.height = 8, echo = FALSE}
 library(micromap)
+library(raster)
 
 nj_shapefile <- raster::shapefile(
-  x = "data/NJ_Shapefiles/co34_d00.shp", 
+  x = "data/NJ_Shapefiles/co34_d00.shp",
   verbose = FALSE
 )
-proj4string(nj_shapefile) <- "+proj=longlat +ellps=WGS84"
 
-par(mar = c(0, 0, 0, 0))
-plot(nj_shapefile)
+# add missing CRS
+proj4string(nj_shapefile) <- sp::CRS(projargs = "+init=epsg:4326")
 
+# thin shapefile
+nj_shapefile_thin <- maptools::thinnedSpatialPoly(
+  SP = nj_shapefile,
+  tolerance = 0.005,
+  minarea = 0.01,
+  topologyPreserve = TRUE,
+  avoidGEOS = TRUE
+)
 
-library(usmap)
-
-data(countypop)
-data("countypov")
-
-class(countypop)
-head(countypop)
-nj_countypop <- countypop[countypop$abbr == "NJ", ]
-nj_countypov <- countypov[countypop$abbr == "NJ", ]
-
-nj_countypopfips <- cbind(nj_countypop, substr(countypop[countypop$abbr == "NJ", ]$fips, 3, 5))
-names(nj_countypopfips)[5] <- "COUNTY"
-
-nj_countypovfips <- cbind(nj_countypov, substr(countypov[countypop$abbr == "NJ", ]$fips, 3, 5))
-names(nj_countypovfips)[5] <- "COUNTY"
-
-nj_data <- nj_shapefile@data
-
+# create map table
 nj_polys_table <- create_map_table(
-  tmp.map = nj_shapefile,
-  IDcolumn = "COUNTY"
+  tmp.map = nj_shapefile_thin,
+  IDcolumn = "NAME"
 )
 
-nj_data_new <- inner_join(nj_data, nj_countypopfips) %>%
-  inner_join(nj_countypovfips)
+# create mock data frame
+stat_county <- c(
+  "Atlantic", "Bergen", "Burlington", "Camden", "Cape May", "Cumberland", "Essex",
+  "Gloucester", "Hudson", "Hunterdon", "Mercer", "Middlesex", "Monmouth", "Morris",
+  "Ocean", "Passaic", "Salem", "Somerset", "Sussex", "Union", "Warren"
+)
 
+stat_data <- c(
+  2, 17, 7, 6, 1, 3, 15,
+  5, 16, 11, 10, 13, 9, 19,
+  8, 18, 4, 12, 21, 14, 20
+)
 
-library(tidyverse)
-library(spatstat)
-library(sf)
-library(njtr1)
-library(corrplot)
-library(viridis)
+set.seed(123)
+nj_data <- data.frame(
+  County = stat_county,
+  StatVar1 = stat_data * 3 + 5 + runif(n = 21, min = -1.5, max = 1.5),
+  StatVar2 = stat_data * 2 + 3 + runif(n = 21, min = -3, max = 3),
+  StatVar3 = 95 - 3 * stat_data + runif(n = 21, min = -5, max = 5)
+)
 
-library(stringr)
+nj_data$StatVar2[8] <- 35 # create outlier
+nj_data$StatVar2[14] <- 15 # create outlier
 
-# Get 2019 accidents
-ac19 <- get_njtr1(year = 2019, type = "Accidents", geo = TRUE) %>%
-  filter(is.na(latitude) == FALSE) %>%
-  mutate(longitude = longitude*(-1)) %>%
-  st_as_sf(coords = c("longitude","latitude"),crs = 4326, remove = FALSE) %>%
-  st_transform(3424)
-
-# Get 2020 accidents
-ac20 <- get_njtr1(year = 2020, type = "Accidents", geo = TRUE) %>%
-  filter(is.na(latitude) == FALSE) %>%
-  mutate(longitude = longitude*(-1)) %>%
-  st_as_sf(coords = c("longitude","latitude"),crs = 4326, remove = FALSE) %>%
-  st_transform(3424)
-
-ac19_county <- ac19 %>% st_drop_geometry() %>% group_by(county_name) %>% tally() %>% mutate(NAME = str_to_title(county_name), ac19 = n) %>% select(NAME = NAME, ac19 = ac19)
-
-ac20_county <- ac20 %>% st_drop_geometry() %>% group_by(county_name) %>% tally() %>% mutate(NAME = str_to_title(county_name), ac20 = n) %>% select(NAME = NAME, ac20 = ac20)
-
-ac19_county$ac19 - ac20_county$ac20 
-
-
-nj_data_new2 <- inner_join(nj_data_new, ac19_county) %>%
-  inner_join(ac20_county) %>%
-  mutate(acbypop19 = ac19 / pop_2015,
-         acbypop20 = ac20 / pop_2015,
-         acdiff = ac19 - ac20,
-         acdiffbypop = acdiff / pop_2015)
-
-nj_data_new2
-
-# ac19_county <- ac19_ts %>% group_by(county_name) %>% tally()
-
+# create linked micromap plot
 mmplot(
-  stat.data = nj_data_new2,
+  stat.data = nj_data,
   map.data = nj_polys_table,
-  map.link = c("COUNTY", "ID"),
-  panel.types = c("dot_legend", "labels", "dot", "dot", "dot", "map"),
-  panel.data = list(NA, "NAME", "acdiffbypop", "acbypop19", "acbypop20", NA),
-  ord.by = "acdiffbypop", 
-  grouping = c(4, 4, 5, 4, 4)
+  map.link = c("County", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot", "dot"),
+  panel.data = list(NA, NA, "County", "StatVar1", "StatVar2", "StatVar3"),
+  ord.by = "StatVar1",
+  rev.ord = TRUE,
+  grouping = c(4, 4, 5, 4, 4),
+  colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu"),
+  vertical.align = "center",
+  panel.att = list(
+    list(
+      1,
+      header = "Light Gray Means\nPreviously Displayed",
+      map.all = TRUE,
+      fill.regions = "aggregate",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 1.0
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 1.3
+    ),
+    list(
+      3,
+      header = "Counties",
+      align = "left",
+      right.margin = 0,
+      left.margin = -1,
+      text.size = 0.9,
+      panel.width = 0.6
+    ),
+    list(
+      4,
+      header = "StatVar1",
+      graph.bgcolor = "lightgray",
+      right.margin = 0,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "StatVar2",
+      graph.bgcolor = "lightgray",
+      right.margin = 0,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50),
+      xaxis.labels = list(0, 25, 50),
+      xaxis.title = "Percent"
+    ),
+    list(
+      6,
+      header = "StatVar3",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.25,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(25, 50, 75, 100),
+      xaxis.labels = list(25, 50, 75, 100),
+      xaxis.title = "Percent"
+    )
+  )
 )
+```
+
+The correlation coefficients $r$ are
+about `r round(cor(nj_data$StatVar1, nj_data$StatVar2), digits = 2)`
+
+about `r round(cor(nj_data$StatVar1, nj_data$StatVar3), digits = 2)`
+
+about `r round(cor(nj_data$StatVar2, nj_data$StatVar3), digits = 2)`
 
 
+```{r Ch1-NJ-Layout2, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. Main changes are the use of two-ended cumulative maps, the reduced number of perceptual groups, the introduction of a median row, and using _StatVar2_ as the sorting variable.', fig.width = 7, fig.height = 8, echo = FALSE}
+# create linked micromap plot
+mmplot(
+  stat.data = nj_data,
+  map.data = nj_polys_table,
+  map.link = c("County", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot", "dot"),
+  panel.data = list(NA, NA, "County", "StatVar1", "StatVar2", "StatVar3"),
+  ord.by = "StatVar2",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
+  vertical.align = "center",
+  panel.att = list(
+    list(
+      1,
+      header = "Two-ended\nCumulative Maps",
+      map.all = TRUE,
+      fill.regions = "two ended",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 1.0
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 1.3
+    ),
+    list(
+      3,
+      header = "Counties",
+      align = "left",
+      right.margin = 0,
+      left.margin = -1,
+      text.size = 0.9,
+      panel.width = 0.6
+    ),
+    list(
+      4,
+      header = "StatVar1",
+      graph.bgcolor = "lightgray",
+      right.margin = 0,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "StatVar2",
+      graph.bgcolor = "lightgray",
+      right.margin = 0,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50),
+      xaxis.labels = list(0, 25, 50),
+      xaxis.title = "Percent"
+    ),
+    list(
+      6,
+      header = "StatVar3",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.25,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(25, 50, 75, 100),
+      xaxis.labels = list(25, 50, 75, 100),
+      xaxis.title = "Percent"
+    )
+  )
+)
+```
+
+```{r Ch1-NJ-Scatterplot, fig.cap = 'Mock-up scatterplot of the three statistical variables shown in the two previous linked micromap plots\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 5, fig.height = 5, echo = FALSE}
+graphics::pairs(x = nj_data[, 2:4])
 ```
 
 
@@ -293,7 +447,7 @@ plot(cars, pch = 19)
 
 ```{r Ch1-IrisTable}
 knitr::kable(
-  head(iris), 
+  head(iris),
   caption = "A table of the iris data.",
   booktabs = TRUE
 )
@@ -388,10 +542,10 @@ lmplot(
   map.data = statePolys,
   panel.types = c("labels", "dot", "dot", "map"),
   panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
+  ord.by = "pov",
+  grouping = 5,
   median.row = TRUE,
-  plot.width = 2, 
+  plot.width = 2,
   plot.height = 6,
   map.link = c("StateAb", "ID")
 )
@@ -405,40 +559,45 @@ This gets further refined now. Figure \@ref(fig:Ch1-micromap2) shows the resulti
 # publication figure 1a
 lmplot(
   stat.data = edPov,
-  map.data = statePolys ,
+  map.data = statePolys,
   panel.types = c("labels", "dot", "dot", "map"),
   panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",  
+  ord.by = "pov",
   grouping = 5,
   median.row = TRUE,
   map.link = c("StateAb", "ID"),
-  
   plot.height = 9,
-  
-  colors = c("red", "orange", "green", "blue", "purple"), 
+  colors = c("red", "orange", "green", "blue", "purple"),
   map.color2 = "lightgray",
-  
   panel.att = list(
-    list(1, header = "States", 
-         panel.width = 0.8, 
-         align = "left", 
-         text.size = 0.9),
-    list(2, header = "Percent Living Below\nPoverty Level",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(10, 15, 20), 
-         xaxis.labels = list(10, 15, 20),
-         xaxis.title = "Percent"),
-    list(3, header = "Percent Adults With\n4+ Years of College",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(10, 20, 30, 40), 
-         xaxis.labels = list(10, 20, 30, 40),
-         xaxis.title = "Percent"),
-    list(4, header = "Light Gray Means\nHighlighted Above",  
-         inactive.border.color = gray(0.7), 
-         inactive.border.size = 2,	
-         panel.width = 0.8)
+    list(1,
+      header = "States",
+      panel.width = 0.8,
+      align = "left",
+      text.size = 0.9
+    ),
+    list(2,
+      header = "Percent Living Below\nPoverty Level",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(10, 15, 20),
+      xaxis.labels = list(10, 15, 20),
+      xaxis.title = "Percent"
+    ),
+    list(3,
+      header = "Percent Adults With\n4+ Years of College",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(10, 20, 30, 40),
+      xaxis.labels = list(10, 20, 30, 40),
+      xaxis.title = "Percent"
+    ),
+    list(4,
+      header = "Light Gray Means\nHighlighted Above",
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 2,
+      panel.width = 0.8
+    )
   )
 )
 ```
@@ -448,55 +607,58 @@ Some more refinements, resulting in Figure \@ref(fig:Ch1-micromap3).
 
 
 ```{r Ch1-micromap3, fig.cap = 'And now the third (revised) micromap example. Note that this specifies a width and height for the figure. This may be the best solution to scale the micromap plots.', fig.width = 7, fig.height = 9}
-edPov$points <- 0	
+edPov$points <- 0
 
 # publication figure 1b
 lmplot(
-  stat.data = edPov, 
+  stat.data = edPov,
   map.data = statePolys,
   panel.types = c("dot", "labels", "dot", "dot", "map"),
   panel.data = list("points", "state", "pov", "ed", NA),
   map.link = c("StateAb", "ID"),
-  ord.by = "pov", 
-  grouping = 5, 
-  median.row = TRUE, 
-  
-  plot.height = 9, 
-  
+  ord.by = "pov",
+  grouping = 5,
+  median.row = TRUE,
+  plot.height = 9,
   colors = c("red", "orange", "green", "blue", "purple"),
-  map.color2 = "lightgray", 
-  
+  map.color2 = "lightgray",
   panel.att = list(
-    list(1, panel.width = 0.15, 
-         point.type = 20,
-         graph.border.color = "white",
-         xaxis.text.display = FALSE, 
-         xaxis.line.display = FALSE,
-         graph.grid.major = FALSE),
-    
-    list(2, header = "States", 
-         panel.width = 0.8, 
-         align = "left", 
-         text.size = 0.9),
-    
-    list(3, header = "Percent Living Below\nPoverty Level",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(10, 15, 20), 
-         xaxis.labels = list(10, 15, 20),
-         xaxis.title = "Percent"),
-    
-    list(4, header = "Percent Adults With\n4+ Years of College",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(20, 30, 40), 
-         xaxis.labels = list(20, 30, 40), 
-         xaxis.title = "Percent"),
-    
-    list(5, header = "Light Gray Means\nHighlighted Above", 
-         inactive.border.color = gray(0.7), 
-         inactive.border.size = 2, 
-         panel.width = 0.8)
+    list(1,
+      panel.width = 0.15,
+      point.type = 20,
+      graph.border.color = "white",
+      xaxis.text.display = FALSE,
+      xaxis.line.display = FALSE,
+      graph.grid.major = FALSE
+    ),
+    list(2,
+      header = "States",
+      panel.width = 0.8,
+      align = "left",
+      text.size = 0.9
+    ),
+    list(3,
+      header = "Percent Living Below\nPoverty Level",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(10, 15, 20),
+      xaxis.labels = list(10, 15, 20),
+      xaxis.title = "Percent"
+    ),
+    list(4,
+      header = "Percent Adults With\n4+ Years of College",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(20, 30, 40),
+      xaxis.labels = list(20, 30, 40),
+      xaxis.title = "Percent"
+    ),
+    list(5,
+      header = "Light Gray Means\nHighlighted Above",
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 2,
+      panel.width = 0.8
+    )
   )
 )
 ```
@@ -517,60 +679,62 @@ or sceenshots, e.g., from a **Shiny**\index{R Packages!shiny} app, that could be
 ```{r Ch1-micromap4}
 # publication figure 1c
 lmplot(
-  stat.data = edPov, 
+  stat.data = edPov,
   map.data = statePolys,
-  panel.types = c("map", "dot",  "labels", "dot", "dot"),
+  panel.types = c("map", "dot", "labels", "dot", "dot"),
   panel.data = list(NA, "points", "state", "pov", "ed"),
   map.link = c("StateAb", "ID"),
-  ord.by = "pov", 
-  grouping = 5, 
+  ord.by = "pov",
+  grouping = 5,
   median.row = TRUE,
-  
-  plot.height = 9, 
-  
+  plot.height = 9,
   colors = c("red", "orange", "green", "blue", "purple"),
-  map.color2 = "lightgray", 
-  
+  map.color2 = "lightgray",
   print.file = "img/Ch1-micromap4-external.jpeg",
-  
   panel.att = list(
-    list(2, panel.width = 0.15, 
-         point.type = 20,
-         graph.border.color = "white",
-         xaxis.text.display = FALSE, 
-         xaxis.line.display = FALSE,
-         graph.grid.major = FALSE),
-    
-    list(3, header = "States", 
-         panel.width = 0.8, 
-         align = "left", 
-         text.size = 0.9),
-    
-    list(4, header = "Percent Living Below\nPoverty Level",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(10, 15, 20), 
-         xaxis.labels = list(10, 15, 20),
-         xaxis.title = "Percent"),
-    
-    list(5, header = "Percent Adults With\n4+ Years of College",
-         graph.bgcolor = "lightgray", 
-         point.size = 1.5,
-         xaxis.ticks = list(20, 30, 40), 
-         xaxis.labels = list(20, 30, 40), 
-         xaxis.title = "Percent"),
-    
-    list(1, header = "Light Gray Means\nHighlighted Above", 
-         inactive.border.color = gray(0.7), 
-         inactive.border.size = 2, 
-         panel.width = 0.8)
+    list(2,
+      panel.width = 0.15,
+      point.type = 20,
+      graph.border.color = "white",
+      xaxis.text.display = FALSE,
+      xaxis.line.display = FALSE,
+      graph.grid.major = FALSE
+    ),
+    list(3,
+      header = "States",
+      panel.width = 0.8,
+      align = "left",
+      text.size = 0.9
+    ),
+    list(4,
+      header = "Percent Living Below\nPoverty Level",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(10, 15, 20),
+      xaxis.labels = list(10, 15, 20),
+      xaxis.title = "Percent"
+    ),
+    list(5,
+      header = "Percent Adults With\n4+ Years of College",
+      graph.bgcolor = "lightgray",
+      point.size = 1.5,
+      xaxis.ticks = list(20, 30, 40),
+      xaxis.labels = list(20, 30, 40),
+      xaxis.title = "Percent"
+    ),
+    list(1,
+      header = "Light Gray Means\nHighlighted Above",
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 2,
+      panel.width = 0.8
+    )
   )
 )
 ```
 
 
 ```{r Ch1-micromap5, fig.cap = 'And now the fourth (and final) micromap example.', out.width = '90%', echo = FALSE}
-#options(knitr.graphics.auto_pdf = TRUE)
+# options(knitr.graphics.auto_pdf = TRUE)
 
 knitr::include_graphics("img/Ch1-micromap4-external.jpeg")
 ```
@@ -782,4 +946,3 @@ I need to check this with CRC Press as well.
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
