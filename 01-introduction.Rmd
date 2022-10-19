@@ -126,7 +126,8 @@ boxplots\index{Boxplot},
 scatterplots\index{Scatterplot}, time series\index{Time Series}, and other graphical displays 
 of observed or estimated statistical data. Sometimes, a global summary statistic is
 also shown in these columns. The three remaining columns are used for the maps,
-the subregion identifiers, and a plot symbol. The subregions are sorted according to a
+a plot symbol, and the subregion names, abbreviations, or 
+some other meaningful identifiers. The subregions are sorted according to a
 sorting variable that may or may not be one of the variables that are displayed
 in the statistical graphics columns. There exists no fixed order how the columns have to be arranged.
 In particular, there is no strong recommendation where the column with the maps should be placed.
@@ -138,18 +139,41 @@ e.g., in @Wartenberg2009,
 and even in the middle,
 e.g., in @TaSt2019.
 
-The rows in linked micromap plots\index{Linked micromap plot} are arranged in
-perceptual groups. Ideally, each perceptual group should contain the same
+The rows in linked micromap plots\index{Linked micromap plot}, representing the subregions, are arranged in
+perceptual groups.\index{Perceptual group} 
+Ideally, each perceptual group\index{Perceptual group} should contain the same
 number of subregions, but that is not always possible. 
-Table XXX provides suggestion for the number of subregions in each perceptual group,
+Table XXX provides suggestions for the number of subregions in each perceptual group,\index{Perceptual group}
 depending on the total number of subregions in the area of interest.
-In practice, having close to five subregions in most of the perceptual groups
+In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
 is ideal from a cognitive perspective.
+Within each perceptual group,\index{Perceptual group} the subregions shown in the map,
+the plot symbol next to the subregion names, and the graphics in the statistical graphics columns are linked
+by color. This allows to quickly link information from the statistical graphics columns
+to the underlying subregions in the maps and to the subregion names via the plot symbol. Within each 
+perceptual group,\index{Perceptual group} a particular color represents a single
+subregion in the map column, the same color is used for the plot symbol next
+to the subregion name, and for the graphs in the statistical graphics columns.
+The same set of colors is used in all perceptual groups.\index{Perceptual group}
+It might be tempting to assume that subregions that appear in the same color
+in different perceptual groups\index{Perceptual group} are somehow related,
+but this is not the case. Rather, the colors could be used as an ordering
+criterion within each perceptual group.\index{Perceptual group}
+When using a sequential color scheme that goes from light to dark
+as in Figure \@ref(fig:Ch1-NJ-Layout1), the lightest color (here yellow)
+always represents the largest value according to the variable that is used as the sorting variable
+in each perceptual group,\index{Perceptual group}
+the second lightest color (here green) always represents the second largest value
+in each perceptual group,\index{Perceptual group}
+and so on.
 
 Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) show six-column
-linked micromap plots\index{Linked micromap plot} for New Jersey.
+linked micromap plots\index{Linked micromap plot} for the 21 counties of New Jersey.
 The first column shows the maps, the second column shows the plot symbol,
 and the third column shows the subregion identifiers, here the county names in New Jersey.
+Columns four, five, and six are the statistical graphics columns 
+that show dotplots\index{Dotplot} that are by far the most frequently used
+graph types in linked micromap plots.\index{Linked micromap plot}
 
 
 
