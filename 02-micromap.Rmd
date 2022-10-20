@@ -823,20 +823,20 @@ This can be done by accessing the data from the `@data` slot in the
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}.
 
 There are 41 variables in the resulting data frame.
-In contrast to @MPRG2016, we will focus on the conductivity variables
-in the following linked micromap plots\index{Linked micromap plot}.
+In contrast to @MPRG2016, we will focus on the specific conductance variables
+in the following linked micromap plots.\index{Linked micromap plot}
 
 Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95`,
 `Cond_UCB95`, are the population estimates, representing the median,
 the lower 95% confidence bound, and the upper 95% confidence bound of a variable
-(here, conductivity) in each of the 25 watersheds, respectively.
+(here, specific conductance) in each of the 25 watersheds, respectively.
 These will be used for the construction of 
 dotplots with confidence bounds\index{Dotplot with confidence bounds}.
 
 Variable names starting with a lowercase letter, e.g., 
 `cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
 are the descriptive statistics, representing the minimum, first quartile, median,
-third quartile, and maximum of a variable (here, conductivity) in each of the 25 watersheds, respectively.
+third quartile, and maximum of a variable (here, specific conductance) in each of the 25 watersheds, respectively.
 These will be used for the construction of boxplots\index{Boxplot}.
 
 (ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary data set for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} in this section.
@@ -947,7 +947,7 @@ first and fifth columns, so `NA` is assigned here.
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
 rows in the linked micromap plot\index{Linked micromap plot}. Here, `cond_med1` 
 from the `wv_data` argument is used. The sorting of the rows goes from smallest (on top) to
-largest (at the bottom) median observed conductivity in a certain subbasin. 
+largest (at the bottom) median observed specific conductance in a certain subbasin. 
 Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups (here `5` rows). This implies that the 25 subbasins
 will be split into five perceptual groups showing five subbasins each.
@@ -1041,7 +1041,7 @@ requires three components
 (median, lower 95% confidence bound, and upper 95% confidence bound)
 for each subregion. These have to be passed on as lists to
 the `panel.data` argument list. Here, we make use of these
-components from the conductivity variable, specifically using
+components from the specific conductance variable, specifically using
 `list("cond_min", "condq1", "cond_med1", "condq3", "cond_max")`
 for the boxplots\index{Boxplot} and
 `list("Cond_med", "Cond_LCB95", "Cond_UCB95")`
@@ -1074,7 +1074,8 @@ mmplot(
 In the second (and final) refined linked micromap plot\index{Linked micromap plot}, shown in 
 Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
 refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
-This includes a reverse sorting (`rev.ord = TRUE`) that places the largest observed median conductivity on top, 
+This includes a reverse sorting (`rev.ord = TRUE`) that places 
+the largest observed median specific conductance on top, 
 a specific color scheme (`colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1]`),
 numerous changes to the sizes and spacing of the perceptual groups and columns,
 and the addition of titles, scales, and axis labels.
@@ -1086,7 +1087,7 @@ is reduced via `graph.bar.size = 0.7` in the third list of the `panel.att` list.
 The dashed black line in the fourth column (i.e., the second statistical graphics column)
 is created via the settings `add.line = 129, add.line.col = "black", add.line.typ = "dashed"`
 in the fourth list of the `panel.att` list.
-The value `129` microSiemens per cm ($\mu$S/cm) represents the estimated median conductivity 
+The value `129` microSiemens per cm ($\mu$S/cm) represents the estimated median specific conductance
 across all 4th order streams (or less). The Greek letter $\mu$ in the two axis titles is 
 produced via its unicode, i.e., `\u03BC`.
 
@@ -1126,13 +1127,13 @@ mmplot(
     ),
     list(
       3,
-      header = "Observed Conductivity\n4th Order Streams or Less",
+      header = "Observed specific conductance\n4th Order Streams or Less",
       graph.bgcolor = "lightgray",
       graph.bar.size = 0.7,
       xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
       xaxis.labels = c(0, 1, 2, 3, 4, 5),
       xaxis.labels.size = 1.25,
-      xaxis.title = "Conductivity [1,000 \u03BCS/cm]", 
+      xaxis.title = "[1,000 \u03BCS/cm]", 
       xaxis.title.size = 1.25, 
       panel.width = 2,
       right.margin = 0,
@@ -1140,12 +1141,12 @@ mmplot(
     ),
     list(
       4,
-      header = "Estimated Conductivity\n4th Order Streams or Less",
+      header = "Estimated specific conductance\n4th Order Streams or Less",
       graph.bgcolor = "lightgray",
       xaxis.ticks = list(0, 150, 300, 450, 600, 750),
       xaxis.labels = list(0, 150, 300, 450, 600, 750),
       xaxis.labels.size = 1.25,
-      xaxis.title = "Conductivity [\u03BCS/cm]",
+      xaxis.title = "[\u03BCS/cm]",
       add.line = 129,
       add.line.col = "black", 
       add.line.typ = "dashed",
@@ -1168,36 +1169,37 @@ mmplot(
 
 What remains to be done is a summary and interpretation of the 
 final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining2WV).
-This plot is related to conductivity in 25 aggregated watersheds and 
+This plot is related to specific conductance variables in 25 aggregated watersheds and 
 subbasins of 4th order streams (or less) in West Virginia in the United States. 
 
 The first statistical graphics column shows boxplots\index{Boxplot} for the 
-observed conductivities for each of these watersheds. The second statistical graphics column 
+observed specific conductance for each of these watersheds. The second statistical graphics column 
 shows dotplots with confidence bounds\index{Dotplot with confidence bounds} 
-that are the population estimates representing the median, the lower 95% confidence bound, 
+that are the population estimates of the specific conductance values,
+representing the median, the lower 95% confidence bound, 
 and the upper 95% confidence bound for each of these watersheds.
 The rows in the plot are sorted from highest (on top) to lowest (at the bottom) 
-median observed conductivity in a certain subbasin.
+median observed specific conductance in a certain subbasin.
 
 Each consecutive map shows which subregions have been colored previously in the map(s) above. 
-There is a weak spatial pattern with the highest median observed conductivities in the northern and 
+There is a weak spatial pattern with the highest median observed specific conductance values in the northern and 
 western subbasins of West Virginia. There is a notable spatial cluster in the 
-central-eastern subbasins of West Virginia with the five lowest median observed conductivities
+central-eastern subbasins of West Virginia with the five lowest median observed specific conductance values
 shown in the perceptual group at the bottom of the plot.
 
 The second statistical graphics column reveals that there is a remarkable relationship between 
-the widths of the confidence bounds and the estimated conductivities. The higher the 
-estimated conductivity, the wider the confidence bound in general.  The value 129 $\mu$S/cm, 
-representing the estimated median conductivity across all 4th order streams (or less), 
+the widths of the confidence bounds and the estimated specific conductance values. The higher the 
+estimated specific conductance, the wider the confidence bound in general.  The value 129 $\mu$S/cm, 
+representing the estimated median specific conductance across all 4th order streams (or less), 
 has been overlaid on this column.
 
-Such a pattern cannot be noticed in the boxplots in the first statistical graphics column. 
-Here, some extreme outliers dominate, e.g., observed conductivities of about 5,000 $\mu$S/cm
+Such a pattern cannot be noticed in the boxplots\index{Boxplot} in the first statistical graphics column. 
+Here, some extreme outliers dominate, e.g., observed specific conductance values of about 5,000 $\mu$S/cm
 in the Little Kanawha subbasin and of about 4,000 $\mu$S/cm in the Lower (L.) Kanawha subbasin.
 
 While this is hard to visually detect due to these extreme outliers, there is a 
-considerable positive correlation between the observed median conductivity and 
-the estimated median conductivity. Not surprisingly, the correlation coefficient $r$ is 
+considerable positive correlation between the observed median specific conductance and 
+the estimated median specific conductance. Not surprisingly, the correlation coefficient $r$ is 
 about `r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
 
 
