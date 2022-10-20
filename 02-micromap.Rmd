@@ -1175,26 +1175,26 @@ subbasins of 4th order streams (or less) in West Virginia in the United States.
 The first statistical graphics column shows boxplots\index{Boxplot} for the 
 observed specific conductance for each of these watersheds. The second statistical graphics column 
 shows dotplots with confidence bounds\index{Dotplot with confidence bounds} 
-that are the population estimates of the specific conductance values,
+that are the population estimates of the specific conductance,
 representing the median, the lower 95% confidence bound, 
 and the upper 95% confidence bound for each of these watersheds.
 The rows in the plot are sorted from highest (on top) to lowest (at the bottom) 
 median observed specific conductance in a certain subbasin.
 
 Each consecutive map shows which subregions have been colored previously in the map(s) above. 
-There is a weak spatial pattern with the highest median observed specific conductance values in the northern and 
+There is a weak spatial pattern with the highest median observed specific conductance in the northern and 
 western subbasins of West Virginia. There is a notable spatial cluster in the 
-central-eastern subbasins of West Virginia with the five lowest median observed specific conductance values
+central-eastern subbasins of West Virginia with the five lowest median observed specific conductance
 shown in the perceptual group at the bottom of the plot.
 
 The second statistical graphics column reveals that there is a remarkable relationship between 
-the widths of the confidence bounds and the estimated specific conductance values. The higher the 
+the widths of the confidence bounds and the estimated specific conductance. The higher the 
 estimated specific conductance, the wider the confidence bound in general.  The value 129 $\mu$S/cm, 
 representing the estimated median specific conductance across all 4th order streams (or less), 
 has been overlaid on this column.
 
 Such a pattern cannot be noticed in the boxplots\index{Boxplot} in the first statistical graphics column. 
-Here, some extreme outliers dominate, e.g., observed specific conductance values of about 5,000 $\mu$S/cm
+Here, some extreme outliers dominate, e.g., observed specific conductance of about 5,000 $\mu$S/cm
 in the Little Kanawha subbasin and of about 4,000 $\mu$S/cm in the Lower (L.) Kanawha subbasin.
 
 While this is hard to visually detect due to these extreme outliers, there is a 

@@ -119,64 +119,6 @@ and how to interpret such plots. These two figures are based
 on actual boundaries for New Jersey in the United States, obtained from
 @USCensus2013Shapefiles. The statistical data were entirely made up for demonstration purposes.
 
-In general, linked micromap plots\index{Linked micromap plot} consist of four to seven columns.
-One to four of these columns are statistical graphics columns that can be used to display
-various statistical displays such as dotplots\index{Dotplot} (with and without confidence bounds), 
-boxplots\index{Boxplot},
-scatterplots\index{Scatterplot}, time series\index{Time Series}, and other graphical displays 
-of observed or estimated statistical data. Sometimes, a global summary statistic is
-also shown in these columns. The three remaining columns are used for the maps,
-a plot symbol, and the subregion names, abbreviations, or 
-some other meaningful identifiers. The subregions are sorted according to a
-sorting variable that may or may not be one of the variables that are displayed
-in the statistical graphics columns. There exists no fixed order how the columns have to be arranged.
-In particular, there is no strong recommendation where the column with the maps should be placed.
-This often depends on personal preferences of the authors and plot designers.
-There exist examples in the literature where the maps were placed on the left,
-e.g., in @Mast2013LinkedMicromaps and @DaWo2021, 
-on the right, 
-e.g., in @Wartenberg2009,
-and even in the middle,
-e.g., in @TaSt2019.
-
-The rows in linked micromap plots\index{Linked micromap plot}, representing the subregions, are arranged in
-perceptual groups.\index{Perceptual group} 
-Ideally, each perceptual group\index{Perceptual group} should contain the same
-number of subregions, but that is not always possible. 
-Table XXX provides suggestions for the number of subregions in each perceptual group,\index{Perceptual group}
-depending on the total number of subregions in the area of interest.
-In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
-is ideal from a cognitive perspective.
-Within each perceptual group,\index{Perceptual group} the subregions shown in the map,
-the plot symbol next to the subregion names, and the graphics in the statistical graphics columns are linked
-by color. This allows to quickly link information from the statistical graphics columns
-to the underlying subregions in the maps and to the subregion names via the plot symbol. Within each 
-perceptual group,\index{Perceptual group} a particular color represents a single
-subregion in the map column, the same color is used for the plot symbol next
-to the subregion name, and for the graphs in the statistical graphics columns.
-The same set of colors is used in all perceptual groups.\index{Perceptual group}
-It might be tempting to assume that subregions that appear in the same color
-in different perceptual groups\index{Perceptual group} are somehow related,
-but this is not the case. Rather, the colors could be used as an ordering
-criterion within each perceptual group.\index{Perceptual group}
-When using a sequential color scheme that goes from light to dark
-as in Figure \@ref(fig:Ch1-NJ-Layout1), the lightest color (here yellow)
-always represents the largest value according to the variable that is used as the sorting variable
-in each perceptual group,\index{Perceptual group}
-the second lightest color (here green) always represents the second largest value
-in each perceptual group,\index{Perceptual group}
-and so on.
-
-Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) show six-column
-linked micromap plots\index{Linked micromap plot} for the 21 counties of New Jersey.
-The first column shows the maps, the second column shows the plot symbol,
-and the third column shows the subregion identifiers, here the county names in New Jersey.
-Columns four, five, and six are the statistical graphics columns 
-that show dotplots\index{Dotplot} that are by far the most frequently used
-graph types in linked micromap plots.\index{Linked micromap plot}
-
-
-
 
 ```{r Ch1-NJ-Layout1, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 7, fig.height = 8, echo = FALSE}
 library(micromap)
@@ -306,15 +248,8 @@ mmplot(
 )
 ```
 
-The correlation coefficients $r$ are
-about `r round(cor(nj_data$StatVar1, nj_data$StatVar2), digits = 2)`
 
-about `r round(cor(nj_data$StatVar1, nj_data$StatVar3), digits = 2)`
-
-about `r round(cor(nj_data$StatVar2, nj_data$StatVar3), digits = 2)`
-
-
-```{r Ch1-NJ-Layout2, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. Main changes are the use of two-ended cumulative maps, the reduced number of perceptual groups, the introduction of a median row, and using _StatVar2_ as the sorting variable.', fig.width = 7, fig.height = 8, echo = FALSE}
+```{r Ch1-NJ-Layout2, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. Main changes are the use of two-ended cumulative maps, the reduced number of perceptual groups, the introduction of a median row, and using `StatVar2` as the sorting variable.', fig.width = 7, fig.height = 8, echo = FALSE}
 # create linked micromap plot
 mmplot(
   stat.data = nj_data,
@@ -392,6 +327,132 @@ mmplot(
   )
 )
 ```
+
+
+In general, linked micromap plots\index{Linked micromap plot} consist of four to seven columns.
+One to four of these columns are statistical graphics columns that can be used to display
+various statistical displays such as dotplots\index{Dotplot} (with and without confidence bounds), 
+boxplots\index{Boxplot},
+scatterplots\index{Scatterplot}, time series\index{Time Series}, and other graphical displays 
+of observed or estimated statistical data. Sometimes, a global summary statistic is
+also shown in these columns. The three remaining columns are used for the maps,
+a plot symbol, and the subregion names, abbreviations, or 
+some other meaningful identifiers. The subregions are sorted according to a
+sorting variable that may or may not be one of the variables that are displayed
+in the statistical graphics columns. There exists no fixed order how the columns have to be arranged.
+In particular, there is no strong recommendation where the column with the maps should be placed.
+This often depends on personal preferences of the authors and plot designers.
+There exist examples in the literature where the maps were placed on the left,
+e.g., in @Mast2013LinkedMicromaps and @DaWo2021, 
+on the right, 
+e.g., in @Wartenberg2009,
+and even in the middle,
+e.g., in @TaSt2019.
+
+The rows in linked micromap plots\index{Linked micromap plot}, representing the subregions, are arranged in
+perceptual groups.\index{Perceptual group} 
+Ideally, each perceptual group\index{Perceptual group} should contain the same
+number of subregions, but that is not always possible. 
+Table XXX provides suggestions for the number of subregions in each perceptual group,\index{Perceptual group}
+depending on the total number of subregions in the area of interest.
+In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
+is ideal from a cognitive perspective.
+Within each perceptual group,\index{Perceptual group} the subregions shown in the map,
+the plot symbol next to the subregion names, and the graphics in the statistical graphics columns are linked
+by color. This allows to quickly link information from the statistical graphics columns
+to the underlying subregions in the maps and to the subregion names via the plot symbol. Within each 
+perceptual group,\index{Perceptual group} a particular color represents a single
+subregion in the map column, the same color is used for the plot symbol next
+to the subregion name, and for the graphs in the statistical graphics columns.
+The same set of colors is used in all perceptual groups.\index{Perceptual group}
+It might be tempting to assume that subregions that appear in the same color
+in different perceptual groups\index{Perceptual group} are somehow related,
+but this is not the case. Rather, the colors could be used as an ordering
+criterion within each perceptual group.\index{Perceptual group}
+When using a sequential color scheme that goes from light to dark
+as in Figure \@ref(fig:Ch1-NJ-Layout1), the lightest color (here yellow)
+always represents the largest value according to the variable that is used as the sorting variable
+in each perceptual group,\index{Perceptual group}
+the second lightest color (here green) always represents the second largest value
+in each perceptual group,\index{Perceptual group}
+and so on.
+
+Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) each show a six-column
+linked micromap plot\index{Linked micromap plot} for the 21 counties of New Jersey.
+The first column shows the maps, the second column shows the plot symbol,
+and the third column shows the subregion identifiers, here the county names in New Jersey.
+Columns four, five, and six are the statistical graphics columns 
+that show dotplots\index{Dotplot} that are by far the most frequently used
+graph types in linked micromap plots.\index{Linked micromap plot}
+
+In Figure \@ref(fig:Ch1-NJ-Layout1), the rows are sorted 
+from highest (on top) to lowest (at the bottom) according to `StatVar1`.
+Each consecutive map shows in light gray which subregions have been colored previously in the map(s) above,
+resulting in some aggregated maps.
+In the map at the bottom, eventually all subregions have been colored.
+With this sorting, the maps show some strong spatial pattern. The subregions
+with the largest values of `StatVar1` can be found (by construction) in the northern part of New Jersey
+while the subregions with the smallest values of `StatVar1` can be found (by construction) in the 
+southern part of New Jersey.
+
+In Figure \@ref(fig:Ch1-NJ-Layout2), the rows are sorted 
+from highest (on top) to lowest (at the bottom) according to `StatVar2`.
+This layout makes use of a median row.
+A median row is often a good solution if the 
+number of subregions is odd such as for the 21 counties of New Jersey.
+Here, Somerset is the county that appears (by construction) in the median row.
+This implies that it has the 11th highest and 11th lowest `StatVar2` value.
+Somerset does not appear in a map by itself, but rather is added to the perceptual
+groups above and below the median row in a neutral color, 
+thus increasing the number of subregions shown in each of these two maps by one (i.e., six here).
+This plot makes use of a two-ended aggregate coloring of the maps.
+The subregions from all previous perceptual groups again are filled in the
+subsequent perceptual groups. But, this filling proceeds from
+the top perceptual group to the median row only
+and from the bottom perceptual group to the median row only
+by sequentially
+filling the subregions that have already been displayed on the more extreme ends.
+This allows to better distinguish between the top-50% and bottom-50% of the data
+according to the sorting variable. Here, it becomes obvious that
+Morris (missing in the northern part of New Jersey)
+and Gloucester (missing in the southern part of New Jersey)
+are potential spatial outliers with respect to `StatVar2`.
+Morris has a much lower value of `StatVar2` than its geographic neighbors and
+Gloucester has a much higher value of `StatVar2` than its geographic neighbors.
+
+Finally, we want to describe and interpret the patterns from the
+statistical graphics columns. In Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2),
+the dots for `StatVar1` and `StatVar2` run almost in parallel, i.e.,
+high values or `StatVar1` are associated with high values of `StatVar2` and
+low values or `StatVar1` are associated with low values of `StatVar2`.
+There are only a few exceptions -- the previously mentioned Morris and Gloucester
+that do not fit in the overall pattern. Overall, such a pattern is an
+indicator of a strong positive (linear) association between these two variables.
+In contrast, the dots for `StatVar1` and `StatVar3` (and `StatVar2` and `StatVar3`) 
+diverge, forming some crude caret shape
+(resembling an upside down V-shape), i.e.,
+high values or `StatVar1` (and `StatVar2`) are associated with low values of `StatVar3` and
+low values or `StatVar1` (and `StatVar2`) are associated with high values of `StatVar3`.
+Overall, such a pattern is an
+indicator of a strong negative (linear) association between these two variables.
+This can be confirmed numerically.
+The correlation coefficients $r$ are
+about `r round(cor(nj_data$StatVar1, nj_data$StatVar2), digits = 2)`
+for `StatVar1` and `StatVar2`,
+about `r round(cor(nj_data$StatVar1, nj_data$StatVar3), digits = 2)`
+for `StatVar1` and `StatVar3`,
+and about `r round(cor(nj_data$StatVar2, nj_data$StatVar3), digits = 2)`
+for `StatVar2` and `StatVar3`.
+
+For readers who cannot immediately interpret the patterns from 
+parallel dotplots,\index{Dotplot} it is sometimes helpful to visualize (or mentally visualize)
+these patterns via scatterplots\index{Scatterplot} or scatterplot matrices\index{Scatterplot matrix}
+as shown in Figure \@ref(fig:Ch1-NJ-Scatterplot). Doing such a visual translation 
+from parallel dotplots\index{Dotplot} to 
+scatterplots\index{Scatterplot} or scatterplot matrices\index{Scatterplot matrix}
+a few times should help to correctly interpret the patterns 
+from parallel dotplots\index{Dotplot} in the future.
+
 
 ```{r Ch1-NJ-Scatterplot, fig.cap = 'Mock-up scatterplot of the three statistical variables shown in the two previous linked micromap plots\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 5, fig.height = 5, echo = FALSE}
 graphics::pairs(x = nj_data[, 2:4])
