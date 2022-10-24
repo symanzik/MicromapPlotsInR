@@ -340,4 +340,11 @@ Two final points about the WVDEP linked micromap should be noted. First, we used
 
 Building off of the foundation in Chapter \@ref(Ch2), this chapter covered environmental applications of linked micromaps. Such applications have two unique aspects. One is the use of geographic boundaries from natural features, such as ecoregions or watersheds, instead of administrative or political boundaries that are more commonly used in other applications. See also Chapter \@ref(Ch12) for medical applications that deal with non-standard geographic boundaries, such as health service areas and census tracts. The other is the strong link between spatial survey design to obtain a representative sample from the natural features so that survey estimates and sample statistics can be displayed in linked micromaps. Data collected from spatially balanced probabilistic surveys by state environmental agencies were used in the linked micromap examples from this chapter. The FDEP example used a linked micromap for initial exploratory spatial data analysis and subsequent testing for spatial autocorrelation in pesticide detection among basins [@SWSCSS2018]. @MPRG2016 used linked micromaps for a multivariate spatial analysis of WVDEP water quality data.  The examples in this chapter were of static linked micromaps, but Chapter \@ref(Ch7) covers interactive exploration of spatial data, including one by VDEQ.  
 
+
+## Acknowledgements {-}
+
+
+We appreciate reviews provided by Michael Dumelle and Marc Weber. The manuscript has been subjected to the U.S. Environmental Protection Agency’s (USEPA) peer and administrative review and approved for publication. However, the views expressed are those of the authors and do not represent the views or policies of the USEPA. The mention of trade names or commercial products does not constitute endorsement or recommendation for use.
+
+
 \printbibliography[segment=\therefsegment,heading=subbibliography]

@@ -72,7 +72,7 @@ as well as early map caricatures, such as Mark S. Monmonier's state visibilty ma
 Linked micromap plots\index{Linked micromap plot} quickly gained popularity
 among researchers at United States (U.S.) Federal Agencies such as
 the U.S. Department of Agriculture – National Agricultural Statistics Service (USDA–NASS),
-various branches of the U.S. Environmental Protection Agency (EPA),
+various branches of the U.S. Environmental Protection Agency (USEPA),
 the National Cancer Institute (NCI),
 the U.S. Census Bureau, and
 the U.S. Bureau of Labor Statistics (BLS).
