@@ -8,9 +8,12 @@
 
 
 Welcome to the _Micromap Plots in R Book_. In this chapter, we provide a general
-overview of micromap visualizations, introduce the nomenclature used
-throughout the book, and introduce the primary software that is available
-for micromap visualizations. Also provided are an outlook on the
+overview of micromap visualizations, we present the three major classes of micromaps,
+and we introduce the nomenclature used throughout the book.
+For each of the three major classes of micromaps,
+we look at the historical developments, their design, features, and interpretation, and
+the primary software and online developments for their construction. 
+Also provided are an outlook on the remaining
 chapters of this book and how to best use the accompanying R code,
 webpage, and newly developed **micromapExtra**\index{R Packages!micromapExtra} R package.
 
@@ -31,14 +34,19 @@ conditioned micromaps,\index{Conditioned micromaps}
 introduced in Section \@ref(Ch1-ConditionedMicromaps), and
 comparative micromaps,\index{Comparative micromaps}
 introduced in Section \@ref(Ch1-ComparativeMicromaps).
-Our nomenclature will closely follow the one from @SCMW2017.
-Alternatives can sometimes be found in the literature,
-but should be easy to match with the terminology used in this book.
+In each of these three sections, we will first look at the 
+historical development of that class of micromaps, 
+then discuss their design, features, and interpretation,
+and finish with an overview of past and current software and online developments.
 
-After introducing the three main types of micromaps,
-we take a closer look at software and online developments
-for micromaps in Section \@ref(Ch1-SoftwareOnlineDevelopments)
-that cover almost 40 years of micromap developments.
+Our nomenclature will closely follow the one from @SCMW2017.
+Alternatives can sometimes be found elsewhere in the literature,
+but it should be easy to match alternative terms with the terminology used in this book.
+As an example, linked micromap plots\index{Linked micromap plot}
+were originally called _map row plots_ (@OCCP1996). They often have been abbreviated as _LMplots_.
+Conditioned micromaps\index{Conditioned micromaps} initially have been
+called _conditioned choropleth maps_ (@CWC2000) and have been abbreviated as _CCmaps_.
+
 What follows in Section \@ref(Ch1-Outlook)
 is an outlook on the 14 chapters in this book.
 Finally, Section \@ref(Ch1-HowToUse) will provide
@@ -48,6 +56,9 @@ the accompanying R code, webpage, and the newly developed
 
 
 ## Linked Micromap Plots {#Ch1-LinkedMicromapPlots}
+
+
+### Historical Development {#Ch1-LinkedMicromapPlotsHistoricalDevelopment}
 
 
 Linked micromap plots\index{Linked micromap plot} were introduced as the first
@@ -124,15 +135,22 @@ to read the book chapters and encyclopedia entries by
 for readers who want to learn the full background behind all three main types
 of micromaps, we strongly recommend to read the excellent book by @CP2010.
 
-We will use two mock-up linked micromap plots\index{Linked micromap plot},
-shown in Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2),
+
+### Design, Features, and Interpretation {#Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation}
+
+
+We will use three mock-up linked micromap plots\index{Linked micromap plot},
+shown in Figures \@ref(fig:Ch1-NJ-Layout1), \@ref(fig:Ch1-NJ-Layout2), and \@ref(fig:Ch1-NJ-Layout3)
 to introduce the main nomenclature for linked micromap plots\index{Linked micromap plot}
-and how to interpret such plots. These two figures are based
+and how to interpret such plots. These three figures are based
 on actual boundaries for New Jersey in the United States, obtained from
 @USCensus2013Shapefiles. The statistical data were entirely made up for demonstration purposes.
+In particular, the values for `StatVar4` originate from a Normal distribution with 
+mean 55 and standard deviation 10 and have been randomly assigned
+to the 21 counties in New Jersey.
 
 
-```{r Ch1-NJ-Layout1, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 7, fig.height = 8, echo = FALSE}
+```{r Ch1-NJ-Layout1, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar1` is used as the sorting variable.', fig.width = 7, fig.height = 6, echo = FALSE}
 library(micromap)
 library(raster)
 
@@ -273,7 +291,7 @@ mmplot(
 ```
 
 
-```{r Ch1-NJ-Layout2, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. Main changes are the use of two-ended cumulative maps, the reduced number of perceptual groups, the introduction of a median row, and using `StatVar2` as the sorting variable.', fig.width = 7, fig.height = 8, echo = FALSE}
+```{r Ch1-NJ-Layout2, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar2` is used as the sorting variable. Further changes are the use of two-ended cumulative maps, the reduced number of perceptual groups, and the introduction of a median row.', fig.width = 7, fig.height = 6, echo = FALSE}
 # create linked micromap plot
 mmplot(
   stat.data = nj_data,
@@ -282,6 +300,97 @@ mmplot(
   panel.types = c("map", "dot_legend", "labels", "dot", "dot", "dot", "dot"),
   panel.data = list(NA, NA, "County", "StatVar1", "StatVar2", "StatVar3", "StatVar4"),
   ord.by = "StatVar2",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
+  vertical.align = "center",
+  panel.att = list(
+    list(
+      1,
+      header = "Two-ended\nCumulative Maps",
+      map.all = TRUE,
+      fill.regions = "two ended",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 1.3
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 1.5
+    ),
+    list(
+      3,
+      header = "Counties",
+      align = "left",
+      right.margin = 0,
+      left.margin = -1,
+      text.size = 0.9,
+      panel.width = 0.7
+    ),
+    list(
+      4,
+      header = "StatVar1",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "StatVar2",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50),
+      xaxis.labels = list(0, 25, 50),
+      xaxis.title = "Percent"
+    ),
+    list(
+      6,
+      header = "StatVar3",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(25, 50, 75, 100),
+      xaxis.labels = list(25, 50, 75, 100),
+      xaxis.title = "Percent"
+    ),
+    list(
+      7,
+      header = "StatVar4",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.25,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(20, 40, 60, 80),
+      xaxis.labels = list(20, 40, 60, 80),
+      xaxis.title = "Percent"
+    )
+  )
+)
+```
+
+
+```{r Ch1-NJ-Layout3, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar4` is used as the sorting variable.', fig.width = 7, fig.height = 6, echo = FALSE}
+# create linked micromap plot
+mmplot(
+  stat.data = nj_data,
+  map.data = nj_polys_table,
+  map.link = c("County", "ID"),
+  panel.types = c("map", "dot_legend", "labels", "dot", "dot", "dot", "dot"),
+  panel.data = list(NA, NA, "County", "StatVar1", "StatVar2", "StatVar3", "StatVar4"),
+  ord.by = "StatVar4",
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
@@ -478,8 +587,9 @@ about `r round(cor(nj_data$StatVar1, nj_data$StatVar3), digits = 2)`
 for `StatVar1` and `StatVar3`,
 and about `r round(cor(nj_data$StatVar2, nj_data$StatVar3), digits = 2)`
 for `StatVar2` and `StatVar3`.
+
 There is no strong noticeable pattern when comparing `StatVar1`, `StatVar2`, and `StatVar3`
-with `StatVar4`.
+with `StatVar4`. This becomes most obvious in Figure \@ref(fig:Ch1-NJ-Layout3).
 In fact, the correlation coefficients $r$ are
 about `r round(cor(nj_data$StatVar1, nj_data$StatVar4), digits = 2)`
 for `StatVar1` and `StatVar4`,
@@ -487,6 +597,21 @@ about `r round(cor(nj_data$StatVar2, nj_data$StatVar4), digits = 2)`
 for `StatVar2` and `StatVar4`,
 and about `r round(cor(nj_data$StatVar3, nj_data$StatVar4), digits = 2)`
 for `StatVar3` and `StatVar4`.
+The reader should not be tempted to overinterpret the moderate correlation coefficient $r$ of
+about `r round(cor(nj_data$StatVar2, nj_data$StatVar4), digits = 2)`
+for `StatVar2` and `StatVar4` as this is entirely due to chance:
+The values for `StatVar4` originate from a Normal distribution with 
+mean 55 and standard deviation 10 and have been randomly assigned
+to the 21 counties in New Jersey. 
+Therefore, the band of five connected subregions in the top perceptual group
+in Figure \@ref(fig:Ch1-NJ-Layout3) is entirely due to chance.
+It is easy to be misguided by an apparent pattern in a statistical graphic
+or a map visualization. Some considerable work has been done over the past 15 years,
+trying to answer the question `Is what we see really there?` (@WCHB2010).
+Readers are encouraged to assess their visual capabilities to detect true patterns using the examples
+from @WCHB2010 and @BDMSTW2017 where line-ups of one data-based graphic (or map) have been compared
+with several graphics (or maps) that have been created under the null hypothesis of
+no pattern (or no spatial dependence).
 
 For readers who cannot immediately interpret the patterns from 
 parallel dotplots,\index{Dotplot} it is sometimes helpful to visualize (or mentally visualize)
@@ -498,18 +623,39 @@ a few times should help to correctly interpret the patterns
 from parallel dotplots\index{Dotplot} in the future.
 
 
-```{r Ch1-NJ-Scatterplot, fig.cap = 'Mock-up scatterplot of the four statistical variables shown in the two previous linked micromap plots\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 5, fig.height = 5, echo = FALSE}
+```{r Ch1-NJ-Scatterplot, fig.cap = 'Mock-up scatterplot of the four statistical variables shown in the three previous linked micromap plots\\index{Linked micromap plot}, based on the 21 counties of New Jersey.', fig.width = 5, fig.height = 5, echo = FALSE}
 graphics::pairs(x = nj_data[, 2:5])
 ```
+
+
+### Software and Online Developments {#Ch1-LinkedMicromapPlotsSoftwareDevelopments}
+
 
 
 ## Conditioned Micromaps {#Ch1-ConditionedMicromaps}
 
 
+### Historical Development {#Ch1-ConditionedMicromapsHistoricalDevelopment}
+
+
+### Design, Features, and Interpretation {#Ch1-ConditionedMicromapsDesignFeaturesInterpretation}
+
+
+### Software and Online Developments {#Ch1-ConditionedMicromapsSoftwareDevelopments}
+
+
+
 ## Comparative Micromaps {#Ch1-ComparativeMicromaps}
 
 
-## Software and Online Developments {#Ch1-SoftwareOnlineDevelopments}
+### Historical Development {#Ch1-ComparativeMicromapsHistoricalDevelopment}
+
+
+### Design, Features, and Interpretation {#Ch1-ComparativeMicromapssDesignFeaturesInterpretation}
+
+
+### Software and Online Developments {#Ch1-ComparativeMicromapsSoftwareDevelopments}
+
 
 
 ## Outlook on the Book Chapters {#Ch1-Outlook}
