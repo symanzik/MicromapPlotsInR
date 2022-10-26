@@ -8,7 +8,7 @@
 
 
 Welcome to the _Micromap Plots in R Book_. In this chapter, we provide a general
-overview of micromap visualizations, we present the three major classes of micromaps,
+overview of micromap visualizations. We present the three major classes of micromaps
 and we introduce the nomenclature used throughout the book.
 For each of the three major classes of micromaps,
 we look at the historical developments, their design, features, and interpretation, and
@@ -88,19 +88,27 @@ the National Cancer Institute (NCI),
 the U.S. Census Bureau, and
 the U.S. Bureau of Labor Statistics (BLS).
 In addition to static linked micromap plots,\index{Linked micromap plot}
-some of these agencies (in particular the NCI, the EPA, and the USADA-NASS) developed early
+some of these agencies (in particular the NCI, the USEPA, and the USADA-NASS) developed early
 interactive and web-based versions of linked micromap plots\index{Linked micromap plot}
 as discussed in more detail in @SC2008.
 
-@SC2008 also pointed out three main advantages of 
+As indicated in @OCCP1996, linked micromap plots\index{Linked micromap plot}
+"give equal consideration to presenting data in attribute [i.e., statistical] space and
+in geographic space." In contrast, traditionally used choropleth maps emphasize
+the map visualization and put less emphasis on the visualization of the statistical data.
+According to @PoLa2018, a choropleth map is a "map in which regions with differing occurrence rates 
+of conditions of interest (e.g., cancer) are visually distinguished by different color or shading 
+corresponding to rates at which the designated conditions have occurred in each region during the 
+period of observation."
+
+@SC2008 pointed out three main advantages of 
 linked micromap plots\index{Linked micromap plot} over
-traditionally used choropleth maps where the map regions are filled by colors from a
-continuous or discrete color scheme to display numerical information on the map.
+choropleth maps.
 First, small map regions (such as Washington, D.C., in a map of the 
 United States) may be hard to see in a choropleth map.
 In linked micromap plots,\index{Linked micromap plot} small map regions
 are often enlarged, resulting in some kind of map caricatures 
-where such a subregion is enlarged and sometimes also is pulled to the outside of the main map.
+where such a subregion is enlarged and sometimes also gets pulled to the outside of the main map area.
 Further changes of the underlying maps often take place, such as moving
 far-away subregions closer to the main geographic region (such as Alaska and Hawaii
 for the United States)
@@ -121,7 +129,7 @@ rather than showing the statistical data directly on the map.
 Third, it is difficult to show more than one statistical variable directly
 on a map. This becomes even more difficult when trying to display confidence
 bounds or the minimum, first quartile, median, third quartile, and maximum
-that make up the summary statistics visually displayed in a boxplot.\index{Boxplot}
+that make up the summary statistics that are visually displayed in a boxplot.\index{Boxplot}
 This problem is resolved in linked micromap plots\index{Linked micromap plot}
 by linking the statistical graphic displays to certain spatial areas,
 rather than displaying the statistical information directly on a map.
@@ -144,8 +152,9 @@ shown in Figures \@ref(fig:Ch1-NJ-Layout1), \@ref(fig:Ch1-NJ-Layout2), and \@ref
 to introduce the main nomenclature for linked micromap plots\index{Linked micromap plot}
 and how to interpret such plots. These three figures are based
 on actual boundaries for New Jersey in the United States, obtained from
-@USCensus2013Shapefiles. The statistical data were entirely made up for demonstration purposes.
-In particular, the values for `StatVar4` originate from a Normal distribution with 
+@USCensus2013Shapefiles. The statistical data are entirely made up for demonstration purposes.
+In particular, the values for `StatVar4`, one of the four statistical variables, 
+originate from a Normal distribution with 
 mean 55 and standard deviation 10 and have been randomly assigned
 to the 21 counties in New Jersey.
 
@@ -237,7 +246,7 @@ mmplot(
       3,
       header = "Counties",
       align = "left",
-      right.margin = 0,
+      right.margin = -0.1,
       left.margin = -1,
       text.size = 0.9,
       panel.width = 0.7
@@ -328,98 +337,7 @@ mmplot(
       3,
       header = "Counties",
       align = "left",
-      right.margin = 0,
-      left.margin = -1,
-      text.size = 0.9,
-      panel.width = 0.7
-    ),
-    list(
-      4,
-      header = "StatVar1",
-      graph.bgcolor = "lightgray",
-      right.margin = 0.1,
-      left.margin = -0.6,
-      point.size = 1.5,
-      xaxis.ticks = list(0, 25, 50, 75),
-      xaxis.labels = list(0, 25, 50, 75),
-      xaxis.title = "Percent"
-    ),
-    list(
-      5,
-      header = "StatVar2",
-      graph.bgcolor = "lightgray",
-      right.margin = 0.1,
-      left.margin = -0.6,
-      point.size = 1.5,
-      xaxis.ticks = list(0, 25, 50),
-      xaxis.labels = list(0, 25, 50),
-      xaxis.title = "Percent"
-    ),
-    list(
-      6,
-      header = "StatVar3",
-      graph.bgcolor = "lightgray",
-      right.margin = 0.1,
-      left.margin = -0.6,
-      point.size = 1.5,
-      xaxis.ticks = list(25, 50, 75, 100),
-      xaxis.labels = list(25, 50, 75, 100),
-      xaxis.title = "Percent"
-    ),
-    list(
-      7,
-      header = "StatVar4",
-      graph.bgcolor = "lightgray",
-      right.margin = 0.25,
-      left.margin = -0.6,
-      point.size = 1.5,
-      xaxis.ticks = list(20, 40, 60, 80),
-      xaxis.labels = list(20, 40, 60, 80),
-      xaxis.title = "Percent"
-    )
-  )
-)
-```
-
-
-```{r Ch1-NJ-Layout3, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar4` is used as the sorting variable.', fig.width = 7, fig.height = 6, echo = FALSE}
-# create linked micromap plot
-mmplot(
-  stat.data = nj_data,
-  map.data = nj_polys_table,
-  map.link = c("County", "ID"),
-  panel.types = c("map", "dot_legend", "labels", "dot", "dot", "dot", "dot"),
-  panel.data = list(NA, NA, "County", "StatVar1", "StatVar2", "StatVar3", "StatVar4"),
-  ord.by = "StatVar4",
-  rev.ord = TRUE,
-  grouping = 5,
-  median.row = TRUE,
-  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
-  vertical.align = "center",
-  panel.att = list(
-    list(
-      1,
-      header = "Two-ended\nCumulative Maps",
-      map.all = TRUE,
-      fill.regions = "two ended",
-      active.border.color = "black",
-      active.border.size = 1.2,
-      inactive.border.color = gray(0.7),
-      inactive.border.size = 1,
-      panel.width = 1.3
-    ),
-    list(
-      2,
-      point.type = 20,
-      point.border = TRUE,
-      point.size = 2,
-      panel.width = 1.5
-    ),
-    list(
-      3,
-      header = "Counties",
-      align = "left",
-      right.margin = 0,
+      right.margin = -0.1,
       left.margin = -1,
       text.size = 0.9,
       panel.width = 0.7
@@ -567,16 +485,16 @@ Gloucester has a much higher value of `StatVar2` than its geographic neighbors.
 Finally, we want to describe and interpret the patterns from the
 statistical graphics columns. In Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2),
 the dots for `StatVar1` and `StatVar2` run almost in parallel, i.e.,
-high values or `StatVar1` are associated with high values of `StatVar2` and
-low values or `StatVar1` are associated with low values of `StatVar2`.
+high values of `StatVar1` are associated with high values of `StatVar2` and
+low values of `StatVar1` are associated with low values of `StatVar2`.
 There are only a few exceptions -- the previously mentioned Morris and Gloucester
 that do not fit in the overall pattern. Overall, such a pattern is an
 indicator of a strong positive (linear) association between these two variables.
 In contrast, the dots for `StatVar1` and `StatVar3` (and `StatVar2` and `StatVar3`) 
 diverge, forming some crude caret shape
 (resembling an upside down V-shape), i.e.,
-high values or `StatVar1` (and `StatVar2`) are associated with low values of `StatVar3` and
-low values or `StatVar1` (and `StatVar2`) are associated with high values of `StatVar3`.
+high values of `StatVar1` (and `StatVar2`) are associated with low values of `StatVar3` and
+low values of `StatVar1` (and `StatVar2`) are associated with high values of `StatVar3`.
 Overall, such a pattern is an
 indicator of a strong negative (linear) association between these two variables.
 This can be confirmed numerically.
@@ -588,8 +506,106 @@ for `StatVar1` and `StatVar3`,
 and about `r round(cor(nj_data$StatVar2, nj_data$StatVar3), digits = 2)`
 for `StatVar2` and `StatVar3`.
 
+
+```{r Ch1-NJ-Layout3, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar4` is used as the sorting variable. The maps are placed on the right.', fig.width = 7, fig.height = 6, echo = FALSE}
+# create linked micromap plot
+mmplot(
+  stat.data = nj_data,
+  map.data = nj_polys_table,
+  map.link = c("County", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "dot", "dot", "map"),
+  panel.data = list(NA, "County", "StatVar1", "StatVar2", "StatVar3", "StatVar4", NA),
+  ord.by = "StatVar4",
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
+  vertical.align = "center",
+  panel.att = list(
+    list(
+      1,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 2,
+      panel.width = 1.6
+    ),
+    list(
+      2,
+      header = "Counties",
+      align = "left",
+      right.margin = -0.1,
+      left.margin = -1,
+      text.size = 0.9,
+      panel.width = 0.7
+    ),
+    list(
+      3,
+      header = "StatVar1",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50, 75),
+      xaxis.labels = list(0, 25, 50, 75),
+      xaxis.title = "Percent"
+    ),
+    list(
+      4,
+      header = "StatVar2",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(0, 25, 50),
+      xaxis.labels = list(0, 25, 50),
+      xaxis.title = "Percent"
+    ),
+    list(
+      5,
+      header = "StatVar3",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(25, 50, 75, 100),
+      xaxis.labels = list(25, 50, 75, 100),
+      xaxis.title = "Percent"
+    ),
+    list(
+      6,
+      header = "StatVar4",
+      graph.bgcolor = "lightgray",
+      right.margin = 0.1,
+      left.margin = -0.6,
+      point.size = 1.5,
+      xaxis.ticks = list(20, 40, 60, 80),
+      xaxis.labels = list(20, 40, 60, 80),
+      xaxis.title = "Percent"
+    ),
+    list(
+      7,
+      header = "Two-ended\nCumulative Maps",
+      map.all = TRUE,
+      fill.regions = "two ended",
+      active.border.color = "black",
+      active.border.size = 1.2,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1,
+      panel.width = 1.3
+    )
+  )
+)
+```
+
+
+In Figure \@ref(fig:Ch1-NJ-Layout3), the rows are sorted 
+from highest (on top) to lowest (at the bottom) according to `StatVar4`.
+This layout also makes use of a median row and places the maps on the right.
 There is no strong noticeable pattern when comparing `StatVar1`, `StatVar2`, and `StatVar3`
-with `StatVar4`. This becomes most obvious in Figure \@ref(fig:Ch1-NJ-Layout3).
+with `StatVar4`. 
+While this can also been seen in the previously created 
+Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2),
+this becomes most obvious in Figure \@ref(fig:Ch1-NJ-Layout3).
 In fact, the correlation coefficients $r$ are
 about `r round(cor(nj_data$StatVar1, nj_data$StatVar4), digits = 2)`
 for `StatVar1` and `StatVar4`,
@@ -607,7 +623,7 @@ Therefore, the band of five connected subregions in the top perceptual group
 in Figure \@ref(fig:Ch1-NJ-Layout3) is entirely due to chance.
 It is easy to be misguided by an apparent pattern in a statistical graphic
 or a map visualization. Some considerable work has been done over the past 15 years,
-trying to answer the question `Is what we see really there?` (@WCHB2010).
+trying to answer the question "Is what we see really there?" (@WCHB2010).
 Readers are encouraged to assess their visual capabilities to detect true patterns using the examples
 from @WCHB2010 and @BDMSTW2017 where line-ups of one data-based graphic (or map) have been compared
 with several graphics (or maps) that have been created under the null hypothesis of
