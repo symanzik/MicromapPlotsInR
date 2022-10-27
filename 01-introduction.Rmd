@@ -415,7 +415,8 @@ The rows in linked micromap plots\index{Linked micromap plot}, representing the 
 perceptual groups.\index{Perceptual group} 
 Ideally, each perceptual group\index{Perceptual group} should contain the same
 number of subregions, but that is not always possible. 
-Table XXX provides suggestions for the number of subregions in each perceptual group,\index{Perceptual group}
+Table \@ref(tab:Ch1-PartitioningTable) provides suggestions 
+for the number of subregions in each perceptual group,\index{Perceptual group}
 depending on the total number of subregions in the area of interest.
 In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
 is ideal from a cognitive perspective.
@@ -438,6 +439,87 @@ in each perceptual group,\index{Perceptual group}
 the second lightest color (here green) always represents the second largest value
 in each perceptual group,\index{Perceptual group}
 and so on.
+
+
+(ref:Ch1-PartitioningTable-reference) @SC2008
+
+
+```{r Ch1-PartitioningTable, echo = FALSE} 
+library(kableExtra)
+
+partitionings <- matrix(
+  data = c(
+    "1", "1", "",
+    "2", "2", "",
+    "3", "3", "",
+    "4", "4", "",
+    "5", "5", "",
+    "6", "3   3", "",
+    "7", "3   1   3", "2   3   2",
+    "8", "4   4", "",
+    "9", "4   1   4", "3   3   3",
+    "10", "5   5", "",
+    "11", "5   1   5", "3   5   3",
+    "12", "5   2   5", "4   4   4",
+    "13", "5   3   5", "4   5   4",
+    "14", "5   4   5", "",
+    "15", "5   5   5", "",
+    "16", "5   3   3   5", "4   4   4   4",
+    "17", "5   3   1   3   5", "3   4   3   4   3",
+    "18", "5   4   4   5", "4   5   5   4",
+    "19", "5   4   1   4   5", "4   4   3   4   4",
+    "20", "5   5   5   5", "",
+    "21", "5   5   1   5   5", "4   4   5   4   4",
+    "22", "5   5   2   5   5", "5   4   4   4   5",
+    "23", "5   5   3   5   5", "",
+    "24", "5   5   4   5   5", "",
+    "25", "5   5   5   5   5", "",
+    "26", "5   5   3   3   5   5", "5   4   4   4   4   5",
+    "27", "5   5   3   1   3   5   5", "4   4   4   3   4   4   4",
+    "28", "5   5   4   4   5   5", "4   5   5   5   5    4",
+    "29", "5   5   4   1   4   5   5", "4   4   4   5   4   4   4",
+    "30", "5   5   5   5   5   5", "",
+    "31", "5   5   5   1   5   5   5", "4   4   5   5   5   4   4",
+    "32", "5   5   5   2   5   5   5", "5   5   4   4   4   5   5",
+    "33", "5   5   5   3   5   5   5", "4   5   5   5   5   5   4",
+    "34", "5   5   5   4   5   5   5", "",
+    "35", "5   5   5   5   5   5   5", "",
+    "36", "5   5   5   3   3   5   5   5", "4   4   5   5   5   5   4   4",
+    "37", "5   5   5   3   1   3   5   5   5", "4   4   4   4   5   4   4   4   4",
+    "38", "5   5   5   4   4   5   5   5", "4   5   5   5   5   5   5   4",
+    "39", "5   5   5   4   1   4   5   5   5", "4   4   4   5   5   5   4   4   4",
+    "40", "5   5   5   5   5   5   5   5", "",
+    "41", "5   5   5   5   1   5   5   5   5", "4   4   5   5   5   5   5   4   4",
+    "42", "5   5   5   5   2   5   5   5   5", "5   5   5   4   4   4   5   5   5",
+    "43", "5   5   5   5   3   5   5   5   5", "4   5   5   5   5   5   5   5   4",
+    "44", "5   5   5   5   4   5   5   5   5", "",
+    "45", "5   5   5   5   5   5   5   5   5", "",
+    "46", "5   5   5   5   3   3   5   5   5   5", "4   4   5   5   5   5   5   5   4   4",
+    "47", "5   5   5   5   3   1   3   5   5   5   5", "4   4   4   4   5   5   5   4   4   4   4",
+    "48", "5   5   5   5   4   4   5   5   5   5", "4   5   5   5   5   5   5   5   5   4",
+    "49", "5   5   5   5   4   1   4   5   5   5   5", "4   4   4   5   5   5   5   5   4   4   4",
+    "50", "5   5   5   5   5   5   5   5   5   5", "",
+    "51", "5   5   5   5   5   1   5   5   5   5   5", "4   4   5   5   5   5   5   5   5   4   4"
+  ),
+  nrow = 51, ncol = 3, byrow = TRUE
+)
+
+knitr::kable(
+  partitionings,
+  align = c(rep("c", times = 3)),
+  booktabs = TRUE,
+  caption = "Full symmetry partitionings with targeting groups of size 5. The left column (Number) contains the number of regions. The middle column (Partitioning 1) puts smallest counts in the middle. Full symmetry alternatives that avoid small counts appear in the right column (Partitioning 2). Abandoning full symmetry can lead to fewer panels. The table ends with 51 regions (the number of U.S. states plus Washington, D.C.), but it can be easily extended. Table originally published in (ref:Ch1-PartitioningTable-reference).",
+  col.names = c("Number", "Partitioning 1", "Partitioning 2")
+) %>%
+  kable_styling(
+    latex_options = "striped",
+    font_size = 8
+  ) %>%
+  column_spec(1, width = "0.5in") %>%
+  column_spec(2, width = "2in") %>%
+  column_spec(3, width = "2in")
+```
+
 
 Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) each show a seven-column
 linked micromap plot\index{Linked micromap plot} for the 21 counties of New Jersey.

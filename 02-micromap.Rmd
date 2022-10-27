@@ -299,7 +299,7 @@ that there are 51 subregions overall: The 50 U.S. states and Washington, D.C.
 This results in only one row of data and one subregion highlighted in the final (bottom) perceptual
 group. There is no automatic balancing of the number of rows in each perceptual group.
 A layout such as the default one shown in Figure \@ref(fig:Ch2-creatingdraft) 
-should be avoided in general. Table XXX in Chapter \@ref(Ch1) provides 
+should be avoided in general. Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1) provides 
 suggestions how to group data for various numbers of subregions.
 We will also address this as one of the refinement steps in the next section.
 
@@ -838,6 +838,7 @@ Variable names starting with a lowercase letter, e.g.,
 are the descriptive statistics, representing the minimum, first quartile, median,
 third quartile, and maximum of a variable (here, specific conductance) in each of the 25 watersheds, respectively.
 These will be used for the construction of boxplots\index{Boxplot}.
+
 
 (ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary data set for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} in this section.
 
