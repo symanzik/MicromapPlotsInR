@@ -403,7 +403,9 @@ mmplot(
 We continue making changes to the second refined linked micromap plot\index{Linked micromap plot}.
 We change the grouping to nine perceptual groups overall (and no median row)
 via `grouping = c(6, 6, 6, 6, 3, 6, 6, 6, 6)` and `median.row = FALSE` (which is the default and could be omitted)
-and vertically align the rows in each perceptual block via `vertical.align = "center"`.
+and vertically align the rows in each perceptual group via `vertical.align = "center"`.
+This grouping is not a recommended partitioning from Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)
+and is mostly done for experimental purposes here.
 Finally, we start making changes to individual columns of the plot via
 the `panel.att` argument. Here, the third column that shows the `labels` is aligned on the left.
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
@@ -429,7 +431,9 @@ mmplot(
 
 After this experiment with a different grouping, we revert back to the more traditional grouping
 of ten perceptual groups with five rows each and a median row that is frequently used
-for the 50 U.S. states (and Washington, D.C.). What we want to discuss next is the choice of colors
+for the 50 U.S. states (and Washington, D.C.) 
+as suggested as Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1).
+What we want to discuss next is the choice of colors
 for the subregions in each map (and thus for the `dot_legend` appearance in the
 `panel.type` argument as well). The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
@@ -952,6 +956,7 @@ largest (at the bottom) median observed specific conductance in a certain subbas
 Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups (here `5` rows). This implies that the 25 subbasins
 will be split into five perceptual groups showing five subbasins each.
+This is the recommended Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1).
 
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraftWVdot).

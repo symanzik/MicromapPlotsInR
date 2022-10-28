@@ -416,10 +416,15 @@ perceptual groups.\index{Perceptual group}
 Ideally, each perceptual group\index{Perceptual group} should contain the same
 number of subregions, but that is not always possible. 
 Table \@ref(tab:Ch1-PartitioningTable) provides suggestions 
-for the number of subregions in each perceptual group,\index{Perceptual group}
+for common partitionings
+of the number of subregions in each perceptual group,\index{Perceptual group}
 depending on the total number of subregions in the area of interest.
 In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
-is ideal from a cognitive perspective.
+is ideal from a cognitive perspective. However, sometimes it is desireable to highlight
+one subregion in a median row and emphasize which subregions fall above and which
+fall below with respect to the sorting variable. Those partitionings
+that contain a `1` should be interpreted as partitionings with a median row.
+
 Within each perceptual group,\index{Perceptual group} the subregions shown in the map,
 the plot symbol next to the subregion names, and the graphics in the statistical graphics columns are linked
 by color. This allows to quickly link information from the statistical graphics columns
@@ -531,6 +536,8 @@ graph types in linked micromap plots.\index{Linked micromap plot}
 
 In Figure \@ref(fig:Ch1-NJ-Layout1), the rows are sorted 
 from highest (on top) to lowest (at the bottom) according to `StatVar1`.
+This layout makes use of Partitioning 2 from Table \@ref(tab:Ch1-PartitioningTable)
+and uses five perceptual groups and no median row.
 Each consecutive map shows in light gray which subregions have been colored previously in the map(s) above,
 resulting in some aggregated maps.
 In the map at the bottom, eventually all subregions have been colored.
@@ -541,7 +548,8 @@ southern part of New Jersey.
 
 In Figure \@ref(fig:Ch1-NJ-Layout2), the rows are sorted 
 from highest (on top) to lowest (at the bottom) according to `StatVar2`.
-This layout makes use of a median row.
+This layout makes use of Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable)
+and uses four perceptual groups and a median row.
 A median row is often a good solution if the 
 number of subregions is odd such as for the 21 counties of New Jersey.
 Here, Somerset is the county that appears (by construction) in the median row.
@@ -682,7 +690,9 @@ mmplot(
 
 In Figure \@ref(fig:Ch1-NJ-Layout3), the rows are sorted 
 from highest (on top) to lowest (at the bottom) according to `StatVar4`.
-This layout also makes use of a median row and places the maps on the right.
+This layout also makes use of Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable)
+and uses four perceptual groups and a median row.
+Moreover, it places the maps on the right.
 There is no strong noticeable pattern when comparing `StatVar1`, `StatVar2`, and `StatVar3`
 with `StatVar4`. 
 While this can also been seen in the previously created 
