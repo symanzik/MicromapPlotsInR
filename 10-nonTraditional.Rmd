@@ -229,7 +229,7 @@ if (sortby == "pupil_data") {
 
 5. **Determine Panel Layouts.**
 
-The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here we chose the automatic layout and set the partitioning to be 1 (the first partitioning way defined in the function `ArrangePanels()`). The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows for the aesthetics of the plot. The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()`, as well as the layout details list is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired.  
+The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here we chose the automatic layout and set the partitioning to be 1 (the first partitioning way defined in the function `ArrangePanels()`). The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows for the aesthetics of the plot. The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()` is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired. A layout details list is defined in code section 5.4 for the graphical parameters. 
 
 ```{r Ch10-panel-layout}
 # 5.1 Load source code for panel definitions and layouts
@@ -271,6 +271,27 @@ if (!median_row) {
   rowsize <- c(rep(17.2 / rows, floor(rows / 2)), 17.2 / (rows * 3.2), 
                rep(17.2 / rows, floor(rows / 2)))
 }
+
+
+# 5.4 Define some graphic parameters
+details <- list(
+  bot = 0.77, # bottom margin for the panel
+  top = 0.85, # top margin for the panel
+  left = 0, # left margin for the panel
+  right = 0, # right margin for the panel
+  dcex = 0.96, # text size option 1
+  tCex = 1.08, # text size 2
+  cex = 0.7, # text size option 3 
+  fontsize = 12, # font size option 1
+  font = 1, # font size ooption 2
+  line1 = .2, # on which margin line, starting at 0 counting outwards.
+  line2 = 1.0, # same as above
+  line3 = .2, # same as above
+  ypad = .65, # change the scale of the panel vertically
+  nameShift = .12, # label location shift 
+  wyellow = rgb(1,1,.82), # color option 1 (for plot background)
+  wgray = rgb(0.945, 0.945, 0.945) # color option 2 (for panel background)
+)
 ```
 
 
@@ -291,7 +312,7 @@ panels <- panelLayout(
   rowSep = rep(0.01, rows + 1), 
   rowSize = rowsize,
   colSize = panel_width, 
-  colSep = rep(0.05, (columns + 1))
+  colSep = rep(0.1, (columns + 1)) # space between panels
 )
 # 6.2 Set panel row indices
 row_begin <- ArrangePanels(posterdat = poster_dataset, 
@@ -328,7 +349,7 @@ The panels and indices are set in code section 7.3.1, 7.3.2, and 7.3.5. Then pos
 ```{r Ch10-create-microposters-function}
 plot_microposters <- function(panel_col,
                          cumulate = TRUE,
-                         poster_dataset = poster_dataset,
+                         poster_dataset,
                          aoi_vis_borders,
                          poster_vis_borders,
                          poster,
@@ -480,11 +501,10 @@ plot_microposters <- function(panel_col,
 }
 ```
 
-Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot, i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, five colors are used from the `Accent` color palette, since we have five rows at most for each perceptual group. Multiple microposter columns could be created if needed.
+Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot, i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, five colors are used from the `Paired` color palette, since we have five rows at most for each perceptual group. Multiple microposter columns could be created if needed.
 
 ```{r Ch10-create-microposters, fig.cap = 'Linked microposters plot poster column.', fig.width = 7}
-color_scheme <- rev(RColorBrewer::brewer.pal(5, "Accent"))
-
+color_scheme <- rev(RColorBrewer::brewer.pal(5, "Paired"))
 if (sum(panel_types == "poster") >= 1) {
   posters <- which(panel_types == "poster")
 
@@ -514,21 +534,21 @@ if (sum(panel_types == "poster") >= 1) {
 After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indices are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs by using the same color scheme and plotting order. The `Blank` AOI is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
 
 ```{r Ch10-create-labels-function}
-plot_labels <- function(panel_col = panel_col,
-                     title = title,
+plot_labels <- function(panel_col,
+                     title,
                      header_size = 0.7,
                      cex = 0.7,
                      dcex = 0.96,
                      font = 1,
-                     poster_dataset = poster_dataset,
+                     poster_dataset ,
                      aoi_vis_borders,
                      poster_vis_borders,
-                     panels = panels,
-                     n_groups = n_groups,
-                     median_row = median_row,
-                     row_begin = row_begin,
-                     row_end = row_end,
-                     color_scheme = color_scheme) {
+                     panels,
+                     n_groups,
+                     median_row,
+                     row_begin,
+                     row_end,
+                     color_scheme) {
   
   # 8.1 Define panels 
   panelSelect(panels, 1, panel_col)
@@ -647,7 +667,7 @@ For the `plot_boxplot()` function, the dataframe is specified within the data li
 
 ```{r Ch10-dotplot-boxplot-functions}
 # A Dotplot
-plot_dotplot <- function(var = var,
+plot_dotplot <- function(var,
                       poster_dataset,
                       panel_num,
                       title,
