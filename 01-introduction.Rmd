@@ -62,7 +62,7 @@ the accompanying R code, webpage, and the newly developed
 
 
 Linked micromap plots\index{Linked micromap plot} were introduced as the first
-of the three major classes of micromaps. 
+of the three major classes of micromap visualizations.\index{Micromap visualizations} 
 They were originally presented at the Joint Statistical Meetings (JSM) 
 in Chicago, Illinois, in 1996 [@OCCP1996].
 A series of applications was published soon thereafter,
@@ -94,21 +94,23 @@ as discussed in more detail in @SC2008.
 
 As indicated in @OCCP1996, linked micromap plots\index{Linked micromap plot}
 "give equal consideration to presenting data in attribute [i.e., statistical] space and
-in geographic space." In contrast, traditionally used choropleth maps emphasize
+in geographic space." In contrast, traditionally used choropleth maps\index{Choropleth map} emphasize
 the map visualization and put less emphasis on the visualization of the statistical data.
-According to @PoLa2018, a choropleth map is a "map in which regions with differing occurrence rates 
+According to @PoLa2018, a choropleth map\index{Choropleth map} 
+is a "map in which regions with differing occurrence rates 
 of conditions of interest (e.g., cancer) are visually distinguished by different color or shading 
 corresponding to rates at which the designated conditions have occurred in each region during the 
 period of observation."
 
 @SC2008 pointed out three main advantages of 
 linked micromap plots\index{Linked micromap plot} over
-choropleth maps.
+choropleth maps.\index{Choropleth map}
 First, small map regions (such as Washington, D.C., in a map of the 
-United States) may be hard to see in a choropleth map.
+United States) may be hard to see in a choropleth map.\index{Choropleth map}
 In linked micromap plots,\index{Linked micromap plot} small map regions
-are often enlarged, resulting in some kind of map caricatures 
-where such a subregion is enlarged and sometimes also gets pulled to the outside of the main map area.
+are often enlarged and sometimes also pulled to the outside of the main map area, 
+resulting in some kind of a map caricature that helps to make the smaller
+map regions better visible.
 Further changes of the underlying maps often take place, such as moving
 far-away subregions closer to the main geographic region (such as Alaska and Hawaii
 for the United States)
@@ -117,14 +119,15 @@ for faster plotting
 and obtaining a less dominant, i.e., thinner, borderline.
 
 Second, when converting data from an ordered statistical variable into five to eight
-discrete colors for coloring the map area in a choropleth map, 
+discrete colors for coloring the map area in a choropleth map,\index{Choropleth map}
 there is an immediate loss of information.
 The exact numerical values of the variable are lost, the ranking of the values is lost,
-and the relative proximities of the values translated into a certain color class 
+and the relative proximities of the values that are translated into a certain color class 
 that represents an interval of values is lost. This problem is solved by
 using row-labeled statistical displays such as dotplots\index{Dotplot}
 that are linked to the mircomaps in linked micromap plots,\index{Linked micromap plot}
-rather than showing the statistical data directly on the map.
+rather than showing the statistical data directly on the map via a small
+set of discrete colors.
 
 Third, it is difficult to show more than one statistical variable directly
 on a map. This becomes even more difficult when trying to display confidence
@@ -139,9 +142,10 @@ in a linked micromap plot.\index{Linked micromap plot}
 Readers who are interested to learn more about the background and history
 of linked micromap plots\index{Linked micromap plot} are encouraged
 to read the book chapters and encyclopedia entries by 
-@SC2008 and @SCMW2017, respectively. Even more, 
+@SC2008 and @SCMW2017. Even more, 
 for readers who want to learn the full background behind all three main types
-of micromaps, we strongly recommend to read the excellent book by @CP2010.
+of micromap visualizations,\index{Micromap visualizations}
+we strongly recommend to read the excellent book by @CP2010.
 
 
 ### Design, Features, and Interpretation {#Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation}
@@ -396,12 +400,12 @@ One to four of these columns are statistical graphics columns that can be used t
 various statistical displays such as dotplots\index{Dotplot} (with and without confidence bounds), 
 boxplots\index{Boxplot},
 scatterplots\index{Scatterplot}, time series\index{Time Series}, and other graphical displays 
-of observed or estimated statistical data. Sometimes, a global summary statistic is
+of observed or estimated statistical data. Sometimes, an additional global summary statistic is
 also shown in these columns. The three remaining columns are used for the maps,
-a plot symbol, and the subregion names, abbreviations, or 
-some other meaningful identifiers. The subregions are sorted according to a
-sorting variable that may or may not be one of the variables that are displayed
-in the statistical graphics columns. There exists no fixed order how the columns have to be arranged.
+a color-coded legend, and a column with the subregion names, abbreviations, or 
+some other meaningful subregion identifiers. 
+The color-coded legend links the subregion names, the map regions, and the statistical data.
+There exists no fixed order how the columns have to be arranged.
 In particular, there is no strong recommendation where the column with the maps should be placed.
 This often depends on personal preferences of the authors and plot designers.
 There exist examples in the literature where the maps were placed on the left,
@@ -411,7 +415,11 @@ e.g., in @Wartenberg2009,
 and even in the middle,
 e.g., in @TaSt2019.
 
-The rows in linked micromap plots\index{Linked micromap plot}, representing the subregions, are arranged in
+Each row in a linked micromap plot\index{Linked micromap plot} is representing one subregion.
+The rows with the subregions are sorted according to a
+sorting variable that may or may not be one of the variables that are displayed
+in the statistical graphics columns.
+Moreover, the rows are arranged in
 perceptual groups.\index{Perceptual group} 
 Ideally, each perceptual group\index{Perceptual group} should contain the same
 number of subregions, but that is not always possible. 
@@ -420,18 +428,20 @@ for common partitionings
 of the number of subregions in each perceptual group,\index{Perceptual group}
 depending on the total number of subregions in the area of interest.
 In practice, having close to five subregions in most of the perceptual groups\index{Perceptual group}
-is ideal from a cognitive perspective. However, sometimes it is desireable to highlight
+is ideal from a cognitive perspective. However, sometimes it is desirable to highlight
 one subregion in a median row and emphasize which subregions fall above and which
 fall below with respect to the sorting variable. Those partitionings
-that contain a `1` should be interpreted as partitionings with a median row.
+that contain a `1` in Table \@ref(tab:Ch1-PartitioningTable) 
+should be interpreted as partitionings with a median row.
 
 Within each perceptual group,\index{Perceptual group} the subregions shown in the map,
-the plot symbol next to the subregion names, and the graphics in the statistical graphics columns are linked
-by color. This allows to quickly link information from the statistical graphics columns
-to the underlying subregions in the maps and to the subregion names via the plot symbol. Within each 
-perceptual group,\index{Perceptual group} a particular color represents a single
-subregion in the map column, the same color is used for the plot symbol next
-to the subregion name, and for the graphs in the statistical graphics columns.
+the color-coded legend next to the subregion names, and the graphics in the statistical graphics columns are linked
+by the color from the color-coded legend. This allows to quickly link information 
+from the statistical graphics columns
+to the underlying subregions in the maps and to the subregion names via the color-coded legend. Within each 
+perceptual group,\index{Perceptual group} a particular color, shown in the color-coded legend, represents a single
+subregion in the map column and all statistical data for this subregion in
+the graphs in the statistical graphics columns.
 The same set of colors is used in all perceptual groups.\index{Perceptual group}
 It might be tempting to assume that subregions that appear in the same color
 in different perceptual groups\index{Perceptual group} are somehow related,
@@ -528,14 +538,14 @@ knitr::kable(
 
 Figures \@ref(fig:Ch1-NJ-Layout1) and \@ref(fig:Ch1-NJ-Layout2) each show a seven-column
 linked micromap plot\index{Linked micromap plot} for the 21 counties of New Jersey.
-The first column shows the maps, the second column shows the plot symbol,
+The first column shows the maps, the second column shows the color-coded legend,
 and the third column shows the subregion identifiers, here the county names in New Jersey.
 Columns four, five, six, and seven are the statistical graphics columns 
 that show dotplots\index{Dotplot} that are by far the most frequently used
 graph types in linked micromap plots.\index{Linked micromap plot}
 
 In Figure \@ref(fig:Ch1-NJ-Layout1), the rows are sorted 
-from highest (on top) to lowest (at the bottom) according to `StatVar1`.
+from highest (at the top) to lowest (at the bottom) according to `StatVar1`.
 This layout makes use of Partitioning 2 from Table \@ref(tab:Ch1-PartitioningTable)
 and uses five perceptual groups and no median row.
 Each consecutive map shows in light gray which subregions have been colored previously in the map(s) above,
@@ -547,7 +557,7 @@ while the subregions with the smallest values of `StatVar1` can be found (by con
 southern part of New Jersey.
 
 In Figure \@ref(fig:Ch1-NJ-Layout2), the rows are sorted 
-from highest (on top) to lowest (at the bottom) according to `StatVar2`.
+from highest (at the top) to lowest (at the bottom) according to `StatVar2`.
 This layout makes use of Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable)
 and uses four perceptual groups and a median row.
 A median row is often a good solution if the 
@@ -609,7 +619,7 @@ mmplot(
   rev.ord = TRUE,
   grouping = 5,
   median.row = TRUE,
-  colors = RColorBrewer::brewer.pal(n = 5, name = "BrBG"),
+  colors = RColorBrewer::brewer.pal(n = 5, name = "RdYlBu"),
   vertical.align = "center",
   panel.att = list(
     list(
@@ -689,7 +699,7 @@ mmplot(
 
 
 In Figure \@ref(fig:Ch1-NJ-Layout3), the rows are sorted 
-from highest (on top) to lowest (at the bottom) according to `StatVar4`.
+from highest (at the top) to lowest (at the bottom) according to `StatVar4`.
 This layout also makes use of Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable)
 and uses four perceptual groups and a median row.
 Moreover, it places the maps on the right.
@@ -739,6 +749,40 @@ graphics::pairs(x = nj_data[, 2:5])
 ### Software and Online Developments {#Ch1-LinkedMicromapPlotsSoftwareDevelopments}
 
 
+Historical and online developments. Also introduce both main R packages that are used throughout the book.
+Summarize their main features, differences, and limitations.
+
+
+### Challenges and Open Research Questions {#Ch1-LinkedMicromapPlotsChallenges}
+
+
+One of the main challenges regarding linked micromap plots\index{Linked micromap plot}
+relates to geographic regions with many subareas. The challenge is that more
+than twelve perceptual groups\index{Perceptual group} with five subregions
+each typically do not fit on a single print page. 
+Possible solutions have been
+discussed for U.S. states with many counties such as Iowa and Tennessee
+that have between 60 and 120 counties [@Carr2001]. 
+However, those were specially tailored solutions for these two states.
+Neither of the two current R packages for linked micromap plots\index{Linked micromap plot}
+supports similar solutions. 
+Both current R packages only allow to stitch together multiple linked micromap plots,\index{Linked micromap plot}
+e.g., for the 255 counties of Texas [@PMWOK2015JSS]
+or for the 55 sub-boroughs of New York City [@MPS2019ASA;@Medri2021],
+which are less sophisticated than the designs in @Carr2001.
+
+Other conceptual challenges for linked micromap plots\index{Linked micromap plot}
+are imposed by the underlying geographic regions. No good solutions have been
+developed so far for long and narrow countries such as Chile where many of the 
+provinces are so narrow that they can be barely colored without using 
+a considerable distortion of the map.
+Problems exist if the geographic region consists of many small polygons, such
+as the numerous islands of the Philippines and Indonesia.
+Problems also exist when there are numerous big and numerous small subregions
+that cannot be resized in any obvious way as is the case 
+for the 89 federal subjects of Russia where the largest subregions are 
+about three orders of magnitude bigger than the smallest ones.
+
 
 ## Conditioned Micromaps {#Ch1-ConditionedMicromaps}
 
@@ -752,6 +796,9 @@ graphics::pairs(x = nj_data[, 2:5])
 ### Software and Online Developments {#Ch1-ConditionedMicromapsSoftwareDevelopments}
 
 
+### Challenges and Open Research Questions {#Ch1-ConditionedMicromapsChallenges}
+
+
 
 ## Comparative Micromaps {#Ch1-ComparativeMicromaps}
 
@@ -763,6 +810,9 @@ graphics::pairs(x = nj_data[, 2:5])
 
 
 ### Software and Online Developments {#Ch1-ComparativeMicromapsSoftwareDevelopments}
+
+
+### Challenges and Open Research Questions {#Ch1-ComparativeMicromapsChallenges}
 
 
 

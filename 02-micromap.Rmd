@@ -28,6 +28,7 @@ Write chapter introduction here.
 Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
 and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
 (or no) association in statistical panels of dotplots.\index{Dotplot}
+- DONE - see Section \@ref(Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation).
 
 
 -	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
@@ -35,30 +36,43 @@ and rows of perceptual groups? Also discussion of spatial patterns and interpret
     - Linking Spatial Boundary Data and Statistical Data
     - Creating a Draft Linked Micromap Plot
     - Refining the Linked Micromap Plot
+    - DONE - see Section \@ref(Ch2-Steps).
     
 -	Spatial Polygons in R and micromap Package Updates (**Juergen**: How much of this do we need here in Chapter \@ref(Ch2)? Would it make more sense to mention this in Chapter \@ref(Ch4)?)
     - Spatial objects and simple feature objects
     - Updates
+    - BRIEFLY MENTIONED - more in Chapter \@ref(Ch4).
     
 -	Identifying and Geoprocessing of Spatial Boundary Data (**Marcus**: I think this is a good topic to discuss, but may be tricky to balance specificity with brevity.  I'm no expert on it, but I know there are a few different methods one could use.  Maybe just hit on the why and how, and briefly present tradeoffs of the different methods?  I think for MM, the goal is just to increase render time w/o sacrificing spatial specificity, so maybe the exact method is not important? -- **Juergen**: In fact, let's keep it simple here and work with ready-to-use shapefiles that are already available in some R packages; refer to Chapter \@ref(Ch4) how to bring in external shapefiles and modify them for use in micromaps)
     - Keep this brief as Chapter \@ref(Ch4) might cover this in detail?
     - Example of generalizing polygons Figure  (Use same figures as Chapter \@ref(Ch4)?)
+    - POSTPONED - to be discussed in Chapter \@ref(Ch4).
 
 -	Linking Spatial Boundary Data and Statistical Data
     - Explicit link to spatial object
     - Under the hood link to simple features object
+    - ONLY AT THE TOP LEVEL - see Section \@ref(Ch2-Linking).
 
 -	Creating a Draft Linked Micromap Plot
     - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+    - DONE - see Section \@ref(Ch2-Creating).
 
 -	Refining the Linked Micromap Plot
     - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
+    - DONE - see Section \@ref(Ch2-Refining).
 
 - **Juergen**: Introducing a second basic example for a different geographic region, e.g., state level or environmental, and use of a different built-in plot type (e.g., boxplot). Similar four steps as before, but more condensed.
+- DONE - see Section \@ref(Ch2-Example2)
 
 -	Challenges to Visualizing Data with Linked Micromap Plots (**Marcus**: Not sure this is the right place for it, but maybe it's worth providing a brief contrast with micromapST?  Maybe include this in the overview at the top?  I think it would be useful for the reader to understand succinctly how the two differ and why there are two packages, though I'm sure these themes will be present throughout the book.  Perhaps the latter point is not that interesting, i.e., it's common to have "competing" software in an open source environment? -- **Juergen**: Yes, we need some discussions at the end of Chapters \@ref(Ch2) and \@ref(Ch3) that outline advantages and limitations of each of the two main micromap packages. Alternatively, there could be some table in Chapter \@ref(Ch1) that lists features (and limitations) of the two packages when they are first introduced to the reader. Overall, this last point may be a subsection in the Introduction, or become a final chapter at the end of the book which research is necessary in the future.)
+- TO BE DONE in Section \@ref(Ch1-LinkedMicromapPlotsSoftwareDevelopments).
+
     - Problem of many polygons (**Juergen**: There are other problems, e.g., many islands as in the Philippines, narrow shapes as for Chile, subregions of considerably different sizes as for Russia)
+    - DONE in Section \@ref(Ch1-LinkedMicromapPlotsChallenges).
+    
     - Automating linked micromap plot production for reports and interactive visualizations (Check with Emma Jones at VA DEQ)
+    - I SUPPOSE DONE in Chapter \@ref(Ch7).
+    
     - (**Marcus**: Related, a disadvantage of both packages is their lack of tighter integration with ggplot.  Not sure we want to go there though. -- **Juergen**: I wouldn't go there as these are the packages that currently exist and have to be used.)
 
 
@@ -284,7 +298,7 @@ is assigned here.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
 rows in the linked micromap plot\index{Linked micromap plot}. Here, `pov` 
-from the `stat.data` argument is used. The sorting of the rows goes from smallest (on top) to
+from the `stat.data` argument is used. The sorting of the rows goes from smallest (at the top) to
 largest (at the bottom). Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups. If a single integer value is provided, 
 that value is used for all perceptual groups. If a vector of integer values is provided,
@@ -341,7 +355,7 @@ It does not appear in a map by itself, but rather is added to the perceptual
 groups above and below the median row in a neutral color, 
 thus increasing the number of subregions shown in each of these two maps by one (i.e., six here).
 Also, we reverse the sorting order via `rev.ord = TRUE`. 
-Now the sorting of the rows goes from largest (on top) to
+Now the sorting of the rows goes from largest (at the top) to
 smallest (at the bottom).
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-refining1).
@@ -951,7 +965,7 @@ first and fifth columns, so `NA` is assigned here.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
 rows in the linked micromap plot\index{Linked micromap plot}. Here, `cond_med1` 
-from the `wv_data` argument is used. The sorting of the rows goes from smallest (on top) to
+from the `wv_data` argument is used. The sorting of the rows goes from smallest (at the top) to
 largest (at the bottom) median observed specific conductance in a certain subbasin. 
 Finally, `grouping` specifies  the number of rows
 in each of the perceptual groups (here `5` rows). This implies that the 25 subbasins
@@ -1081,12 +1095,12 @@ In the second (and final) refined linked micromap plot\index{Linked micromap plo
 Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
 refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
 This includes a reverse sorting (`rev.ord = TRUE`) that places 
-the largest observed median specific conductance on top, 
+the largest observed median specific conductance at the top, 
 a specific color scheme (`colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1]`),
 numerous changes to the sizes and spacing of the perceptual groups and columns,
 and the addition of titles, scales, and axis labels.
 We keep the maps on the right side in the fifth column. 
-A square plot symbol (instead of a circular one) is used in the first column 
+A square symbol (instead of a circular one) is used for the color-coded legend in the first column 
 via `point.type = 15` in the first list of the `panel.att` list.
 The thickness of the boxes in the third column (i.e., the first statistical graphics column)
 is reduced via `graph.bar.size = 0.7` in the third list of the `panel.att` list.
@@ -1184,7 +1198,7 @@ shows dotplots with confidence bounds\index{Dotplot with confidence bounds}
 that are the population estimates of the specific conductance,
 representing the median, the lower 95% confidence bound, 
 and the upper 95% confidence bound for each of these watersheds.
-The rows in the plot are sorted from highest (on top) to lowest (at the bottom) 
+The rows in the plot are sorted from highest (at the top) to lowest (at the bottom) 
 median observed specific conductance in a certain subbasin.
 
 Each consecutive map shows which subregions have been colored previously in the map(s) above. 
@@ -1214,7 +1228,7 @@ about `r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
 
 In this chapter, we have discussed the four main steps that are required 
 to create linked micromap plots\index{Linked micromap plot} with 
-the **micromap**\index{R Packages!micromap} R Package [@PaOl2015].
+the **micromap**\index{R Packages!micromap} R package [@PaOl2015].
 This R package is one of two major R packages for the construction of 
 linked micromap plots.\index{Linked micromap plot}
 We will encounter it in several of the following chapters again.
@@ -1247,6 +1261,29 @@ use of the **micromap**\index{R Packages!micromap} R package
 although the **micromapST**\index{R Packages!micromapST} R package [@PeCa2022CRAN201]
 could be used in a similar way.
 
+We do not want to forget that a user of linked micromap plots\index{Linked micromap plot}
+has a choice which R package to use for their creation. 
+Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN].
+Chapters \@ref(Ch4b) and \@ref(Ch5b) resemble Chapters \@ref(Ch4) and \@ref(Ch5)
+and discuss how to process external shapefiles\index{Shapefiles}
+and display different types of statistical graphics with the
+**micromapST**\index{R Packages!micromapST} R package. 
+Each of the two R packages has its own strengths and weaknesses.
+The **micromapST**\index{R Packages!micromapST} R package has a larger number of
+built-in types of statistical graphics for the statistical graphics columns
+while the **micromap**\index{R Packages!micromap} R package allows (at least in theory)
+to add any meaningful type of statistical graphics that is not currently part of this R package.
+Similarly, the **micromapST**\index{R Packages!micromapST} R package supports a larger number of
+built-in geographic regions
+while the **micromap**\index{R Packages!micromap} R package
+makes it easy to quickly construct linked micromap plots\index{Linked micromap plot}
+whenever external shapefiles\index{Shapefiles} are available.
+Such an option also exists for the **micromapST**\index{R Packages!micromapST} R package,
+but it takes additional work to process external shapefiles\index{Shapefiles}
+for use in that R package.
+Ultimately, it is up to the user of linked micromap plots\index{Linked micromap plot}
+to decide which of these two R packages to use.
+
 We want to finish this chapter with some practical recommendations.
 When working with **R Markdown**\index{R Markdown} [@XAG2018;@XDR2021] and/or 
 the **bookdown**\index{R Packages!bookdown} R package [@Xie2022bookdown],
@@ -1263,7 +1300,7 @@ Similarly, the height is somewhat determined by the number of perceptual groups.
 A linked micromap plot\index{Linked micromap plot} with only two or three perceptual groups
 has to be less tall than one with nine or ten perceptual groups.
 
-Some additional examples of linked micromap plots\index{Linked micromap plot}
+Some additional published examples of linked micromap plots\index{Linked micromap plot}
 created with the **micromap**\index{R Packages!micromap} R package are related
 to pesticides in 
 Florida Department of Environmental Protection (FDEP) drainage basins [@SWSCSS2018],
@@ -1275,7 +1312,7 @@ International examples are related
 to population data in selected countries from South America [@SDWPM2014],
 to suicide data by prefecture in Japan [@KIT2015],
 and to the spatial distributions of religions in China [@SBDSS2016].
-Some of these required additional modifications of
+Some of these examples needed additional modifications of
 external shapefiles\index{Shapefiles}
 as discussed in Chapter \@ref(Ch4).
 
