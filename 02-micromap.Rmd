@@ -6,7 +6,7 @@
 
 The **micromap**\index{R Packages!micromap} R package [@PaOl2015],
 accessible at https://cran.r-project.org/web/packages/micromap/index.html,
-will be introduced in this chapter. The reader will be introduced to the
+will be introduced in this chapter. The reader will learn how to make use of the
 four main steps that are required to create a 
 basic linked micromap plot\index{Linked micromap plot} via this R package. 
 Details will be provided how to optimize and fine-tune such a basic plot 
