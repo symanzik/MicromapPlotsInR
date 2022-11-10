@@ -863,7 +863,7 @@ use of the _cars_\index{Datasets!cars} dataset
 and also a table in Table \@ref(tab:Ch1-IrisTable) that makes
 use of the _iris_\index{Datasets!iris} dataset.
 See these examples how to create automatic figure and table numbers in your R code chunks 
-and how to reference them in the main text. Also, please cite all data sets that
+and how to reference them in the main text. Also, please cite all datasets that
 are used in your chapter.
 
 Use meaningful identifiers that start with the letters **Ch**, 
@@ -872,7 +872,7 @@ can eventually cross-reference figures across chapters (and also avoid that the
 same identifier is used more than once in different chapters).
 
 
-```{r Ch1-CarsScatterplot, out.width = '90%', fig.cap = 'A trivial scatterplot of the cars data set.'}
+```{r Ch1-CarsScatterplot, out.width = '90%', fig.cap = 'A trivial scatterplot of the cars dataset.'}
 par(mar = c(4, 4, 1, 0.1))
 plot(cars, pch = 19)
 ```
