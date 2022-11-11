@@ -4,7 +4,7 @@
 \chapterauthor{Chunyang Li}
 
 
-This chapter will introduce the reader how to create linked micromap plots\index{Linked micromap plot} from scratch without using any of the existing micromap R packages. This may become necessary when the underlying areas are not supported by any shapefile or other boundary file, e.g., positions on a baseball field or locations of stores in a shopping mall, or when non-standard visualizations are required, e.g., the in-flow or out-flow of a spatial area. This chapter will focus on linked microposter plots,\index{Linked microposter plot} i.e., linked micromap plots\index{Linked micromap plot} where the areas of interest are the main viewing areas of a scientific poster.
+This chapter will demonstrate how to create linked micromap plots\index{Linked micromap plot} from scratch without using any of the existing micromap R packages. This may become necessary when the underlying areas are not supported by any shapefile or other boundary file, e.g., positions on a baseball field or locations of stores in a shopping mall, or when non-standard visualizations are required, e.g., the in-flow or out-flow of a spatial area. This chapter will focus on linked microposter plots,\index{Linked microposter plot} i.e., linked micromap plots\index{Linked micromap plot} where the areas of interest\index{Area of interest} are the main viewing areas of a scientific poster.
 
 
 ## Introduction {#Ch10-Introduction}
@@ -12,7 +12,7 @@ This chapter will introduce the reader how to create linked micromap plots\index
 
 Linked micromap plots\index{Linked micromap plot} were first introduced in 1996 to highlight geographic patterns and associations among the variables in a spatial dataset [@OCCP1996;@CaPi1996]. They have been widely used to display geospatially-indexed summary statistics. For some in-depth discussion of linked micromap plots,\index{Linked micromap plot} the reader is referred to @SC2008, @CP2010, @SDWPM2014, @SCMW2017, and additional chapters of this book, in particular Chapters \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3).
 
-According to @CP2010, linked micromap plots\index{Linked micromap plot} can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot\index{Linked microposter plot} to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the Area Of Interests (AOIs) of the poster as the different countries or states. Linked microposter plots\index{Linked microposter plot} are able to more effectively presenting eye tracking data compared to the commonly used eye tracking visualizations. @LiSy2017ASA proposed **EyeTrackR**\index{R Packages!EyeTrackR}, an R package for eye tracking data visualizations including linked microposter plots,\index{Linked microposter plot} and @SLZSM2017ASA applied this R package to create linked microposter plots\index{Linked microposter plot} to visualize how people look at posters of yoga postures.
+According to @CP2010, linked micromap plots\index{Linked micromap plot} can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot\index{Linked microposter plot} to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the areas of interest\index{Area of interest} (AOIs)\index{AOI|see {Area of interest}} of the poster as the different countries or states. Linked microposter plots\index{Linked microposter plot} are able to more effectively presenting eye tracking data compared to the commonly used eye tracking visualizations. @LiSy2017ASA proposed **EyeTrackR**\index{R Packages!EyeTrackR}, an R package for eye tracking data visualizations including linked microposter plots,\index{Linked microposter plot} and @SLZSM2017ASA applied this R package to create linked microposter plots\index{Linked microposter plot} to visualize how people look at posters of yoga postures.
 
 The following sections will illustrate how to create linked micromap plots\index{Linked micromap plot} from scratch using the creation of linked microposter plots\index{Linked microposter plot} as an example. The goal is to help users to be able to change the R code from this chapter to create other types of linked micromap plots\index{Linked micromap plot} for their own needs. 
 <!-- The creation of linked microposter is based on the raw code from @LiSy2017ASA before compiling the R package. -->
@@ -34,19 +34,19 @@ The eye tracking data for the poster we use to demonstrate here is based on a co
 #### Shapefile Preparation: AOI Definition {#Ch10-Shapefile}
 
 
-The shapefile for the linked microposter plot\index{Linked microposter plot} contains the boundaries of the areas of interests (AOIs) for the poster, such as the title, logos, multiple text areas, images, and tables. 
+The shapefile for the linked microposter plot\index{Linked microposter plot} contains the boundaries of the areas of interest\index{Area of interest} for the poster, such as the title, logos, multiple text areas, images, and tables. 
 
 <!-- The AOIs of the posters can be automatically defined with the \textit{DrawAOIs} function in **EyeTrackR**\index{R Packages!EyeTrackR} R package.  -->
-The rectangles that represent the AOIs are drawn by mouse clicking two vertices using the `locator()` function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. The AOIs are named by the analyst, 
+The rectangles that represent the AOIs\index{Area of interest} are drawn by mouse clicking two vertices using the `locator()` function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click. The AOIs\index{Area of interest} are named by the analyst.
 <!-- The \textit{DrawAOIs} function used __locator__ function in base R graphics [@RCore2017], which is able to return coordinates with the mouse click.  -->
-Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \@ref(tab:Ch10-aoi-data) shows two of the AOIs definitions considered as the shapefile for the poster and will be used for the linked microposter plot\index{Linked microposter plot} creation. 
+Based on the coordinates of two vertices, we are able to create the boundaries of a rectangle that are used as shapefile of the map. Table \@ref(tab:Ch10-aoi-data) shows two of the AOIs\index{Area of interest} definitions considered as the shapefile for the poster and will be used for the linked microposter plot\index{Linked microposter plot} creation. 
 <!-- The code for **EyeTrackR**\index{R Packages!EyeTrackR} R package is available on Github (https://github.com/ChunyangCLi/EyeTrackR.git). -->
 
-The user can create self-defined shapefile based on their own needs, for example, defining different locations of the stores or spots in a baseball field. The output similar to the AOIs from Table \@ref(tab:Ch10-aoi-data) can be directly used to generate the linked micromap plot,\index{Linked micromap plot} which contains the names of the AOIs and the x, y coordinates of the vertices of the AOIs. The coordinates start with one vertex and end with the coordinates of the same vertex. Each AOI is separated by a line with "NA"s. 
+The user can create self-defined shapefile based on their own needs, for example, defining different locations of the stores or spots in a baseball field. The output similar to the AOIs\index{Area of interest} from Table \@ref(tab:Ch10-aoi-data) can be directly used to generate the linked micromap plot,\index{Linked micromap plot} which contains the names of the AOIs\index{Area of interest} and the x, y coordinates of the vertices of the AOIs.\index{Area of interest} The coordinates start with one vertex and end with the coordinates of the same vertex. Each AOI\index{Area of interest} is separated by a line with "NA"s. 
 According to @CP2010 and @PMWOK2015JSS, "the polygons displayed in the maps of micromaps only need to be detailed enough to convey shape and relative position of the areas and provide a spatial framework by identifying neighboring polygons". 
 <!-- If the polygons one is interested to create are all rectangles, the _DrawAOIs_ function from base R can be used to extract the point coordinate in order to create the shape file.  -->
 <!-- Here is the code we used to create poster shape files for eye tracking data. -->
-Twelve AOIs are defined on the poster image and the shape data is saved as ``AOIName.rda''.
+Twelve AOIs\index{Area of interest} are defined on the poster image and the shape data is saved as ``AOIName.rda''.
 
 
 ```{r Ch10-aoi-data, eval = TRUE, echo = FALSE}
@@ -61,10 +61,10 @@ knitr::kable(
 ```
 
 
-Figure \@ref(fig:Ch10-poster-AOI) shows the twelve defined AOIs of the poster. The red bounding boxes outline the defined AOIs. An additional AOI, called ``Blank'', contains all the empty space between these main AOIs, so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot.\index{Linked microposter plot} The participant is timed to look at eight of the AOIs for about six seconds and at four of the AOIs for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
+Figure \@ref(fig:Ch10-poster-AOI) shows the twelve defined AOIs\index{Area of interest} of the poster. The red bounding boxes outline the defined AOIs.\index{Area of interest} An additional AOI,\index{Area of interest} called ``Blank'', contains all the empty space between these main AOIs,\index{Area of interest} so that the entire poster is covered. The poster is used to test the data processing results and the validity of the linked microposter plot.\index{Linked microposter plot} The participant is timed to look at eight of the AOIs\index{Area of interest} for about six seconds and at four of the AOIs\index{Area of interest} for about two seconds.  Overall, the participants looked at Poster 1 for about 56 seconds resulting in a total of 1680 video frames, so there will be around 1680 rows of x and y coordinates after the video processing. 
 
 
-```{r Ch10-poster-AOI, fig.cap = 'Poster with defined AOIs.', out.width = '90%', eval = TRUE, echo = FALSE}
+```{r Ch10-poster-AOI, fig.cap = 'Poster with defined AOIs.\\index{Area of interest}', out.width = '90%', eval = TRUE, echo = FALSE}
 options(knitr.graphics.auto_pdf = TRUE)
 knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
@@ -73,15 +73,15 @@ knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 #### Eye Tracking Data Feature Extractions {#Ch10-Feature-Extractions}
 
 
-The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create a linked micromap plot,\index{Linked micromap plot} the data features should be extracted based on the defined Region of Interests or AOIs. Different features of eye tracking data are extracted in terms of the defined AOIs, such as how long the participant has spent and how many times the participant has visited each AOI, eye movement speed from one focus point to another in pixels within each AOIs and pupil radiuses for each visit at the corresponding AOI. 
+The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create a linked micromap plot,\index{Linked micromap plot} the data features should be extracted based on the defined Region of Interests or AOIs.\index{Area of interest} Different features of eye tracking data are extracted in terms of the defined AOIs,\index{Area of interest} such as how long the participant has spent and how many times the participant has visited each AOI,\index{Area of interest} eye movement speed from one focus point to another in pixels within each AOIs\index{Area of interest} and pupil radiuses for each visit at the corresponding AOI.\index{Area of interest} 
 
-The resulting datasets described in the above sections are provided to create a sample linked micromap plot\index{Linked micromap plot} or linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
+The resulting datasets described in the above sections are provided to create a sample linked micromap plot\index{Linked micromap plot} or linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI\index{Area of interest} (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI.\index{Area of interest} 2. A list of eye movement speed for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 3. A list of pupil radius for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 
 
 
 ### Linked Microposter Plot Creation {#Ch10-Linked-Microposter-Creation}
 
 
-After the eye tracking video data has been processed and AOI shapefile has been created, we can now start to create linked microposter plots\index{Linked microposter plot} following the steps below. 
+After the eye tracking video data has been processed and AOI\index{Area of interest} shapefile has been created, we can now start to create linked microposter plots\index{Linked microposter plot} following the steps below. 
 
 1. **Panel Design Specification.**
     
@@ -170,7 +170,7 @@ poster <- imager::grayscale(poster)
 
 3. **Load Shapefile for Poster.**
 
-The shape file, i.e. the definitions of AOIs' data, is loaded in 3.1. The AOIs are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI "Blank" is added to the shape file with its vertices defined as 0s in 3.2. A polygon for the entire poster is created in 3.3 after the creation and loading the polygons for all the AOIs.   
+The shape file, i.e. the definitions of AOIs'\index{Area of interest} data, is loaded in 3.1. The AOIs\index{Area of interest} are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI\index{Area of interest} "Blank" is added to the shape file with its vertices defined as 0s in 3.2. A polygon for the entire poster is created in 3.3 after the creation and loading the polygons for all the AOIs.\index{Area of interest}
 
 
 ```{r Ch10-load-shapefile}
@@ -363,15 +363,15 @@ After all the settings are specified, we can now start to create the linked micr
 
 A `plot_microposters()` function is created to plot the poster column. If the user keep the similar data structure as the eye tracking data demonstrated, dataframe, column names, and image types, then there is no need to adjust this function to visualize other topic of interest, otherwise, one will need to adjust the data and column names accordingly. 
 
-The microposter column with small posters is plotted with highlights according to the context and labels. `panel_col` is the column number of this panel that is defined with the column attributes, the rest of the inputs are the attributes also specified in the above sections. First, the labels are specified in 7.1 and 7.2. One can adjust the texts inside the function. Then the microposters with specific highlights are created by the perceptual groups divided with a for loop in the code 7.3. In this example, there are 3 perceptual groups and no median row. For each group, we color the AOIs presented in the group, the rest AOIs are either gray as background or colored in light yellow if they have been presented in the previous groups given that cumulative option is True. The borders of each AOIs and the entire poster are plotted with thick black lines. Within the `plot_microposters()` function, the explanations of the most important variables are listed below: 
+The microposter column with small posters is plotted with highlights according to the context and labels. `panel_col` is the column number of this panel that is defined with the column attributes, the rest of the inputs are the attributes also specified in the above sections. First, the labels are specified in 7.1 and 7.2. One can adjust the texts inside the function. Then the microposters with specific highlights are created by the perceptual groups divided with a for loop in the code 7.3. In this example, there are 3 perceptual groups and no median row. For each group, we color the AOIs\index{Area of interest} presented in the group, the rest AOIs\index{Area of interest} are either gray as background or colored in light yellow if they have been presented in the previous groups given that cumulative option is True. The borders of each AOIs\index{Area of interest} and the entire poster are plotted with thick black lines. Within the `plot_microposters()` function, the explanations of the most important variables are listed below: 
 
 * `gsubs`: the row index for current group;
-* `back`: the row index for the AOIs that are not presenting in the current group;
+* `back`: the row index for the AOIs\index{Area of interest} that are not presenting in the current group;
 * `fore`: the complement of `back`, i.e., the row index for the AOIs that are presenting in the current group;
 * `pen`: the index to determine which color to use in the selected color scheme `color_scheme`.
-* `past`: index for cumulative AOIs shown above. 
+* `past`: index for cumulative AOIs\index{Area of interest} shown above. 
 
-The panels and indices are set in code section 7.3.1, 7.3.2, and 7.3.5. Then posters (7.3.3) and `back` AOIs (7.3.4) are plotted. 7.3.6 and 7.3.7 plotted the `fore` AOIs. The microposters are finished with coloring the cumulative sections in 7.3.8 and plotting the outlines or the borders for the poster.
+The panels and indices are set in code section 7.3.1, 7.3.2, and 7.3.5. Then posters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. 7.3.6 and 7.3.7 plotted the `fore` AOIs.\index{Area of interest} The microposters are finished with coloring the cumulative sections in 7.3.8 and plotting the outlines or the borders for the poster.
 
 
 ```{r Ch10-create-microposters-function}
@@ -574,7 +574,7 @@ if (sum(panel_types == "poster") >= 1) {
 
 8. **Plot Labels.**
 
-After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indices are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs by using the same color scheme and plotting order. The `Blank` AOI is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
+After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indices are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
 
 ```{r Ch10-create-labels-function}
 plot_labels <- function(panel_col,
@@ -713,7 +713,7 @@ In our case, dotplot and boxplot are presented to visualize the visits and the p
 
 For the `plot_dotplot()` function, the axis range as well as the panel grid are automatically determined by the range of the input data in A.9.1, if they are not defined by the user. For the automatic setup, axis range is set to be slightly below the minimum and above the maximum, then the grid in panels are determined by evenly dividing the panel width with the predefined functions. Finally, the dots are plotted manually by perceptual groups using the `points()` fuction and connected with black lines in A.9.3.5, after the indices, panels, and labels are created for each group from A.9.3.1 to A.9.3.4.    
 
-For the `plot_boxplot()` function, the dataframe is specified within the data list in B.9.1, then the plot parameters are defined for the boxplot in B.9.2. The summary statistics of the data by AOIs are summarised for the creation of boxplot in B.9.3. Similar to the `plot_dotplot()`, the panel grid and axis lables are created in B.9.4, and groups panels are set up in B.9.5. Then the boxplots are created by perceptual groups manually by first plotting the outliers, and then the boxes. 
+For the `plot_boxplot()` function, the dataframe is specified within the data list in B.9.1, then the plot parameters are defined for the boxplot in B.9.2. The summary statistics of the data by AOIs\index{Area of interest} are summarised for the creation of boxplot in B.9.3. Similar to the `plot_dotplot()`, the panel grid and axis lables are created in B.9.4, and groups panels are set up in B.9.5. Then the boxplots are created by perceptual groups manually by first plotting the outliers, and then the boxes. 
 
 
 ```{r Ch10-dotplot-boxplot-functions}
@@ -1045,7 +1045,7 @@ plot_boxplot <- function(dat,
 }
 ```
 
-There are two columns visualized with dotplot: the length of time spent in each AOI and the number of times each AOI is visited. The two columns are plotted by calling the `plot_dotplot()` function twice within the for loop. 
+There are two columns visualized with dotplot: the length of time spent in each AOI\index{Area of interest} and the number of times each AOI\index{Area of interest} is visited. The two columns are plotted by calling the `plot_dotplot()` function twice within the for loop. 
 
 ```{r Ch10-add-dotplot, eval = FALSE}
 # plot length of visits and number of visits
@@ -1078,7 +1078,7 @@ if (sum(panel_types == "dot") >= 1) {
 <<Ch10-add-dotplot>>
 ```
 
-Then the final column, the boxplot column to visualize pupil sizes for each AOIs, is added.
+Then the final column, the boxplot column to visualize pupil sizes for each AOIs,\index{Area of interest} is added.
 
 ```{r Ch10-add-boxplot, eval = FALSE}
 # Plot pupil size
@@ -1142,7 +1142,7 @@ Now we finished creating a non-traditional linked microposter plot\index{Linked 
 
 Readers can find more plot types in Chapter \@ref(Ch5) and implement those for non-traditional linked micromap plots\index{Linked micromap plot} similar to how the boxplot and dotplot functions are incorporated in this chapter. To understand more of linked micromap plot\index{Linked micromap plot} principles and basics of their creation via the **micromap**\index{R Packages!micromap} and **micromapST**\index{R Packages!micromapST} R packages, readers should refer to Chapters \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3).
 
-Further, all steps demonstrated in this chapter have been placed into the function `DrawEyeLMPlot()` in the **EyeTrackR**\index{R Packages!EyeTrackR} R package that is available on GitHub (https://github.com/ChunyangCLi/EyeTrackR.git). If the user wants to put overlays on the poster in a different way without using the AOI polygons, the `DrawEyeLTMPlot()` function provides a linked scanpath microposter plot\index{Linked scanpath microposter plot} [@Li2017] without predefined AOIs. If interested, the user can directly refer to that code on GitHub, while the non-traditional linked micromap plot\index{Linked micromap plot} creation approach from the **EyeTrackR**\index{R Packages!EyeTrackR} R package is the same as demonstrated in this chapter. 
+Further, all steps demonstrated in this chapter have been placed into the function `DrawEyeLMPlot()` in the **EyeTrackR**\index{R Packages!EyeTrackR} R package that is available on GitHub (https://github.com/ChunyangCLi/EyeTrackR.git). If the user wants to put overlays on the poster in a different way without using the AOI\index{Area of interest} polygons, the `DrawEyeLTMPlot()` function provides a linked scanpath microposter plot\index{Linked scanpath microposter plot} [@Li2017] without predefined AOIs.\index{Area of interest} If interested, the user can directly refer to that code on GitHub, while the non-traditional linked micromap plot\index{Linked micromap plot} creation approach from the **EyeTrackR**\index{R Packages!EyeTrackR} R package is the same as demonstrated in this chapter. 
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
