@@ -24,14 +24,14 @@ The following sections will illustrate how to create linked micromap plots\index
 ### Data Processing and Preparation {#Ch10-Data}
 
 <!-- TODO capitalize every word in title and label them -->
-#### Eye Tracking Data {#Ch10-eye_tracking_data}
+#### Eye Tracking Data {#Ch10-Eye-Tracking-Data}
 
 Eye tracking data is obtained from measuring where people are looking at with an eye tracking device, either a mobile eye tracker or a static eye tracker. Static eye trackers are based on a desktop, hence they are often used to study eye motion on a computer screen. Mobile eye trackers are fixed on a user's head, so they are not limited within a restricted area and can be used for a variety of activities, such as playing soccer, driving, etc. The example data we use to demonstrate are from a 30 Hz mobile eye tracker that records 30 images per second. The two co-authors of @LiSy2017ASA looked at a series of statistical and other scientific posters. The original data is a video record indicating where people are looking at. The video data is processed with Matlab and we are able to obtain a dataframe with x and y coordinates transformed to the same coordinate system in terms of the poster we defined. The details of processing the raw video data is described in @Li2017. Time series pupil radius data are also obtained from the eye tracker.
 
 The eye tracking data for the poster we use to demonstrate here is based on a controlled experiment where the participant was given instructions to look at the poster in a certain way. 
 
 
-#### Shapefile Preparation: AOI Definition {#Ch10-shapefile}
+#### Shapefile Preparation: AOI Definition {#Ch10-Shapefile}
 
 
 The shapefile for the linked microposter plot\index{Linked microposter plot} contains the boundaries of the areas of interests (AOIs) for the poster, such as the title, logos, multiple text areas, images, and tables. 
@@ -70,7 +70,7 @@ knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
 
 
-#### Eye Tracking Data Feature Extractions {#Ch10-feature_extractions}
+#### Eye Tracking Data Feature Extractions {#Ch10-Feature-Extractions}
 
 
 The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create a linked micromap plot,\index{Linked micromap plot} the data features should be extracted based on the defined Region of Interests or AOIs. Different features of eye tracking data are extracted in terms of the defined AOIs, such as how long the participant has spent and how many times the participant has visited each AOI, eye movement speed from one focus point to another in pixels within each AOIs and pupil radiuses for each visit at the corresponding AOI. 
@@ -78,7 +78,7 @@ The processed video data is still considered raw eye tracking data, which is a t
 The resulting datasets described in the above sections are provided to create a sample linked micromap plot\index{Linked micromap plot} or linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI. 2. A list of eye movement speed for each AOIs (each AOI is a list). 3. A list of pupil radius for each AOIs (each AOI is a list). 
 
 
-### Linked Microposter Plot Creation {#Ch10-linked_microposter_creation}
+### Linked Microposter Plot Creation {#Ch10-Linked-Microposter-Creation}
 
 
 After the eye tracking video data has been processed and AOI shapefile has been created, we can now start to create linked microposter plots\index{Linked microposter plot} following the steps below. 
