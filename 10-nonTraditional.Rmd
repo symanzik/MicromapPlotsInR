@@ -12,26 +12,27 @@ This chapter will demonstrate how to create linked micromap plots\index{Linked m
 
 Linked micromap plots\index{Linked micromap plot} were first introduced in 1996 to highlight geographic patterns and associations among the variables in a spatial dataset [@OCCP1996;@CaPi1996]. They have been widely used to display geospatially-indexed summary statistics. For some in-depth discussion of linked micromap plots,\index{Linked micromap plot} the reader is referred to @SC2008, @CP2010, @SDWPM2014, @SCMW2017, and additional chapters of this book, in particular Chapters \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3).
 
-According to @CP2010, linked micromap plots\index{Linked micromap plot} can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot\index{Linked microposter plot} to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the areas of interest\index{Area of interest} (AOIs)\index{AOI|see {Area of interest}} of the poster as the different countries or states. Linked microposter plots\index{Linked microposter plot} are able to more effectively presenting eye tracking data compared to the commonly used eye tracking visualizations. @LiSy2017ASA proposed **EyeTrackR**\index{R Packages!EyeTrackR}, an R package for eye tracking data visualizations including linked microposter plots,\index{Linked microposter plot} and @SLZSM2017ASA applied this R package to create linked microposter plots\index{Linked microposter plot} to visualize how people look at posters of yoga postures.
+According to @CP2010, linked micromap plots\index{Linked micromap plot} can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot\index{Linked microposter plot} to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the areas of interest\index{Area of interest} (AOIs)\index{AOI|see {Area of interest}} of the poster as equivalent to the different countries or states of a geographic map. Linked microposter plots\index{Linked microposter plot} are able to more effectively present eye tracking data compared to some of the commonly used eye tracking visualization methods. @LiSy2017ASA proposed **EyeTrackR**\index{R Packages!EyeTrackR}, an R package for eye tracking data visualizations including linked microposter plots,\index{Linked microposter plot} and @SLZSM2017ASA applied this R package to create linked microposter plots\index{Linked microposter plot} to visualize how people look at posters of yoga postures.
 
-The following sections will illustrate how to create linked micromap plots\index{Linked micromap plot} from scratch using the creation of linked microposter plots\index{Linked microposter plot} as an example. The goal is to help users to be able to change the R code from this chapter to create other types of linked micromap plots\index{Linked micromap plot} for their own needs. 
+The following sections will illustrate how to create linked micromap plots\index{Linked micromap plot} from scratch using the creation of linked microposter plots\index{Linked microposter plot} as an example. Specifically, Section \@ref(Ch10-Data) will provide an overview how to process eye tracking data for use in linked microposter plots.\index{Linked microposter plot} Section \@ref(Ch10-Linked-Microposter-Creation) will demonstrate how to create linked microposter plots\index{Linked microposter plot} column by column. Finally, Section \@ref(Ch10-FurtherReading) provides a brief summary of this chapter and also provides suggestions for further reading. The overall goal of this chapter is to help users to be able to change the R code from this chapter to create other types of linked micromap plots\index{Linked micromap plot} for their own needs. 
 <!-- The creation of linked microposter is based on the raw code from @LiSy2017ASA before compiling the R package. -->
 
 
-## Main {#Ch10-Main}
+## Data Processing and Preparation {#Ch10-Data}
 
 
-### Data Processing and Preparation {#Ch10-Data}
+Section \@ref(Ch10-Eye-Tracking-Data) provides a brief summary of eye tracking data that is used as basis for the linked microposter plots.\index{Linked microposter plot} Section \@ref(Ch10-Shapefile) discusses areas of interest\index{Area of interest} (AOIs) that can be seen as equivalent to shapefiles\index{Shapefile} in regular linked micromap plots.\index{Linked micromap plot}. Section \@ref(Ch10-Feature-Extractions) describes feature extraction from the raw eye tracking data.
+
 
 <!-- TODO capitalize every word in title and label them -->
-#### Eye Tracking Data {#Ch10-Eye-Tracking-Data}
+### Eye Tracking Data {#Ch10-Eye-Tracking-Data}
 
 Eye tracking data is obtained from measuring where people are looking at with an eye tracking device, either a mobile eye tracker or a static eye tracker. Static eye trackers are based on a desktop, hence they are often used to study eye motion on a computer screen. Mobile eye trackers are fixed on a user's head, so they are not limited within a restricted area and can be used for a variety of activities, such as playing soccer, driving, etc. The example data we use to demonstrate are from a 30 Hz mobile eye tracker that records 30 images per second. The two co-authors of @LiSy2017ASA looked at a series of statistical and other scientific posters. The original data is a video record indicating where people are looking at. The video data is processed with Matlab and we are able to obtain a dataframe with x and y coordinates transformed to the same coordinate system in terms of the poster we defined. The details of processing the raw video data is described in @Li2017. Time series pupil radius data are also obtained from the eye tracker.
 
 The eye tracking data for the poster we use to demonstrate here is based on a controlled experiment where the participant was given instructions to look at the poster in a certain way. 
 
 
-#### Shapefile Preparation: AOI Definition {#Ch10-Shapefile}
+### Shapefile Preparation: AOI Definition {#Ch10-Shapefile}
 
 
 The shapefile for the linked microposter plot\index{Linked microposter plot} contains the boundaries of the areas of interest\index{Area of interest} for the poster, such as the title, logos, multiple text areas, images, and tables. 
@@ -70,15 +71,15 @@ knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 ```
 
 
-#### Eye Tracking Data Feature Extractions {#Ch10-Feature-Extractions}
+### Eye Tracking Data Feature Extractions {#Ch10-Feature-Extractions}
 
 
 The processed video data is still considered raw eye tracking data, which is a time series of x and y coordinates. To create a linked micromap plot,\index{Linked micromap plot} the data features should be extracted based on the defined Region of Interests or AOIs.\index{Area of interest} Different features of eye tracking data are extracted in terms of the defined AOIs,\index{Area of interest} such as how long the participant has spent and how many times the participant has visited each AOI,\index{Area of interest} eye movement speed from one focus point to another in pixels within each AOIs\index{Area of interest} and pupil radiuses for each visit at the corresponding AOI.\index{Area of interest} 
 
-The resulting datasets described in the above sections are provided to create a sample linked micromap plot\index{Linked micromap plot} or linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI\index{Area of interest} (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI.\index{Area of interest} 2. A list of eye movement speed for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 3. A list of pupil radius for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 
+The resulting datasets described in the previous sections are provided to create a sample linked micromap plot\index{Linked micromap plot} or linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} is the shapefile; `locations_testing`\index{Datasets!locations\_testing} is the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} is the list with features extracted from *locations_testing* dataset. `poster_dataset_all` contains three lists: 1. A dataframe with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI\index{Area of interest} (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI.\index{Area of interest} 2. A list of eye movement speed for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 3. A list of pupil radius for each AOIs\index{Area of interest} (each AOI\index{Area of interest} is a list). 
 
 
-### Linked Microposter Plot Creation {#Ch10-Linked-Microposter-Creation}
+## Linked Microposter Plot Creation {#Ch10-Linked-Microposter-Creation}
 
 
 After the eye tracking video data has been processed and AOI\index{Area of interest} shapefile has been created, we can now start to create linked microposter plots\index{Linked microposter plot} following the steps below. 
