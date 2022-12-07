@@ -24,9 +24,12 @@ webpage, and newly developed **micromapExtra**\index{R Packages!micromapExtra} R
 Micromap visualizations\index{Micromap visualizations} are an important tool
 for the visualization of statistical data in a geographic context,
 providing a rich context for interpretation.
-Micromap visualizations\index{Micromap visualizations} consist of a series of small maps, the _micromaps_,
-that are used to show spatial patterns. These maps are also used
-to link to underlying statistical data. 
+Micromap visualizations\index{Micromap visualizations} are based on numerous
+small panels\index{Panel} that are arranged in specific ways.
+Apparently, the most important types of panels\index{Panel}
+are those that contain one or multiple series of small maps, the _micromaps_,
+that are used to show spatial patterns. These maps are often used
+to link to panels that contain underlying statistical data and region identifiers.
 There exist three major classes of micromaps, i.e.,
 linked micromap plots,\index{Linked micromap plot}
 introduced in Section \@ref(Ch1-LinkedMicromapPlots),
@@ -395,7 +398,8 @@ mmplot(
 ```
 
 
-In general, linked micromap plots\index{Linked micromap plot} consist of four to seven columns.
+In general, linked micromap plots\index{Linked micromap plot} 
+consist of four to seven columns of panels.\index{Panel}
 One to four of these columns are statistical graphics columns that can be used to display
 various statistical displays such as dotplots\index{Dotplot} (with and without confidence bounds), 
 boxplots\index{Boxplot},
