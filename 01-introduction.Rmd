@@ -568,8 +568,8 @@ A median row is often a good solution if the
 number of subregions is odd such as for the 21 counties of New Jersey.
 Here, Somerset is the county that appears (by construction) in the median row.
 This implies that it has the 11th highest and 11th lowest `StatVar2` value.
-Somerset does not appear in a map by itself, but rather is added to the perceptual
-groups above and below the median row in a neutral (gray) color, 
+Somerset does not appear in a map by itself, but rather is added to the maps
+in the panels\index{Panel} above and below the median row in a neutral (gray) color, 
 thus increasing the number of subregions shown in each of these two maps by one (i.e., six here).
 This plot makes use of a two-ended aggregate coloring of the maps.
 The subregions from all previous perceptual groups again are filled in the

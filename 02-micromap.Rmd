@@ -276,11 +276,12 @@ Changing the order of these two variable names typically results in an error.
 
 The `panel.types` and `panel.data` arguments are closely related. 
 As the name suggests, `panel.types` is a vector
-that specifies the layout of the columns in the linked micromap plot\index{Linked micromap plot}.
-Here, we have a `dot_legend` in the first column, `labels` in the second column,
+that specifies the layout of the columns of panels\index{Panel}
+in the linked micromap plot.\index{Linked micromap plot}
+Here, we have panels\index{Panel} with a `dot_legend` in the first column, `labels` in the second column,
 the statistical data represented as dotplots\index{Dotplot} (`dot`) in the third and fourth columns,
 and the micromaps in the fifth, i.e., final, (`map`) column.
-This is matched with a list of data that is used for each of the five columns.
+This is matched with a list of data that is used for each of the five columns of panels.\index{Panel}
 A list is necessary for this argument as some of the data itself can be lists as we will
 see in the R code for Figures \@ref(fig:Ch2-refining1WV) 
 and \@ref(fig:Ch2-refining2WV) later on.
