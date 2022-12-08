@@ -14,7 +14,7 @@ Linked micromap plots\index{Linked micromap plot} were first introduced in 1996 
 
 According to @CP2010, linked micromap plots\index{Linked micromap plot} can represent any two-dimensional space, not just latitude-longitude on the Earth's surface, such as positions on a baseball field or locations of stores in a shopping mall, or the in-flow or out-flow of a spatial area, etc. Based on this idea, @LiSy2016ASA proposed a linked microposter plot\index{Linked microposter plot} to visualize eye tracking data of how people look at scientific posters, considering a poster as a map and the areas of interest\index{Area of interest} (AOIs)\index{AOI|see {Area of interest}} of the poster as equivalent to the different countries or states of a geographic map. Linked microposter plots\index{Linked microposter plot} are able to more effectively present eye tracking data compared to some of the commonly used eye tracking visualization methods. @LiSy2017ASA proposed **EyeTrackR**\index{R Packages!EyeTrackR}, an R package for eye tracking data visualizations including linked microposter plots,\index{Linked microposter plot} and @SLZSM2017ASA applied this R package to create linked microposter plots\index{Linked microposter plot} to visualize how people look at posters of yoga postures.
 
-The following sections will illustrate how to create linked micromap plots\index{Linked micromap plot} from scratch using the creation of linked microposter plots\index{Linked microposter plot} as an example. Specifically, Section \@ref(Ch10-Data) will provide an overview how to process eye tracking data for use in linked microposter plots.\index{Linked microposter plot} Section \@ref(Ch10-Linked-Microposter-Creation) will demonstrate how to create linked microposter plots\index{Linked microposter plot} column by column. Finally, Section \@ref(Ch10-FurtherReading) will provide a brief summary of this chapter and it will also provide suggestions for further reading. The overall goal of this chapter is to enable users to change the R code from this chapter to create other types of linked micromap plots\index{Linked micromap plot} for their own needs. 
+The following sections will illustrate how to create linked micromap plots\index{Linked micromap plot} from scratch using the creation of linked microposter plots\index{Linked microposter plot} as an example. Specifically, Section \@ref(Ch10-Data) will provide an overview how to process eye tracking data for use in linked microposter plots.\index{Linked microposter plot} Section \@ref(Ch10-Linked-Microposter-Creation) will demonstrate how to create linked microposter plots\index{Linked microposter plot} column by column and panel\index{Panel} by panel.\index{Panel} Finally, Section \@ref(Ch10-FurtherReading) will provide a brief summary of this chapter and it will also provide suggestions for further reading. The overall goal of this chapter is to enable users to change the R code from this chapter to create other types of linked micromap plots\index{Linked micromap plot} for their own needs. 
 <!-- The creation of linked microposter is based on the raw code from @LiSy2017ASA before compiling the R package. -->
 
 
@@ -99,13 +99,13 @@ After the eye tracking video data has been processed and the AOI\index{Area of i
 
 1. **Panel Design Specification.**
     
-First, the user needs to figure out a few questions: What panels are there in the plot, i.e., how many and which variables does one want to visualize? What are the plot types one wants to use for the visualization? How to arrange the panels, such as which panel goes left and which panel goes right? How does one want to label the panels? 
+First, the user needs to figure out a few questions: What columns are there in the plot, i.e., how many and which variables does one want to visualize? What are the plot types one wants to use for the statistical columns? How to arrange the columns, such as which column type goes left and which column type goes right? How does one want to label the columns? How many perceptual groups should there be? And how many rows should be in each perceptual group? Readers who are not familiar with the general design and terminology related to linked micromap plots\index{Linked micromap plot} are encouraged to review Section \@ref(Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation).
 
-A vector of panel plot types are created to store the designed panel types (code section 1.1). Then in code section 1.2, a list of column attributes are created to specify the order of the panels from left to right using a *col_num*. For the poster panel in 1.2.1, *cumulate* is an attribute that determines if one wants cumulative pattern or not. For each panel, one needs to specify the header of the panel, and the font of the labeling. For the data panels 1.2.3-1.2.5, the data needs to be specified, such as "visits_num", "visits_len", and "pupil_data". Below is the code how the linked microposter plot\index{Linked microposter plot} panels are specified. Here we are creating three data panels: two dotplot panels representing number of visits (1.2.3) and length of visits (1.2.4), and one boxplot panel (1.2.5) representing pupil data. The poster, legend and the data panels are presented from left to right. After the panel types and attributes are specified, a quick check is conducted to make sure that all the panel types one plans to plot are specified (1.3). 
+A vector called `panel_types` is created to store the intended panel\index{Panel} types in each of the columns (code section 1.1). Then, in 1.2, a list of column attributes is  created to specify the order of the columns from left to right using a `col_num`. For the poster column in 1.2.1, `cumulate` is an attribute that determines if one wants cumulative patterns or not. For each column, one needs to specify the header of the column and the font characteristics of the labeling. Code section 1.2.2 does this for the label column. For the statistical graphics columns in 1.2.3-1.2.5, the data needs to be specified, such as `visits_num`, `visits_len`, and `pupil_data`. Below is the code how the linked microposter plot\index{Linked microposter plot} columns are specified. Here, we are creating three statistical graphics columns: two dotplot columns representing number of visits (1.2.3) and length of visits (1.2.4) and one boxplot column (1.2.5) representing pupil data. The poster, legend, and the statistical graphics columns are presented from left to right. After the column types and attributes have been specified, a quick check is conducted to make sure that all the column types one plans to plot have been properly specified (1.3). 
 
 
 ```{r Ch10-panel-design}
-# 1.1 Specify panel types
+# 1.1 Specify column types
 panel_types <- c("poster", "legend", "dot", "dot", "boxplot")
 
 # 1.2 Specify column attributes
@@ -155,21 +155,22 @@ columns_att <- list(
   )
 )
 
-# 1.3 Check if the length of panel types and column attributes match
+# 1.3 Check if the length of column types and column attributes match
 columns <- length(columns_att)
 if (length(panel_types) < columns) {
-  warning("Panel types are not completely specified.")
+  warning("Column types are not completely specified.")
 }
 ```
 
 
 2. **Load Images and Data.**
 
-After specifying the panels, the image/poster and data need to be loaded. The poster image is changed to grayscale. We used **imager**\index{R Packages!imager} R package for the poster image processing such as changing the colored poster to grayscale in order to lay other colors on top of it. The user can replace poster with other images and replace eye tracking data with other data types. 
+After specifying the columns of the linked microposter plot,\index{Linked microposter plot} the background image/poster and data have to be loaded. The poster image is changed to grayscale. We use the **imager**\index{R Packages!imager} R package [@Barthelme2022] for the poster image processing such as changing the colored poster to grayscale in order to overlay other colors on top of it. The user can replace the poster with other images and replace eye tracking data with other data types. 
 
 
 ```{r Ch10-load-data}
 library(imager)
+
 # 2.1 Load data
 load(file = "data/Ch10/posterdat.all.rda")
 poster_loc <- "img/Ch10-poster_colored.jpg"
@@ -178,22 +179,22 @@ poster_dataset <- posterdat.all[[1]]
 names(columns_att) <- panel_types
 
 # 2.2 Load image and convert to gray scale
-poster <- imager::load.image(poster_loc)
-poster <- imager::grayscale(poster)
+poster_raw <- imager::load.image(poster_loc)
+poster <- imager::grayscale(poster_raw)
 ```
 
 
-3. **Load Shapefile for Poster.**
+3. **Load the Shapefile for the Poster.**
 
-The shape file, i.e. the definitions of AOIs'\index{Area of interest} data, is loaded in 3.1. The AOIs\index{Area of interest} are like states for the map of the united states and the poster is like the nation. The boarders for the entire poster is also defined as a dataframe for the plotting. The AOI\index{Area of interest} "Blank" is added to the shape file with its vertices defined as 0s in 3.2. A polygon for the entire poster is created in 3.3 after the creation and loading the polygons for all the AOIs.\index{Area of interest}
+The shapefile,\index{Shapefile} i.e., the definitions of the AOIs'\index{Area of interest} boundary data, is loaded in code section 3.1. The AOIs\index{Area of interest} are like the states for the map of the United States and the poster is like the entire nation. The AOI\index{Area of interest} `Blank` is added to the shapefile\index{Shapefile} with its vertices defined as `0`s in 3.2. A polygon for the entire poster is created in 3.3 after the creation and loading of the polygons for all the AOIs.\index{Area of interest}
 
 
 ```{r Ch10-load-shapefile}
-# 3.1 Load shape file or definitions of AOIs
+# 3.1 Load shapefile or definitions of AOIs
 load("data/Ch10/AOIName.rda")
 aoi_vis_borders <- AOIName
 
-# 3.2 Create shape data for blank and add it to poster shapefile
+# 3.2 Create shape data for blank and add it to the poster shapefile
 blank <- as.data.frame(matrix(c(rep(0, 5 * 3), NA, NA, NA),
   nrow = 6,
   ncol = 3,
@@ -208,8 +209,7 @@ poster_vis_borders <- matrix(
   c(
     0, 0,
     imager::width(poster), 0,
-    imager::width(poster),
-    imager::height(poster),
+    imager::width(poster), imager::height(poster),
     0, imager::height(poster),
     0, 0
   ),
@@ -222,16 +222,17 @@ colnames(poster_vis_borders) <- c("x", "y")
 ```
 
 
-4. **Sort Rows According to Data Columns.**
+4. **Sort Rows According to a Specific Data Column.**
 
-The user can specify how they want the rows to be ordered in 4.1, i.e., which column to sort by. In this case, one can choose a variable from the three variables we visualize: number of visits (_visits\_num_), length of visits (_visits\_len_) or pupil radiuses (_pupil\_data_) to sort by. The code for rearranging the datasets sorted by specific columns is in code section 4.2. It is executed using if statements based on the different data structures of the variables. The variable _visits\_len_ is chosen to sort the rows for the plot as an example. 
+The user can specify how the rows of the linked microposter plot\index{Linked microposter plot} should be ordered in code section 4.1, i.e., which column to sort by. In this case, one can choose a variable from the three variables we visualizein the statistical columns: number of visits (`visits_num`), length of visits (`visits_len`) or pupil radiuses (`pupil_data`) to sort by. The code for rearranging the datasets sorted by a specific column is shown in code section 4.2. It is executed using if statements based on the different data structures of the variables. The variable `visits_len` is chosen to sort the rows for the plot in this example. 
 
 
 ```{r Ch10-sort-rows}
-# 4.1 Specify which column to sortby
+# 4.1 Specify which column to sort by
 sortby <- "visits_len"
 decreasing <- TRUE
 pupil_data <- poster_dataset[[3]]
+
 # 4.2 Order rows: rearrange the datasets by a specific variable
 # 4.2.1 Order by pupil radius
 if (sortby == "pupil_data") {
@@ -258,13 +259,16 @@ if (sortby == "pupil_data") {
 }
 ```
 
+XXX JS: remove 4.2.2 from above as we are not doing anything with speed - pupil radius seems to be enough (and renumber) XXX
 
-5. **Determine Panel Layouts.**
+5. **Determine the Panel Layout.**
 
-The quickest approach is to use automatic layout and choose different partitioning described in @PMWOK2015JSS, here we chose the automatic layout and set the partitioning to be 1 (the first partitioning way defined in the function `ArrangePanels()`). The user can also specify layout of the rows, and if median row is wanted or not. Then the sizes of the each rows are calculated based on the overall plot size and the number of rows for the aesthetics of the plot. The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()` is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired. A layout details list is defined in code section 5.4 for the graphical parameters. 
+The quickest approach to specify the panel layout for the entire linked microposter plot\index{Linked microposter plot} is to use an automatic layout function and choose a suitable partitioning (see @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). Here, we work with an automatically created layout from the `ArrangePanels()` function and we select Partitioning 1 (according to @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). The user can further specify the layout of the rows and whether a median row is wanted or not. Then the sizes of all rows are calculated based on the overall plot size and the number of rows, based on the aesthetics of the linked microposter plot.\index{Linked microposter plot} The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()` is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired. A list with the layout details is defined in code section 5.4 for the graphical parameters. 
+
+XXX JS: Can you mention that there are 11 functions overall. Introduce those that are needed for your code in 1 or 2 sentences. Mention that there are other ones and refer to the help pages of the **micromapExtra**\index{R Packages!micromapExtra} R package for further details. Mention that the functions starting with panel... have been released as part of the @CP2010 book and are based on the original S-Plus functions (I found S-Plus code on my side from 2003, but there should be even older code). The three other functions likely have been created on my side, but I could not find when. XXX
 
 ```{r Ch10-panel-layout}
-# 5.1 Load source code for panel definitions and layouts
+# 5.1 Load source code for panel definitions and layout
 source("R/Ch10_SharedFunctions.R")
 # aoi_names <- row.names(poster_dataset)
 layout <- NA
@@ -272,7 +276,7 @@ median_row <- TRUE
 automatic_layout <- TRUE
 partitioning <- 1
 
-# 5.2 Determine the layouts
+# 5.2 Determine the layout
 if (automatic_layout) {
   rows <- ArrangePanels(
     posterdat = poster_dataset,
@@ -289,7 +293,6 @@ if (automatic_layout) {
       color_scheme,
       ceiling(max(layout) / length(color_scheme))
     )
-
     warning("There are too few colors provided.")
   }
 }
@@ -306,24 +309,24 @@ if (!median_row) {
   rowsize <- rep(17.2 / rows, rows)
 } else {
   rowsize <- c(
-    rep(17.2 / rows, floor(rows / 2)), 17.2 / (rows * 3.2),
+    rep(17.2 / rows, floor(rows / 2)), 
+    17.2 / (rows * 3.2),
     rep(17.2 / rows, floor(rows / 2))
   )
 }
 
-
-# 5.4 Define some graphic parameters
+# 5.4 Define some graphical parameters
 details <- list(
   bot = 0.77, # bottom margin for the panel
   top = 0.85, # top margin for the panel
   left = 0, # left margin for the panel
   right = 0, # right margin for the panel
   dcex = 0.96, # text size option 1
-  tCex = 1.08, # text size 2
+  tCex = 1.08, # text size option 2
   cex = 0.7, # text size option 3
   fontsize = 12, # font size option 1
-  font = 1, # font size ooption 2
-  line1 = 0.2, # on which margin line, starting at 0 counting outwards.
+  font = 1, # font size option 2
+  line1 = 0.2, # on which margin line, starting at 0 counting outwards
   line2 = 1.0, # same as above
   line3 = 0.2, # same as above
   ypad = 0.65, # change the scale of the panel vertically
@@ -333,13 +336,18 @@ details <- list(
 )
 ```
 
+XXX JS: Place 5.4 earlier on and then add 17.2, 2, and 3.2 as additional constants and work with these constant names in 5.3, rather than using the numeric values in that code section. This means you have to rearrange some of your code and description in the main text. Same with the 2.9 from code section 6.1. Ideally, have one place (i.e., list) where you define all constants for the aesthetics of the plot and then use those constants. Same with the 0.1 and 0.01 for the rowSep and colSep further below. THere may be more numeric and color constants used below. But, notice that Black may not be the same as Black if one refers to a font color and the next to a line color - so define fontcolor = Black and linecolor = Black in your list above (if needed). XXX
 
-6. **Create Panel Layouts and Plot Indexes.**
 
-_Details_ is a list structure that contains the variables and values for the detailed layout of the plot. `ArrangePanels()` function is able to automatically determine the start and end rows for each plot groups given the input: _row\_begin_ and _row\_end_. The data is arranged into 3 perceptual groups. 
+6. **Create Panel Layout and Plot Indexes.**
+
+`details` is a list structure that contains the variables and values for the detailed layout of the plot. `ArrangePanels()` function is able to automatically determine the start and end rows for each plot groups given the input: _row\_begin_ and _row\_end_. The data is arranged into 3 perceptual groups. 
+
+XXX JS: You defined/used `details` and the `ArrangePanels()` function already in step 5. above. Describe what you are doing here in code sections 6.1 and 6.2. XXX
+
 
 ```{r Ch10-panel-layout-and-plot-indexes}
-# 6.1 Determine panel layouts
+# 6.1 Determine panel layout
 panel_width <- c(2.9, 2.9, 2.9, 2.9, 2.9)
 panels <- panelLayout(
   nrow = rows,
@@ -353,7 +361,8 @@ panels <- panelLayout(
   colSize = panel_width,
   colSep = rep(0.1, (columns + 1)) # space between panels
 )
-# 6.2 Set panel row indices
+
+# 6.2 Set panel row indexes
 row_begin <- ArrangePanels(
   posterdat = poster_dataset,
   partitioning = partitioning,
@@ -372,9 +381,9 @@ n_groups <- length(row_end)
 ```
 
 
-7. **Plot Posters.**
+7. **Plot the Microposters Column.**
 
-After all the settings are specified, we can now start to create the linked microposter plot\index{Linked microposter plot} one column at a time, by starting from the leftmost column, i.e., the microposters. The linked microposter plots\index{Linked microposter plot} code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package by @PaOl2015.     
+After all the settings have been specified, we can now start to create the linked microposter plot\index{Linked microposter plot} one column at a time, by starting from the leftmost column, i.e., the microposters. The linked microposter plots\index{Linked microposter plot} code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package [@PaOl2015].     
 
 A `plot_microposters()` function is created to plot the poster column. If the user keep the similar data structure as the eye tracking data demonstrated, dataframe, column names, and image types, then there is no need to adjust this function to visualize other topic of interest, otherwise, one will need to adjust the data and column names accordingly. 
 
@@ -386,7 +395,7 @@ The microposter column with small posters is plotted with highlights according t
 * `pen`: the index to determine which color to use in the selected color scheme `color_scheme`.
 * `past`: index for cumulative AOIs\index{Area of interest} shown above. 
 
-The panels and indices are set in code section 7.3.1, 7.3.2, and 7.3.5. Then posters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. 7.3.6 and 7.3.7 plotted the `fore` AOIs.\index{Area of interest} The microposters are finished with coloring the cumulative sections in 7.3.8 and plotting the outlines or the borders for the poster.
+The panels and indexes are set in code section 7.3.1, 7.3.2, and 7.3.5. Then posters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. 7.3.6 and 7.3.7 plotted the `fore` AOIs.\index{Area of interest} The microposters are finished with coloring the cumulative sections in 7.3.8 and plotting the outlines or the borders for the poster.
 
 
 ```{r Ch10-create-microposters-function}
@@ -414,26 +423,26 @@ plot_microposters <- function(panel_col,
   # if not, it will be skipped.
   if (median_row) {
     graphics::mtext(
+      text = "Above Median Visits",
       side = 3,
       line = details$line1,
-      "Above Median Visits",
       cex = details$cex
     )
 
     if (cumulate) {
       graphics::mtext(
+        text = "Cumulative Microposters",
         side = 3,
         line = details$line2,
-        "Cumulative Microposters",
         cex = details$cex
       )
     }
   } else {
     if (cumulate) {
       graphics::mtext(
+        text = "Cumulative Microposters",
         side = 3,
         line = details$line1,
-        "Cumulative Microposters",
         cex = details$cex
       )
     }
@@ -444,9 +453,9 @@ plot_microposters <- function(panel_col,
 
   if (median_row) {
     graphics::mtext(
+      text = "Below Median Visits",
       side = 1,
       line = details$line3,
-      "Below Median Visits",
       cex = details$cex
     )
   }
@@ -471,7 +480,7 @@ plot_microposters <- function(panel_col,
     panelScale(rxpoly, rypoly)
     gsubs <- row_begin[i]:row_end[i]
     median_group <- row_begin[ceiling(n_groups / 2)]
-    # If there is median row, include median row in the index
+    # If there is a median row, include median row in the index
     if (median_row) {
       if (i == ceiling(n_groups / 2) - 1) {
         gsubs <- c(gsubs, median_group)
@@ -486,11 +495,11 @@ plot_microposters <- function(panel_col,
 
     # 7.3.3 Plot background images (the poster)
     graphics::rasterImage(
-      poster,
-      0,
-      0,
-      imager::width(poster),
-      imager::height(poster)
+      image = poster,
+      xleft = 0,
+      ybottom = 0,
+      xright = imager::width(poster),
+      ytop = imager::height(poster)
     )
 
     # 7.3.4 Plot background (out of contour) regions
@@ -503,7 +512,7 @@ plot_microposters <- function(panel_col,
       border = TRUE
     )
 
-    # 7.3.5 Set the indices: plot foreground regions
+    # 7.3.5 Set the indexes: plot foreground regions
     # for the panel in their special colors pens 1:5
     # and other in contour regions in light yellow if cumulative is True
     fore <- !is.na(match(aoi_vis_borders$section, panel_names))
@@ -548,7 +557,7 @@ plot_microposters <- function(panel_col,
       )
     }
 
-    # 7.3.9 plot poster outline
+    # 7.3.9 Plot poster outline
     graphics::polygon(poster_vis_borders$x,
       poster_vis_borders$y,
       col = "black",
@@ -587,9 +596,9 @@ if (sum(panel_types == "poster") >= 1) {
 ```
 
 
-8. **Plot Labels.**
+8. **Plot the Labels Column.**
 
-After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indices are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
+After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indexes are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
 
 ```{r Ch10-create-labels-function}
 plot_labels <- function(panel_col,
@@ -611,26 +620,26 @@ plot_labels <- function(panel_col,
   panelSelect(panels, 1, panel_col)
   panelScale()
 
-  # 8.2 Plot median row panel is there is a median
+  # 8.2 Plot median row panel if there is a median
   if (median_row) {
     graphics::mtext(
+      text = title,
       side = 3,
       line = details$line2,
-      title,
       cex = header_size
     )
   } else {
     graphics::mtext(
+      text = title,
       side = 3,
       line = details$line1,
-      title,
       cex = header_size
     )
   }
 
   # 8.3 Plot labels by perceptual groups
   for (i in 1:n_groups) {
-    # 8.3.1 Set indices and panels
+    # 8.3.1 Set indexes and panels
     gsubs <- row_begin[i]:row_end[i]
     gnams <- poster_dataset$section[gsubs]
     nsubs <- length(gnams)
@@ -722,11 +731,11 @@ if (sum(panel_types == "legend") >= 1) {
 ```
 
 
-9. **Other Columns.**
+9. **Plot the Statistical Columns.**
 
-In our case, dotplot and boxplot are presented to visualize the visits and the pupil radiuses as examples. Similar to the `plot_microposters()` and `plot_labels()` functions, we first set up indices, panels, specify labels (axis, axis ticks, and texts) and then plot each dot or boxplot one by one with the corresponding colors within each perceptual group. Since we chose white color for blank, it is coded as a special case. 
+In our case, dotplot and boxplot are presented to visualize the visits and the pupil radiuses as examples. Similar to the `plot_microposters()` and `plot_labels()` functions, we first set up indexes, panels, specify labels (axis, axis ticks, and texts) and then plot each dot or boxplot one by one with the corresponding colors within each perceptual group. Since we chose white color for blank, it is coded as a special case. 
 
-For the `plot_dotplot()` function, the axis range as well as the panel grid are automatically determined by the range of the input data in A.9.1, if they are not defined by the user. For the automatic setup, axis range is set to be slightly below the minimum and above the maximum, then the grid in panels are determined by evenly dividing the panel width with the predefined functions. Finally, the dots are plotted manually by perceptual groups using the `points()` fuction and connected with black lines in A.9.3.5, after the indices, panels, and labels are created for each group from A.9.3.1 to A.9.3.4.    
+For the `plot_dotplot()` function, the axis range as well as the panel grid are automatically determined by the range of the input data in A.9.1, if they are not defined by the user. For the automatic setup, axis range is set to be slightly below the minimum and above the maximum, then the grid in panels are determined by evenly dividing the panel width with the predefined functions. Finally, the dots are plotted manually by perceptual groups using the `points()` fuction and connected with black lines in A.9.3.5, after the indexes, panels, and labels are created for each group from A.9.3.1 to A.9.3.4.    
 
 For the `plot_boxplot()` function, the dataframe is specified within the data list in B.9.1, then the plot parameters are defined for the boxplot in B.9.2. The summary statistics of the data by AOIs\index{Area of interest} are summarised for the creation of boxplot in B.9.3. Similar to the `plot_dotplot()`, the panel grid and axis lables are created in B.9.4, and groups panels are set up in B.9.5. Then the boxplots are created by perceptual groups manually by first plotting the outliers, and then the boxes. 
 
@@ -762,14 +771,14 @@ plot_dotplot <- function(var,
   panelSelect(panels, 1, panel_num)
   panelScale()
   graphics::mtext(
+    text = title,
     side = 3,
     line = details$line1,
-    text = title,
     cex = cex
   )
   # A.9.3 Plot by perceptual groups
   for (i in 1:n_groups) {
-    # A.9.3.1 Set up indices
+    # A.9.3.1 Set up indexes
     gsubs <- row_begin[i]:row_end[i] # group subscript
     gnams <- aoi_names[gsubs] # group names
     nsubs <- length(gsubs) # number of group subscripts
@@ -870,10 +879,10 @@ plot_boxplot <- function(dat,
   }
   aoi_names <- poster_dataset[[1]]$section
 
-  # B.9.2 Set up box plot parameters
+  # B.9.2 Set up boxplot parameters
   thin_box <- 0.2
   thick_box <- 0.60
-  use_black <- FALSE # for outliners
+  use_black <- FALSE # for outliers
   median_line <- 0.88
   dot_median_col <- "white"
   pch_median <- 19
@@ -938,9 +947,9 @@ plot_boxplot <- function(dat,
   panelSelect(panels, 1, panel_num)
   panelScale()
   graphics::mtext(
+    text = title,
     side = 3,
     line = details$line1,
-    text = title,
     cex = text_size
   )
 
@@ -1021,7 +1030,7 @@ plot_boxplot <- function(dat,
           )
         }
       }
-      # Plot box plots
+      # Plot boxplots
       # Plot "Blank" AOI separately in white color
       # Plot other AOIs with colors in the selected color scheme
       if (gnams[k] == "Blank") {
@@ -1063,7 +1072,7 @@ plot_boxplot <- function(dat,
 There are two columns visualized with dotplot: the length of time spent in each AOI\index{Area of interest} and the number of times each AOI\index{Area of interest} is visited. The two columns are plotted by calling the `plot_dotplot()` function twice within the for loop. 
 
 ```{r Ch10-add-dotplot, eval = FALSE}
-# plot length of visits and number of visits
+# Plot length of visits and number of visits
 if (sum(panel_types == "dot") >= 1) {
   dots <- which(panel_types == "dot")
 
@@ -1126,7 +1135,7 @@ if (sum(panel_types == "boxplot") >= 1) {
 ```
 
 
-10. **Add Title.**
+10. **Add the Title.**
 
 By now, all the columns in the linked microposter plot\index{Linked microposter plot} have been created. The plot can now be finalized by adding the main title.  
 
