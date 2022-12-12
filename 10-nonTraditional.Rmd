@@ -383,19 +383,19 @@ n_groups <- length(row_end)
 
 7. **Plot the Microposters Column.**
 
-After all the settings have been specified, we can now start to create the linked microposter plot\index{Linked microposter plot} one column at a time, by starting from the leftmost column, i.e., the microposters. The linked microposter plots\index{Linked microposter plot} code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package [@PaOl2015].     
+After all the settings have been specified in the previous steps, we can now start to create the linked microposter plot\index{Linked microposter plot} one column at a time, by starting from the leftmost column, i.e., the microposters column. The linked microposter plots\index{Linked microposter plot} code is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package [@PaOl2015].     
 
-A `plot_microposters()` function is created to plot the poster column. If the user keep the similar data structure as the eye tracking data demonstrated, dataframe, column names, and image types, then there is no need to adjust this function to visualize other topic of interest, otherwise, one will need to adjust the data and column names accordingly. 
+A `plot_microposters()` function has been created to plot the microposters column. If the user plans to use similar data structures as for the eye tracking data in this chapter, i.e., similar dataframes, column names, and image types, then there is no need to adjust this function to visualize other topics of interest. Otherwise, it is necessary to adjust the data and column names accordingly. 
 
-The microposter column with small posters is plotted with highlights according to the context and labels. `panel_col` is the column number of this panel that is defined with the column attributes, the rest of the inputs are the attributes also specified in the above sections. First, the labels are specified in 7.1 and 7.2. One can adjust the texts inside the function. Then the microposters with specific highlights are created by the perceptual groups divided with a for loop in the code 7.3. In this example, there are 3 perceptual groups and no median row. For each group, we color the AOIs\index{Area of interest} presented in the group, the rest AOIs\index{Area of interest} are either gray as background or colored in light yellow if they have been presented in the previous groups given that cumulative option is True. The borders of each AOIs\index{Area of interest} and the entire poster are plotted with thick black lines. Within the `plot_microposters()` function, the explanations of the most important variables are listed below: 
+The microposters column with small microposters is plotted with highlighting and coloring of the AOIs\index{Area of interest} according to the context and labels. `panel_col` is the column number of this column that is defined with the column attributes. The rest of the arguments for this function are the attributes specified in the previous steps. First, the labels are specified in code sections 7.1 and 7.2. One can adjust the text of the labels directly inside the function. Then the microposters with specific AOIs highlighted are created for each of the perceptual groups via a for loop in code section 7.3. In this example, there are three perceptual groups and no median row. For each group, we color the AOIs\index{Area of interest} that are present in the perceptual group. The remaining AOIs\index{Area of interest} are either gray as background or colored in light yellow if they have been highlighted in the previous perceptual groups given that the cumulative option is `TRUE`. The borders of each AOI\index{Area of interest} and the entire poster are plotted with thick black lines. Within the `plot_microposters()` function, the explanations of the most important arguments are listed below: 
 
-* `gsubs`: the row index for current group;
-* `back`: the row index for the AOIs\index{Area of interest} that are not presenting in the current group;
-* `fore`: the complement of `back`, i.e., the row index for the AOIs that are presenting in the current group;
-* `pen`: the index to determine which color to use in the selected color scheme `color_scheme`.
-* `past`: index for cumulative AOIs\index{Area of interest} shown above. 
+* `gsubs`: the row indexes for current perceptual group;
+* `back`: the row indexes for the AOIs\index{Area of interest} that are not presented in the current perceptual group;
+* `fore`: the complement of `back`, i.e., the row indexes for the AOIs that are presented in the current perceptual group;
+* `pen`: the index to determine which color to use in the selected color scheme `color_scheme`;
+* `past`: the indexes for cumulative AOIs\index{Area of interest} shown in perceptual groups that have been highlighted above the current perceptual group. 
 
-The panels and indexes are set in code section 7.3.1, 7.3.2, and 7.3.5. Then posters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. 7.3.6 and 7.3.7 plotted the `fore` AOIs.\index{Area of interest} The microposters are finished with coloring the cumulative sections in 7.3.8 and plotting the outlines or the borders for the poster.
+The panels and indexes are set in code sections 7.3.1, 7.3.2, and 7.3.5. Then the microposters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. In code sections 7.3.6 and 7.3.7, the `fore` AOIs\index{Area of interest} are plotted. The microposters are finalized with coloring the cumulative AOIs\index{Area of interest} in 7.3.8 and plotting the outlines of the borders for the poster in 7.3.9.
 
 
 ```{r Ch10-create-microposters-function}
@@ -412,13 +412,13 @@ plot_microposters <- function(panel_col,
                               row_begin,
                               row_end,
                               color_scheme) {
-  # 7.1 Assign aoi ids (one per aoi)
+  # 7.1 Assign AOI ids (one per AOI)
   aoi_ids <- aoi_vis_borders$section[is.na(aoi_vis_borders$x)]
 
   # 7.2 Plot panel titles
   panelSelect(panels, 1, panel_col)
   panelScale()
-  # If there is Median row,
+  # If there is a median row,
   # then there will be additional labels and a median panel plotted;
   # if not, it will be skipped.
   if (median_row) {
@@ -568,9 +568,9 @@ plot_microposters <- function(panel_col,
 }
 ```
 
-Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package. In this example, five colors are used from the `Paired` color palette, since we have five rows at most for each perceptual group. Multiple microposter columns could be created if needed.
+Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022]. In this example, five colors are used from the `Paired` color palette, since we have five rows at most in each perceptual group. Multiple microposters columns could be created if needed.
 
-```{r Ch10-create-microposters, fig.cap = 'Linked microposters plot poster column.', fig.width = 7}
+```{r Ch10-create-microposters, fig.cap = 'Linked microposter plot poster column.', fig.width = 7}
 color_scheme <- rev(RColorBrewer::brewer.pal(5, "Paired"))
 if (sum(panel_types == "poster") >= 1) {
   posters <- which(panel_types == "poster")
@@ -598,7 +598,7 @@ if (sum(panel_types == "poster") >= 1) {
 
 8. **Plot the Labels Column.**
 
-After plotting the poster image column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indexes are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
+After plotting the microposters column, we can plot the labels or the legends. Similarly, we created a function `plot_labels()` to make the plotting process cleaner and easier to reuse. The function is structured similarly as the `plot_microposters()` function, also the variable naming schemes. First, we define the label content and aesthetics such as font and size. The panels and indexes are set in 8.1 and 8.2. Then we create the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the labels are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be white color, which is not in the color series we chose (code section 8.3.3). 
 
 ```{r Ch10-create-labels-function}
 plot_labels <- function(panel_col,
@@ -725,7 +725,7 @@ if (sum(panel_types == "legend") >= 1) {
 }
 ```
 
-```{r Ch10-create-microposters-and-labels, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters), now with labels added.', fig.width = 7, tidy = FALSE}
+```{r Ch10-create-microposters-and-labels, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-create-microposters), now with labels column added.', fig.width = 7, tidy = FALSE}
 <<Ch10-create-microposters>>
 <<Ch10-plot-labels>>
 ```
@@ -1153,12 +1153,12 @@ invisible(panelScale(inches = TRUE))
 ```
 
 
-```{r Ch10-dotplot-boxplot-title-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-boxplot-cum), now with the main title added.', tidy = FALSE}
+```{r Ch10-dotplot-boxplot-title-cum, echo = FALSE, fig.cap = 'Similar to Figure \\@ref(fig:Ch10-dotplot-boxplot-cum), now with the main title added.', fig.width = 7, tidy = FALSE}
 <<Ch10-dotplot-boxplot-cum>>
 <<Ch10-add-title>>
 ```
 
-Now we finished creating a non-traditional linked microposter plot\index{Linked microposter plot} with our own data, boundary, images in a different domain compared to the other chapters of the book. When one gets familiar with the steps on how to bring in data, boundary, images, and different plots and map overlays, the above steps and functions can be incorporated into a linked micromap plot\index{Linked micromap plot} function to simplify the creation of a non-traditional linked micromap plot.\index{Linked micromap plot}
+Now we finished creating a non-traditional linked microposter plot\index{Linked microposter plot} with our own data, boundary, images in a different domain compared to the other chapters of the book. When one gets familiar with the steps on how to bring in data, boundary, images, and different plots and map overlays, the above steps and functions can be incorporated into a new linked micromap plot\index{Linked micromap plot} function to simplify the creation of a non-traditional linked micromap plot.\index{Linked micromap plot}
 
 
 ## Summary and Further Reading {#Ch10-FurtherReading}
