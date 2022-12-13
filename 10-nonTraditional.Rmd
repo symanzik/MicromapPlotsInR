@@ -110,7 +110,7 @@ panel_types <- c("poster", "legend", "dot", "dot", "boxplot")
 
 # 1.2 Specify column attributes
 columns_att <- list(
-  # 1.2.1 Microposter column
+  # 1.2.1 Microposters column
   list(
     col_num = 1,
     cumulate = TRUE
@@ -387,12 +387,12 @@ After all the settings have been specified in the previous steps, we can now sta
 
 A `plot_microposters()` function has been created to plot the microposters column. If the user plans to use similar data structures as for the eye tracking data in this chapter, i.e., similar dataframes, column names, and image types, then there is no need to adjust this function to visualize other topics of interest. Otherwise, it is necessary to adjust the data and column names accordingly. 
 
-The microposters column with small microposters is plotted with highlighting and coloring of the AOIs\index{Area of interest} according to the context and labels. `panel_col` is the column number of this column that is defined with the column attributes. The rest of the arguments for this function are the attributes specified in the previous steps. First, the labels are specified in code sections 7.1 and 7.2. One can adjust the text of the labels directly inside the function. Then the microposters with specific AOIs highlighted are created for each of the perceptual groups via a for loop in code section 7.3. In this example, there are three perceptual groups and no median row. For each group, we color the AOIs\index{Area of interest} that are present in the perceptual group. The remaining AOIs\index{Area of interest} are either gray as background or colored in light yellow if they have been highlighted in the previous perceptual groups given that the cumulative option is `TRUE`. The borders of each AOI\index{Area of interest} and the entire poster are plotted with thick black lines. Within the `plot_microposters()` function, the explanations of the most important arguments are listed below: 
+The microposters column with small microposters is plotted with highlighting and coloring of the AOIs\index{Area of interest} according to the context and labels. `panel_col` is the column number of this column that is defined with the column attributes. The rest of the arguments for this function are the attributes specified in the previous steps. First, the labels are specified in code sections 7.1 and 7.2. One can adjust the text of the labels directly inside the function. Then the microposters with specific AOIs highlighted are created for each of the perceptual groups via a for-loop in code section 7.3. In this example, there are three perceptual groups and no median row. For each perceptual group, we color the AOIs\index{Area of interest} that are present in that perceptual group. The remaining AOIs\index{Area of interest} are either gray as background or colored in light yellow if they have been highlighted in the previous perceptual groups given that the cumulative option is `TRUE`. The borders of each AOI\index{Area of interest} and the entire poster are plotted with thick black lines. Explanations of the most important arguments used Within the `plot_microposters()` function are given below: 
 
-* `gsubs`: the row indexes for current perceptual group;
-* `back`: the row indexes for the AOIs\index{Area of interest} that are not presented in the current perceptual group;
-* `fore`: the complement of `back`, i.e., the row indexes for the AOIs that are presented in the current perceptual group;
-* `pen`: the index to determine which color to use in the selected color scheme `color_scheme`;
+* `gsubs`: the row indexes for all AOIs\index{Area of interest} that are in the current perceptual group;
+* `back`: the row indexes for the AOIs\index{Area of interest} that are not highlighted in the current perceptual group, i.e., those in the background;
+* `fore`: the complement of `back`, i.e., the row indexes for the AOIs that are highlighted in the current perceptual group, i.e., those in the foreground;
+* `pen`: the index to determine which color to use from the selected color scheme `color_scheme`;
 * `past`: the indexes for cumulative AOIs\index{Area of interest} shown in perceptual groups that have been highlighted above the current perceptual group. 
 
 The panels and indexes are set in code sections 7.3.1, 7.3.2, and 7.3.5. Then the microposters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. In code sections 7.3.6 and 7.3.7, the `fore` AOIs\index{Area of interest} are plotted. The microposters are finalized with coloring the cumulative AOIs\index{Area of interest} in 7.3.8 and plotting the outlines of the borders for the poster in 7.3.9.
@@ -514,7 +514,7 @@ plot_microposters <- function(panel_col,
 
     # 7.3.5 Set the indexes: plot foreground regions
     # for the panel in their special colors pens 1:5
-    # and other in contour regions in light yellow if cumulative is True
+    # and other in contour regions in light yellow if cumulative is TRUE
     fore <- !is.na(match(aoi_vis_borders$section, panel_names))
     pen <- match(aoi_ids,
       panel_names,
@@ -541,7 +541,7 @@ plot_microposters <- function(panel_col,
       lwd = 1
     )
 
-    # 7.3.8 Plot and color cumulative regions if it is defined to be True
+    # 7.3.8 Plot and color cumulative regions if it is defined to be TRUE
     if (cumulate) {
       past <- !back & !fore
       graphics::polygon(aoi_vis_borders$x[past],
@@ -568,7 +568,7 @@ plot_microposters <- function(panel_col,
 }
 ```
 
-Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposter column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022]. In this example, five colors are used from the `Paired` color palette, since we have five rows at most in each perceptual group. Multiple microposters columns could be created if needed.
+Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposters column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022]. In this example, five colors are used from the `Paired` color palette, since we have five rows at most in each perceptual group. Multiple microposters columns could be created if needed.
 
 ```{r Ch10-create-microposters, fig.cap = 'Linked microposter plot poster column.', fig.width = 7}
 color_scheme <- rev(RColorBrewer::brewer.pal(5, "Paired"))
