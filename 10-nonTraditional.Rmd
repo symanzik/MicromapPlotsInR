@@ -195,11 +195,13 @@ load("data/Ch10/AOIName.rda")
 aoi_vis_borders <- AOIName
 
 # 3.2 Create shape data for blank and add it to the poster shapefile
-blank <- as.data.frame(matrix(c(rep(0, 5 * 3), NA, NA, NA),
-  nrow = 6,
-  ncol = 3,
-  byrow = TRUE
-))
+blank <- as.data.frame(
+  matrix(c(rep(0, 5 * 3), NA, NA, NA),
+    nrow = 6,
+    ncol = 3,
+    byrow = TRUE
+  )
+)
 blank[, 1] <- "Blank"
 colnames(blank) <- colnames(aoi_vis_borders)
 aoi_vis_borders <- rbind(aoi_vis_borders, blank)
@@ -234,16 +236,16 @@ decreasing <- TRUE
 pupil_data <- poster_dataset[[3]]
 
 # 4.2 Order rows: rearrange the datasets by a specific variable
-# 4.2.1 Order by pupil radius
 if (sortby == "pupil_data") {
+  # 4.2.1 Order by pupil radius
   unordered_median <- unlist(lapply(pupil_data, stats::median))
   ordered_median <- order(unordered_median,
     decreasing = decreasing
   )
   pupil_data <- pupil_data[ordered_median]
   poster_dataset <- poster_dataset[ordered_median, ]
-  # 4.2.2 Order by eye movement speed
 } else if (sortby == "speed") {
+  # 4.2.2 Order by eye movement speed
   unordered_median <- unlist(lapply(speed, stats::median))
   ordered_median <- order(unordered_median,
     decreasing = decreasing
@@ -283,7 +285,8 @@ if (automatic_layout) {
     partitioning = partitioning
   )[[3]]
 
-  median_row <- DetermineMedianRow(nrow(poster_dataset),
+  median_row <- DetermineMedianRow(
+    n = nrow(poster_dataset),
     partitioning = partitioning
   )
 } else {
@@ -309,7 +312,7 @@ if (!median_row) {
   rowsize <- rep(17.2 / rows, rows)
 } else {
   rowsize <- c(
-    rep(17.2 / rows, floor(rows / 2)), 
+    rep(17.2 / rows, floor(rows / 2)),
     17.2 / (rows * 3.2),
     rep(17.2 / rows, floor(rows / 2))
   )
@@ -317,8 +320,8 @@ if (!median_row) {
 
 # 5.4 Define some graphical parameters
 details <- list(
-  bot = 0.77, # bottom margin for the panel
-  top = 0.85, # top margin for the panel
+  bot = 0.05, # bottom margin for the panel
+  top = 0.6, # top margin for the panel
   left = 0, # left margin for the panel
   right = 0, # right margin for the panel
   dcex = 0.96, # text size option 1
@@ -352,31 +355,26 @@ panel_width <- c(2.9, 2.9, 2.9, 2.9, 2.9)
 panels <- panelLayout(
   nrow = rows,
   ncol = columns,
-  topMargin = details$top,
-  bottomMargin = details$bot - 0.7,
   leftMargin = details$left,
   rightMargin = details$right,
-  rowSep = rep(0.01, rows + 1),
-  rowSize = rowsize,
+  topMargin = details$top,
+  bottomMargin = details$bot,
   colSize = panel_width,
-  colSep = rep(0.1, (columns + 1)) # space between panels
+  rowSize = rowsize,
+  colSep = rep(0.1, (columns + 1)), # space between panels in columns
+  rowSep = rep(0.01, rows + 1) # space between panels in rows
 )
 
 # 6.2 Set panel row indexes
-row_begin <- ArrangePanels(
+row_indexes <- ArrangePanels(
   posterdat = poster_dataset,
   partitioning = partitioning,
   AutomaticLayout = automatic_layout,
   Layout = layout,
   MedianRow = median_row
-)[[1]]
-row_end <- ArrangePanels(
-  posterdat = poster_dataset,
-  partitioning = partitioning,
-  AutomaticLayout = automatic_layout,
-  Layout = layout,
-  MedianRow = median_row
-)[[2]]
+)
+row_begin <- row_indexes[[1]]
+row_end <- row_indexes[[2]]
 n_groups <- length(row_end)
 ```
 
@@ -416,7 +414,7 @@ plot_microposters <- function(panel_col,
   aoi_ids <- aoi_vis_borders$section[is.na(aoi_vis_borders$x)]
 
   # 7.2 Plot panel titles
-  panelSelect(panels, 1, panel_col)
+  panelSelect(layout = panels, i = 1, j = panel_col)
   panelScale()
   # If there is a median row,
   # then there will be additional labels and a median panel plotted;
@@ -467,21 +465,26 @@ plot_microposters <- function(panel_col,
   for (i in 1:n_groups) {
     if (median_row && i == ceiling(n_groups / 2)) {
       # 7.3.1 Map not drawn, median region plotted in adjacent panel
-      panelSelect(panels, (n_groups + 1) / 2, panel_col)
+      panelSelect(layout = panels, i = (n_groups + 1) / 2, j = panel_col)
       panelScale()
       panelFill(col = details$wgray)
       panelOutline(col = "black")
-      graphics::text(0.5, 0.55, "Median", cex = details$cex)
+      graphics::text(
+        x = 0.5,
+        y = 0.55,
+        labels = "Median",
+        cex = details$cex
+      )
       next
     }
 
     # 7.3.2 Select panels and set indexes
-    panelSelect(panels, i, panel_col)
-    panelScale(rxpoly, rypoly)
+    panelSelect(layout = panels, i = i, j = panel_col)
+    panelScale(rx = rxpoly, ry = rypoly)
     gsubs <- row_begin[i]:row_end[i]
     median_group <- row_begin[ceiling(n_groups / 2)]
-    # If there is a median row, include median row in the index
     if (median_row) {
+      # If there is a median row, include median row in the index
       if (i == ceiling(n_groups / 2) - 1) {
         gsubs <- c(gsubs, median_group)
       }
@@ -506,21 +509,22 @@ plot_microposters <- function(panel_col,
     # in gray with white outlines
     # "front_regions" are the regions in the group, the rest are "back"
     front_regions <- poster_dataset$section[1:row_end[i]]
-    back <- is.na(match(aoi_vis_borders$section, front_regions))
+    back <- is.na(match(x = aoi_vis_borders$section, table = front_regions))
     graphics::polygon(
-      aoi_vis_borders$x[back],
-      aoi_vis_borders$y[back],
+      x = aoi_vis_borders$x[back],
+      y = aoi_vis_borders$y[back],
       border = TRUE
     )
 
     # 7.3.5 Set the indexes: plot foreground regions
     # for the panel in their special colors pens 1:5
-    # and other in contour regions in light yellow if cumulative is TRUE
-    fore <- !is.na(match(aoi_vis_borders$section, panel_names))
-    pen <- match(aoi_ids,
-      panel_names,
+    # and others in contour regions in light yellow if cumulative is TRUE
+    fore <- !is.na(match(x = aoi_vis_borders$section, table = panel_names))
+    pen <- match(
+      x = aoi_ids,
+      table = panel_names,
       nomatch = 10
-    )[!is.na(match(aoi_ids, panel_names))]
+    )[!is.na(match(x = aoi_ids, table = panel_names))]
 
     # 7.3.6 Outline regions
     # If there is a median row,
@@ -529,16 +533,16 @@ plot_microposters <- function(panel_col,
       pen[which(pen == median_group)] <- length(color_scheme)
     }
     graphics::polygon(
-      aoi_vis_borders$x[fore],
-      aoi_vis_borders$y[fore],
-      col = scales::alpha(color_scheme[pen], 0.7),
+      x = aoi_vis_borders$x[fore],
+      y = aoi_vis_borders$y[fore],
+      col = scales::alpha(colour = color_scheme[pen], alpha = 0.7),
       border = FALSE
     )
 
     # 7.3.7 Plot borders
     graphics::polygon(
-      aoi_vis_borders$x[fore],
-      aoi_vis_borders$y[fore],
+      x = aoi_vis_borders$x[fore],
+      y = aoi_vis_borders$y[fore],
       col = "black",
       density = 0,
       lwd = 1
@@ -548,14 +552,14 @@ plot_microposters <- function(panel_col,
     if (cumulate) {
       past <- !back & !fore
       graphics::polygon(
-        aoi_vis_borders$x[past],
-        aoi_vis_borders$y[past],
-        col = scales::alpha(details$wyellow, 0.7),
+        x = aoi_vis_borders$x[past],
+        y = aoi_vis_borders$y[past],
+        col = scales::alpha(colour = details$wyellow, alpha = 0.7),
         border = FALSE
       )
       graphics::polygon(
-        aoi_vis_borders$x[past],
-        aoi_vis_borders$y[past],
+        x = aoi_vis_borders$x[past],
+        y = aoi_vis_borders$y[past],
         col = "black",
         density = 0,
         lwd = 1
@@ -564,8 +568,8 @@ plot_microposters <- function(panel_col,
 
     # 7.3.9 Plot poster outline
     graphics::polygon(
-      poster_vis_borders$x,
-      poster_vis_borders$y,
+      x = poster_vis_borders$x,
+      y = poster_vis_borders$y,
       col = "black",
       density = 0,
       lwd = 1
@@ -577,7 +581,7 @@ plot_microposters <- function(panel_col,
 Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposters column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022]. In this example, five colors are used from the `Paired` color palette, since we have five rows at most in each perceptual group. Multiple microposters columns could be created if needed.
 
 ```{r Ch10-create-microposters, fig.cap = 'Microposters column of the linked microposter plot.', fig.width = 7}
-color_scheme <- rev(RColorBrewer::brewer.pal(5, "Paired"))
+color_scheme <- rev(RColorBrewer::brewer.pal(n = 5, name = "Paired"))
 if (sum(panel_types == "poster") >= 1) {
   posters <- which(panel_types == "poster")
 
@@ -623,10 +627,10 @@ plot_labels <- function(panel_col,
                         row_end,
                         color_scheme) {
   # 8.1 Define panels
-  panelSelect(panels, 1, panel_col)
+  panelSelect(layout = panels, i = 1, j = panel_col)
   panelScale()
 
-  # 8.2 Plot median row panel if there is a median
+  # 8.2 Plot median row panel if there is a median row
   if (median_row) {
     graphics::mtext(
       text = title,
@@ -651,10 +655,10 @@ plot_labels <- function(panel_col,
     nsubs <- length(gnams)
     pen <- 1:nsubs
     laby <- nsubs:1
-    panelSelect(panels, i, panel_col)
-    panelScale(c(0, 1), c(1 - details$ypad, nsubs + details$ypad))
+    panelSelect(layout = panels, i = i, j = panel_col)
+    panelScale(rx = c(0, 1), ry = c(1 - details$ypad, nsubs + details$ypad))
 
-    # 8.3.2 Define the index for median row if there is a median row
+    # 8.3.2 Define the index for the median row if there is a median row
     if (median_row && i == ((n_groups + 1) / 2)) {
       pen <- length(color_scheme)
     }
@@ -662,21 +666,24 @@ plot_labels <- function(panel_col,
     # 8.3.3 Plot labels and color-coded legend corresponding to
     # the colors of the AOIs in the microposters
     for (j in 1:length(pen)) {
-      graphics::points(0.1,
-        laby[j],
+      graphics::points(
+        x = 0.1,
+        y = laby[j],
         pch = 16,
         col = color_scheme[pen[j]],
         cex = dcex
       )
-      graphics::points(0.1,
-        laby[j],
+      graphics::points(
+        x = 0.1,
+        y = laby[j],
         pch = 1,
         col = "black",
         cex = dcex
       )
-      graphics::text(0.18,
-        laby[j] + details$nameShift,
-        gnams[j],
+      graphics::text(
+        x = 0.18,
+        y = laby[j] + details$nameShift,
+        labels = gnams[j],
         cex = cex,
         adj = 0,
         col = "black",
@@ -685,14 +692,16 @@ plot_labels <- function(panel_col,
 
       # Label "Blank" AOI separately as white is not in the color scheme
       if (gnams[j] == "Blank") {
-        graphics::points(0.1,
-          laby[j],
+        graphics::points(
+          x = 0.1,
+          y = laby[j],
           pch = 16,
           col = "white",
           cex = dcex
         )
-        graphics::points(0.1,
-          laby[j],
+        graphics::points(
+          x = 0.1,
+          y = laby[j],
           pch = 1,
           col = "black",
           cex = dcex
@@ -770,13 +779,15 @@ plot_dotplot <- function(var,
   countRange <- range(var)
   countRange <- mean(countRange) + 1.3 * diff(countRange) * c(-0.5, 0.5)
   if (is.na(axis_ticks)) {
-    # Use pretty values that cover the entire range
-    countGrid <- panelInbounds(countRange)
+    # If axis is not defined by the user, grids are determined automatically and
+    # pretty values that are within bounds are used
+    countGrid <- panelInbounds(bnds = countRange)
   } else {
+    # If axis is defined by the user
     countGrid <- axis_ticks
   }
   # A.9.2 Set up panels as a big frame for the entire plot
-  panelSelect(panels, 1, panel_num)
+  panelSelect(layout = panels, i = 1, j = panel_num)
   panelScale()
   graphics::mtext(
     text = title,
@@ -793,19 +804,19 @@ plot_dotplot <- function(var,
     pen <- 1:nsubs # index counts forward
     laby <- nsubs:1 # index counts backward
     # A.9.3.2 Set up group panels
-    panelSelect(panels, i, panel_num)
+    panelSelect(layout = panels, i = i, j = panel_num)
     countRange2 <- c(
       min(countGrid) - mean(countGrid) * 0.28,
       max(countGrid) + mean(countGrid) * 0.28
     )
-    panelScale(countRange2, c(1 - details$ypad, nsubs + details$ypad))
+    panelScale(rx = countRange2, ry = c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
     panelGrid(x = countGrid, col = "white")
     panelOutline(col = "white")
-    # A.9.3.3 label axis
+    # A.9.3.3 Label axis
     if (i == n_groups) {
-      # if axis labels are not defined
       if (is.na(axis_labels)) {
+        # If axis labels are not defined by the user
         graphics::axis(
           side = 1,
           at = countGrid,
@@ -815,8 +826,8 @@ plot_dotplot <- function(var,
           tck = -0.04,
           cex.axis = cex
         )
-        # if axis labels are defined by the user
       } else {
+        # If axis labels are defined by the user
         graphics::axis(
           side = 1,
           at = countGrid,
@@ -832,34 +843,39 @@ plot_dotplot <- function(var,
     if (median_row & i == ((n_groups + 1) / 2)) {
       pen <- length(color_scheme)
     }
-    graphics::lines(var[gsubs], laby, col = "black", lwd = 1)
+    graphics::lines(
+      x = var[gsubs],
+      y = laby,
+      col = "black",
+      lwd = 1
+    )
     # A.9.3.5 Plot dots using corresponding data points
     for (j in 1:length(pen)) {
       graphics::points(
-        var[gsubs[j]],
-        laby[j],
+        x = var[gsubs[j]],
+        y = laby[j],
         pch = 16,
         cex = dcex,
         col = color_scheme[pen[j]]
       )
       graphics::points(
-        var[gsubs[j]],
-        laby[j],
+        x = var[gsubs[j]],
+        y = laby[j],
         pch = 1,
         cex = dcex,
         col = "black"
       )
       if (gnams[j] == "Blank") {
         graphics::points(
-          var[gsubs[j]],
-          laby[j],
+          x = var[gsubs[j]],
+          y = laby[j],
           pch = 16,
           cex = dcex,
           col = "white"
         )
         graphics::points(
-          var[gsubs[j]],
-          laby[j],
+          x = var[gsubs[j]],
+          y = laby[j],
           pch = 1,
           cex = dcex,
           col = "black"
@@ -914,7 +930,7 @@ plot_boxplot <- function(dat,
   medy <- median_line * c(-0.5, 0.5)
   ry <- c(0, 1) # used in y scaling for grid lines
 
-  # B.9.3 Gather stats and put in AOI order
+  # B.9.3 Gather boxplot statistics and put in AOI order
   boxlist <- graphics::boxplot(dat, plot = FALSE)
   # For the moment match on names
   # Boxlist: names, stats, out, group
@@ -938,7 +954,7 @@ plot_boxplot <- function(dat,
   }
 
   # B.9.4 Put data in order and set up grids
-  ord <- match(aoi_names, nam)
+  ord <- match(x = aoi_names, table = nam)
 
   if (is.null(out)) {
     rx <- range(stats)
@@ -946,17 +962,17 @@ plot_boxplot <- function(dat,
     rx <- range(stats, out)
   }
   countRange <- sc * diff(rx) * c(-0.5, 0.5) + mean(rx)
-  # If axis is not defined, grids are determined automatically
   if (is.na(axis_ticks)) {
-    # Use pretty values that are in bounds
-    countGrid <- panelInbounds(countRange)
-    # If axis is defined by user
+    # If axis is not defined by the user, grids are determined automatically and
+    # pretty values that are within bounds are used
+    countGrid <- panelInbounds(bnds = countRange)
   } else {
+    # If axis is defined by the user
     countGrid <- axis_ticks
   }
 
   # B.9.5 Set up group panels
-  panelSelect(panels, 1, panel_num)
+  panelSelect(layout = panels, i = 1, j = panel_num)
   panelScale()
   graphics::mtext(
     text = title,
@@ -974,19 +990,19 @@ plot_boxplot <- function(dat,
     pen <- 1:nsubs
     laby <- nsubs:1
     # B.9.6.2 Set up group panels
-    panelSelect(panels, i, panel_num)
+    panelSelect(layout = panels, i = i, j = panel_num)
     countRange2 <- c(
       min(countGrid) - stats::median(countGrid) * 0.05,
       max(countGrid) + stats::median(countGrid) * 0.05
     )
-    panelScale(countRange2, c(1 - details$ypad, nsubs + details$ypad))
+    panelScale(rx = countRange2, ry = c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
     panelGrid(x = countGrid, col = "white")
     panelOutline(col = "white")
     # B.9.6.3 Plot axis labels
-    # if axis labels are not defined
     if (i == n_groups) {
       if (is.na(axis_labels)) {
+        # If axis labels are not defined by the user
         graphics::axis(
           side = 1,
           at = countGrid,
@@ -996,8 +1012,8 @@ plot_boxplot <- function(dat,
           tck = -0.04,
           cex.axis = text_size
         )
-        # if axis labels are defined by user
       } else {
+        # If axis labels are defined by the user
         graphics::axis(
           side = 1,
           at = countGrid,
@@ -1022,19 +1038,23 @@ plot_boxplot <- function(dat,
       ht <- laby[k]
 
       # Plot outliers
-      # Plot "Blank" AOI separately in white color
-      # Plot other AOIs with colors in the selected color scheme
       if (outlier[m]) {
         vals <- out[group == m]
         if (gnams[k] == "Blank") {
-          graphics::points(vals, rep(ht, length(vals)),
+          # Plot "Blank" AOI separately in white color
+          graphics::points(
+            x = vals,
+            y = rep(ht, length(vals)),
             pch = 1,
             col = ifelse(use_black, "black", "#FFFFFF"),
             cex = cex_outlier,
             lwd = lwd_outlier
           )
         } else {
-          graphics::points(vals, rep(ht, length(vals)),
+          # Plot other AOIs with colors in the selected color scheme
+          graphics::points(
+            x = vals,
+            y = rep(ht, length(vals)),
             pch = 1,
             col = ifelse(use_black, "black", color_scheme[kp]),
             cex = cex_outlier,
@@ -1043,39 +1063,47 @@ plot_boxplot <- function(dat,
         }
       }
       # Plot boxplots
-      # Plot "Blank" AOI separately in white color
-      # Plot other AOIs with colors in the selected color scheme
       if (gnams[k] == "Blank") {
+        # Plot "Blank" AOI separately in white color
         graphics::polygon(
-          thin[, m],
-          rep(ht, 4) + thiny,
+          x = thin[, m],
+          y = rep(ht, 4) + thiny,
           col = "#FFFFFF",
-          border = NA
+          border = "black"
         )
         graphics::polygon(
-          thick[, m],
-          rep(ht, 4) + thicky,
+          x = thick[, m],
+          y = rep(ht, 4) + thicky,
           col = "#FFFFFF",
-          border = NA
+          border = "black"
         )
-        graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
+        graphics::segments(
+          x0 = med[m],
+          y0 = ht + medy[1],
+          x1 = med[m],
+          y1 = ht + medy[2],
           col = "black",
           lwd = lwd_median
         )
       } else {
+        # Plot other AOIs with colors in the selected color scheme
         graphics::polygon(
-          thin[, m],
-          rep(ht, 4) + thiny,
+          x = thin[, m],
+          y = rep(ht, 4) + thiny,
           col = color_scheme[kp],
-          border = NA
+          border = "black"
         )
         graphics::polygon(
-          thick[, m],
-          rep(ht, 4) + thicky,
+          x = thick[, m],
+          y = rep(ht, 4) + thicky,
           col = color_scheme[kp],
-          border = NA
+          border = "black"
         )
-        graphics::segments(med[m], ht + medy[1], med[m], ht + medy[2],
+        graphics::segments(
+          x0 = med[m],
+          y0 = ht + medy[1],
+          x1 = med[m],
+          y1 = ht + medy[2],
           col = "black",
           lwd = lwd_median
         )
@@ -1162,7 +1190,11 @@ if (sum(panel_types == "boxplot") >= 1) {
 ```
 
 XXX JS: Something goes wrong with the coloring in the `plot_boxplot()` function. Note that `Blank` is colored in pink while
-`Ack` is colored in white at the bottom. XXX
+`Ack` is colored in white at the bottom. As a side note, I was able to add black outlines around the boxes
+to make the white one better visible. That was easy. But I did not spot immediately why `Blank` and `Ack`
+do not get the proper colors. Is this a coding issue or was `Blank` assigned to the wrong AOI? 
+In your dissertation in Fig 4.5, `Blank` is the AOI at the bottom. Here, it is at the top. 
+So, a problem with the data / sorting of the data may be the issue (and not the code in `plot_boxplot()` function). XXX
 
 
 10. **Add the Title.**
@@ -1171,14 +1203,19 @@ By now, all the columns in the linked microposter plot\index{Linked microposter 
 
 
 ```{r Ch10-add-title, eval = FALSE}
-main.title <- "Eye Tracking: Looking at Poster Statistics"
+main.title <- "Eye Tracking: Statistics from Looking at a Scientific Poster "
 title.cex <- 1.08
 
-panelSelect(panels, margin = "top")
+panelSelect(layout = panels, margin = "top")
 invisible(panelScale())
-graphics::text(0.5, 0.75, labels = main.title, cex = title.cex)
+graphics::text(
+  x = 0.5,
+  y = 0.75,
+  labels = main.title,
+  cex = title.cex
+)
 
-panelSelect(panels, margin = "bottom")
+panelSelect(layout = panels, margin = "bottom")
 invisible(panelScale(inches = TRUE))
 ```
 
@@ -1194,9 +1231,9 @@ Now we have finished creating a non-traditional linked microposter plot\index{Li
 ## Summary and Further Reading {#Ch10-FurtherReading}
 
 
-Readers can find additional plot types for linked micromap plots\index{Linked micromap plot} in Chapter \@ref(Ch5) and Chapter \@ref(Ch5b) and implement those for non-traditional linked micromap plots\index{Linked micromap plot} similar to how the dotplot\index{dotplot} and boxplot\index{Boxplot} functions have been incorporated in this chapter. To understand more of the linked micromap plot\index{Linked micromap plot} principles and basics of their creation via the **micromap**\index{R Packages!micromap} and **micromapST**\index{R Packages!micromapST} R packages, readers should refer to Chapters \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3), respectively.
+Readers can find additional plot types for linked micromap plots\index{Linked micromap plot} in Chapter \@ref(Ch5) and Chapter \@ref(Ch5b) and implement those for non-traditional linked micromap plots\index{Linked micromap plot} similar to how the `plot_dotplot()` and `plot_boxplot()` functions have been incorporated in this chapter. To understand more of the linked micromap plot\index{Linked micromap plot} principles and basics of their creation via the **micromap**\index{R Packages!micromap} and **micromapST**\index{R Packages!micromapST} R packages, readers should refer to Chapters \@ref(Ch1), \@ref(Ch2), and \@ref(Ch3), respectively.
 
-Further, all steps demonstrated in this chapter can be found in the `DrawEyeLMPlot()` function in the **EyeTrackR**\index{R Packages!EyeTrackR} R package that is available on GitHub (https://github.com/ChunyangCLi/EyeTrackR.git). If the user wants to put overlays on the poster in a different way without using the AOI\index{Area of interest} polygons, the `DrawEyeLTMPlot()` function provides a linked scanpath microposter plot\index{Linked scanpath microposter plot} [@Li2017] without predefined AOIs.\index{Area of interest} If interested in such a functionality, the user can directly refer to that code on GitHub, while the non-traditional linked micromap plot\index{Linked micromap plot} creation approach from the **EyeTrackR**\index{R Packages!EyeTrackR} R package is similar to the code demonstrated in this chapter. 
+Further, all steps demonstrated in this chapter can be found in the `DrawEyeLMPlot()` function in the **EyeTrackR**\index{R Packages!EyeTrackR} R package that is available on GitHub (https://github.com/ChunyangCLi/EyeTrackR.git). If the user wants to put overlays on the poster in a different way without using the AOI\index{Area of interest} polygons, the `DrawEyeLTMPlot()` function provides a linked scanpath microposter plot\index{Linked scanpath microposter plot} [@Li2017] without predefined AOIs.\index{Area of interest} If interested in such a functionality, the user can directly refer to that R code on GitHub, while the non-traditional linked micromap plot\index{Linked micromap plot} creation approach from the **EyeTrackR**\index{R Packages!EyeTrackR} R package closely matches the R code demonstrated in this chapter. 
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
