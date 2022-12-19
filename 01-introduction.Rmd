@@ -753,7 +753,17 @@ graphics::pairs(x = nj_data[, 2:5])
 ### Software and Online Developments {#Ch1-LinkedMicromapPlotsSoftwareDevelopments}
 
 
-Historical and online developments. Also introduce both main R packages that are used throughout the book.
+As mentioned in Section \@ref(Ch1-LinkedMicromapPlotsHistoricalDevelopment),
+linked micromap plots\index{Linked micromap plot} were 
+first presented at the JSM
+in Chicago, Illinois, in 1996 [@OCCP1996].
+Lead contributors were Daniel (Dan) B. Carr from George Mason University and
+Anthony R. Olsen and Susanne M. Pierson from the Environmental Protection Agency in Corvallis, Oregon.
+Linda W. Pickle and B. Sue Bell from the National Cancer Institute and others
+soon developed an interest in the use of interactive linked micromap plots\index{Linked micromap plot}
+for cancer data [@CCBPZ2002;@CBPZL2003].
+
+Add historical and online developments. Also introduce both main R packages that are used throughout the book.
 Summarize their main features, differences, and limitations.
 
 

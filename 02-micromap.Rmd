@@ -19,7 +19,18 @@ United States (U.S.) and for watersheds in West Virginia (one of the 50 U.S. sta
 ## Introduction {#Ch2-Introduction}
 
 
-Write chapter introduction here.
+As discussed in Chapter \@ref(Ch1), linked micromap plots\index{Linked micromap plot}
+were originally presented at the Joint Statistical Meetings (JSM) 
+in Chicago, Illinois, in 1996 [@OCCP1996]. They quickly gained popularity among
+researchers at United States (U.S.) Federal Agencies such as
+the U.S. Department of Agriculture – National Agricultural Statistics Service (USDA–NASS),
+various branches of the U.S. Environmental Protection Agency (USEPA),
+the National Cancer Institute (NCI),
+the U.S. Census Bureau, and
+the U.S. Bureau of Labor Statistics (BLS).
+Early main applications of linked micromap plots\index{Linked micromap plot}
+could be found in the environmental field [@COPC1998;@COPC2000].
+and the medical field [@CCBPZ2002;@CBPZL2003].
 
 
 ## Chapter Outline (Merge into Chapter Introduction at the End) {#Ch2-Outline}
