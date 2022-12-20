@@ -758,7 +758,7 @@ linked micromap plots\index{Linked micromap plot} were
 first presented at the JSM
 in Chicago, Illinois, in 1996 [@OCCP1996].
 Lead contributors were Daniel (Dan) B. Carr from George Mason University and
-Anthony R. Olsen and Susanne M. Pierson from the Environmental Protection Agency in Corvallis, Oregon.
+Anthony R. Olsen and Susanne M. Pierson from the U.S. Environmental Protection Agency in Corvallis, Oregon.
 Linda W. Pickle and B. Sue Bell from the National Cancer Institute and others
 soon developed an interest in the use of interactive linked micromap plots\index{Linked micromap plot}
 for cancer data [@CCBPZ2002;@CBPZL2003].

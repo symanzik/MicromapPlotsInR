@@ -29,8 +29,72 @@ the National Cancer Institute (NCI),
 the U.S. Census Bureau, and
 the U.S. Bureau of Labor Statistics (BLS).
 Early main applications of linked micromap plots\index{Linked micromap plot}
-could be found in the environmental field [@COPC1998;@COPC2000].
+can be found in the environmental field [@COPC1998;@COPC2000]
 and the medical field [@CCBPZ2002;@CBPZL2003].
+
+While early linked micromap plots\index{Linked micromap plot} were created via
+S-Plus\index{S-Plus} and Java, later ones were created in R (see @SC2013 for an overview).
+However, even with the availability of R code that was provided in support
+of @CP2010, creating linked micromap plots\index{Linked micromap plot} 
+was challenging which considerably limited their use.
+In fact, @PWMO2012 observed that
+"Producing LMplots [...] has
+typically been somewhat difficult, and therefore LMplots
+have seen limited use." However, linked micromap plots\index{Linked micromap plot}
+continued to play an important role at the USEPA. Eventually, a team of 
+researchers around Anthony R. Olsen, Quinn C. Payton, Michael G. McManus,
+Marc H. Weber, and Thomas M. Kincaid, all originally with the USEPA
+in Corvallis, Oregon, started to develop an R package for 
+linked micromap plots.\index{Linked micromap plot}
+First uses of this package can be seen in poster presentations in
+May 2012 [@PWMO2012] and April 2013 [@PWMKO2013].
+At about the same time, in December 2012, the first publicly available 
+version of the **micromap**\index{R Packages!micromap} R package (version 1.5
+to be precise), was released to CRAN [@PaOl2012].
+Eventually, Marcus W. Beck, then also with the USEPA in Corvallis, Oregon,
+joined the team of the original developers with the release of version 1.9.3
+of this R package in February 2018 [@PaOl2018] and has also served as the maintainer of
+this R package since then.
+
+As it frequently has happened in an open software environment such as R,
+the **micromap**\index{R Packages!micromap} R package is not the only 
+R package for linked micromap plots.\index{Linked micromap plot}
+Independently, but motivated by similar past uses and resources,
+the **micromapST**\index{R Packages!micromapST} R package
+has been developed in parallel and its first version (version 1.0)
+has been released to CRAN in June 2013 [@CP2013CRAN], i.e., 
+only a few months after the first release of the
+**micromap**\index{R Packages!micromap} R package.
+The **micromapST**\index{R Packages!micromapST} R package will be extensively discussed in 
+Chapter \@ref(Ch3).
+
+From a user's perspective, there are little differences in the
+appearance and quality of the final linked micromap plots\index{Linked micromap plot}
+that can be created by these two R packages. However, there are some relatively minor details how
+linked micromap plots\index{Linked micromap plot}
+differ that have been created via the two R packages, but those differences may be essential for individual users.
+Perhaps the two biggest differences between the two packages at first glance are that
+the **micromap**\index{R Packages!micromap} R package makes it easy to bring
+in one's own boundary files, in particular external shapefiles,\index{Shapefile}
+while the **micromapST**\index{R Packages!micromapST} R package
+initially supports a larger number of glyph types.
+However, even these differences are relatively minor as users can 
+create their own plot types for use in the **micromap**\index{R Packages!micromap} R package
+as discussed in Chapter \@ref(Ch5) and
+incorporate external shapefiles,\index{Shapefile} into the 
+**micromapST**\index{R Packages!micromapST} R package as discussed in Chapter \@ref(Ch4b).
+Ultimately, one has to make one's own decision which of these two R packages
+to use for the construction of linked micromap plots.\index{Linked micromap plot}
+
+The remainder of this chapter is organized as follows:
+Section \@ref(Ch2-Steps), will introduce the
+four main steps that are required to create a 
+basic linked micromap plot\index{Linked micromap plot} via the **micromap**\index{R Packages!micromap} R package. 
+Examples in Section \@ref(Ch2-Example1) and Section \@ref(Ch2-Example2) will outline how to apply these steps
+to data for the for the 50 U.S. States and Washington, D.C. and 
+to data for watersheds in West Virginia, respectively.
+This chapter comes to a conclusion with a summary and suggestions for further reading
+in Section \@ref(Ch2-SummaryFurtherReading).
 
 
 ## Chapter Outline (Merge into Chapter Introduction at the End) {#Ch2-Outline}
@@ -73,10 +137,10 @@ and rows of perceptual groups? Also discussion of spatial patterns and interpret
     - DONE - see Section \@ref(Ch2-Refining).
 
 - **Juergen**: Introducing a second basic example for a different geographic region, e.g., state level or environmental, and use of a different built-in plot type (e.g., boxplot). Similar four steps as before, but more condensed.
-- DONE - see Section \@ref(Ch2-Example2)
+    - DONE - see Section \@ref(Ch2-Example2)
 
 -	Challenges to Visualizing Data with Linked Micromap Plots (**Marcus**: Not sure this is the right place for it, but maybe it's worth providing a brief contrast with micromapST?  Maybe include this in the overview at the top?  I think it would be useful for the reader to understand succinctly how the two differ and why there are two packages, though I'm sure these themes will be present throughout the book.  Perhaps the latter point is not that interesting, i.e., it's common to have "competing" software in an open source environment? -- **Juergen**: Yes, we need some discussions at the end of Chapters \@ref(Ch2) and \@ref(Ch3) that outline advantages and limitations of each of the two main micromap packages. Alternatively, there could be some table in Chapter \@ref(Ch1) that lists features (and limitations) of the two packages when they are first introduced to the reader. Overall, this last point may be a subsection in the Introduction, or become a final chapter at the end of the book which research is necessary in the future.)
-- TO BE DONE in Section \@ref(Ch1-LinkedMicromapPlotsSoftwareDevelopments).
+    - DONE in Sections \@ref(Ch1-LinkedMicromapPlotsSoftwareDevelopments), \@ref(Ch1-LinkedMicromapPlotsChallenges), and end of \@ref(Ch2-Introduction).
 
     - Problem of many polygons (**Juergen**: There are other problems, e.g., many islands as in the Philippines, narrow shapes as for Chile, subregions of considerably different sizes as for Russia)
     - DONE in Section \@ref(Ch1-LinkedMicromapPlotsChallenges).
