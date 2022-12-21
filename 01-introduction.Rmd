@@ -759,9 +759,38 @@ first presented at the JSM
 in Chicago, Illinois, in 1996 [@OCCP1996].
 Lead contributors were Daniel (Dan) B. Carr from George Mason University and
 Anthony R. Olsen and Susanne M. Pierson from the U.S. Environmental Protection Agency in Corvallis, Oregon.
-Linda W. Pickle and B. Sue Bell from the National Cancer Institute and others
+During the first five years of their existence, almost all 
+linked micromap plots\index{Linked micromap plot}
+were created in S-Plus\index{S-Plus}. The basis for these was a set of panel function
+that eventually were translated into R functions and later formed the basis for
+the R-based linked micromap plots\index{Linked micromap plot} in @CP2010.
+These panel functions are further used and described in Chapter \@ref(Ch10)
+for non-traditional linked micromap plots.\index{Linked micromap plot}
+Other experimental approaches to construct linked micromap plots\index{Linked micromap plot}
+in R have been described in @SC2013.
+
+Linda W. Pickle and B. Sue Bell from the National Cancer Institute,
+Jim X. Chen from George Mason University, and a few others
 soon developed an interest in the use of interactive linked micromap plots\index{Linked micromap plot}
-for cancer data [@CCBPZ2002;@CBPZL2003].
+for cancer data [@CCBPZ2002;@WCCBP2002;@CBPZL2003;@CCWS2006;@BHPW200]. 
+This resulted in the creation of stand-alone Java code and the Java-based
+National Cancer Institute’s State Cancer Profiles web site in 2002.
+This web site allowed the user to easily compare graphs of
+national or state trends for Whites, Blacks, Hispanics, Asian Pacific Islanders, and American Indian
+Alaskan Natives for both genders for a variety of cancer types.
+While the State Cancer Profiles web site still exists, the interactive linked micromap plots\index{Linked micromap plot}
+component was retired after about 12 years of use around 2014/2015.
+
+Jürgen Symanzik (first at George Mason University and later at Utah State University)
+and his colleagues and students experimented with a variety
+of other software approaches to creating linked micromap plots\index{Linked micromap plot}.
+These included linked micromap plots\index{Linked micromap plot} based on the 
+Graphics Production Library\index{Graphics Production Library} (GPL)\index{GPL|see {Graphics Production Library}} 
+[@CVR96;@WRCR2000]
+for the USEPA's Cumulative Exposure Project (CEP) [@SWWCWA1998;@SACWWW1999].
+The GPL, then under its new name nViZn\index{nViZn} (read envision), 
+was also used in @JoSy2001, @SyJo2001ASA, @SHG2002ASA, and @HSG2003
+for the construction of interactive linked micromap plots.\index{Linked micromap plot}
 
 Add historical and online developments. Also introduce both main R packages that are used throughout the book.
 Summarize their main features, differences, and limitations.
