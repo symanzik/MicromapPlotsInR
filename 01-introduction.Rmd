@@ -772,7 +772,7 @@ in R have been described in @SC2013.
 Linda W. Pickle and B. Sue Bell from the National Cancer Institute,
 Jim X. Chen from George Mason University, and a few others
 soon developed an interest in the use of interactive linked micromap plots\index{Linked micromap plot}
-for cancer data [@CCBPZ2002;@WCCBP2002;@CBPZL2003;@CCWS2006;@BHPW200]. 
+for cancer data [@CCBPZ2002;@WCCBP2002;@CBPZL2003;@CCWS2006;@BHPW2006]. 
 This resulted in the creation of stand-alone Java code and the Java-based
 National Cancer Institute’s State Cancer Profiles web site in 2002.
 This web site allowed the user to easily compare graphs of
@@ -786,13 +786,11 @@ and his colleagues and students experimented with a variety
 of other software approaches to creating linked micromap plots\index{Linked micromap plot}.
 These included linked micromap plots\index{Linked micromap plot} based on the 
 Graphics Production Library\index{Graphics Production Library} (GPL)\index{GPL|see {Graphics Production Library}} 
-[@CVR96;@WRCR2000]
-for the USEPA's Cumulative Exposure Project (CEP) [@SWWCWA1998;@SACWWW1999].
-The GPL, then under its new name nViZn\index{nViZn} (read envision), 
+[@CVR96;@WRCR2000], developed at the Bureau of Labor Statistics,
+for the USEPA's Cumulative Exposure Project (CEP) [@SWWCWA1998;@SACWWW1999;@SCAWWW1999].
+The GPL, extended and renamed to nViZn\index{nViZn} (read envision) [@WRRN2001] and distributed by Illumitek, Inc./SPSS,
 was also used in @JoSy2001, @SyJo2001ASA, @SHG2002ASA, and @HSG2003
 for the construction of interactive linked micromap plots.\index{Linked micromap plot}
-
-nViZn: https://www.semanticscholar.org/paper/nViZn-%3A-An-Algebra-Based-Visualization-System-Wilkinson/59c5ed82acbfe5fe043be0bdf003385e279c822f
 
 Add historical and online developments. Also introduce both main R packages that are used throughout the book.
 Summarize their main features, differences, and limitations.
@@ -840,6 +838,8 @@ about three orders of magnitude bigger than the smallest ones.
 
 ### Software and Online Developments {#Ch1-ConditionedMicromapsSoftwareDevelopments}
 
+@Baulier2011 created conditioned micromaps\index{Conditioned micromaps} in JMP.
+
 
 ### Challenges and Open Research Questions {#Ch1-ConditionedMicromapsChallenges}
 
@@ -855,6 +855,8 @@ about three orders of magnitude bigger than the smallest ones.
 
 
 ### Software and Online Developments {#Ch1-ComparativeMicromapsSoftwareDevelopments}
+
+@Baulier2011 created comparative micromaps\index{Comparative micromaps} in JMP.
 
 
 ### Challenges and Open Research Questions {#Ch1-ComparativeMicromapsChallenges}
