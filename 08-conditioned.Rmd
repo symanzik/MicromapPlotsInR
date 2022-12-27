@@ -45,27 +45,45 @@ For convenience, Figure \@ref(fig:Ch8-micromap1) shows one linked micromap plot\
 (which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
 
 
-```{r Ch8-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
+```{r Ch8-micromap1, fig.cap = 'Trivial conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+# Based on code from the help page at
+#  https://maptools.r-forge.r-project.org/reference/CCmaps.html
 
-# initial example
+library(maptools)
+library(lattice)
 
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
+nc.sids <- readShapeSpatial(
+  system.file("shapes/sids.shp",
+    package = "maptools"
+  )[1],
+  IDvar = "FIPSNO",
+  proj4string = CRS("+proj=longlat +ellps=clrk66")
+)
 
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
+nc.sids$ft.SID74 <- sqrt(1000) * (sqrt(nc.sids$SID74 / nc.sids$BIR74) +
+  sqrt((nc.sids$SID74 + 1) / nc.sids$BIR74))
+nc.sids$ft.NWBIR74 <- sqrt(1000) * (sqrt(nc.sids$NWBIR74 / nc.sids$BIR74) +
+  sqrt((nc.sids$NWBIR74 + 1) / nc.sids$BIR74))
+
+# sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number=4, overlap=1/5)
+# CCmaps(nc.sids, "ft.SID74", list("Nonwhite_births"=sh_nw4),
+#       col.regions=colorRampPalette(c("yellow1", "brown3"))(20),
+#       main="Transformed SIDS rates 1974-8")
+
+##
+
+sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number = 3, overlap = 0)
+sh_bir <- equal.count(nc.sids$BIR79, number = 3, overlap = 0)
+CCmaps(
+  obj = nc.sids,
+  zcol = "ft.SID74",
+  cvar = list(
+    "Nonwhite_births" = sh_nw4,
+    "Births79" = sh_bir
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  main = "Transformed SIDS rates 1974-78",
+  layout = c(3, 3)
 )
 ```
 
@@ -84,4 +102,3 @@ of micromaps that are related to the title and content of your chapter, etc.?
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
