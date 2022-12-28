@@ -88,6 +88,12 @@ CCmaps(
 ```
 
 
+Use R code from the end of Section 3.3.5 from
+http://www.geo.hunter.cuny.edu/~ssun/R-Spatial/mapping.html
+as the basis to experiment with CCmaps in ggplot / ggmap.
+
+
+
 ## Further Reading {#Ch8-FurtherReading}
 
 
