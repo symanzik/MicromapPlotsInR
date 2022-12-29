@@ -840,6 +840,9 @@ about three orders of magnitude bigger than the smallest ones.
 
 @Baulier2011 created conditioned micromaps\index{Conditioned micromaps} in JMP.
 
+See this ccmap macro from Friendly for CCmaps in SAS:
+http://euclid.psych.yorku.ca/datavis/sasmac/ccmap.html
+
 
 ### Challenges and Open Research Questions {#Ch1-ConditionedMicromapsChallenges}
 
