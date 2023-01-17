@@ -344,7 +344,7 @@ Building off of the foundation in Chapter \@ref(Ch2), this chapter covered envir
 ## Acknowledgements {-}
 
 
-We appreciate reviews provided by Michael Dumelle and Marc Weber. The manuscript has been subjected to the U.S. Environmental Protection Agency’s (USEPA) peer and administrative review and approved for publication. However, the views expressed are those of the authors and do not represent the views or policies of the USEPA. The mention of trade names or commercial products does not constitute endorsement or recommendation for use.
+ The manuscript has been subjected to the U.S. Environmental Protection Agency’s (USEPA) peer and administrative review and approved for publication. However, the views expressed are those of the authors and do not represent the views or policies of the USEPA. The mention of trade names or commercial products does not constitute endorsement or recommendation for use. We appreciate reviews provided by Michael Dumelle and Marc Weber at USEPA.
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
