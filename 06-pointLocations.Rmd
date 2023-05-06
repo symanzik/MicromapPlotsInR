@@ -207,7 +207,7 @@ Before the `circles_sf` and `asia` objects can be combined, the latter needs to 
 asia_sf <- st_as_sf(asia)
 ```
 
-Before trying to combine the objects also check wether they have the same coordinate reference
+Before trying to combine the objects also check whether they have the same coordinate reference
 system (CRS).
 
 ```{r Ch6-CheckAsiaCRS}
@@ -225,6 +225,7 @@ will be shown. Note when selecting a specific column of a `sf` object, by using 
 
 ```{r Ch6-ExtendAsia}
 asia_sf$city <- NA
+asia_sf <- st_transform(asia_sf, crs = st_crs(circles_sf))
 comb_sf <- rbind(asia_sf['city'], circles_sf['city'])
 ```
 

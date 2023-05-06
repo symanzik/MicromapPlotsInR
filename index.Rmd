@@ -48,6 +48,10 @@ header-includes:
 
 
 ```{r Setup2, include = FALSE}
+# may need updated version of kableExtra from GitHub
+# devtools::install_github("kupietz/kableExtra")
+# see https://github.com/haozhu233/kableExtra/issues/750
+
 options(
   htmltools.dir.version = FALSE, formatR.indent = 2, width = 80, digits = 4
 )
