@@ -8,6 +8,11 @@ In Chapter \@ref(Ch3) you learned how to create a simple linked micromap plot\in
 accessible at https://cran.r-project.org/web/packages/micromapST/index.html. In this chapter, you will learn about other geographies available in the package and how to process your own shapefile to create a map file for new linked micromap plots. The latter option is an advanced feature in the package, best suited to those familiar with R programming. The directions here will sound complicated but need only be done once to produce future linked micromap plots for your own geographic areas. 
 
 
+NOTE: The BuildBorderGroup function currently does not work, due to changes in the
+rmapshaper R package. Those code chunks have been commented out for now with eval = FALSE.
+The chapter is translated with previously created boundary files.
+
+
 ## Introduction {#Ch4b-Introduction}
 
 
@@ -281,7 +286,9 @@ library(micromapST)
 shape_file_dir_US <- "data/Ch4b"
 name_table_dir_US <- "data/Ch4b"
 output_dir_US <- "output/Ch4b/US"
+```
 
+```{r Ch4b-BuildBorderGroupUSTEMP, results = 'hide', eval = FALSE}
 BuildBorderGroup(
   ShapeFile = "st99_d00", # Base filename of shapefile without SPDF extension
   ShapeFileDir = shape_file_dir_US, # Directory containing the shapefile
@@ -300,7 +307,7 @@ BuildBorderGroup(
 )
 ```
 
-```{r Ch4b-BuildBorderGroupUS-pdf, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-pdf, echo = FALSE, results = 'hide', eval = FALSE}
 # Same as Ch4b-BuildBorderGroupUS, but now with pdf output
 
 BuildBorderGroup(
@@ -398,7 +405,9 @@ output_dir_KY <- "output/Ch4b/KY"
 KY_shp_file <- "co21_d00" # Census 2000 files Kentucky counties.
 KY_spdf <- readOGR(shape_file_dir_KY, KY_shp_file, verbose = FALSE)
 KY_spdf_data <- KY_spdf@data
+```
 
+```{r Ch4b-CreateKYBorderGroupTEMP, results = 'hide', eval = FALSE}
 #  shapefile has "NAME" field in data.frame that can be used to match
 #  "Name" in the Name Table
 BuildBorderGroup(
@@ -417,7 +426,7 @@ BuildBorderGroup(
 )
 ```
 
-```{r Ch4b-CreateKYBorderGroup-pdf, echo = FALSE, results = 'hide'}
+```{r Ch4b-CreateKYBorderGroup-pdf, echo = FALSE, results = 'hide', eval = FALSE}
 # Same as Ch4b-CreateKYBorderGroup but now with pdf output
 
 BuildBorderGroup(
@@ -570,7 +579,7 @@ head(temp_name_table, n = 6L)
 
 Next, `BuildBorderGroup` is called using this Name Table and the ADD border group created in the the previous section (\@ref(Ch4b-Aggregate)). Again, the output from the `BuildBorderGroup` function extends over several pages and is not shown here.
 
-```{r Ch4b-CreateKYADDBorderGroup, results = 'hide'}
+```{r Ch4b-CreateKYADDBorderGroup, results = 'hide', eval = FALSE}
 #  BuildBorderGroup function call
 
 BuildBorderGroup(
@@ -589,7 +598,7 @@ BuildBorderGroup(
 )
 ```
 
-```{r Ch4b-CreateKYADDBorderGroup-pdf, echo = FALSE, results = 'hide'}
+```{r Ch4b-CreateKYADDBorderGroup-pdf, echo = FALSE, results = 'hide', eval = FALSE}
 # Same as Ch4b-CreateKYADDBorderGroup but now with pdf output
 
 BuildBorderGroup(
