@@ -25,7 +25,7 @@ One obstacle to creating micromaps for point locations is that the user
 must create polygons to represent the 
 point locations. The more standard use of micromaps displays information associated
 with geographic areas for which the associated spatial data
-likely already exist. In the case of point locations,
+likely already exists. In the case of point locations,
 points need to displayed on the 
 map as a circles (or other shape). The coordinates of a given point location become the center of the circle.
 Once the polygons are created, maps and accompanying data can be visualized 
@@ -42,39 +42,74 @@ locations also need to be
 integrated into a base map that shows some geographic
 boundaries of interest. 
 
+As with more traditional micromaps, values from multiple variables can be shown
+for each location. There is, however, a space constraint on how many point locations
+can be shown on a map. In general we find it challenging to visualize more than roughly
+50 point locations [Juergen: do you think that is right?]. 
+
+It is also important to consider whether a micromaps of point locations are actually 
+the appropriate visualization for the data you're trying to display. 
+Do the points represent a broader geographic area, which could be represented by larger polygons,
+as is done in more traditional micromaps presented in the previous chapters? For example, in 
+Section \@ref(Ch6-Utah) we provide an example where we plot data associated with County Seats in
+the state of Utah. In that case there is one point location (city) per county, so it would
+also be possible to make an effective micromap where instead of showing the point locations,
+the corresponding counties were shown on the micromap, which would potentially require fewer steps to 
+create. 
+
+
 ## Outline of steps to create micromaps of point locations
 
-Broadly the following steps need be taken to display point locations
-on micromaps.
 
-1. Obtain coordinates of the point locations of interest along with 
-the corresponding data that you wish to display.
+Broadly the following steps need be taken to display point locations
+on micromaps. We will provide more detail on these steps in following
+sections. 
+
+
+1. The user needs to obtain coordinates of the point locations of interest along with 
+the corresponding data to display. We do 
 
 1. Obtain geographic data for the underlying base map that the user wishes
-to display.
+to display. Strictly speaking, the micromaps of point locations could be shown without a base map
+but in most cases we think that would be less useful visualization. 
 
-1. If needed, adjust the locations of points that are close to each other. Otherwise, if points are very close together they may almost entirely overlap on the final map,
-making them hard to see.
+1. The locations of points that are close to each other may need to be adjusted. 
+If points are very close together they may overlap on the final map,
+making them hard or impossible distinguish from each other. Adjusting point locations does lead to some geographic 
+distortion, but we have found that it is often helpful. 
 
-1. Polygons (circles, or other shape) need to be created around points. 
-Multiple R packages offer ways to create buffers (polygons) around objects,
+1. Polygons (circles, or other shape) need to be created around points. This step
+is necessary because the **micromap** package was designed to show polygons,
+not points on maps. To work around this, each point becomes a small polygon 
+that is then visible in the resulting micromaps.
+Multiple R packages offer ways to create buffers (polygons) around points,
 and the `points2circles()` function (described below) provides a convenient wrapper to do this.
 
+
 1. The base map and polygons representing point locations need to be 
-combined into single object.
+combined into single object. This step may require re-projecting one or both datasets
+into a common projection. The resulting object contains polygons
+that will have data associated with them (i.e., the polygons showing the point locations),
+as well as polygons that form the base map in the background. 
 
-1. Flatten the object created in the previous step into a dataframe 
-that can be used in the `mmplot()` function from the
-**micromap** package.
+1. As described in section \@ref(#Ch2-Linking), the `mmplot()` function from the **micromap** package,
+which creates the figure, requires a dataframe as input. 
+Therefore, object  created in the previous step (which may, for example, be an object from the **sp** or **sf** packages)
+needs to be flattened into dataframe. 
 
-1. Create micromap.
+1. Create an initial simple micromap. We recommend, not adding all
+the visualizion elements (e.g., error bars, labels, multiple variables), to the 
+plot all at once, to make trouble shooting easier
 
 1. Iterate until the size of the circles representing point locations
-and their level of overlap is acceptable .
+and their level of overlap is acceptable.
+
+1. As necessary, add additional visualization elements including labels, and adjust dimensions
+of the figure until you're happy with the final product. 
 
 We walk through the steps needed to make micromaps using three separate datasets. 
 In Section \@ref(Ch6-Example1), we create a micromap showing
-the populations of large cities across Asia. Section \@ref(Ch6-Example2) provides
+the populations of large cities across Asia. Section \@ref(Ch6-Utah) provides
 a more complex example where point locations are manually adjusted to limit overlap, and section
 \@ref(Ch6-Example3) provides an example where point locations are repelled
 from each other using the `point_repel()` function. 
@@ -93,6 +128,8 @@ library(sf)
 library(dplyr)
 source("R/Ch6_functions.R") # maybe these will be integrated into a package
 ```
+
+### Load point location data
 
 Next we load the the point location data. This dataframe contains four
 columns that we will use: `city`, `population`, `lat`, and `long`.
@@ -119,28 +156,27 @@ locations we won't need to be worried about undo overlap in the final maps.
 plot(cities$long, cities$lat, xlab = "Longitude", ylab = 'Latitude')
 ```
 
-
-### Generate polygons from points
+### Generate polygons around points
 
 The next step is to draw circles around the points. Here we 
 achieve this using the `points2circles` function. This function can be supplied
-a dataframe with columns that give the x and y coordinates, or a simple features object
-(from the `sf` package).
+a dataframe with columns that give the x and y coordinates, or a simple features ("sf") object
+(from the **sf** package). In this case we are passing it a dataframe. 
 By default the radius of the circles is 5% of the range of the x variable 
 (i.e., 5% of the width of the map). 
 The value passed to the radius argument can be changed to adjust the size of the circles,
 The output of points2circles is an object of class `sf`. 
 
-Note, here the coordinate reference system (`"EPSG:4326"`) for this
-dataset is known and therefore we can specify it using the `crs` argument. This becomes
-important in section \@ref(Ch6-Example2Combine) when two different `sf` objects are
-combined. 
+Usually metadata or other descriptions of the data will provide the coordinate
+reference systems ("crs"). In this example we happen to know that the crs is `EPSG:4326` (this data is in not projected)
+and we can specify that using the `crs` argument. Specifying the crs is especially 
+important in section \@ref(Ch6-Example2Combine) where we combine this object
+and a basemap. 
 
 
 ```{r Ch6-CreateCircles-Asia}
 circles_sf <- points2circles(cities, coords = c("long", "lat"), 
-                             radius = 5, crs = "+proj=longlat +ellps=WGS84 +no_defs")
-#                             radius = 5, crs = "EPSG:4326")
+                             radius = 5,crs = 4326)
 names(circles_sf)
 ```
 
@@ -148,14 +184,15 @@ The `sf` object that we created here has all the same columns  as the original d
 except the `long` and `lat`, columns have been removed, and there is now a `geometry` column which contains spatial data that defines the polygon for each row (city) in the dataset. `sf` objects
 are essentially special kinds of dataframes, that are able to contain a wide variety
 of spatial data (in the `geometry` column) and also contain additional spatial
-metadata.
+metadata (see https://r.geocompx.org/ for more details). 
 
 
 The `mmplot()` function requires a dataframe as input, which can be created
 using `create_map_table()` (see chapters
 X, Y, Z). The 
 `sf` object first needs to be converted to a `Spatial` object (from the `sp` package),
-before it can be be passed to `create_map_table()`.
+before it can be be passed to `create_map_table()`(this is accomplished with 
+`as(circles_sf, 'Spatial')`). 
 
 ```{r Ch6-CreateMapTableAsia}
 circles_df <- create_map_table(
@@ -168,7 +205,7 @@ circles_df <- create_map_table(
 
 Now we have the data needed to create a rudimentary micromap. 
 Here the micromap shows the locations of the cities, where each city
-city is a circle. In the next section (\@ref(Ch6-Example2Combine)) we will tackle
+ is a circle. In the next section (\@ref(Ch6-Example2Combine)) we will tackle
 how to add a base map, so that the maps are more readable. 
 
 ```{r Ch6-micromap1, fig.cap = 'Micromap showing the 10 largest cities in asia. Note that locations of cities are shown, but there are no country polygons to indicate the location of cities', fig.width = 4, fig.height = 3}
@@ -187,7 +224,8 @@ with a basemap.
 
 Some data wrangling may be needed to acquire the necessary basemap (see Chapter X
 for more details preparing maps for use in micromaps).
-For this example we're cropping a world map (from the `maptools` package) so that only the region we're interested in is shown.
+For this example were using a world map which is provided in the **maptools** package.
+We then use the the `crop` function from the **terra** package so that only the region we're interested in is shown.
 
 **Note this code will need to be updated so that it uses newer tools so it doesn't throw
 a warning (e.g., don't use wrld_simpl from maptools and don't rely on raster
@@ -197,7 +235,7 @@ regarding the fact that `rgeos` is being retired in 2023)**
 ```{r Ch6-WrldSimpl, warning = FALSE, message = FALSE}
 data('wrld_simpl')
 # note this throws a warning: https://gis.stackexchange.com/questions/379693/crop-wrld-simpl-gives-error-after-r-update
-asia <- raster::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
+asia <- terra::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
 class(asia)
 ```
 
@@ -207,30 +245,42 @@ Before the `circles_sf` and `asia` objects can be combined, the latter needs to 
 asia_sf <- st_as_sf(asia)
 ```
 
-Before trying to combine the objects also check whether they have the same coordinate reference
+Before trying to combine the objects, we first need to check whether they have the same coordinate reference
 system (CRS).
 
 ```{r Ch6-CheckAsiaCRS}
 st_crs(asia_sf) == st_crs(circles_sf)
-# this was FALSE after package updates - thus the different CRS above
-# it may be a good idea to obtain FALSE here and then update the CRS afterwards
 ```
 
-Since the they share the same CRS we don't need to do anything. 
+Since the two objects don't have identical crs we will need to re-project one. In this
+case we'll reproject `asia_sf`, so that it has the same crs as `circles_sf`.
 
-The 'ID' column in the `circles_sf` object  is `city`, and here we add an empty
-column of that name to the `asia_sf`, and then bind the two datsets together. When creating, micromaps the 'ID' column
-contains names that uniquely identifies the polygons for which data will be shown (see Chapter X). No data
-will be shown. Note when selecting a specific column of a `sf` object, by using `x["column_name"]`, an `sf` object is returned with the desired column as well as the `geometry` column. In other words, the `geometry` column is 'sticky' and comes along when selecting columns in this way, so that the associated spatial information isn't lost.
+```{r}
+asia_sf <- st_transform(asia_sf, st_crs(circles_sf))
+```
+
+
+When creating, micromaps the input includes an 'ID' column
+that contains names that uniquely identify the polygons for which data will be shown (see Chapter X).
+Polygons that are shown on the map but for which no data is shown (i.e., which form the map in the background)
+have `NA` values in the 'ID' column. 
+The 'ID' column in the `circles_sf` object  is `city`, and so here we add an empty
+column of that name to `asia_sf`, so that we can then bind the two datasets together.
 
 ```{r Ch6-ExtendAsia}
 asia_sf$city <- NA
-asia_sf <- st_transform(asia_sf, crs = st_crs(circles_sf))
-comb_sf <- rbind(asia_sf['city'], circles_sf['city'])
+comb_sf <- rbind(circles_sf['city'], asia_sf['city'])
 ```
 
+Note `comb_sf` object now contains two columns. 
 
-The next step is to flatten the spatial object into a dataframe so that it can be used
+```{r Ch6-CombColumns}
+names(comb_sf)
+```
+
+Note that when selecting a specific column of a `sf` object using `object['columnName']`, an `sf` object is returned with the desired column as well as the `geometry` column. In other words, the `geometry` column is 'sticky' and comes along when selecting columns in this way, so that the associated spatial information isn't lost.
+
+Next we need flatten the spatial object into a dataframe so that it can be used
 in the `mmplot()` function.
 
 
@@ -243,7 +293,7 @@ comb_df <- create_map_table(
 head(comb_df, 3)
 ```
 
-In the `comb_df` data frame the `ID` column is `NA` for all polygons associated
+Note that in the `comb_df` data frame the `ID` column is `NA` for all polygons associated
 with the base map, and is filled with the city name for all polygons (circles)
 that represent the city point locations. 
 
@@ -283,11 +333,13 @@ mmplot(stat.data=cities,
 ```
 
 
-## County seats in Utah {#Ch6-Example2}
+## County seats in Utah {#Ch6-Utah}
 
 For this example we will look at point location data in Utah. Specifically,
 29 towns or cities in Utah that are the County seats of the 29 counties in the
 state. 
+
+### Load point locations and base map data
 
 First we load the point locations, this is an `sf` object,
 which provides the name of the county seat, as well as its elevation, population,
@@ -300,15 +352,16 @@ class(seats1)
 names(seats1)
 ```
 
-Next we want to load the spatial dataset showing the polygons of counties
-in Utah, which we can use as a basemap for the micromap. 
+Next we want to load a spatial dataset from the **tigris** package that contains
+polygons of counties
+in Utah, which we can use as a basemap for the micromap.
 
 ```{r Ch6-UTCounites, cache = TRUE, message = FALSE, results='hide'}
 county_polygon <- tigris::counties("Utah", cb = TRUE,
                                    year = 2020)
 ```
 
-We need to check whether the base map
+Before moving on need to check whether the base map
 and point locations have the same coordinate reference system
 
 ```{r Ch6-CheckCountiesCRS}
@@ -331,8 +384,8 @@ However, in this cased we may want adjust the locations of some of these
 points so that they are more easily visible in the final micromap. The user needs to
 consider how they want to balance being able to see all points
 in the micromap (i.e., so there is limited overlap), while not moving points
-so far as to create a misleading visualization. Additionally, figure captions
-should disclose when point locations have been adjusted. 
+so far as to create a misleading visualization. We think it is also 
+important that figure captions disclose when point locations have been adjusted. 
 
 
 ```{r Ch6-CountyMap, fig.cap="Locations of counties and county seats (points), in Utah."}
@@ -341,17 +394,16 @@ plot(seats2$geometry, add = TRUE, pch = 19, col = 'blue ')
 ```
 
 There are multiple ways that point locations could be adjusted. A tedious, but effective,
-method could be to use manually choose new coordinates.
+method could be to manually choose new coordinates.
 
 Another option, which we will use here, is to replace the coordinates of 
 of some county seats with the centroid of their respective county. That way we can avoid
 excessive over-plotting of the points on the micromap while still having
 the points appear in the correct county. 
 
-Here there are several county seats we could consider moving.
-
-First we create a vector of names of counties who's county seats we want to move, 
-and then calculate the polygon centroid using the `st_centroid()` function.  
+Here there are several county seats we may want to adjust the locations of. 
+To do this we first create a vector of names of counties who's county seats we want to move.
+Then for we calculate the centroids of those counties using the `st_centroid()` function.  
 
 ```{r Ch6-CountiesCentroids, warning = FALSE}
 county_names <- c("Weber", "Morgan", "Davis", "Salt Lake", "Summit", "Wasatch",
@@ -362,21 +414,23 @@ centroids <- county_polygon %>%
   st_centroid()
 ```
 
-Now we replace the coordinates of the county seats with the centroids of the county. 
-Note here we're arranging county names in alphabetical order so that
-that the correct coordinates are replaced. 
+Next we replace the coordinates of the county seats with the centroids of the county they're located in. 
+Note here we're first arranging the columns that contain county names into alphabetical order in both the
+`seats2` and `centroids` objects so that
+that the row ordering matches and correct coordinates are replaced. 
 
 ```{r Ch6-CountiesReplacement}
-county_names <- sort(county_names)
-seats_adjust1 <- seats2 %>% 
-  arrange(county)
+seats_adjust1 <- arrange(seats2, county)
+
+centroids <- arrange(centroids, NAME)
+
 seats_adjust1$geometry[seats_adjust1$county %in% county_names] <- 
   centroids$geometry
 ```
 
 Figure \@ref(fig:Ch6-CountyMap2) shows the effect of adjusting these points. 
 
-```{r Ch6-CountyMap2, fig.cap="Original locations of county seats in blue, and adjusted locations in red."}
+```{r Ch6-CountyMap2, fig.cap="Original locations of county seats in blue, and adjusted locations (county centroids) in red."}
 plot(county_polygon$geometry)
 plot(seats2$geometry[seats2$county %in% county_names], add = TRUE, 
      pch = 19, col = 'blue')
@@ -400,7 +454,7 @@ Next the `seats_circles`  needs to be combined
 with `county_polygons`. 
 
 To be able to bind the two objects the `county_polygon` object needs to
-have an empty county_seats column.
+have an empty county_seats column (as described in secion \@ref(#Ch6-Example2Combine))
 
 ```{r Ch6-ExtendCounties}
 county_polygon$county_seat <- NA
@@ -409,7 +463,7 @@ seat_map <- rbind(county_polygon['county_seat'],
 ```
 
 The `seat_map` object is simple features dataframe (class `sf`), which needs to be converted
-to a `Spatial` object before it can be flattened into a regular data frame using
+to a `Spatial` object before it can be flattened into a regular data frame using the
 `create_map_table` function.
 
 ```{r Ch6-CreateMapTableCounties}
@@ -422,12 +476,16 @@ seat_map_df <- create_map_table(
 
 ### Create micromap
 
-We now have the necessary data to create the micromap.
+We now have the necessary data to create the micromap using the `mmplot` function.
 
-Note that the stat.data argument must be passed a data frame, and the class of
-`seats1` is `sf`. The `st_drop_geometry` function is used to drop the geometry
-column (i.e., the coordinates), and convert the object to a regular data frame
-that is accepted by `mmplot()`. 
+Note that the stat.data argument in the `mmplot` function must be passed a dataframe, and the class of
+`seats1` is `sf`. Therefore, we use the `st_drop_geometry` function to drop the geometry
+column (i.e., which contains the spatial data) and convert the object to a regular dataframe. 
+
+```{r Ch6-dropGeometry}
+seats_df <- st_drop_geometry(seats1)
+```
+
 
 Note that, as described in section \@ref(#Ch6-Example1Micromap2), the `map.all`,
 `nodata.border.color`, and `nodata.border.size` arguments are specified for the 
@@ -435,7 +493,7 @@ third panel so that the polygons that make up the basemap are plotted. See Chapt
 on other arguments used in the `mmplot` function.
 
 ```{r Ch6-MicromapSeat, fig.cap = "Micromap showing the elevations of county seats in Utah. Some locations have been adjusted to decrease overplotting", fig.width = 5, fig.height = 7}
-seats_df <- st_drop_geometry(seats1)
+
 mmplot(stat.data = seats_df,
        map.data = seat_map_df,
        panel.types = c("labels", "dot", "map"),
@@ -469,7 +527,7 @@ For this example we will be using using locations of premier league football
 stadiums. A challenge with this data set is being able to properly visualize multiple
 locations that are very close together, such as the several stadiums located
 in London. This is likely to be a common issue that a
-user will run into, where locations are clustered around, for example, urban areas.
+user will run into, where locations are clustered in, for example, urban areas.
 
 Here we show a micromap with the actual stadium locations plots, and then create a second version of the micromap where we use a more automated approach to repel locations of stadiums that are too close together. 
 

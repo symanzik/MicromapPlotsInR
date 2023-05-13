@@ -85,7 +85,7 @@ points2circles <- function(x, ...) {
 
 # method for dataframe objects
 points2circles.data.frame <- function(x, coords, radius = 5, crs = NA) {
-  points_sf <- sf::st_as_sf(x, coords = coords, crs = crs)
+  points_sf <- sf::st_as_sf(x, coords = coords, crs = sf::st_crs(crs))
   # create buffer around the points (i.e. circular polygons)
   dist <- calc_buffer_dist(points_sf, radius = radius)
   circles_sf <- sf::st_buffer(points_sf,dist = dist, nQuadSegs = 4)
