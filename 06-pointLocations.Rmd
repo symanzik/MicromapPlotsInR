@@ -123,6 +123,7 @@ First the necessary packages need to be loaded.
 
 ```{r Ch6-libraries, message = FALSE, warning = FALSE}
 library(micromap)
+#library(micromapST) # This chapter may not translate with micromapST loaded
 library(maptools)
 library(sf)
 library(dplyr)
@@ -230,12 +231,14 @@ We then use the the `crop` function from the **terra** package so that only the 
 **Note this code will need to be updated so that it uses newer tools so it doesn't throw
 a warning (e.g., don't use wrld_simpl from maptools and don't rely on raster
 package?, see note here: https://cran.r-project.org/web/packages/rgeos/index.html
-regarding the fact that `rgeos` is being retired in 2023)**
+regarding the fact that `rgeos` is being retired in 2023) --- To get this to work,
+I needed to use the raster version of crop (and not the terra version) 
+under R 4.3.1 and all packages updated.**
 
 ```{r Ch6-WrldSimpl, warning = FALSE, message = FALSE}
 data('wrld_simpl')
 # note this throws a warning: https://gis.stackexchange.com/questions/379693/crop-wrld-simpl-gives-error-after-r-update
-asia <- terra::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
+asia <- raster::crop(wrld_simpl, raster::extent(24, 145, 8, 47))
 class(asia)
 ```
 
