@@ -334,3 +334,89 @@ panelSelect <- function (layout, i = 1, j = 1, margin = NULL)
   }
 }
 
+##########################
+# details for plotting
+###########################
+
+details <- list(
+  bot = 0.05, # bottom margin for the panel
+  top = 0.6, # top margin for the panel
+  left = 0, # left margin for the panel
+  right = 0, # right margin for the panel
+  dcex = 0.96, # text size option 1
+  tCex = 1.08, # text size option 2
+  cex = 0.7, # text size option 3
+  fontsize = 12, # font size option 1
+  font = 1, # font size option 2
+  line1 = 0.2, # on which margin line, starting at 0 counting outwards
+  line2 = 1.0, # same as above
+  line3 = 0.2, # same as above
+  ypad = 0.65, # change the scale of the panel vertically
+  nameShift = 0.12, # label location shift
+  wyellow = rgb(1, 1, 0.82), # color option 1 (for plot background)
+  wgray = rgb(0.945, 0.945, 0.945), # color option 2 (for panel background)
+  lwd = 1, # plot polygon line type
+  density = 0 # polygon density
+  
+)
+
+
+
+details_layout <- list(
+  pheight = 17.2, # panel height
+  pwidth = 2.9, # panel width
+  mheight = 3.2, # median row height divider
+  ngroups = 2, # number of groups excluding median
+  pcspace = 0.1, # space between panels in columns
+  prspace = 0.01, # space between panels in rows
+  ocol = 'black', # group outline color
+  text_x = 0.5, # x coordinate for group labels
+  text_y = 0.55, # y coordinate for group labels
+  alpha = 0.6, # transparency of plot polygons
+  lwd = 1, # plot polygon line type
+  density = 0 # polygon density
+)
+
+
+details_labels <-  list(
+  header_size = 0.7, # header size
+  label_cex = 0.7, # label text size 
+  dcex = 0.96, # label dot size
+  font = 1, # header font
+  points_x = 0.1, # x coordinate of label dot
+  text_x = 0.18, # x coordinate of label text
+  points_pch1 = 16, # label point pch
+  points_pch2 = 1 # label point pch
+)
+
+
+details_dotplot <- list(
+  rmulti = 1.3, # multiplier for determining range
+  rmarks = 0.5, # steps for determining axis ticks automatically
+  gmulti = 0.28, # multiplier for determining grid 
+  tck = -0.04, # axis tick label location
+  pch1 = 16, # pch for points
+  pch2 = 1 # pch for points
+)
+
+
+
+details_boxplot <- list(
+  pmulti = 0.5, # size multiplier for lines
+  mmulti = 0.05, # scaling multiplier for plotting grid
+  thin_box = 0.2, # size of the inner box
+  thick_box = 0.60, # size of the outer box
+  use_black = FALSE, # for outliers
+  median_line = 0.88, # median line width
+  lwd_median = 2, # line width for median
+  cex_outlier = 0.6, # cex for the outlier dot
+  lwd_outlier = 0.4, # line width for outlier
+  pch_outlier = 1, # dot type for outlier
+  sc = 1.3, # scaling for range
+  text_size = 0.7, # text size for boxplot
+  tck = -0.04 # location to label ticks
+)
+
+
+
+
