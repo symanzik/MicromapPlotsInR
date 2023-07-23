@@ -87,9 +87,11 @@ knitr::include_graphics("img/Ch10-AOI_boxes.pdf")
 
 The processed video data (which is a time series of x and y coordinates) is still considered to be raw eye tracking data. To create a linked microposter plot,\index{Linked microposter plot} the data features had to be extracted based on the previously defined AOIs.\index{Area of interest} Here, different features of eye tracking data have been extracted in terms of the defined AOIs,\index{Area of interest} such as how long the participant has spent looking at each AOI\index{Area of interest} and how many times the participant has visited each AOI,\index{Area of interest} eye movement speed from one focus point to another in pixels within each AOI,\index{Area of interest} and pupil radiuses for each visit at the corresponding AOI.\index{Area of interest} 
 
-The resulting datasets described in the previous sections have been provided as part of the **micromapExtra**\index{R Packages!micromapExtra} R package to create a sample non-traditional linked micromap plot\index{Linked micromap plot} or, more specifically, a linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} contains the shapefile;\index{Shapefile} `locations_testing`\index{Datasets!locations\_testing} contains the time series of the x and y coordinates indicating where the participant is looking at on the poster; `poster_dataset_all`\index{Datasets!poster\_dataset\_all} contains three lists with features extracted from the `locations_testing` dataset. These lists are: 1. A data frame with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI\index{Area of interest} (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI.\index{Area of interest} 2. A list of eye movement speed for each AOI\index{Area of interest} (each AOI\index{Area of interest} is a list). 3. A list of pupil radiuses for each AOI\index{Area of interest} (each AOI\index{Area of interest} is a list). 
+The resulting datasets described in the previous sections have been provided as part of the **micromapExtra**\index{R Packages!micromapExtra} R package to create a sample non-traditional linked micromap plot\index{Linked micromap plot} or, more specifically, a linked microposter plot:\index{Linked microposter plot} `AOIName`\index{Datasets!AOIName} contains the shapefile;\index{Shapefile} 
+<!-- `locations_testing`\index{Datasets!locations\_testing} contains the time series of the x and y coordinates indicating where the participant is looking at on the poster;  -->
+`poster_dataset_all`\index{Datasets!poster\_dataset\_all} contains two lists with features extracted from the original eye movement data set. These lists are: 1. A data frame with three columns: _section_ (AOI names), _visits\_len_ or time the participant spent on each AOI\index{Area of interest} (in seconds), and _visits\_num_ indicating how many times the participant has visited each AOI.\index{Area of interest} 2. A list of pupil radiuses for each AOI\index{Area of interest} (each AOI\index{Area of interest} is a list). 
 
-XXX JS: Simplify the data that is provided (and adjust the text above), e.g., `locations_testing` does not seem to be used later on. As far as I can see, you are also not using eye movement speed in any figure, so it can be deleted. Overall, a simple data frame with AOI name, number of visits, lengths of visits, and pupil radiuses (and anything else that is needed) may be enough. Others should be allowed to see what is needed for the linked microposter construction and do not need to see the original data structures. XXX
+XXX JS: Simplify the data that is provided (and adjust the text above), e.g., `locations_testing` does not seem to be used later on. As far as I can see, you are also not using eye movement speed in any figure, so it can be deleted. Overall, a simple data frame with AOI name, number of visits, lengths of visits, and pupil radiuses (and anything else that is needed) may be enough. Others should be allowed to see what is needed for the linked microposter construction and do not need to see the original data structures. XXX CL: removed the description of 'locations_testing', also removed eye movement speed to simplify the data list
 
 
 ## Linked Microposter Plot Creation {#Ch10-Linked-Microposter-Creation}
@@ -118,19 +120,13 @@ columns_att <- list(
   # 1.2.2 Label column
   list(
     col_num = 2,
-    header = "Areas of Interest",
-    header_size = 0.7,
-    point_size = 0.96,
-    text_size = 0.7,
-    text_font = 1
+    header = "Areas of Interest"
   ),
   # 1.2.3 Dotplot column to visualize number of visits
   list(
     col_num = 3,
     panel_data = "visits_num",
     header = "Number of Visits",
-    text_size = 0.7,
-    point_size = 0.96,
     axis_ticks = NA,
     axis_labels = NA
   ),
@@ -139,17 +135,13 @@ columns_att <- list(
     col_num = 4,
     panel_data = "visits_len",
     header = "Length of Visits (sec)",
-    text_size = 0.7,
-    point_size = 0.96,
     axis_ticks = NA,
     axis_labels = NA
   ),
   # 1.2.5 Boxplot column to visualize pupil radius
   list(
     col_num = 5,
-    panel_data = "pupil_data",
     header = "Pupil Radius in Pixels",
-    text_size = 0.7,
     axis_ticks = NA,
     axis_labels = NA
   )
@@ -172,10 +164,9 @@ After specifying the columns of the linked microposter plot,\index{Linked microp
 library(imager)
 
 # 2.1 Load data
-load(file = "data/Ch10/posterdat.all.rda")
+load(file = "data/Ch10/posterdat_all.rda")
 poster_loc <- "img/Ch10-poster_colored.jpg"
-names(posterdat.all[[1]]) <- c("section", "visits_len", "visits_num")
-poster_dataset <- posterdat.all[[1]]
+poster_dataset <- posterdat_all$poster_dataset
 names(columns_att) <- panel_types
 
 # 2.2 Load image and convert to gray scale
@@ -233,7 +224,7 @@ The user can specify how the rows of the linked microposter plot\index{Linked mi
 # 4.1 Specify which column to sort by
 sortby <- "visits_len"
 decreasing <- TRUE
-pupil_data <- poster_dataset[[3]]
+pupil_data <- posterdat_all$pupil_data
 
 # 4.2 Order rows: rearrange the datasets by a specific variable
 if (sortby == "pupil_data") {
@@ -244,16 +235,8 @@ if (sortby == "pupil_data") {
   )
   pupil_data <- pupil_data[ordered_median]
   poster_dataset <- poster_dataset[ordered_median, ]
-} else if (sortby == "speed") {
-  # 4.2.2 Order by eye movement speed
-  unordered_median <- unlist(lapply(speed, stats::median))
-  ordered_median <- order(unordered_median,
-    decreasing = decreasing
-  )
-  speed <- speed[ordered_median]
-  poster_dataset <- poster_dataset[ordered_median, ]
 } else {
-  # 4.2.3 Order by other variables,
+  # 4.2.2 Order by other variables,
   # such as number of visits and length of visits
   ordered_rows <- order(poster_dataset[, sortby])
   poster_dataset <- poster_dataset[ordered_rows, ]
@@ -261,18 +244,22 @@ if (sortby == "pupil_data") {
 }
 ```
 
-XXX JS: remove 4.2.2 from above as we are not doing anything with speed - pupil radius seems to be enough (and renumber) XXX
+XXX JS: remove 4.2.2 from above as we are not doing anything with speed - pupil radius seems to be enough (and renumber) XXX CL: Done
 
 5. **Determine the Panel Layout.**
 
-The quickest approach to specify the panel layout for the entire linked microposter plot\index{Linked microposter plot} is to use an automatic layout function and choose a suitable partitioning (see @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). Here, we work with an automatically created layout from the `ArrangePanels()` function and we select Partitioning 1 (according to @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). The user can further specify the layout of the rows and whether a median row is wanted or not. Then the sizes of all rows are calculated based on the overall plot size and the number of rows, based on the aesthetics of the linked microposter plot.\index{Linked microposter plot} The code for the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()` is in the SharedFunctions.R file provided with the book. There is no need to make changes to these functions, unless more changes on the layout are desired. A list with the layout details is defined in code section 5.4 for the graphical parameters. 
+The quickest approach to specify the panel layout for the entire linked microposter plot\index{Linked microposter plot} is to use an automatic layout function and choose a suitable partitioning (see @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). There are 11 such helper functions overall (See help pages of the **micromapExtra**\index{R Packages!micromapExtra} R package for further details). There is no need to make changes to these functions, unless more changes on the layout are desired. We use the functions `panelLayout()`, `DetermineMedianRow()`, and `ArrangePanels()` to determine the panel layout. The `ArrangePanels()` function automatically creates layout, and we select Partitioning 1 (according to @SC2008 or Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1)). The user can further specify the layout of the rows and whether a median row is wanted or not. Then the sizes of all rows are calculated based on the overall plot size and the number of rows, based on the aesthetics of the linked microposter plot.\index{Linked microposter plot} 
 
-XXX JS: Can you mention that there are 11 functions overall. Introduce those that are needed for your code in 1 or 2 sentences. Mention that there are other ones and refer to the help pages of the **micromapExtra**\index{R Packages!micromapExtra} R package for further details. Mention that the functions starting with panel... have been released as part of the @CP2010 book and are based on the original S-Plus functions (I found S-Plus code on my side from 2003, but there should be even older code). The three other functions likely have been created on my side, but I could not find when. XXX
+The data is arranged into three perceptual groups. In code section 5.4, the entire panel layout frame is created. The start and end row numbers for each plot groups are automatically determined by `ArrangePanels()` function.
+
+
+XXX JS: Can you mention that there are 11 functions overall. Introduce those that are needed for your code in 1 or 2 sentences. Mention that there are other ones and refer to the help pages of the **micromapExtra**\index{R Packages!micromapExtra} R package for further details. Mention that the functions starting with panel... have been released as part of the @CP2010 book and are based on the original S-Plus functions (I found S-Plus code on my side from 2003, but there should be even older code). The three other functions likely have been created on my side, but I could not find when. XXX CL: updated the description based on the suggestion. I didn't mention S-Plus functions, I am not sure if it might be a little redundant for readers to read, as the purpose is to be able to create the plot. But if it helps explain the history of the code and would benefit for the big picture, feel free to add a sentence or so 
+
+
 
 ```{r Ch10-panel-layout}
 # 5.1 Load source code for panel definitions and layout
 source("R/Ch10_SharedFunctions.R")
-# aoi_names <- row.names(poster_dataset)
 layout <- NA
 median_row <- TRUE
 automatic_layout <- TRUE
@@ -301,7 +288,7 @@ if (automatic_layout) {
 }
 
 if (!automatic_layout && median_row) {
-  if ((rows %% 2 == 0) || (layout[ceiling(length(layout) / 2)] != 1)) {
+  if ((rows %% details_layout$ngroups == 0) || (layout[ceiling(length(layout) / details_layout$ngroups)] != 1)) {
     median_row <- FALSE
     warning("There is no median row.")
   }
@@ -309,49 +296,18 @@ if (!automatic_layout && median_row) {
 
 # 5.3 Determine the plot size of the rows
 if (!median_row) {
-  rowsize <- rep(17.2 / rows, rows)
+  rowsize <- rep(details_layout$pheight / rows, rows)
 } else {
   rowsize <- c(
-    rep(17.2 / rows, floor(rows / 2)),
-    17.2 / (rows * 3.2),
-    rep(17.2 / rows, floor(rows / 2))
+    rep(details_layout$pheight / rows, floor(rows / details_layout$ngroups)),
+    details_layout$pheight / (rows * details_layout$mheight),
+    rep(details_layout$pheight / rows, floor(rows / details_layout$ngroups))
   )
 }
 
-# 5.4 Define some graphical parameters
-details <- list(
-  bot = 0.05, # bottom margin for the panel
-  top = 0.6, # top margin for the panel
-  left = 0, # left margin for the panel
-  right = 0, # right margin for the panel
-  dcex = 0.96, # text size option 1
-  tCex = 1.08, # text size option 2
-  cex = 0.7, # text size option 3
-  fontsize = 12, # font size option 1
-  font = 1, # font size option 2
-  line1 = 0.2, # on which margin line, starting at 0 counting outwards
-  line2 = 1.0, # same as above
-  line3 = 0.2, # same as above
-  ypad = 0.65, # change the scale of the panel vertically
-  nameShift = 0.12, # label location shift
-  wyellow = rgb(1, 1, 0.82), # color option 1 (for plot background)
-  wgray = rgb(0.945, 0.945, 0.945) # color option 2 (for panel background)
-)
-```
 
-XXX JS: Place 5.4 earlier on and then add 17.2, 2, and 3.2 as additional constants and work with these constant names in 5.3, rather than using the numeric values in that code section. This means you have to rearrange some of your code and description in the main text. Same with the 2.9 from code section 6.1. Ideally, have one place (i.e., list) where you define all constants for the aesthetics of the plot and then use those constants. Same with the 0.1 and 0.01 for the rowSep and colSep further below. THere may be more numeric and color constants used below. But, notice that Black may not be the same as Black if one refers to a font color and the next to a line color - so define fontcolor = Black and linecolor = Black in your list above (if needed). XXX
-
-
-6. **Create the Panel Layout and Plot Indexes.**
-
-`details` is a list structure that contains the variables and values for the detailed layout of the plot. `ArrangePanels()` function is able to automatically determine the start and end rows for each plot groups given the input: _row\_begin_ and _row\_end_. The data is arranged into 3 perceptual groups. 
-
-XXX JS: You defined/used `details` and the `ArrangePanels()` function already in step 5. above. Describe what you are doing here in code sections 6.1 and 6.2. XXX
-
-
-```{r Ch10-panel-layout-and-plot-indexes}
-# 6.1 Determine panel layout
-panel_width <- c(2.9, 2.9, 2.9, 2.9, 2.9)
+# 5.4 Determine panel layout
+panel_width <- rep(details_layout$pwidth, columns)
 panels <- panelLayout(
   nrow = rows,
   ncol = columns,
@@ -361,11 +317,11 @@ panels <- panelLayout(
   bottomMargin = details$bot,
   colSize = panel_width,
   rowSize = rowsize,
-  colSep = rep(0.1, (columns + 1)), # space between panels in columns
-  rowSep = rep(0.01, rows + 1) # space between panels in rows
+  colSep = rep(details_layout$pcspace, (columns + 1)), # space between panels in columns
+  rowSep = rep(details_layout$prspace, rows + 1) # space between panels in rows
 )
 
-# 6.2 Set panel row indexes
+# 5.5 Set panel row indexes
 row_indexes <- ArrangePanels(
   posterdat = poster_dataset,
   partitioning = partitioning,
@@ -376,16 +332,25 @@ row_indexes <- ArrangePanels(
 row_begin <- row_indexes[[1]]
 row_end <- row_indexes[[2]]
 n_groups <- length(row_end)
+
+
 ```
 
+XXX JS: Place 5.4 earlier on and then add 17.2, 2, and 3.2 as additional constants and work with these constant names in 5.3, rather than using the numeric values in that code section. This means you have to rearrange some of your code and description in the main text. Same with the 2.9 from code section 6.1. Ideally, have one place (i.e., list) where you define all constants for the aesthetics of the plot and then use those constants. Same with the 0.1 and 0.01 for the rowSep and colSep further below. There may be more numeric and color constants used below. But, notice that Black may not be the same as Black if one refers to a font color and the next to a line color - so define fontcolor = Black and linecolor = Black in your list above (if needed). XXX CL: moved 5.4 to section 1 
 
-7. **Plot the Microposters Column.**
+
+
+XXX JS: You defined/used `details` and the `ArrangePanels()` function already in step 5. above. Describe what you are doing here in code sections 6.1 and 6.2. XXX CL: I got rid of step 6 and merged them into step 5
+
+
+
+6. **Plot the Microposters Column.**
 
 After all settings have been specified in the previous steps, we can now start to create the linked microposter plot\index{Linked microposter plot} one column at a time, by starting from the leftmost column, i.e., the microposters column. The R code for linked microposter plots\index{Linked microposter plot} is structured similar to the `mmplot()` function provided in the **micromap**\index{R Packages!micromap} R package [@PaOl2015]. We introduce a series of functions (called `plot_microposters()`, `plot_labels()`, `plot_dotplot()`, and `plot_boxplot()`) in the next three steps that plot the various panels in the columns of the linked microposter plot.\index{Linked microposter plot}
 
 The `plot_microposters()` function has been created to plot the panels in the microposters column. If the user plans to use similar data structures as for the eye tracking data in this chapter, i.e., similar data frames, column names, and image types, then there is no need to adjust this function to visualize other topics of interest. Otherwise, it is necessary to adjust the data and column names accordingly. 
 
-The microposters column with small microposters in its panels is plotted with highlighting and coloring of the AOIs\index{Area of interest} according to context and user-defined labels. `panel_col` is the column number of this column that is defined with the column attributes. The rest of the arguments for this function are the attributes specified in the previous steps. First, the labels used in this column are specified in code sections 7.1 and 7.2. These labels typically are related to above and below median data and to cumulative microposters. One can adjust the text of the labels directly inside the function. Then the microposters with specific AOIs highlighted are created for each of the perceptual groups via a for-loop in code section 7.3. In this example, there are three perceptual groups and no median row. For each perceptual group, we color the AOIs\index{Area of interest} that are present in that perceptual group. The remaining AOIs\index{Area of interest} are either colored in gray as background or colored in light yellow if they have been highlighted in the previous perceptual groups given that the cumulative option is `TRUE`. The borders of each AOI\index{Area of interest} and the entire poster are plotted with thicker black lines. Explanations of the most important arguments used within the `plot_microposters()` function are given below: 
+The microposters column with small microposters in its panels is plotted with highlighting and coloring of the AOIs\index{Area of interest} according to context and user-defined labels. `panel_col` is the column number of this column that is defined with the column attributes. The rest of the arguments for this function are the attributes specified in the previous steps. First, in code sections 6.1 and 6.2, the labels used in this column are specified. These labels typically are related to above and below median data and to cumulative microposters. One can adjust the text of the labels directly inside the function. Then in code section 6.3, the microposters with specific AOIs highlighted are created for each of the perceptual groups via a for-loop. In this example, there are three perceptual groups and no median row. For each perceptual group, we color the AOIs\index{Area of interest} that are present in that perceptual group. The remaining AOIs\index{Area of interest} are either colored in gray as background or colored in light yellow if they have been highlighted in the previous perceptual groups given that the cumulative option is `TRUE`. The borders of each AOI\index{Area of interest} and the entire poster are plotted with thicker black lines. Explanations of the most important arguments used within the `plot_microposters()` function are given below: 
 
 * `gsubs`: the row indexes for all AOIs\index{Area of interest} that are in the current perceptual group;
 * `back`: the row indexes for the AOIs\index{Area of interest} that are not highlighted in the current perceptual group, i.e., those in the background;
@@ -393,10 +358,11 @@ The microposters column with small microposters in its panels is plotted with hi
 * `pen`: the index to determine which color to use from the selected color scheme `color_scheme`;
 * `past`: the indexes for cumulative AOIs\index{Area of interest} shown in perceptual groups that have been highlighted above the current perceptual group. 
 
-The panels and indexes are set in code sections 7.3.1, 7.3.2, and 7.3.5. Then the microposters (7.3.3) and `back` AOIs\index{Area of interest} (7.3.4) are plotted. In code sections 7.3.6 and 7.3.7, the `fore` AOIs\index{Area of interest} are plotted. The microposters are finalized with coloring the cumulative AOIs\index{Area of interest} in 7.3.8 and plotting the outlines of the borders for the poster in 7.3.9.
+In code sections 6.3.1, 6.3.2, and 6.3.5, the panels and indexes are set. Then the microposters (6.3.3) and `back` AOIs\index{Area of interest} (6.3.4) are plotted. In code sections 6.3.6 and 6.3.7, the `fore` AOIs\index{Area of interest} are plotted. In 6.3.8, the microposters are finalized with coloring the cumulative AOIs\index{Area of interest}, and in 6.3.9, plotting the outlines of the borders for the poster.
 
 
 ```{r Ch10-create-microposters-function}
+
 plot_microposters <- function(panel_col,
                               cumulate = TRUE,
                               poster_dataset,
@@ -410,10 +376,10 @@ plot_microposters <- function(panel_col,
                               row_begin,
                               row_end,
                               color_scheme) {
-  # 7.1 Assign AOI ids (one per AOI)
+  # 6.1 Assign AOI ids (one per AOI)
   aoi_ids <- aoi_vis_borders$section[is.na(aoi_vis_borders$x)]
 
-  # 7.2 Plot panel titles
+  # 6.2 Plot panel titles
   panelSelect(layout = panels, i = 1, j = panel_col)
   panelScale()
   # If there is a median row,
@@ -421,7 +387,7 @@ plot_microposters <- function(panel_col,
   # if not, it will be skipped.
   if (median_row) {
     graphics::mtext(
-      text = "Above Median Visits",
+      text = "Above Median Visits",    
       side = 3,
       line = details$line1,
       cex = details$cex
@@ -429,7 +395,7 @@ plot_microposters <- function(panel_col,
 
     if (cumulate) {
       graphics::mtext(
-        text = "Cumulative Microposters",
+        text = "Cumulative Microposters",    # change this to flexible
         side = 3,
         line = details$line2,
         cex = details$cex
@@ -461,24 +427,24 @@ plot_microposters <- function(panel_col,
   rxpoly <- range(poster_vis_borders$x, na.rm = TRUE)
   rypoly <- range(poster_vis_borders$y, na.rm = TRUE)
 
-  # 7.3 Plot by perceptual groups
+  # 6.3 Plot by perceptual groups
   for (i in 1:n_groups) {
     if (median_row && i == ceiling(n_groups / 2)) {
-      # 7.3.1 Map not drawn, median region plotted in adjacent panel
+      # 6.3.1 Map not drawn, median region plotted in adjacent panel
       panelSelect(layout = panels, i = (n_groups + 1) / 2, j = panel_col)
       panelScale()
       panelFill(col = details$wgray)
-      panelOutline(col = "black")
+      panelOutline(col = details_layout$ocol)
       graphics::text(
-        x = 0.5,
-        y = 0.55,
+        x = details$text_x,
+        y = details$text_y,
         labels = "Median",
         cex = details$cex
       )
       next
     }
 
-    # 7.3.2 Select panels and set indexes
+    # 6.3.2 Select panels and set indexes
     panelSelect(layout = panels, i = i, j = panel_col)
     panelScale(rx = rxpoly, ry = rypoly)
     gsubs <- row_begin[i]:row_end[i]
@@ -496,7 +462,7 @@ plot_microposters <- function(panel_col,
 
     panel_names <- poster_dataset$section[gsubs]
 
-    # 7.3.3 Plot background images (the poster)
+    # 6.3.3 Plot background images (the poster)
     graphics::rasterImage(
       image = poster,
       xleft = 0,
@@ -505,7 +471,7 @@ plot_microposters <- function(panel_col,
       ytop = imager::height(poster)
     )
 
-    # 7.3.4 Plot background (out of contour) regions
+    # 6.3.4 Plot background (out of contour) regions
     # in gray with white outlines
     # "front_regions" are the regions in the group, the rest are "back"
     front_regions <- poster_dataset$section[1:row_end[i]]
@@ -516,7 +482,7 @@ plot_microposters <- function(panel_col,
       border = TRUE
     )
 
-    # 7.3.5 Set the indexes: plot foreground regions
+    # 6.3.5 Set the indexes: plot foreground regions
     # for the panel in their special colors pens 1:5
     # and others in contour regions in light yellow if cumulative is TRUE
     fore <- !is.na(match(x = aoi_vis_borders$section, table = panel_names))
@@ -526,7 +492,7 @@ plot_microposters <- function(panel_col,
       nomatch = 10
     )[!is.na(match(x = aoi_ids, table = panel_names))]
 
-    # 7.3.6 Outline regions
+    # 6.3.6 Outline regions
     # If there is a median row,
     # then the median row color is defined here
     if (median_row) {
@@ -535,44 +501,44 @@ plot_microposters <- function(panel_col,
     graphics::polygon(
       x = aoi_vis_borders$x[fore],
       y = aoi_vis_borders$y[fore],
-      col = scales::alpha(colour = color_scheme[pen], alpha = 0.7),
+      col = scales::alpha(colour = color_scheme[pen], alpha = details_layout$alpha),
       border = FALSE
     )
 
-    # 7.3.7 Plot borders
+    # 6.3.7 Plot borders
     graphics::polygon(
       x = aoi_vis_borders$x[fore],
       y = aoi_vis_borders$y[fore],
-      col = "black",
-      density = 0,
-      lwd = 1
+      col = details_layout$ocol,
+      density = details_layout$density,
+      lwd = details_layout$lwd
     )
 
-    # 7.3.8 Plot and color cumulative regions if it is defined to be TRUE
+    # 6.3.8 Plot and color cumulative regions if it is defined to be TRUE
     if (cumulate) {
       past <- !back & !fore
       graphics::polygon(
         x = aoi_vis_borders$x[past],
         y = aoi_vis_borders$y[past],
-        col = scales::alpha(colour = details$wyellow, alpha = 0.7),
+        col = scales::alpha(colour = details$wyellow, alpha = details_layout$alpha),
         border = FALSE
       )
       graphics::polygon(
         x = aoi_vis_borders$x[past],
         y = aoi_vis_borders$y[past],
-        col = "black",
-        density = 0,
-        lwd = 1
+        col = details_layout$ocol,
+        density = details_layout$density,
+        lwd = details_layout$lwd
       )
     }
 
-    # 7.3.9 Plot poster outline
+    # 6.3.9 Plot poster outline
     graphics::polygon(
       x = poster_vis_borders$x,
       y = poster_vis_borders$y,
-      col = "black",
-      density = 0,
-      lwd = 1
+      col = details_layout$ocol,
+      density = details_layout$density,
+      lwd = details_layout$lwd
     )
   }
 }
@@ -580,7 +546,9 @@ plot_microposters <- function(panel_col,
 
 Now we can apply the `plot_microposters()` function to create our first column in the linked microposter plot,\index{Linked microposter plot} i.e., the microposters column. The color palette is selected from the **RColorBrewer**\index{R Packages!RColorBrewer} R package [@Neuwirth2022]. In this example, five colors are used from the `Paired` color palette, since we have five rows at most in each perceptual group. Multiple microposters columns could be created if needed.
 
+
 ```{r Ch10-create-microposters, fig.cap = 'Microposters column of the linked microposter plot.', fig.width = 7}
+
 color_scheme <- rev(RColorBrewer::brewer.pal(n = 5, name = "Paired"))
 if (sum(panel_types == "poster") >= 1) {
   posters <- which(panel_types == "poster")
@@ -592,7 +560,7 @@ if (sum(panel_types == "poster") >= 1) {
       poster_dataset = poster_dataset,
       aoi_vis_borders = aoi_vis_borders,
       poster_vis_borders = poster_vis_borders,
-      poster = poster,
+      poster = poster, 
       panels = panels,
       n_groups = n_groups,
       rows = rows,
@@ -606,17 +574,13 @@ if (sum(panel_types == "poster") >= 1) {
 ```
 
 
-8. **Plot the Color-Coded Legend and Labels Column.**
+7. **Plot the Color-Coded Legend and Labels Column.**
 
-After plotting the microposters column, we will plot the column with the color-coded legend and the labels with the subregion names. While these are considered to be two different columns as outlined in Section \@ref(Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation), they typically have been created in one step in the original R code for linked micromap plots.\index{Linked micromap plots} Similarly to the `plot_microposters()` function introduced in the previous step, a `plot_labels()` function has been created to make the plotting process cleaner and easier to reuse. This function is structured similarly to the `plot_microposters()` function. Also, the variable naming schemes are similar. First, we define the label content and aesthetics such as font and size. The panels and indexes are set in code section 8.1 and 8.2. Then we create the color-coded legend and the labels with a for-loop in the code based on the perceptual groups in code section 8.3. Within each perceptual group, the colors of the color-coded legend are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be of white color which is not in the color scheme we chose for the AOIs\index{Area of interest} (code section 8.3.3). 
+After plotting the microposters column, we will plot the column with the color-coded legend and the labels with the subregion names. While these are considered to be two different columns as outlined in Section \@ref(Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation), they typically have been created in one step in the original R code for linked micromap plots.\index{Linked micromap plots} Similarly to the `plot_microposters()` function introduced in the previous step, a `plot_labels()` function has been created to make the plotting process cleaner and easier to reuse. This function is structured similarly to the `plot_microposters()` function. Also, the variable naming schemes are similar. First, we define the label content and aesthetics such as font and size. The panels and indexes are set in code section 7.1 and 7.2. Then we create the color-coded legend and the labels with a for-loop in the code based on the perceptual groups in code section 7.3. Within each perceptual group, the colors of the color-coded legend are set to match the corresponding AOIs\index{Area of interest} by using the same color scheme and plotting order. The `Blank` AOI\index{Area of interest} is defined separately as we want it to be of white color which is not in the color scheme we chose for the AOIs\index{Area of interest} (code section 7.3.3). 
 
 ```{r Ch10-create-labels-function}
 plot_labels <- function(panel_col,
                         title,
-                        header_size = 0.7,
-                        cex = 0.7,
-                        dcex = 0.96,
-                        font = 1,
                         poster_dataset,
                         aoi_vis_borders,
                         poster_vis_borders,
@@ -626,30 +590,31 @@ plot_labels <- function(panel_col,
                         row_begin,
                         row_end,
                         color_scheme) {
-  # 8.1 Define panels
+  
+  # 7.1 Define panels
   panelSelect(layout = panels, i = 1, j = panel_col)
   panelScale()
 
-  # 8.2 Plot median row panel if there is a median row
+  # 7.2 Plot median row panel if there is a median row
   if (median_row) {
     graphics::mtext(
       text = title,
       side = 3,
       line = details$line2,
-      cex = header_size
+      cex = details_labels$header_size
     )
   } else {
     graphics::mtext(
       text = title,
       side = 3,
       line = details$line1,
-      cex = header_size
+      cex = details_labels$header_size
     )
   }
 
-  # 8.3 Plot labels by perceptual groups
+  # 7.3 Plot labels by perceptual groups
   for (i in 1:n_groups) {
-    # 8.3.1 Set indexes and panels
+    # 7.3.1 Set indexes and panels
     gsubs <- row_begin[i]:row_end[i]
     gnams <- poster_dataset$section[gsubs]
     nsubs <- length(gnams)
@@ -658,58 +623,60 @@ plot_labels <- function(panel_col,
     panelSelect(layout = panels, i = i, j = panel_col)
     panelScale(rx = c(0, 1), ry = c(1 - details$ypad, nsubs + details$ypad))
 
-    # 8.3.2 Define the index for the median row if there is a median row
+    # 7.3.2 Define the index for the median row if there is a median row
     if (median_row && i == ((n_groups + 1) / 2)) {
       pen <- length(color_scheme)
     }
 
-    # 8.3.3 Plot labels and color-coded legend corresponding to
+    # 7.3.3 Plot labels and color-coded legend corresponding to
     # the colors of the AOIs in the microposters
     for (j in 1:length(pen)) {
       graphics::points(
-        x = 0.1,
+        x = details_labels$points_x,
         y = laby[j],
-        pch = 16,
+        pch = details_labels$points_pch1,
         col = color_scheme[pen[j]],
-        cex = dcex
+        cex = details_labels$dcex
       )
       graphics::points(
-        x = 0.1,
+        x = details_labels$points_x,
         y = laby[j],
-        pch = 1,
+        pch = details_labels$points_pch2,
         col = "black",
-        cex = dcex
+        cex = details_labels$dcex
       )
       graphics::text(
-        x = 0.18,
+        x = details_labels$text_x,
         y = laby[j] + details$nameShift,
         labels = gnams[j],
-        cex = cex,
+        cex = details_labels$cex,
         adj = 0,
         col = "black",
-        font = font
+        font = details_labels$font
       )
 
       # Label "Blank" AOI separately as white is not in the color scheme
       if (gnams[j] == "Blank") {
         graphics::points(
-          x = 0.1,
+          x = details_labels$points_x,
           y = laby[j],
-          pch = 16,
+          pch = details_labels$points_pch1,
           col = "white",
-          cex = dcex
+          cex = details_labels$dcex
         )
         graphics::points(
-          x = 0.1,
+          x = details_labels$points_x,
           y = laby[j],
-          pch = 1,
+          pch = details_labels$points_pch2,
           col = "black",
-          cex = dcex
+          cex = details_labels$dcex
         )
       }
     }
   }
 }
+
+
 ```
 
 Now the `plot_labels()` function can be executed and the color-coded legend and labels column can be plotted.
@@ -722,10 +689,6 @@ if (sum(panel_types == "legend") >= 1) {
     plot_labels(
       panel_col = columns_att[legends[i]]$legend$col_num,
       title = columns_att[legends[i]]$legend$header,
-      header_size = columns_att[legends[i]]$legend$header_size,
-      cex = columns_att[legends[i]]$legend$text_size,
-      dcex = columns_att[legends[i]]$legend$point.size,
-      font = columns_att[legends[i]]$legend$text.font,
       poster_dataset = poster_dataset,
       aoi_vis_borders = aoi_vis_borders,
       poster_vis_borders = poster_vis_borders,
@@ -746,15 +709,15 @@ if (sum(panel_types == "legend") >= 1) {
 ```
 
 
-9. **Plot the Statistical Columns.**
+8. **Plot the Statistical Columns.**
 
 In our case, two dotplot\index{Dotplot} columns and one boxplot\index{Boxplot} column are used to visualize the number of visits and length of visits to the AOIs\index{Area of interest} and the pupil radiuses in pixels during these visits. Similar to the `plot_microposters()` and `plot_labels()` functions, we first set up indexes and panels, specify labels (axis, axis ticks, and texts), and then plot each dotplot\index{Dotplot} or boxplot\index{Boxplot} one-by-one with the corresponding colors from the AOIs\index{Area of interest} within each perceptual group. Since we chose a white color for `Blank`, it is coded as a special case again. 
 
-For the `plot_dotplot()` function, the axis range as well as the panel grid are automatically determined by the range of the input data in code section A.9.1 if they are not provided by the user. For the automatic setup, axis range is set to be slightly below the minimum and above the maximum. Then the grids in the panels are determined by evenly dividing the panel width with the predefined functions. Finally, the dots are plotted within each perceptual group by using the `points()` function. Moreover, the dots are connected with black lines in code section A.9.3.5, after the indexes, panels, and labels are created for each group from A.9.3.1 to A.9.3.4.    
+For the `plot_dotplot()` function, the axis range as well as the panel grid are automatically determined by the range of the input data in code section A.9.1 if they are not provided by the user. For the automatic setup, axis range is set to be slightly below the minimum and above the maximum. Then the grids in the panels are determined by evenly dividing the panel width with the predefined functions. Finally, the dots are plotted within each perceptual group by using the `points()` function. Moreover, from A.9.3.1 to A.9.3.4, the indexes, panels, and labels are created for each group. In code section A.9.3.5, the dots are connected with black lines,   
 
-XXX JS: Instead of listing A.9.3.1 to A.9.3.4 at the end of the previous sentence, add this to the preceding text, similar to the description of the steps in Step 7. XXX
+XXX JS: Instead of listing A.9.3.1 to A.9.3.4 at the end of the previous sentence, add this to the preceding text, similar to the description of the steps in Step 7. XXX CL: addressed
 
-For the `plot_boxplot()` function, the data frame is specified within the data list in code section B.9.1. Then the plot parameters are defined for the boxplot\index{Boxplot} in B.9.2. The summary statistics of the data for each AOI\index{Area of interest} are calculated for the creation of the boxplots\index{Boxplot} in B.9.3. Similar to the `plot_dotplot()` function, the panel grid and axis lables are created in B.9.4, and the groups panels are set up in B.9.5. Finally, the boxplots\index{Boxplot} are created component-wise within each perceptual group by first plotting the outliers and then the boxes. 
+For the `plot_boxplot()` function, the data frame is specified within the data list in code section B.9.1. Then in B.9.2, the plot parameters are defined for the boxplot\index{Boxplot}. In B.9.3, the summary statistics of the data for each AOI\index{Area of interest} are calculated for the creation of the boxplots\index{Boxplot}. Similar to the `plot_dotplot()` function, in B.9.4, the panel grid and axis lables are created, and in B.9.5, the groups panels are set up. Finally, the boxplots\index{Boxplot} are created component-wise within each perceptual group by first plotting the outliers and then the boxes. 
 
 
 ```{r Ch10-dotplot-boxplot-functions}
@@ -763,8 +726,6 @@ plot_dotplot <- function(var,
                          poster_dataset,
                          panel_num,
                          title,
-                         cex = 0.7,
-                         dcex = 0.96,
                          axis_ticks = NA,
                          axis_labels = NA,
                          panels,
@@ -772,12 +733,13 @@ plot_dotplot <- function(var,
                          median_row,
                          row_begin,
                          row_end,
+                         draw_line = TRUE,
                          color_scheme) {
   # A.9.1 Define grids based on the data to be visualized
   var <- poster_dataset[, var]
   aoi_names <- poster_dataset$section
   countRange <- range(var)
-  countRange <- mean(countRange) + 1.3 * diff(countRange) * c(-0.5, 0.5)
+  countRange <- mean(countRange) + details_dotplot$rmulti * diff(countRange) * c(-details_dotplot$rmarks, details_dotplot$rmarks) 
   if (is.na(axis_ticks)) {
     # If axis is not defined by the user, grids are determined automatically and
     # pretty values that are within bounds are used
@@ -793,7 +755,7 @@ plot_dotplot <- function(var,
     text = title,
     side = 3,
     line = details$line1,
-    cex = cex
+    cex = details$cex
   )
   # A.9.3 Plot by perceptual groups
   for (i in 1:n_groups) {
@@ -806,8 +768,8 @@ plot_dotplot <- function(var,
     # A.9.3.2 Set up group panels
     panelSelect(layout = panels, i = i, j = panel_num)
     countRange2 <- c(
-      min(countGrid) - mean(countGrid) * 0.28,
-      max(countGrid) + mean(countGrid) * 0.28
+      min(countGrid) - mean(countGrid) * details_dotplot$gmulti,
+      max(countGrid) + mean(countGrid) * details_dotplot$gmulti
     )
     panelScale(rx = countRange2, ry = c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
@@ -823,8 +785,8 @@ plot_dotplot <- function(var,
           labels = as.character(countGrid),
           col = "black",
           mgp = c(1, 0, 0),
-          tck = -0.04,
-          cex.axis = cex
+          tck = details_dotplot$tck,  ### details
+          cex.axis = details$cex
         )
       } else {
         # If axis labels are defined by the user
@@ -834,8 +796,8 @@ plot_dotplot <- function(var,
           labels = as.character(axis_labels),
           col = "black",
           mgp = c(1, 0, 0),
-          tck = -0.04,
-          cex.axis = cex
+          tck = details_dotplot$tck,
+          cex.axis = details$cex
         )
       }
     }
@@ -843,41 +805,45 @@ plot_dotplot <- function(var,
     if (median_row & i == ((n_groups + 1) / 2)) {
       pen <- length(color_scheme)
     }
-    graphics::lines(
+    
+    if (draw_line == TRUE){
+      graphics::lines(
       x = var[gsubs],
       y = laby,
       col = "black",
       lwd = 1
     )
+    }
+
     # A.9.3.5 Plot dots using corresponding data points
     for (j in 1:length(pen)) {
       graphics::points(
         x = var[gsubs[j]],
         y = laby[j],
-        pch = 16,
-        cex = dcex,
+        pch = details_dotplot$pch1,
+        cex = details$dcex,
         col = color_scheme[pen[j]]
       )
       graphics::points(
         x = var[gsubs[j]],
         y = laby[j],
-        pch = 1,
-        cex = dcex,
+        pch = details_dotplot$pch2,
+        cex = details$dcex,
         col = "black"
       )
       if (gnams[j] == "Blank") {
         graphics::points(
           x = var[gsubs[j]],
           y = laby[j],
-          pch = 16,
-          cex = dcex,
+          pch = details_dotplot$pch1,
+          cex = details$dcex,
           col = "white"
         )
         graphics::points(
           x = var[gsubs[j]],
           y = laby[j],
-          pch = 1,
-          cex = dcex,
+          pch = details_dotplot$pch2,
+          cex = details$dcex,
           col = "black"
         )
       }
@@ -889,7 +855,6 @@ plot_dotplot <- function(var,
 plot_boxplot <- function(dat,
                          poster_dataset,
                          panel_num,
-                         text_size = 0.7,
                          panels,
                          title,
                          axis_ticks = NA,
@@ -900,34 +865,16 @@ plot_boxplot <- function(dat,
                          row_end,
                          color_scheme) {
   # B.9.1 Prepare data to visualize
-  if (dat == "speed") {
-    dat <- poster_dataset[[2]]
-  } else if (dat == "pupil_data") {
-    dat <- poster_dataset[[3]]
-  }
-  aoi_names <- poster_dataset[[1]]$section
+  aoi_names <- poster_dataset$section
 
   # B.9.2 Set up boxplot parameters
-  thin_box <- 0.2
-  thick_box <- 0.60
-  use_black <- FALSE # for outliers
-  median_line <- 0.88
-  dot_median_col <- "white"
-  pch_median <- 19
-  cex_median <- 0.95
-  lwd_median <- 2
-  col_median <- "white"
-  cex_outlier <- 0.6 # see cexDot
-  lwd_outlier <- 0.4
-  sc <- 1.3
-  pad <- 0.67 # y axis padding for integer plotting locates
-  lwd_grid <- 1
+
   # y boxplot scaling
   # standard - horizontal box - no vertical (y) dimensions
-  py <- c(-0.5, -0.5, 0.5, 0.5)
-  thiny <- thin_box * py
-  thicky <- thick_box * py
-  medy <- median_line * c(-0.5, 0.5)
+  py <- c(-details_boxplot$pmulti, -details_boxplot$pmulti, details_boxplot$pmulti, details_boxplot$pmulti)
+  thiny <- details_boxplot$thin_box * py
+  thicky <- details_boxplot$thick_box * py
+  medy <- details_boxplot$median_line * c(-details_boxplot$pmulti, details_boxplot$pmulti)
   ry <- c(0, 1) # used in y scaling for grid lines
 
   # B.9.3 Gather boxplot statistics and put in AOI order
@@ -961,7 +908,7 @@ plot_boxplot <- function(dat,
   } else {
     rx <- range(stats, out)
   }
-  countRange <- sc * diff(rx) * c(-0.5, 0.5) + mean(rx)
+  countRange <- details_boxplot$sc * diff(rx) * c(-details_boxplot$pmulti, details_boxplot$pmulti) + mean(rx)
   if (is.na(axis_ticks)) {
     # If axis is not defined by the user, grids are determined automatically and
     # pretty values that are within bounds are used
@@ -978,7 +925,7 @@ plot_boxplot <- function(dat,
     text = title,
     side = 3,
     line = details$line1,
-    cex = text_size
+    cex = details_boxplot$text_size
   )
 
   # B.9.6 Plot by perceptual groups
@@ -992,8 +939,8 @@ plot_boxplot <- function(dat,
     # B.9.6.2 Set up group panels
     panelSelect(layout = panels, i = i, j = panel_num)
     countRange2 <- c(
-      min(countGrid) - stats::median(countGrid) * 0.05,
-      max(countGrid) + stats::median(countGrid) * 0.05
+      min(countGrid) - stats::median(countGrid) * details_boxplot$mmulti,
+      max(countGrid) + stats::median(countGrid) * details_boxplot$mmulti
     )
     panelScale(rx = countRange2, ry = c(1 - details$ypad, nsubs + details$ypad))
     panelFill(col = details$wgray)
@@ -1009,8 +956,8 @@ plot_boxplot <- function(dat,
           labels = as.character(countGrid),
           col = "black",
           mgp = c(1, 0, 0),
-          tck = -0.04,
-          cex.axis = text_size
+          tck = details_boxplot$tck,
+          cex.axis = details_boxplot$text_size
         )
       } else {
         # If axis labels are defined by the user
@@ -1020,8 +967,8 @@ plot_boxplot <- function(dat,
           labels = as.character(axis_labels),
           col = "black",
           mgp = c(1, 0, 0),
-          tck = -0.04,
-          cex.axis = text_size
+          tck = details_boxplot$tck,
+          cex.axis = details_boxplot$text_size
         )
       }
     }
@@ -1045,20 +992,20 @@ plot_boxplot <- function(dat,
           graphics::points(
             x = vals,
             y = rep(ht, length(vals)),
-            pch = 1,
-            col = ifelse(use_black, "black", "#FFFFFF"),
-            cex = cex_outlier,
-            lwd = lwd_outlier
+            pch = details_boxplot$pch_outlier,
+            col = ifelse(details_boxplot$use_black, "black", "#FFFFFF"),
+            cex = details_boxplot$cex_outlier,
+            lwd = details_boxplot$lwd_outlier
           )
         } else {
           # Plot other AOIs with colors in the selected color scheme
           graphics::points(
             x = vals,
             y = rep(ht, length(vals)),
-            pch = 1,
-            col = ifelse(use_black, "black", color_scheme[kp]),
-            cex = cex_outlier,
-            lwd = lwd_outlier
+            pch = details_boxplot$pch_outlier,
+            col = ifelse(details_boxplot$use_black, "black", color_scheme[kp]),
+            cex = details_boxplot$cex_outlier,
+            lwd = details_boxplot$lwd_outlier
           )
         }
       }
@@ -1083,7 +1030,7 @@ plot_boxplot <- function(dat,
           x1 = med[m],
           y1 = ht + medy[2],
           col = "black",
-          lwd = lwd_median
+          lwd = details_boxplot$lwd_median
         )
       } else {
         # Plot other AOIs with colors in the selected color scheme
@@ -1105,7 +1052,7 @@ plot_boxplot <- function(dat,
           x1 = med[m],
           y1 = ht + medy[2],
           col = "black",
-          lwd = lwd_median
+          lwd = details_boxplot$lwd_median
         )
       }
     }
@@ -1124,15 +1071,13 @@ There are two statistical columns that make use of dotplot\index{Dotplot} visual
 # Plot number of visits and length of visits
 if (sum(panel_types == "dot") >= 1) {
   dots <- which(panel_types == "dot")
-
+  
   for (i in 1:length(dots)) {
     plot_dotplot(
       var = columns_att[dots[i]]$dot$panel_data,
-      poster_dataset = poster_dataset,
+      poster_dataset = poster_dataset, 
       panel_num = columns_att[dots[i]]$dot$col_num,
       title = columns_att[dots[i]]$dot$header,
-      cex = columns_att[dots[i]]$dot$text_size,
-      dcex = columns_att[dots[i]]$dot$point_size,
       axis_ticks = columns_att[dots[i]]$dot$axis_ticks,
       axis_labels = columns_att[dots[i]]$dot$axis_labels,
       panels = panels,
@@ -1140,6 +1085,7 @@ if (sum(panel_types == "dot") >= 1) {
       median_row = median_row,
       row_begin = row_begin,
       row_end = row_end,
+      draw_line = FALSE,
       color_scheme = color_scheme
     )
   }
@@ -1154,7 +1100,7 @@ if (sum(panel_types == "dot") >= 1) {
 XXX JS: The connecting lines between the dots should be optional. Can you modify the `plot_dotplot()` function and add an
 argument to draw / not draw these lines. Set the default to FALSE. Here, draw the line for the number of visits column,
 but omit it for the length of visits column. This line makes most sense when there are big jumps in the data
-as is the case for the number of visits, but it makes less sense for the column with sorted data or minor jumps only. XXX
+as is the case for the number of visits, but it makes less sense for the column with sorted data or minor jumps only. XXX CL: addressed with the function, I removed the line for both, I personally think it looks fine
 
 
 Then the third statistical column, the boxplot\index{Boxplot} column to visualize pupil sizes for each AOI,\index{Area of interest} is added.
@@ -1166,10 +1112,9 @@ if (sum(panel_types == "boxplot") >= 1) {
 
   for (i in 1:length(bplot)) {
     plot_boxplot(
-      dat = columns_att[bplot[i]]$boxplot$panel_data,
-      poster_dataset = posterdat.all,
+      dat = pupil_data,# columns_att[bplot[i]]$boxplot$panel_data,
+      poster_dataset = poster_dataset,
       panel_num = columns_att[bplot[i]]$boxplot$col_num,
-      text_size = columns_att[bplot[i]]$boxplot$text_size,
       axis_ticks = columns_att[bplot[i]]$boxplot$axis_ticks,
       axis_labels = columns_att[bplot[i]]$boxplot$axis_labels,
       panels = panels,
@@ -1203,16 +1148,16 @@ By now, all the columns in the linked microposter plot\index{Linked microposter 
 
 
 ```{r Ch10-add-title, eval = FALSE}
-main.title <- "Eye Tracking: Statistics from Looking at a Scientific Poster "
-title.cex <- 1.08
+main_title <- "Eye Tracking: Statistics from Looking at a Scientific Poster "
+title_cex <- 1.08
 
 panelSelect(layout = panels, margin = "top")
 invisible(panelScale())
 graphics::text(
   x = 0.5,
   y = 0.75,
-  labels = main.title,
-  cex = title.cex
+  labels = main_title,
+  cex = title_cex
 )
 
 panelSelect(layout = panels, margin = "bottom")
