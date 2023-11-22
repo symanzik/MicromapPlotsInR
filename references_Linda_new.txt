@@ -1,0 +1,96 @@
+For sf:
+
+@Book{PeBi2023,
+
+    author = {Edzer Pebesma and Roger Bivand},
+
+    title = {{Spatial Data Science: With applications in R}},
+
+    year = {2023},
+
+    publisher = {{Chapman and Hall/CRC}},
+
+    url = {https://r-spatial.org/book/},
+
+    doi = {10.1201/9780429459016},
+
+  }
+
+  @Article{Pebesma2018,
+
+    author = {Edzer Pebesma},
+
+    title = {{Simple Features for R: Standardized Support for Spatial
+
+      Vector Data}},
+
+    year = {2018},
+
+    journal = {{The R Journal}},
+
+    doi = {10.32614/RJ-2018-009},
+
+    url = {https://doi.org/10.32614/RJ-2018-009},
+
+    pages = {439--446},
+
+    volume = {10},
+
+    number = {1},
+
+  }
+
+ 
+
+For sp:
+
+@Article{PeBi2005,
+    author = {Edzer J. Pebesma and Roger Bivand},
+    title = {Classes and methods for spatial data in {R}},
+    journal = {R News},
+    year = {2005},
+    volume = {5},
+    number = {2},
+    pages = {9--13},
+    month = {November},
+    url = {https://CRAN.R-project.org/doc/Rnews/},
+  }
+  @Book{BPG2013,
+    author = {Roger S. Bivand and Edzer Pebesma and Virgilio
+      Gomez-Rubio},
+    title = {Applied spatial data analysis with {R}, Second edition},
+    year = {2013},
+    publisher = {Springer, NY},
+    url = {https://asdar-book.org/},
+  }
+ 
+
+For spdep:
+
+  @Article{Biv2022,
+    author = {{Roger Bivand}},
+    title = {R Packages for Analyzing Spatial Data: A Comparative Case
+      Study with Areal Data},
+    journal = {Geographical Analysis},
+    year = {2022},
+    volume = {54},
+    number = {3},
+    pages = {488-518},
+    doi = {10.1111/gean.12319},
+  }
+  @Book{BPG2013,
+    author = {Roger S. Bivand and Edzer Pebesma and Virgilio
+      Gómez-Rubio},
+    title = {Applied spatial data analysis with {R}, Second edition},
+    year = {2013},
+    publisher = {Springer, NY},
+    url = {https://asdar-book.org/},
+  }
+  @Book{PeBi2023,
+    author = {Edzer Pebesma and Roger S. Bivand},
+    title = {Spatial Data Science With Applications in {R}},
+    year = {2023},
+    publisher = {Chapman & Hall},
+    url = {https://r-spatial.org/book/},
+  }
+ 
