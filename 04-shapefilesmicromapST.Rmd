@@ -491,7 +491,7 @@ fig1 <- ggdraw() +
     scale = scaling
   )
 fig2 <- ggdraw() +
-  draw_image(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders2pt5pct.png"),
+  draw_image(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders2pt5.png"),
     scale = scaling
   )
 fig3 <- ggdraw() +

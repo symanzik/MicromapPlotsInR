@@ -1,6 +1,8 @@
 _bookdown_files/
 _book/
 _NOT_USED/
+bookdown_cache/
+bookdown_files/
 .Rproj.user
 .Rhistory
 .RData
