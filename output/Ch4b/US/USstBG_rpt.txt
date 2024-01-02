@@ -1,0 +1,176 @@
+
+
+
+PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
+     USstBG   2024-01-02 17:25:13 
+
+
+   ab                 full id alt_ab                alias
+AL AL              Alabama 01     AL              Alabama
+AK AK               Alaska 02     AK               Alaska
+AZ AZ              Arizona 04     AZ              Arizona
+AR AR             Arkansas 05     AR             Arkansas
+CA CA           California 06     CA           California
+CO CO             Colorado 08     CO             Colorado
+CT CT          Connecticut 09     CT          Connecticut
+DE DE             Delaware 10     DE             Delaware
+DC DC District of Columbia 11     DC District of Columbia
+FL FL              Florida 12     FL              Florida
+GA GA              Georgia 13     GA              Georgia
+HI HI               Hawaii 15     HI               Hawaii
+ID ID                Idaho 16     ID                Idaho
+IL IL             Illinois 17     IL             Illinois
+IN IN              Indiana 18     IN              Indiana
+IA IA                 Iowa 19     IA                 Iowa
+KS KS               Kansas 20     KS               Kansas
+KY KY             Kentucky 21     KY             Kentucky
+LA LA            Louisiana 22     LA            Louisiana
+ME ME                Maine 23     ME                Maine
+MD MD             Maryland 24     MD             Maryland
+MA MA        Massachusetts 25     MA        Massachusetts
+MI MI             Michigan 26     MI             Michigan
+MN MN            Minnesota 27     MN            Minnesota
+MS MS          Mississippi 28     MS          Mississippi
+MO MO             Missouri 29     MO             Missouri
+MT MT              Montana 30     MT              Montana
+NE NE             Nebraska 31     NE             Nebraska
+NV NV               Nevada 32     NV               Nevada
+NH NH        New Hampshire 33     NH        New Hampshire
+NJ NJ           New Jersey 34     NJ           New Jersey
+NM NM           New Mexico 35     NM           New Mexico
+NY NY             New York 36     NY             New York
+NC NC       North Carolina 37     NC       North Carolina
+ND ND         North Dakota 38     ND         North Dakota
+OH OH                 Ohio 39     OH                 Ohio
+OK OK             Oklahoma 40     OK             Oklahoma
+OR OR               Oregon 41     OR               Oregon
+PA PA         Pennsylvania 42     PA         Pennsylvania
+RI RI         Rhode Island 44     RI         Rhode Island
+SC SC       South Carolina 45     SC       South Carolina
+SD SD         South Dakota 46     SD         South Dakota
+TN TN            Tennessee 47     TN            Tennessee
+TX TX                Texas 48     TX                Texas
+UT UT                 Utah 49     UT                 Utah
+VT VT              Vermont 50     VT              Vermont
+VA VA             Virginia 51     VA             Virginia
+WA WA           Washington 53     WA           Washington
+WV WV        West Virginia 54     WV        West Virginia
+WI WI            Wisconsin 55     WI            Wisconsin
+WY WY              Wyoming 56     WY              Wyoming
+
+
+
+
+Name Table Layer 2 and Regional Values
+   L2_ID L2_ID_Name regID   regName
+AL     2      South     2     South
+AK     0   Offshore     0  Offshore
+AZ     4       West     4      West
+AR     2      South     2     South
+CA     4       West     4      West
+CO     4       West     4      West
+CT     1  Northeast     1 Northeast
+DE     2      South     2     South
+DC     2      South     2     South
+FL     2      South     2     South
+GA     2      South     2     South
+HI     0   Offshore     0  Offshore
+ID     4       West     4      West
+IL     3    Midwest     3   Midwest
+IN     3    Midwest     3   Midwest
+IA     3    Midwest     3   Midwest
+KS     3    Midwest     3   Midwest
+KY     2      South     2     South
+LA     2      South     2     South
+ME     1  Northeast     1 Northeast
+MD     2      South     2     South
+MA     1  Northeast     1 Northeast
+MI     3    Midwest     3   Midwest
+MN     3    Midwest     3   Midwest
+MS     2      South     2     South
+MO     3    Midwest     3   Midwest
+MT     4       West     4      West
+NE     3    Midwest     3   Midwest
+NV     4       West     4      West
+NH     1  Northeast     1 Northeast
+NJ     1  Northeast     1 Northeast
+NM     4       West     4      West
+NY     1  Northeast     1 Northeast
+NC     2      South     2     South
+ND     3    Midwest     3   Midwest
+OH     3    Midwest     3   Midwest
+OK     2      South     2     South
+OR     4       West     4      West
+PA     1  Northeast     1 Northeast
+RI     1  Northeast     1 Northeast
+SC     2      South     2     South
+SD     3    Midwest     3   Midwest
+TN     2      South     2     South
+TX     2      South     2     South
+UT     4       West     4      West
+VT     1  Northeast     1 Northeast
+VA     2      South     2     South
+WA     4       West     4      West
+WV     2      South     2     South
+WI     3    Midwest     3   Midwest
+WY     4       West     4      West
+
+
+Name Table Modifications and Map Label Values
+   Xoffset Yoffset Scale Rotate MapL     MapX     MapY
+AL     0.0    0.00    NA     NA <NA>       NA       NA
+AK    36.5  -36.00   0.3      0   AK -1506891 -1307069
+AZ     0.0    0.00    NA     NA <NA>       NA       NA
+AR     0.0    0.00    NA     NA <NA>       NA       NA
+CA     0.0    0.00    NA     NA <NA>       NA       NA
+CO     0.0    0.00    NA     NA <NA>       NA       NA
+CT     0.0    0.00    NA     NA <NA>       NA       NA
+DE     0.0    0.00    NA     NA <NA>       NA       NA
+DC     3.8   -2.15   4.0      0   DC  2523689     -366
+FL     0.0    0.00    NA     NA <NA>       NA       NA
+GA     0.0    0.00    NA     NA <NA>       NA       NA
+HI    52.0    6.00   1.0      0   HI  -133360 -1482287
+ID     0.0    0.00    NA     NA <NA>       NA       NA
+IL     0.0    0.00    NA     NA <NA>       NA       NA
+IN     0.0    0.00    NA     NA <NA>       NA       NA
+IA     0.0    0.00    NA     NA <NA>       NA       NA
+KS     0.0    0.00    NA     NA <NA>       NA       NA
+KY     0.0    0.00    NA     NA <NA>       NA       NA
+LA     0.0    0.00    NA     NA <NA>       NA       NA
+ME     0.0    0.00    NA     NA <NA>       NA       NA
+MD     0.0    0.00    NA     NA <NA>       NA       NA
+MA     0.0    0.00    NA     NA <NA>       NA       NA
+MI     0.0    0.00    NA     NA <NA>       NA       NA
+MN     0.0    0.00    NA     NA <NA>       NA       NA
+MS     0.0    0.00    NA     NA <NA>       NA       NA
+MO     0.0    0.00    NA     NA <NA>       NA       NA
+MT     0.0    0.00    NA     NA <NA>       NA       NA
+NE     0.0    0.00    NA     NA <NA>       NA       NA
+NV     0.0    0.00    NA     NA <NA>       NA       NA
+NH     0.0    0.00    NA     NA <NA>       NA       NA
+NJ     0.0    0.00    NA     NA <NA>       NA       NA
+NM     0.0    0.00    NA     NA <NA>       NA       NA
+NY     0.0    0.00    NA     NA <NA>       NA       NA
+NC     0.0    0.00    NA     NA <NA>       NA       NA
+ND     0.0    0.00    NA     NA <NA>       NA       NA
+OH     0.0    0.00    NA     NA <NA>       NA       NA
+OK     0.0    0.00    NA     NA <NA>       NA       NA
+OR     0.0    0.00    NA     NA <NA>       NA       NA
+PA     0.0    0.00    NA     NA <NA>       NA       NA
+RI     0.0   -1.00   1.5      0 <NA>       NA       NA
+SC     0.0    0.00    NA     NA <NA>       NA       NA
+SD     0.0    0.00    NA     NA <NA>       NA       NA
+TN     0.0    0.00    NA     NA <NA>       NA       NA
+TX     0.0    0.00    NA     NA <NA>       NA       NA
+UT     0.0    0.00    NA     NA <NA>       NA       NA
+VT     0.0    0.00    NA     NA <NA>       NA       NA
+VA     0.0    0.00    NA     NA <NA>       NA       NA
+WA     0.0    0.00    NA     NA <NA>       NA       NA
+WV     0.0    0.00    NA     NA <NA>       NA       NA
+WI     0.0    0.00    NA     NA <NA>       NA       NA
+WY     0.0    0.00    NA     NA <NA>       NA       NA
+
+
+Any entries in the name table with location ids with a value 
+ of 'NA', '', or ' ' are considered empty and will not be ignored.
+

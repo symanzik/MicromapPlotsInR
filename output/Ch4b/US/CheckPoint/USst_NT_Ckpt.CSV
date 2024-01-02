@@ -1,52 +1,52 @@
-"Abbr","Name","ID","L2_ID","L2_ID_Name","regID","regName","Xoffset","Yoffset","Scale","Rotate","Alt_Abbr","Alias","Key","DoAdj","MapL","MapX","MapY"
-"AL","Alabama","01","2","South","2","South",NA,NA,NA,NA,"AL","Alabama","AL",FALSE,NA,NA,NA
-"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","Alaska","AK",TRUE,"AK",-2324845.5061373,-1126175.31537335
-"AZ","Arizona","04","4","West","4","West",NA,NA,NA,NA,"AZ","Arizona","AZ",FALSE,NA,NA,NA
-"AR","Arkansas","05","2","South","2","South",NA,NA,NA,NA,"AR","Arkansas","AR",FALSE,NA,NA,NA
-"CA","California","06","4","West","4","West",NA,NA,NA,NA,"CA","California","CA",FALSE,NA,NA,NA
-"CO","Colorado","08","4","West","4","West",NA,NA,NA,NA,"CO","Colorado","CO",FALSE,NA,NA,NA
-"CT","Connecticut","09","1","Northeast","1","Northeast",NA,NA,NA,NA,"CT","Connecticut","CT",FALSE,NA,NA,NA
-"DE","Delaware","10","2","South","2","South",NA,NA,NA,NA,"DE","Delaware","DE",FALSE,NA,NA,NA
-"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC","District of Columbia","DC",TRUE,"DC",1807029.26263931,-186318.504027669
-"FL","Florida","12","2","South","2","South",NA,NA,NA,NA,"FL","Florida","FL",FALSE,NA,NA,NA
-"GA","Georgia","13","2","South","2","South",NA,NA,NA,NA,"GA","Georgia","GA",FALSE,NA,NA,NA
-"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI","Hawaii","HI",TRUE,"HI",-972556.539272243,-1423583.28401923
-"ID","Idaho","16","4","West","4","West",NA,NA,NA,NA,"ID","Idaho","ID",FALSE,NA,NA,NA
-"IL","Illinois","17","3","Midwest","3","Midwest",NA,NA,NA,NA,"IL","Illinois","IL",FALSE,NA,NA,NA
-"IN","Indiana","18","3","Midwest","3","Midwest",NA,NA,NA,NA,"IN","Indiana","IN",FALSE,NA,NA,NA
-"IA","Iowa","19","3","Midwest","3","Midwest",NA,NA,NA,NA,"IA","Iowa","IA",FALSE,NA,NA,NA
-"KS","Kansas","20","3","Midwest","3","Midwest",NA,NA,NA,NA,"KS","Kansas","KS",FALSE,NA,NA,NA
-"KY","Kentucky","21","2","South","2","South",NA,NA,NA,NA,"KY","Kentucky","KY",FALSE,NA,NA,NA
-"LA","Louisiana","22","2","South","2","South",NA,NA,NA,NA,"LA","Louisiana","LA",FALSE,NA,NA,NA
-"ME","Maine","23","1","Northeast","1","Northeast",NA,NA,NA,NA,"ME","Maine","ME",FALSE,NA,NA,NA
-"MD","Maryland","24","2","South","2","South",NA,NA,NA,NA,"MD","Maryland","MD",FALSE,NA,NA,NA
-"MA","Massachusetts","25","1","Northeast","1","Northeast",NA,NA,NA,NA,"MA","Massachusetts","MA",FALSE,NA,NA,NA
-"MI","Michigan","26","3","Midwest","3","Midwest",NA,NA,NA,NA,"MI","Michigan","MI",FALSE,NA,NA,NA
-"MN","Minnesota","27","3","Midwest","3","Midwest",NA,NA,NA,NA,"MN","Minnesota","MN",FALSE,NA,NA,NA
-"MS","Mississippi","28","2","South","2","South",NA,NA,NA,NA,"MS","Mississippi","MS",FALSE,NA,NA,NA
-"MO","Missouri","29","3","Midwest","3","Midwest",NA,NA,NA,NA,"MO","Missouri","MO",FALSE,NA,NA,NA
-"MT","Montana","30","4","West","4","West",NA,NA,NA,NA,"MT","Montana","MT",FALSE,NA,NA,NA
-"NE","Nebraska","31","3","Midwest","3","Midwest",NA,NA,NA,NA,"NE","Nebraska","NE",FALSE,NA,NA,NA
-"NV","Nevada","32","4","West","4","West",NA,NA,NA,NA,"NV","Nevada","NV",FALSE,NA,NA,NA
-"NH","New Hampshire","33","1","Northeast","1","Northeast",NA,NA,NA,NA,"NH","New Hampshire","NH",FALSE,NA,NA,NA
-"NJ","New Jersey","34","1","Northeast","1","Northeast",NA,NA,NA,NA,"NJ","New Jersey","NJ",FALSE,NA,NA,NA
-"NM","New Mexico","35","4","West","4","West",NA,NA,NA,NA,"NM","New Mexico","NM",FALSE,NA,NA,NA
-"NY","New York","36","1","Northeast","1","Northeast",NA,NA,NA,NA,"NY","New York","NY",FALSE,NA,NA,NA
-"NC","North Carolina","37","2","South","2","South",NA,NA,NA,NA,"NC","North Carolina","NC",FALSE,NA,NA,NA
-"ND","North Dakota","38","3","Midwest","3","Midwest",NA,NA,NA,NA,"ND","North Dakota","ND",FALSE,NA,NA,NA
-"OH","Ohio","39","3","Midwest","3","Midwest",NA,NA,NA,NA,"OH","Ohio","OH",FALSE,NA,NA,NA
-"OK","Oklahoma","40","2","South","2","South",NA,NA,NA,NA,"OK","Oklahoma","OK",FALSE,NA,NA,NA
-"OR","Oregon","41","4","West","4","West",NA,NA,NA,NA,"OR","Oregon","OR",FALSE,NA,NA,NA
-"PA","Pennsylvania","42","1","Northeast","1","Northeast",NA,NA,NA,NA,"PA","Pennsylvania","PA",FALSE,NA,NA,NA
-"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,"RI","Rhode Island","RI",TRUE,NA,NA,NA
-"SC","South Carolina","45","2","South","2","South",NA,NA,NA,NA,"SC","South Carolina","SC",FALSE,NA,NA,NA
-"SD","South Dakota","46","3","Midwest","3","Midwest",NA,NA,NA,NA,"SD","South Dakota","SD",FALSE,NA,NA,NA
-"TN","Tennessee","47","2","South","2","South",NA,NA,NA,NA,"TN","Tennessee","TN",FALSE,NA,NA,NA
-"TX","Texas","48","2","South","2","South",NA,NA,NA,NA,"TX","Texas","TX",FALSE,NA,NA,NA
-"UT","Utah","49","4","West","4","West",NA,NA,NA,NA,"UT","Utah","UT",FALSE,NA,NA,NA
-"VT","Vermont","50","1","Northeast","1","Northeast",NA,NA,NA,NA,"VT","Vermont","VT",FALSE,NA,NA,NA
-"VA","Virginia","51","2","South","2","South",NA,NA,NA,NA,"VA","Virginia","VA",FALSE,NA,NA,NA
-"WA","Washington","53","4","West","4","West",NA,NA,NA,NA,"WA","Washington","WA",FALSE,NA,NA,NA
-"WV","West Virginia","54","2","South","2","South",NA,NA,NA,NA,"WV","West Virginia","WV",FALSE,NA,NA,NA
-"WI","Wisconsin","55","3","Midwest","3","Midwest",NA,NA,NA,NA,"WI","Wisconsin","WI",FALSE,NA,NA,NA
-"WY","Wyoming","56","4","West","4","West",NA,NA,NA,NA,"WY","Wyoming","WY",FALSE,NA,NA,NA
+"Abbr","Name","ID","L2_ID","L2_ID_Name","regID","regName","Xoffset","Yoffset","Scale","Rotate","Alt_Abbr","Alias","Key","DoAdj","MapL","MapX","MapY","CCode"
+"AL","Alabama","01","2","South","2","South",0,0,NA,NA,"AL","Alabama","AL",FALSE,NA,NA,NA,3
+"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","Alaska","AK",TRUE,"AK",-1506890.58253969,-1307068.52116117,1
+"AZ","Arizona","04","4","West","4","West",0,0,NA,NA,"AZ","Arizona","AZ",FALSE,NA,NA,NA,3
+"AR","Arkansas","05","2","South","2","South",0,0,NA,NA,"AR","Arkansas","AR",FALSE,NA,NA,NA,3
+"CA","California","06","4","West","4","West",0,0,NA,NA,"CA","California","CA",FALSE,NA,NA,NA,1
+"CO","Colorado","08","4","West","4","West",0,0,NA,NA,"CO","Colorado","CO",FALSE,NA,NA,NA,1
+"CT","Connecticut","09","1","Northeast","1","Northeast",0,0,NA,NA,"CT","Connecticut","CT",FALSE,NA,NA,NA,3
+"DE","Delaware","10","2","South","2","South",0,0,NA,NA,"DE","Delaware","DE",FALSE,NA,NA,NA,1
+"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC","District of Columbia","DC",TRUE,"DC",2523689.17191139,-365.998536611725,1
+"FL","Florida","12","2","South","2","South",0,0,NA,NA,"FL","Florida","FL",FALSE,NA,NA,NA,2
+"GA","Georgia","13","2","South","2","South",0,0,NA,NA,"GA","Georgia","GA",FALSE,NA,NA,NA,1
+"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI","Hawaii","HI",TRUE,"HI",-133359.598519787,-1482287.2272882,2
+"ID","Idaho","16","4","West","4","West",0,0,NA,NA,"ID","Idaho","ID",FALSE,NA,NA,NA,1
+"IL","Illinois","17","3","Midwest","3","Midwest",0,0,NA,NA,"IL","Illinois","IL",FALSE,NA,NA,NA,2
+"IN","Indiana","18","3","Midwest","3","Midwest",0,0,NA,NA,"IN","Indiana","IN",FALSE,NA,NA,NA,4
+"IA","Iowa","19","3","Midwest","3","Midwest",0,0,NA,NA,"IA","Iowa","IA",FALSE,NA,NA,NA,3
+"KS","Kansas","20","3","Midwest","3","Midwest",0,0,NA,NA,"KS","Kansas","KS",FALSE,NA,NA,NA,3
+"KY","Kentucky","21","2","South","2","South",0,0,NA,NA,"KY","Kentucky","KY",FALSE,NA,NA,NA,3
+"LA","Louisiana","22","2","South","2","South",0,0,NA,NA,"LA","Louisiana","LA",FALSE,NA,NA,NA,2
+"ME","Maine","23","1","Northeast","1","Northeast",0,0,NA,NA,"ME","Maine","ME",FALSE,NA,NA,NA,2
+"MD","Maryland","24","2","South","2","South",0,0,NA,NA,"MD","Maryland","MD",FALSE,NA,NA,NA,4
+"MA","Massachusetts","25","1","Northeast","1","Northeast",0,0,NA,NA,"MA","Massachusetts","MA",FALSE,NA,NA,NA,2
+"MI","Michigan","26","3","Midwest","3","Midwest",0,0,NA,NA,"MI","Michigan","MI",FALSE,NA,NA,NA,2
+"MN","Minnesota","27","3","Midwest","3","Midwest",0,0,NA,NA,"MN","Minnesota","MN",FALSE,NA,NA,NA,2
+"MS","Mississippi","28","2","South","2","South",0,0,NA,NA,"MS","Mississippi","MS",FALSE,NA,NA,NA,1
+"MO","Missouri","29","3","Midwest","3","Midwest",0,0,NA,NA,"MO","Missouri","MO",FALSE,NA,NA,NA,1
+"MT","Montana","30","4","West","4","West",0,0,NA,NA,"MT","Montana","MT",FALSE,NA,NA,NA,2
+"NE","Nebraska","31","3","Midwest","3","Midwest",0,0,NA,NA,"NE","Nebraska","NE",FALSE,NA,NA,NA,2
+"NV","Nevada","32","4","West","4","West",0,0,NA,NA,"NV","Nevada","NV",FALSE,NA,NA,NA,4
+"NH","New Hampshire","33","1","Northeast","1","Northeast",0,0,NA,NA,"NH","New Hampshire","NH",FALSE,NA,NA,NA,1
+"NJ","New Jersey","34","1","Northeast","1","Northeast",0,0,NA,NA,"NJ","New Jersey","NJ",FALSE,NA,NA,NA,2
+"NM","New Mexico","35","4","West","4","West",0,0,NA,NA,"NM","New Mexico","NM",FALSE,NA,NA,NA,4
+"NY","New York","36","1","Northeast","1","Northeast",0,0,NA,NA,"NY","New York","NY",FALSE,NA,NA,NA,1
+"NC","North Carolina","37","2","South","2","South",0,0,NA,NA,"NC","North Carolina","NC",FALSE,NA,NA,NA,3
+"ND","North Dakota","38","3","Midwest","3","Midwest",0,0,NA,NA,"ND","North Dakota","ND",FALSE,NA,NA,NA,3
+"OH","Ohio","39","3","Midwest","3","Midwest",0,0,NA,NA,"OH","Ohio","OH",FALSE,NA,NA,NA,1
+"OK","Oklahoma","40","2","South","2","South",0,0,NA,NA,"OK","Oklahoma","OK",FALSE,NA,NA,NA,2
+"OR","Oregon","41","4","West","4","West",0,0,NA,NA,"OR","Oregon","OR",FALSE,NA,NA,NA,2
+"PA","Pennsylvania","42","1","Northeast","1","Northeast",0,0,NA,NA,"PA","Pennsylvania","PA",FALSE,NA,NA,NA,3
+"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,"RI","Rhode Island","RI",TRUE,NA,NA,NA,2
+"SC","South Carolina","45","2","South","2","South",0,0,NA,NA,"SC","South Carolina","SC",FALSE,NA,NA,NA,2
+"SD","South Dakota","46","3","Midwest","3","Midwest",0,0,NA,NA,"SD","South Dakota","SD",FALSE,NA,NA,NA,1
+"TN","Tennessee","47","2","South","2","South",0,0,NA,NA,"TN","Tennessee","TN",FALSE,NA,NA,NA,2
+"TX","Texas","48","2","South","2","South",0,0,NA,NA,"TX","Texas","TX",FALSE,NA,NA,NA,1
+"UT","Utah","49","4","West","4","West",0,0,NA,NA,"UT","Utah","UT",FALSE,NA,NA,NA,2
+"VT","Vermont","50","1","Northeast","1","Northeast",0,0,NA,NA,"VT","Vermont","VT",FALSE,NA,NA,NA,3
+"VA","Virginia","51","2","South","2","South",0,0,NA,NA,"VA","Virginia","VA",FALSE,NA,NA,NA,1
+"WA","Washington","53","4","West","4","West",0,0,NA,NA,"WA","Washington","WA",FALSE,NA,NA,NA,3
+"WV","West Virginia","54","2","South","2","South",0,0,NA,NA,"WV","West Virginia","WV",FALSE,NA,NA,NA,2
+"WI","Wisconsin","55","3","Midwest","3","Midwest",0,0,NA,NA,"WI","Wisconsin","WI",FALSE,NA,NA,NA,1
+"WY","Wyoming","56","4","West","4","West",0,0,NA,NA,"WY","Wyoming","WY",FALSE,NA,NA,NA,3
