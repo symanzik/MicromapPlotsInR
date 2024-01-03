@@ -640,11 +640,11 @@ Clearly this tests the limits of map visibility, but it does work, although the 
 
 When the data are unstable due to small numbers, aggregation over some dimension of the data can help. The original Kentucky cancer data were already aggregated over time (5 years) so perhaps we can aggregate over space. Geographic aggregation will also help by reducing the number of areas to display on the micromap. Many political entities have defined aggregations of smaller areas that are preferred for reports of their data by geographic area. 
 
-Kentucky defined Area Development Districts (ADDs) [@KLRC1972;@KCADDnd] \index{Kentucky Area Development Districts} 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
+Kentucky defined Area Development Districts (ADDs) [@KLRC1972;@NKADD2024] \index{Kentucky Area Development Districts} 50 years ago to link federal and state resources to the needs of local Kentucky communities. These 15 districts foster collaboration across local governments in the state, aid in regional planning and resource sharing and now are used as the geographic units of choice in many governmental reports [@HPZAGFT2018]. We will use Kentucky ADDs to illustrate how one can create aggregated geographic boundaries which then can be used in **micromapST**.
 
 To build a border group of the ADDs, the first step is to aggregate the county polygons of the state into ADD polygons outside of the **micromapST** package. Then this new shapefile (or SpatialPolygons), along with a Name Table, can be converted into a border group for use by the package.  
 
-The state of Kentucky's website provides the ADD name for each county [@KCADDnd]. The U.S. 2000 Census Bureau County boundary data for Kentucky provides the boundaries and the shapefile provides the county ID (“COUNTY”) and name (“NAME”).
+The state of Kentucky's website provides the ADD name for each county [@NKADD2024]. The U.S. 2000 Census Bureau County boundary data for Kentucky provides the boundaries and the shapefile provides the county ID (“COUNTY”) and name (“NAME”).
 
 The code below is one example of how one can create a SpatialPolygonsDataFrame for the Kentucky ADDs.
 
