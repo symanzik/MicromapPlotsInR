@@ -1,16 +1,16 @@
 "Abbr","Name","ID","L2_ID","L2_ID_Name","regID","regName","Xoffset","Yoffset","Scale","Rotate","Alt_Abbr","Alias","Key","DoAdj","MapL","MapX","MapY","CCode"
 "AL","Alabama","01","2","South","2","South",0,0,NA,NA,"AL","Alabama","AL",FALSE,NA,NA,NA,3
-"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","Alaska","AK",TRUE,"AK",-1506890.58253969,-1307068.52116117,1
+"AK","Alaska","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","Alaska","AK",TRUE,"AK",-1500088.38403907,-1309076.01282187,1
 "AZ","Arizona","04","4","West","4","West",0,0,NA,NA,"AZ","Arizona","AZ",FALSE,NA,NA,NA,3
 "AR","Arkansas","05","2","South","2","South",0,0,NA,NA,"AR","Arkansas","AR",FALSE,NA,NA,NA,3
 "CA","California","06","4","West","4","West",0,0,NA,NA,"CA","California","CA",FALSE,NA,NA,NA,1
 "CO","Colorado","08","4","West","4","West",0,0,NA,NA,"CO","Colorado","CO",FALSE,NA,NA,NA,1
 "CT","Connecticut","09","1","Northeast","1","Northeast",0,0,NA,NA,"CT","Connecticut","CT",FALSE,NA,NA,NA,3
 "DE","Delaware","10","2","South","2","South",0,0,NA,NA,"DE","Delaware","DE",FALSE,NA,NA,NA,1
-"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC","District of Columbia","DC",TRUE,"DC",2523689.17191139,-365.998536611725,1
+"DC","District of Columbia","11","2","South","2","South",3.8,-2.15,4,0,"DC","District of Columbia","DC",TRUE,"DC",2530575.16170391,726.526251599589,1
 "FL","Florida","12","2","South","2","South",0,0,NA,NA,"FL","Florida","FL",FALSE,NA,NA,NA,2
 "GA","Georgia","13","2","South","2","South",0,0,NA,NA,"GA","Georgia","GA",FALSE,NA,NA,NA,1
-"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI","Hawaii","HI",TRUE,"HI",-133359.598519787,-1482287.2272882,2
+"HI","Hawaii","15","0","Offshore","0","Offshore",52,6,1,0,"HI","Hawaii","HI",TRUE,"HI",-126032.79134396,-1483299.32236866,2
 "ID","Idaho","16","4","West","4","West",0,0,NA,NA,"ID","Idaho","ID",FALSE,NA,NA,NA,1
 "IL","Illinois","17","3","Midwest","3","Midwest",0,0,NA,NA,"IL","Illinois","IL",FALSE,NA,NA,NA,2
 "IN","Indiana","18","3","Midwest","3","Midwest",0,0,NA,NA,"IN","Indiana","IN",FALSE,NA,NA,NA,4
@@ -38,7 +38,7 @@
 "OK","Oklahoma","40","2","South","2","South",0,0,NA,NA,"OK","Oklahoma","OK",FALSE,NA,NA,NA,2
 "OR","Oregon","41","4","West","4","West",0,0,NA,NA,"OR","Oregon","OR",FALSE,NA,NA,NA,2
 "PA","Pennsylvania","42","1","Northeast","1","Northeast",0,0,NA,NA,"PA","Pennsylvania","PA",FALSE,NA,NA,NA,3
-"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,"RI","Rhode Island","RI",TRUE,NA,NA,NA,2
+"RI","Rhode Island","44","1","Northeast","1","Northeast",0,-1,1.5,0,"RI","Rhode Island","RI",TRUE,NA,NA,NA,1
 "SC","South Carolina","45","2","South","2","South",0,0,NA,NA,"SC","South Carolina","SC",FALSE,NA,NA,NA,2
 "SD","South Dakota","46","3","Midwest","3","Midwest",0,0,NA,NA,"SD","South Dakota","SD",FALSE,NA,NA,NA,1
 "TN","Tennessee","47","2","South","2","South",0,0,NA,NA,"TN","Tennessee","TN",FALSE,NA,NA,NA,2
