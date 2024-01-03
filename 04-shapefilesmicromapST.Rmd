@@ -69,15 +69,14 @@ The original Census boundaries for U.S. states illustrate challenges to clear ma
 
 
 ```{r Ch4b-USmapRAW, fig.cap = 'U.S. state boundaries plotted with latitude/longitude coordinates as provided by the U.S. Census Bureau [@USCensus2021Shape].', fig.width = 8, fig.height = 2}
-
 library(sf)
 
-shp_dir  <- "data/Ch4b"
+shp_dir <- "data/Ch4b"
 shp_file <- "st99_d00" # Census 2000 US state boundary shapefile
-US_shp   <- sf::st_read(shp_dir, shp_file)
+US_shp <- sf::st_read(shp_dir, shp_file)
 
 par(mar = c(0, 0, 0, 0)) # put full extent of map in figure, no margins
-plot(st_geometry(US_shp),axes = TRUE)
+plot(st_geometry(US_shp), axes = TRUE)
 box(which = "figure") # draw a box around the entire figure
 ```
 
@@ -201,12 +200,13 @@ knitr::kable(
 library(kableExtra)
 
 landscape(
-  knitr::kable(head(
-    US_name_table[, c(1:3, 6:14)],
-    n = 15L
-  ),
-  booktabs = TRUE,
-  caption = "Final Name Table for the first 15 U.S. states."
+  knitr::kable(
+    head(
+      US_name_table[, c(1:3, 6:14)],
+      n = 15L
+    ),
+    booktabs = TRUE,
+    caption = "Final Name Table for the first 15 U.S. states."
   )
 ) %>%
   kable_styling(
@@ -286,7 +286,7 @@ library(micromapST)
 
 shape_file_dir_US <- "data/Ch4b"
 name_table_dir_US <- "data/Ch4b"
-output_dir_US     <- "output/Ch4b/US"
+output_dir_US <- "output/Ch4b/US"
 
 BuildBorderGroup(
   ShapeFile = "st99_d00", # Base filename of shapefile without sf extension
@@ -356,13 +356,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.1, # reduce vertices to 0.1% of original number
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt1.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt1.png"))
 ```
 
 ```{r Ch4b-BuildBorderGroupUS-smooth2, echo = FALSE, results = 'hide'}
@@ -378,13 +378,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.2, # reduce vertices to 0.2% of original number
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt2.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt2.png"))
 ```
 
 ```{r Ch4b-BuildBorderGroupUS-smooth3, echo = FALSE, results = 'hide'}
@@ -400,13 +400,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 0.5, # reduce vertices to 0.5% of original number
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt5.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt5.png"))
 ```
 
 ```{r Ch4b-BuildBorderGroupUS-smooth4, echo = FALSE, results = 'hide'}
@@ -422,13 +422,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 1, # reduce vertices to 1% of original number
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders1.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders1.png"))
 ```
 
 ```{r Ch4b-BuildBorderGroupUS-smooth5, echo = FALSE, results = 'hide'}
@@ -444,13 +444,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 2.5, # reduce vertices to 2.5% of original number
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders2pt5.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders2pt5.png"))
 ```
 
 ```{r Ch4b-BuildBorderGroupUS-smooth6, echo = FALSE, results = 'hide'}
@@ -466,13 +466,13 @@ BuildBorderGroup(
   BorderGroupName = "USstBG", # Name of the Border Group (BordGrp)
   BorderGroupDir = output_dir_US, # Output directory for resulting files
   MapHdr = c("", "States"),
-  MapMinH = 0.7,  # Minimum Height for micromap drawing (inches)
-  MapMaxH = 2,     # Maximum Height for micromap drawing (inches)
-  IDHdr  = "States",  # 1 of 2 header lines for ID Glyph column (Max 12 chars)
+  MapMinH = 0.7, # Minimum Height for micromap drawing (inches)
+  MapMaxH = 2, # Maximum Height for micromap drawing (inches)
+  IDHdr = "States", # 1 of 2 header lines for ID Glyph column (Max 12 chars)
   ReducePC = 100, # NO REDUCTION
-  debug = 1152  # generates final map as PNG
+  debug = 1152 # generates final map as PNG
 )
-file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),paste0(output_dir_US, "/USst_FP_Final_areaVisBorders100.png"))
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders100.png"))
 ```
 
 
@@ -543,9 +543,9 @@ output_dir_KY <- "output/Ch4b/KY"
 
 #  Read in Kentucky 2000 census county boundaries shapefile.
 KY_shp_file <- "co21_d00" # Census 2000 files Kentucky counties.
-KY_sf       <- st_read(shape_file_dir_KY, KY_shp_file)
-KY_sf_data  <- st_drop_geometry(KY_sf)
-sf::st_crs(KY_sf)<-st_crs("+proj=lonlat")
+KY_sf <- st_read(shape_file_dir_KY, KY_shp_file)
+KY_sf_data <- st_drop_geometry(KY_sf)
+sf::st_crs(KY_sf) <- st_crs("+proj=lonlat")
 
 #  shapefile has "NAME" field in data.frame that can be used to match
 #  "Name" in the Name Table
@@ -662,19 +662,21 @@ The first step is to aggregate boundaries for counties into the larger ADDs base
 ```{r Ch4b-CreateKYSpatialPolygonsDataFrame}
 shape_file_dir_KYADD <- "data/Ch4b" # Base Directory
 name_table_dir_KYADD <- "data/Ch4b"
-output_dir_KYADD     <- "output/Ch4b/KYADD"
+output_dir_KYADD <- "output/Ch4b/KYADD"
 
 # Match on county name, then merge polygons based on ADD
-Merge_inx    <- match(KY_sf$NAME, CoToADD$Name)
-Merge_list   <- CoToADD$ADD[Merge_inx]     #   Convert county list into ADD list for merge
+Merge_inx <- match(KY_sf$NAME, CoToADD$Name)
+Merge_list <- CoToADD$ADD[Merge_inx] #   Convert county list into ADD list for merge
 
 # define aggregate function for merge
-aggFun <- function(z) { ifelse ( methods::is(z,"character") , z[1] , sum(z)) }
+aggFun <- function(z) {
+  ifelse(methods::is(z, "character"), z[1], sum(z))
+}
 
-KY_ADD_sf    <- aggregate(KY_sf,by=list(Merge_list),FUN=aggFun)
-names(KY_ADD_sf)[1] <- "addName"             # rename first column - modified by aggregate function
-row.names(KY_ADD_sf) <- KY_ADD_sf$addName    # use ADD names for row.names of of each geometry (area)
-KY_ADD_sf2 <- st_cast(KY_ADD_sf,"MULTIPOLYGON") # make geometries uniform
+KY_ADD_sf <- aggregate(KY_sf, by = list(Merge_list), FUN = aggFun)
+names(KY_ADD_sf)[1] <- "addName" # rename first column - modified by aggregate function
+row.names(KY_ADD_sf) <- KY_ADD_sf$addName # use ADD names for row.names of of each geometry (area)
+KY_ADD_sf2 <- st_cast(KY_ADD_sf, "MULTIPOLYGON") # make geometries uniform
 
 # save sf data.frame as shapefile
 sf::st_write(
@@ -682,7 +684,7 @@ sf::st_write(
   dsn = output_dir_KYADD,
   layer = "KYADD",
   driver = "ESRI Shapefile",
-  delete_layer = TRUE                        # delete old file
+  delete_layer = TRUE # delete old file
 )
 ```
 
