@@ -281,7 +281,7 @@ The plot space calculated for each micromap depends on the number of perceptual 
 
 Now let's apply these steps to the original U.S. state boundaries and compare the results to the default U.S. state map in **micromapST**. The output from the `BuildBorderGroup` function extends over several pages and is not shown here.
 
-```{r Ch4b-BuildBorderGroupUS, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS, results = 'hide', fig.show = 'hide'}
 library(micromapST)
 
 shape_file_dir_US <- "data/Ch4b"
@@ -343,7 +343,7 @@ The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapR
 
 Some readers may prefer a less smoothed map or may need guidance as to the degree of smoothing needed for their own shapefile. To this end, we repeated the `BuildBorderGroup` call with various levels of smoothing. The function call is exactly as shown above except that only the final map image is saved (`debug = 1152`) and `ReducePC` was changed to specify smoothing levels from none (`ReducePC = 100`) to 99.9% reduction (`ReducePC = 0.1`). 
 
-```{r Ch4b-BuildBorderGroupUS-smooth1, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth1, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
@@ -365,7 +365,7 @@ BuildBorderGroup(
 file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt1.png"))
 ```
 
-```{r Ch4b-BuildBorderGroupUS-smooth2, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth2, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
@@ -387,7 +387,7 @@ BuildBorderGroup(
 file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt2.png"))
 ```
 
-```{r Ch4b-BuildBorderGroupUS-smooth3, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth3, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
@@ -409,7 +409,7 @@ BuildBorderGroup(
 file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders0pt5.png"))
 ```
 
-```{r Ch4b-BuildBorderGroupUS-smooth4, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth4, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
@@ -431,7 +431,7 @@ BuildBorderGroup(
 file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders1.png"))
 ```
 
-```{r Ch4b-BuildBorderGroupUS-smooth5, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth5, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
@@ -453,7 +453,7 @@ BuildBorderGroup(
 file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders2pt5.png"))
 ```
 
-```{r Ch4b-BuildBorderGroupUS-smooth6, echo = FALSE, results = 'hide'}
+```{r Ch4b-BuildBorderGroupUS-smooth6, echo = FALSE, results = 'hide', fig.show = 'hide'}
 # generate maps with various levels of smoothing
 
 BuildBorderGroup(
