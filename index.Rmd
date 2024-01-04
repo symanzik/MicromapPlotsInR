@@ -61,8 +61,8 @@ lapply(c('xfun'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 
-# hide messages and warnings from all code chunks
-knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+# hide messages and warnings from all code chunks and cache results and figures
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = TRUE)
 ```
 
 

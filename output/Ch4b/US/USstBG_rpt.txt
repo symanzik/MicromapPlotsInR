@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     USstBG   2024-01-03 17:34:51 
+     USstBG   2024-01-03 18:43:54 
 
 
    ab                 full id alt_ab                alias
@@ -117,58 +117,58 @@ WY     4       West     4      West
 
 
 Name Table Modifications and Map Label Values
-   Xoffset Yoffset Scale Rotate MapL       MapX          MapY
-AL     0.0    0.00    NA     NA <NA>         NA            NA
-AK    36.5  -36.00   0.3      0   AK -1500088.4 -1309076.0128
-AZ     0.0    0.00    NA     NA <NA>         NA            NA
-AR     0.0    0.00    NA     NA <NA>         NA            NA
-CA     0.0    0.00    NA     NA <NA>         NA            NA
-CO     0.0    0.00    NA     NA <NA>         NA            NA
-CT     0.0    0.00    NA     NA <NA>         NA            NA
-DE     0.0    0.00    NA     NA <NA>         NA            NA
-DC     3.8   -2.15   4.0      0   DC  2530575.2      726.5263
-FL     0.0    0.00    NA     NA <NA>         NA            NA
-GA     0.0    0.00    NA     NA <NA>         NA            NA
-HI    52.0    6.00   1.0      0   HI  -126032.8 -1483299.3224
-ID     0.0    0.00    NA     NA <NA>         NA            NA
-IL     0.0    0.00    NA     NA <NA>         NA            NA
-IN     0.0    0.00    NA     NA <NA>         NA            NA
-IA     0.0    0.00    NA     NA <NA>         NA            NA
-KS     0.0    0.00    NA     NA <NA>         NA            NA
-KY     0.0    0.00    NA     NA <NA>         NA            NA
-LA     0.0    0.00    NA     NA <NA>         NA            NA
-ME     0.0    0.00    NA     NA <NA>         NA            NA
-MD     0.0    0.00    NA     NA <NA>         NA            NA
-MA     0.0    0.00    NA     NA <NA>         NA            NA
-MI     0.0    0.00    NA     NA <NA>         NA            NA
-MN     0.0    0.00    NA     NA <NA>         NA            NA
-MS     0.0    0.00    NA     NA <NA>         NA            NA
-MO     0.0    0.00    NA     NA <NA>         NA            NA
-MT     0.0    0.00    NA     NA <NA>         NA            NA
-NE     0.0    0.00    NA     NA <NA>         NA            NA
-NV     0.0    0.00    NA     NA <NA>         NA            NA
-NH     0.0    0.00    NA     NA <NA>         NA            NA
-NJ     0.0    0.00    NA     NA <NA>         NA            NA
-NM     0.0    0.00    NA     NA <NA>         NA            NA
-NY     0.0    0.00    NA     NA <NA>         NA            NA
-NC     0.0    0.00    NA     NA <NA>         NA            NA
-ND     0.0    0.00    NA     NA <NA>         NA            NA
-OH     0.0    0.00    NA     NA <NA>         NA            NA
-OK     0.0    0.00    NA     NA <NA>         NA            NA
-OR     0.0    0.00    NA     NA <NA>         NA            NA
-PA     0.0    0.00    NA     NA <NA>         NA            NA
-RI     0.0   -1.00   1.5      0 <NA>         NA            NA
-SC     0.0    0.00    NA     NA <NA>         NA            NA
-SD     0.0    0.00    NA     NA <NA>         NA            NA
-TN     0.0    0.00    NA     NA <NA>         NA            NA
-TX     0.0    0.00    NA     NA <NA>         NA            NA
-UT     0.0    0.00    NA     NA <NA>         NA            NA
-VT     0.0    0.00    NA     NA <NA>         NA            NA
-VA     0.0    0.00    NA     NA <NA>         NA            NA
-WA     0.0    0.00    NA     NA <NA>         NA            NA
-WV     0.0    0.00    NA     NA <NA>         NA            NA
-WI     0.0    0.00    NA     NA <NA>         NA            NA
-WY     0.0    0.00    NA     NA <NA>         NA            NA
+   Xoffset Yoffset Scale Rotate MapL     MapX     MapY
+AL     0.0    0.00    NA     NA <NA>       NA       NA
+AK    36.5  -36.00   0.3      0   AK -1506891 -1307069
+AZ     0.0    0.00    NA     NA <NA>       NA       NA
+AR     0.0    0.00    NA     NA <NA>       NA       NA
+CA     0.0    0.00    NA     NA <NA>       NA       NA
+CO     0.0    0.00    NA     NA <NA>       NA       NA
+CT     0.0    0.00    NA     NA <NA>       NA       NA
+DE     0.0    0.00    NA     NA <NA>       NA       NA
+DC     3.8   -2.15   4.0      0   DC  2523689     -366
+FL     0.0    0.00    NA     NA <NA>       NA       NA
+GA     0.0    0.00    NA     NA <NA>       NA       NA
+HI    52.0    6.00   1.0      0   HI  -133360 -1482287
+ID     0.0    0.00    NA     NA <NA>       NA       NA
+IL     0.0    0.00    NA     NA <NA>       NA       NA
+IN     0.0    0.00    NA     NA <NA>       NA       NA
+IA     0.0    0.00    NA     NA <NA>       NA       NA
+KS     0.0    0.00    NA     NA <NA>       NA       NA
+KY     0.0    0.00    NA     NA <NA>       NA       NA
+LA     0.0    0.00    NA     NA <NA>       NA       NA
+ME     0.0    0.00    NA     NA <NA>       NA       NA
+MD     0.0    0.00    NA     NA <NA>       NA       NA
+MA     0.0    0.00    NA     NA <NA>       NA       NA
+MI     0.0    0.00    NA     NA <NA>       NA       NA
+MN     0.0    0.00    NA     NA <NA>       NA       NA
+MS     0.0    0.00    NA     NA <NA>       NA       NA
+MO     0.0    0.00    NA     NA <NA>       NA       NA
+MT     0.0    0.00    NA     NA <NA>       NA       NA
+NE     0.0    0.00    NA     NA <NA>       NA       NA
+NV     0.0    0.00    NA     NA <NA>       NA       NA
+NH     0.0    0.00    NA     NA <NA>       NA       NA
+NJ     0.0    0.00    NA     NA <NA>       NA       NA
+NM     0.0    0.00    NA     NA <NA>       NA       NA
+NY     0.0    0.00    NA     NA <NA>       NA       NA
+NC     0.0    0.00    NA     NA <NA>       NA       NA
+ND     0.0    0.00    NA     NA <NA>       NA       NA
+OH     0.0    0.00    NA     NA <NA>       NA       NA
+OK     0.0    0.00    NA     NA <NA>       NA       NA
+OR     0.0    0.00    NA     NA <NA>       NA       NA
+PA     0.0    0.00    NA     NA <NA>       NA       NA
+RI     0.0   -1.00   1.5      0 <NA>       NA       NA
+SC     0.0    0.00    NA     NA <NA>       NA       NA
+SD     0.0    0.00    NA     NA <NA>       NA       NA
+TN     0.0    0.00    NA     NA <NA>       NA       NA
+TX     0.0    0.00    NA     NA <NA>       NA       NA
+UT     0.0    0.00    NA     NA <NA>       NA       NA
+VT     0.0    0.00    NA     NA <NA>       NA       NA
+VA     0.0    0.00    NA     NA <NA>       NA       NA
+WA     0.0    0.00    NA     NA <NA>       NA       NA
+WV     0.0    0.00    NA     NA <NA>       NA       NA
+WI     0.0    0.00    NA     NA <NA>       NA       NA
+WY     0.0    0.00    NA     NA <NA>       NA       NA
 
 
 Any entries in the name table with location ids with a value 
