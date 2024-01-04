@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     KYADD2BG   2024-01-03 18:44:58 
+     KYADD2BG   2024-01-04 10:53:55 
 
 
                 full ab   id    alias alt_ab
