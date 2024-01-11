@@ -53,14 +53,14 @@ The experience of the developers when manually creating the border groups listed
 
 To illustrate the process of building a border group, we will use the U.S. Census Bureau’s state boundary files as defined in 2000 [@USCensus2021Shape].  The resulting map will be compared to the map based on the USStatesBG border group, the familiar caricature which is the default map in the package. Noting differences between these maps can inform the user's decision about the degree of smoothing that is enough so that all area colors are visible but not so much that areas are unrecognizable.
 
-Throughout this chapter, we will utilize the `BuildBorderGroup` function's option to write out the final plus three intermediate map images as the process proceeds. We will read and display these intermediate images so that the impact of each step on the final map image can be assessed. User options for choosing what images to save are specified by `debug = x` in the `BuildBorderGroup` call, where x =
+The `BuildBorderGroup` function includes user options to display intermediate map images as the smoothing process proceeds, to aid in debugging and troubleshooting the function and to illustrate the impact of each step of the process on the final map image. These options are specified by `debug = x` in the `BuildBorderGroup` call. `debug` is a 16-bit integer, where each bit requests a different option if set to 1; the default is for each bit to be set to 0. Thus multiple options can be requested by setting multiple bits to 1, then specifying the integer value represented by that particular sequence of bits. Bits 8-11 are most relevant to `BuildBorderGroup`; see documentation for further details. Setting one of these bits to 1 requests the following option:
 
--    0 for none (default),
--  512 saves all 4 map images in PDF format,
--  640 saves all 4 map images in PNG format,
-- 1024 saves only the final map image in PDF format,
-- 1152 saves only the final map image in PNG format.
+-   bit 8 (value 128) sets the output image file type to PNG, instead of the default PDF;
+-   bit 9 (value 256) generates multiple small images of the map, each with 5 areas shaded, to show what the final map images in the linked micromap would look like;
+-   bit 10 (value 512) generates an approximately 4" by 4" image of the map at key processing stages: the raw (input) map, after smoothing by `rmapshaper`'s simplify function, after change requests in the name table have been applied and the final map;
+-   bit 11 (value 1024) is similar to bit 10, but only generates the raw and final map images.
 
+For example, to illustrate multiple requests using the single integer, we can request saving the raw and final map images (bit 11, value = 1024) in PNG format (bit 8, value = 128) by using `debug = 1152` (1024 + 128 = 1152).
 
 ### Challenges {#Ch4b-NewBGs-Challenges}
 
@@ -306,7 +306,7 @@ BuildBorderGroup(
 )
 ```
 
-After some trial and error, we chose to reduce the polygon vertices to 0.1% of the original number. Including the `debug = 640` option within `BuildBorderGroup` generates intermediate map files in PNG format as the multiple steps of simplification are applied. These are shown in the next figure.
+After some trial and error, we chose to reduce the polygon vertices to 0.1% of the original number. Including the `debug = 640` option within `BuildBorderGroup` generates intermediate map files in PNG format as the multiple steps of simplification are applied. These are shown in the next figure, omitting the original raw image.
 
 ```{r Ch4b-USExample-BBG, fig.cap = 'U.S. states maps: Simplified (A), after moving and scaling (B), final (C) and   micromapST default map (D).', out.width = '100%', echo = FALSE}
 # Based on
