@@ -51,23 +51,40 @@ For convenience, Figure \@ref(fig:Ch8-micromap1) shows one linked micromap plot\
 
 # Original CCmaps function taken from the maptools R package (now retired and archived on CRAN)
 
-library(maptools)
-library(sp)
-library(foreign)
-library(grid)
 library(lattice)
-library(stats)
-library(utils)
-library(graphics)
-library(grDevices)
-library(methods)
-library(raster)
+# trellis.par.set(sp.theme()) # sets bpy.colors() ramp
+# demo(meuse, ask = FALSE, echo = FALSE)
+# l2 = list("SpatialPolygonsRescale", layout.north.arrow(), offset = c(181300,329800),
+# 	scale = 400)
+# l3 = list("SpatialPolygonsRescale", layout.scale.bar(), offset = c(180500,329800),
+# 	scale = 500, fill=c("transparent","black"))
+# l4 = list("sp.text", c(180500,329900), "0")
+# l5 = list("sp.text", c(181000,329900), "500 m")
+#
+# meuseplot <- spplot(meuse, c("ffreq"), sp.layout=list(l2,l3,l4,l5), col.regions= "black",
+# 	pch=c(1,2,3), key.space=list(x=0.1,y=.95,corner=c(0,1)))
+#
+# class(meuseplot)
+# lattice:::print.trellis(x = meuseplot)
+
+# library(maptools)
+library(sp)
+# library(foreign)
+# library(grid)
+# library(lattice)
+# library(stats)
+# library(utils)
+# library(graphics)
+# library(grDevices)
+# library(methods)
+# library(raster)
 library(sf)
 
 myCCmaps <- function(
     obj, zcol = NULL, cvar = NULL, cvar.names = NULL, ...,
     names.attr, scales = list(draw = FALSE), xlab = NULL, ylab = NULL,
-    aspect = mapasp(obj, xlim, ylim), sp.layout = NULL, xlim = bbox(obj)[1, ], ylim = bbox(obj)[2, ]) {
+    aspect = mapasp(obj, xlim, ylim), sp.layout = NULL,
+    xlim = sp::bbox(obj)[1, ], ylim = sp::bbox(obj)[2, ]) {
   stopifnot(is(obj, "SpatialPolygonsDataFrame"))
   stopifnot(!is.null(zcol), !is.null(cvar))
   n <- length(slot(obj, "polygons"))
@@ -103,10 +120,7 @@ myCCmaps <- function(
       ilcc <- do.call("rbind", lcc[[1]])
       for (j in 1:nlcc[1]) {
         vn <- paste(cvar.names[1], j, sep = "_")
-        io <- Outside(cvar[[1]], ilcc[j, 1], ilcc[
-          j,
-          2
-        ])
+        io <- Outside(cvar[[1]], ilcc[j, 1], ilcc[j, 2])
         obj[[vn]] <- obj[[zcol]]
         is.na(obj[[vn]]) <- io
       }
@@ -114,7 +128,7 @@ myCCmaps <- function(
     nms <- names(obj)
     nms <- nms[-(match(zcol, nms))]
     if (fcc[1]) {
-      print(spplot(obj,
+      lattice:::print.trellis(x = spplot(obj,
         zcol = nms, ..., scales = scales,
         xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
         xlim = xlim, ylim = ylim, strip = strip.custom(
@@ -124,7 +138,7 @@ myCCmaps <- function(
         )
       ))
     } else {
-      print(spplot(obj,
+      lattice:::print.trellis(x = spplot(obj,
         zcol = nms, ..., scales = scales,
         xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
         xlim = xlim, ylim = ylim, strip = strip.custom(
@@ -159,7 +173,7 @@ myCCmaps <- function(
       }
       lcc2 <- lcc[[2]]
       xlcc2 <- rep(lcc2, nlcc[1])
-      print(spplot(obj,
+      lattice:::print.trellis(x = spplot(obj,
         zcol = nms, ..., scales = scales,
         xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
         xlim = xlim, ylim = ylim, strip = strip.custom(
@@ -183,10 +197,7 @@ myCCmaps <- function(
             )
             obj[[vn]] <- obj[[zcol]]
             ioi <- as.character(cvar[[1]]) != lcc[[1]][i]
-            ioj <- Outside(cvar[[2]], jlcc[j, 1], jlcc[
-              j,
-              2
-            ])
+            ioj <- Outside(cvar[[2]], jlcc[j, 1], jlcc[j, 2])
             io <- ioi | ioj
             is.na(obj[[vn]]) <- io
           }
@@ -203,7 +214,7 @@ myCCmaps <- function(
           byrow = TRUE,
           ncol = 2
         )
-        print(spplot(obj,
+        lattice:::print.trellis(x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab, aspect = aspect,
           sp.layout = sp.layout, xlim = xlim, ylim = ylim,
@@ -227,10 +238,7 @@ myCCmaps <- function(
               sep = "_"
             )
             obj[[vn]] <- obj[[zcol]]
-            ioi <- Outside(cvar[[1]], ilcc[i, 1], ilcc[
-              i,
-              2
-            ])
+            ioi <- Outside(cvar[[1]], ilcc[i, 1], ilcc[i, 2])
             ioj <- as.character(cvar[[2]]) != lcc[[2]][j]
             io <- ioi | ioj
             is.na(obj[[vn]]) <- io
@@ -248,7 +256,7 @@ myCCmaps <- function(
         xlcc <- xlcc[-1, ]
         lcc2 <- lcc[[2]]
         xlcc2 <- rep(lcc2, nlcc[1])
-        print(spplot(obj,
+        lattice:::print.trellis(x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab, aspect = aspect,
           sp.layout = sp.layout, xlim = xlim, ylim = ylim,
@@ -268,19 +276,10 @@ myCCmaps <- function(
       jlcc <- do.call("rbind", lcc[[2]])
       for (i in 1:nlcc[1]) {
         for (j in 1:nlcc[2]) {
-          vn <- paste(cvar.names[1], i, cvar.names[2],
-            j,
-            sep = "_"
-          )
+          vn <- paste(cvar.names[1], i, cvar.names[2], j, sep = "_")
           obj[[vn]] <- obj[[zcol]]
-          ioi <- Outside(cvar[[1]], ilcc[i, 1], ilcc[
-            i,
-            2
-          ])
-          ioj <- Outside(cvar[[2]], jlcc[j, 1], jlcc[
-            j,
-            2
-          ])
+          ioi <- Outside(cvar[[1]], ilcc[i, 1], ilcc[i, 2])
+          ioj <- Outside(cvar[[2]], jlcc[j, 1], jlcc[j, 2])
           io <- ioi | ioj
           is.na(obj[[vn]]) <- io
         }
@@ -300,7 +299,7 @@ myCCmaps <- function(
         byrow = TRUE,
         ncol = 2
       )
-      print(spplot(obj,
+      lattice:::print.trellis(x = spplot(obj,
         zcol = nms, ..., scales = scales,
         xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
         xlim = xlim, ylim = ylim, strip = strip.custom(
@@ -349,7 +348,7 @@ nc.sids$ft.NWBIR74 <- sqrt(1000) * (sqrt(nc.sids$NWBIR74 / nc.sids$BIR74) +
 sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number = 3, overlap = 0)
 sh_bir <- equal.count(nc.sids$BIR79, number = 3, overlap = 0)
 
-CCmaps(
+myCCmaps(
   obj = nc.sids,
   zcol = "ft.SID74",
   cvar = list(
