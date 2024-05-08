@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     USstBG   2024-02-12 11:42:06 
+     USstBG   2024-05-08 18:21:43 
 
 
    ab                 full id alt_ab                alias
