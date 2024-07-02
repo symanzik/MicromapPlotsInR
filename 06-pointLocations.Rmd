@@ -71,7 +71,7 @@ distortion.
 We provide examples of both manual and semi-automated approaches to adjusting point locations. 
 
 1. Polygons need to be created around points. This step
-is necessary because the **micromap** package was designed to show polygons,
+is necessary because the **micromap**\index{R Packages!micromap} package was designed to show polygons,
 not points, on maps. Thus, each point becomes a small polygon 
 that is then visible in the resulting micromaps.
 Multiple R packages offer ways to create buffers (polygons) around points,
@@ -85,7 +85,7 @@ as well as polygon(s) that form the background of the map.
 
 1. As described in section \@ref(Ch2-Linking), the `micromap::mmplot()` function, which creates the figure, requires a specially formatted dataframe as input. 
 Therefore, the object created in the previous step (which may, for example, be 
-an object from the **sf**\index{R Packages!sf} package)
+an object from the **sf**\index{R Packages!sf} package [@Pebesma2018])
 needs to be converted into such a dataframe. 
 
 1. Create an initial simple micromap. To make troubleshooting easier, we recommend that you initially do not add all visualization elements (e.g., error bars, labels, multiple variables). 
@@ -148,7 +148,7 @@ plot(cities$long, cities$lat, xlab = "Longitude", ylab = 'Latitude')
 
 Our next task is to draw circles around the points. However, first the
 point location data needs to be properly formatted. We first convert the `cities` dataframe to a 
-simple features (`sf`) object from the **sf**\index{R Packages!sf} package .
+simple features (`sf`) object from the **sf**\index{R Packages!sf} package [@Pebesma2018].
 Usually metadata or other descriptions of the data will provide the coordinate
 reference systems ("crs"). In this example we happen to know that the crs is `EPSG:4326`
 and we can specify that using the `crs` argument. Correctly specifying the crs is  
@@ -221,7 +221,7 @@ with a basemap. Some data wrangling may be needed to acquire the necessary basem
 for more details on preparing shapefiles for use in micromaps).
 
 For this example were using a dataset of country polygons for the whole world.
-This dataset can be downloaded using the **rnaturalearth**\index{R Packages!rnaturalearth} package . 
+This dataset can be downloaded using the **rnaturalearth**\index{R Packages!rnaturalearth} package [@Massicotte2023]. 
 
 ```{r eval = FALSE}
 wrld <- rnaturalearth::ne_download(scale = 'small', type = "countries", 
@@ -341,7 +341,7 @@ class(seats1)
 names(seats1)
 ```
 
-Next we want to load a spatial dataset from the **tigris**\index{R Packages!tigris} package that contains
+Next we want to load a spatial dataset from the **tigris**\index{R Packages!tigris} package [@Walker2024] that contains
 polygons of counties
 in Utah, which we can use as a basemap.
 
@@ -672,7 +672,7 @@ mmplot(stat.data = st_drop_geometry(stadiums),
 
 In this chapter, we have outlined the essential steps to create linked micromap
 plots for point locations. The point location data requires some pre-processing 
-before the **micromap** R package can be used to create the figure. 
+before the **micromap**\index{R Packages!micromap} R package can be used to create the figure. 
 
 The process begins with obtaining coordinates and and data of interest for the 
 point locations. Next, geographic data for the underlying base map is obtained 
@@ -686,14 +686,14 @@ visualization is refined iteratively, adjusting the size and overlap of
 polygons, adding labels, and enhancing other visualization elements.
 
 To become proficient in creating linked micromaps for point locations we recommend you also
-read chapter @\ref(Ch2) for a better foundational understanding of the rationale behind 
-micromaps. Additionally, see chapter @\ref(Ch3) for a more
-thorough coverage of the **micromap** R package and its functionality. Note also
+read chapter \@ref(Ch2) for a better foundational understanding of the rationale behind 
+micromaps. Additionally, see chapter \@ref(Ch3) for a more
+thorough coverage of the **micromap**\index{R Packages!micromap} R package and its functionality. Note also
 that there are many potential applications for micromaps of point locations that we
-did not explore here, such as environmental data collected fixed sites (see chapter @\ref(Ch3) for
+did not explore here, such as environmental data collected fixed sites (see chapter \@ref(Ch11) for
 more on environmental data). Lastly, the types of micromaps we present in this
 chapter could also be presented in different and creative ways such as via web applications 
-(see @\ref(Ch7)). 
+(see chapter \@ref(Ch7)).
 
 
 
