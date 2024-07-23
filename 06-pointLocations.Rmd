@@ -686,14 +686,18 @@ visualization is refined iteratively, adjusting the size and overlap of
 polygons, adding labels, and enhancing other visualization elements.
 
 To become proficient in creating linked micromaps for point locations we recommend you also
-read chapter \@ref(Ch2) for a better foundational understanding of the rationale behind 
-micromaps. Additionally, see chapter \@ref(Ch3) for a more
+read Chapter \@ref(Ch1) for a better foundational understanding of the rationale behind 
+micromaps. Additionally, see Chapter \@ref(Ch2) for a more
 thorough coverage of the **micromap**\index{R Packages!micromap} R package and its functionality. Note also
 that there are many potential applications for micromaps of point locations that we
-did not explore here, such as environmental data collected fixed sites (see chapter \@ref(Ch11) for
-more on environmental data). Lastly, the types of micromaps we present in this
+did not explore here, such as environmental data collected at fixed sites (see Chapter \@ref(Ch11) for
+more on environmental data). 
+Previously, linked micromap plots for point locations have been used for time series plots
+of climate data from weather station locations, accessible through the Utah Climate Center web page
+at Utah State University [@Thapliyal2009;@Yarra2010].
+Lastly, the types of micromaps we presented in this
 chapter could also be presented in different and creative ways such as via web applications 
-(see chapter \@ref(Ch7)).
+(see Chapter \@ref(Ch7)).
 
 
 

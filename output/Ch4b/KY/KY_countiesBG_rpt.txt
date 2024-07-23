@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     KY_countiesBG   2024-07-23 13:17:45 
+     KY_countiesBG   2024-07-23 14:45:11 
 
 
                      full  id           ab       alt_ab        alias
