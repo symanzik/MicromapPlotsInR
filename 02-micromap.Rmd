@@ -246,20 +246,13 @@ margin space on all four sides of the plot
 via `par(mar = c(0, 0, 0, 0))`
 to maximize the plot, i.e., the actual map.
 The reader will notice that the **micromap**\index{R Packages!micromap} R package
-depends on the **maptools**\index{R Packages!maptools} [@BiLe2014], 
+depends on the 
 **RColorBrewer**\index{R Packages!RColorBrewer} [@Neuwirth2022], 
-**rgdal**\index{R Packages!rgdal} [@BKR2022], 
 **sp**\index{R Packages!sp} [@PeBi2022], 
-and **sf**\index{R Packages!sf} [@Pebesma2022] R packages
-and also suggests the use of the **rgeos**\index{R Packages!rgeos} [@BiRu2021]
-R package. All of these R packages should
+and **sf**\index{R Packages!sf} [@Pebesma2022] R packages.
+All of these R packages should
 be installed locally so they can be loaded automatically when the
 **micromap**\index{R Packages!micromap} R package is loaded.
-
-UPDATE: Some of these dependencies are no longer needed. Moreover,
-rgdal, rgeos, and maptools will be retired - see
-https://www.r-bloggers.com/2022/04/r-spatial-evolution-retirement-of-rgdal-rgeos-and-maptools/.
-Replace throughout the book.
 
 
 ```{r Ch2-USstates, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary dataset for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
@@ -870,15 +863,13 @@ SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 and are then split into the geographic information and the statistical data components.
 Numerous R packages, such as 
 **raster**\index{R Packages!raster} [@Hijmans2022raster],
-**rgdal**\index{R Packages!rgdal} [@BKR2022],
 **sf**\index{R Packages!sf} [@Pebesma2022],
 **shapefiles**\index{R Packages!shapefiles} [@Stabler2022], 
 and **terra**\index{R Packages!terra} [@Hijmans2022terra],
 support the use of shapefiles\index{Shapefiles} in R.
-Only the **raster**\index{R Packages!raster} and **rgdal**\index{R Packages!rgdal}
-R packages directly create a SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
+From these R packages, only the **raster**\index{R Packages!raster}
+R package directly creates a SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
 For functions from the other R packages, an additional transformation step would be needed.
-The **rgdal**\index{R Packages!rgdal} R package will be retired by the end of 2023.
 Therefore, we use the `raster::shapefile()` function here.
 
 It is worthwhile to mention that geography and attributes that are

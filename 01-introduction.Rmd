@@ -1292,7 +1292,7 @@ If your translation to html or pdf does not work immediately, try the following:
 - Check that you have all necessary R packages installed, in particular **bookdown**, **micromap**,
 **micromapST**, and all their dependencies.  Note that the dependencies should be installed
 automatically with each package, but some may require manual installation.
-Chapter \@ref(Ch2) also needs the **labeling**, **rgeos**, **rgdal**, and **maptools** R packages.
+Chapter \@ref(Ch2) also needs the **labeling** R package.
 If necessary, install missing R packages (and their dependencies) via 
 `Tools -> Install Packages` in RStudio.
 

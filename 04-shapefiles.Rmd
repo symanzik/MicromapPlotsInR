@@ -103,18 +103,17 @@ Example moved from Chapter \@ref(Ch2).
 ```{r Ch4-micromapChina1, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
 # VI. Use of external shapefiles
 
-library(rgeos)
-library(rgdal)
-library(maptools)
 library(micromap)
 
 ### Read in the shapefile and simplify the polygons (run this part of the code only once!)
 
-ChinaShapefile <- readOGR(
-  dsn = "data/China_Shapefiles",
-  layer = "export",
-  verbose = TRUE
-)
+#ChinaShapefile <- readOGR(
+#  dsn = "data/China_Shapefiles",
+#  layer = "export",
+#  verbose = TRUE
+#)
+
+ChinaShapefile <- sf::as_Spatial(sf::st_read("data/China_Shapefiles/export.shp"))
 
 plot(ChinaShapefile)
 summary(ChinaShapefile)
@@ -122,24 +121,29 @@ summary(ChinaShapefile)
 
 
 ```{r Ch4-micromapChina2, fig.cap = 'Chunk 1.', fig.width = 7, fig.height = 9}
-gIsValid(spgeom = ChinaShapefile, byid = TRUE, reason = TRUE)
+# gIsValid(spgeom = ChinaShapefile, byid = TRUE, reason = TRUE)
+# 
+# ChinaShapefileThin <- thinnedSpatialPoly(
+#   SP = ChinaShapefile,
+#   tolerance = 300,
+#   # try 100, 300, 3000, 30000
+#   minarea = 10000000000,
+#   topologyPreserve = TRUE,
+#   avoidGEOS = TRUE
+# )
+# 
+# ChinaShapefileThin <- gBuffer(
+#   spgeom = ChinaShapefileThin,
+#   width = 0,
+#   byid = TRUE
+# )
+# 
+# gIsValid(spgeom = ChinaShapefileThin, byid = TRUE, reason = TRUE)
 
-ChinaShapefileThin <- thinnedSpatialPoly(
-  SP = ChinaShapefile,
-  tolerance = 300,
-  # try 100, 300, 3000, 30000
-  minarea = 10000000000,
-  topologyPreserve = TRUE,
-  avoidGEOS = TRUE
-)
+ChinaShapefileThin <- sf::st_read("data/China_Shapefiles/export.shp") %>%
+  st_simplify(dTolerance = 2000) %>%
+  as_Spatial()
 
-ChinaShapefileThin <- gBuffer(
-  spgeom = ChinaShapefileThin,
-  width = 0,
-  byid = TRUE
-)
-
-gIsValid(spgeom = ChinaShapefileThin, byid = TRUE, reason = TRUE)
 plot(ChinaShapefileThin)
 
 ### Change tolerance to 100, 3000, and 30000 and run the the entire code again, starting with readOGR.
