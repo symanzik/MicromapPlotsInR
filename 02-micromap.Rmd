@@ -100,46 +100,6 @@ in Section \@ref(Ch2-SummaryFurtherReading).
 ## Steps to Create a Linked Micromap Plot with the **micromap**\index{R Packages!micromap} R Package {#Ch2-Steps}
 
 
-Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create a 
-linked micromap plot\index{Linked micromap plot} 
-with the **micromap**\index{R Packages!micromap} R package:
-
-1. **Identifying and Geoprocessing of Spatial Boundary Data** 
-(see Sections \@ref(Ch2-Identifying) and \@ref(Ch2-IdentifyingWV) for details): 
-In addition to a data frame that contains the statistical data,
-the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
-to be colored in the maps. This spatial boundary data typically comes in the form of a
-SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
-boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
-provided as external shapefiles\index{Shapefiles}. In particular, we will see in that chapter how
-to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
-to the main area of the map.
-
-2. **Linking Spatial Boundary Data and Statistical Data** 
-(see Sections \@ref(Ch2-Linking) and \@ref(Ch2-LinkingWV) for details): 
-To link spatial boundary data and statistical data, 
-the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first has to be transformed into a regular data frame
-via the `micromap::create_map_table()` function.
-Next, we have to identify one variable from the statistical data frame
-and one variable from the newly created data frame with the boundary information that 
-allow us to link statistical data and boundary data for each subregion.
-
-3. **Creating a Draft Linked Micromap Plot** 
-(see Sections \@ref(Ch2-Creating) and \@ref(Ch2-CreatingWV) for details): 
-While not necessary, it is always a good idea to first create a minimal
-linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
-are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
-step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
-to find possible errors in the R code.
-
-4. **Refining the Linked Micromap Plot** 
-(see Sections \@ref(Ch2-Refining) and \@ref(Ch2-RefiningWV) for details): 
-Once a draft linked micromap plot\index{Linked micromap plot} has been
-created, this plot usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
-change of the layout and of perceptual groups, addition of labels and legends, and possibly the addition of additional
-statistical variables or changes to different graph types for some of the variables.
-
-
 ```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package [@Iannone2022]).', fig.width = 5, fig.height = 5, echo = FALSE}
 library(DiagrammeR)
 
@@ -161,6 +121,49 @@ DiagrammeR::grViz(
 "
 )
 ```
+
+
+Four main steps, shown in Figure \@ref(fig:Ch2-flowchart), are needed to create a 
+linked micromap plot\index{Linked micromap plot} 
+with the **micromap**\index{R Packages!micromap} R package:
+
+1. **Identifying and Geoprocessing of Spatial Boundary Data** 
+(see Sections \@ref(Ch2-Identifying) and \@ref(Ch2-IdentifyingWV) for details): 
+In addition to a data frame that contains the statistical data,
+the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
+to be colored in the maps. This spatial boundary data typically comes in the form of a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
+boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
+provided as external shapefiles\index{Shapefiles}. In particular, we will see in that chapter how
+to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
+to the main area of the map.
+
+2. **Linking Spatial Boundary Data and Statistical Data** 
+(see Sections \@ref(Ch2-Linking) and \@ref(Ch2-LinkingWV) for details): 
+To link spatial boundary data and statistical data, 
+the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first has to be transformed into a regular data frame
+via the `create_map_table()` function.
+Next, we have to identify one variable from the statistical data frame
+and one variable from the newly created data frame with the boundary information that 
+allow us to link statistical data and boundary data for each subregion.
+This step is not required when the spatial boundary data and statistical data are adequately
+stored in a simple features\index{Simple features} (sf) format [@OGC2022] instead of a
+SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
+
+3. **Creating a Draft Linked Micromap Plot** 
+(see Sections \@ref(Ch2-Creating) and \@ref(Ch2-CreatingWV) for details): 
+While not necessary, it is always a good idea to first create a minimal
+linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
+are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
+step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
+to find possible errors in the R code.
+
+4. **Refining the Linked Micromap Plot** 
+(see Sections \@ref(Ch2-Refining) and \@ref(Ch2-RefiningWV) for details): 
+Once a draft linked micromap plot\index{Linked micromap plot} has been
+created, this plot usually needs fine-tuning of its appearance and plot aesthetics, e.g., modification of colors,
+change of the layout and of perceptual groups, addition of labels and legends, and possibly the addition of additional
+statistical variables or changes to different graph types for some of the variables.
 
 
 ## Example 1: A Linked Micromap Plot for the 50 U.S. States and Washington, D.C. {#Ch2-Example1}
@@ -191,8 +194,8 @@ For figures that only contain maps, it is often helpful to remove all
 margin space on all four sides of the plot 
 via `par(mar = c(0, 0, 0, 0))`
 to maximize the plot, i.e., the actual map.
-The reader will notice that the **micromap**\index{R Packages!micromap} R package
-depends on the 
+When loading the **micromap**\index{R Packages!micromap} R package,
+the reader will notice that it depends on the 
 **RColorBrewer**\index{R Packages!RColorBrewer} [@Neuwirth2022], 
 **sp**\index{R Packages!sp} [@PeBi2022], 
 and **sf**\index{R Packages!sf} [@Pebesma2022] R packages.
@@ -219,7 +222,7 @@ plot(USstates)
 
 In this step, the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
 into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
-via the `micromap::create_map_table()` function. We have to indicate a variable from the `data`
+via the `create_map_table()` function. We have to indicate a variable from the `data`
 component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object that 
 can be used as an ID column. 
 A matching ID column has to be identified in the statistical dataset. These two ID columns
@@ -278,7 +281,7 @@ all(sort(edPov$StateAb) == sort(unique(state_polys_table$ID)))
 
 
 Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
-`micromap::mmplot()` function, based on the previously created 
+`mmplot()` function, based on the previously created 
 `state_polys_table` data frame and the _edPov_\index{Datasets!edPov} dataset.
 In our function call, we only provide seven required arguments. None of these arguments has a default setting.
 For all other arguments of this function, the default settings will be used here. 
@@ -410,7 +413,7 @@ While any column of the linked micromap plot\index{Linked micromap plot} or even
 variables not shown in it can be used as sorting variables, in most cases,
 the first (leftmost) statistical graphics column is used for sorting purposes.
 Moreover, we place the maps on the left side of the plot. As previously stated,
-the `panel.types` and `panel.data` arguments of the `micromap::mmplot()` function
+the `panel.types` and `panel.data` arguments of the `mmplot()` function
 are closely related. Thus, if we change the order of one, the order of the
 other one has to be changed accordingly. 
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
@@ -578,21 +581,21 @@ mmplot(
       active.border.size = 1.2,
       inactive.border.color = gray(0.7),
       inactive.border.size = 1,
-      panel.width = 0.8
+      panel.width = 0.85
     ),
     list(
       2,
       point.type = 20,
       point.border = TRUE,
       point.size = 2,
-      panel.width = 0.9
+      panel.width = 1.0
     ),
     list(
       3,
       header = "States",
       align = "left",
       text.size = 0.9,
-      panel.width = 0.7
+      panel.width = 0.75
     ),
     list(
       4,
@@ -672,14 +675,14 @@ mmplot(
       active.border.size = 1.2,
       inactive.border.color = gray(0.7),
       inactive.border.size = 1,
-      panel.width = 0.8
+      panel.width = 0.85
     ),
     list(
       2,
       point.type = 20,
       point.border = TRUE,
       point.size = 2,
-      panel.width = 0.9
+      panel.width = 1.0
     ),
     list(
       3,
@@ -688,7 +691,7 @@ mmplot(
       right.margin = 0,
       left.margin = -1,
       text.size = 0.9,
-      panel.width = 0.6
+      panel.width = 0.75
     ),
     list(
       4,
@@ -819,7 +822,7 @@ For functions from the other R packages, an additional transformation step would
 Therefore, we use the `raster::shapefile()` function here.
 
 It is worthwhile to mention that geography and attributes that are
-stored in a simple features\index{Simple features} (sf) format [@OGC2022] instead of a
+stored in a simple features\index{Simple features} format [@OGC2022] instead of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 no longer have to be split. Rather, the **micromap**\index{R Packages!micromap} R package
 can handle these directly as can be seen in the R code for Figure \@ref(fig:Ch11-micromapWVDEP).
@@ -907,7 +910,7 @@ dim(wv_data)
 Similar to Section \@ref(Ch2-Linking),
 the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
 into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
-via the `micromap::create_map_table()` function. The `Random_Wat` variable from the `data`
+via the `create_map_table()` function. The `Random_Wat` variable from the `data`
 component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object 
 can be used as an ID column here. 
 
@@ -947,7 +950,7 @@ all(sort(wv_data$Random_Wat) == sort(unique(wv_polys_table$ID)))
 
 
 We can now create a minimal draft linked micromap plot\index{Linked micromap plot} using the
-`micromap::mmplot()` function, based on the previously created 
+`mmplot()` function, based on the previously created 
 `wv_polys_table` and `wv_data` data frames.
 Similar to our first example in Section \@ref(Ch2-Creating),
 we only provide seven required arguments in our function call.
@@ -1086,7 +1089,7 @@ for the boxplots\index{Boxplot} and
 for the dotplots with confidence bounds.\index{Dotplot with confidence bounds}
 It should be noted that these eight components have been precalculated
 for each subregion and are variables of the `wv_data` data frame. 
-The `micromap::mmplot()` function does not calculate these summary
+The `mmplot()` function does not calculate these summary
 statistics by itself from a provided data frame.
 
 
