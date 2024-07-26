@@ -1013,6 +1013,39 @@ mmplot(
 ```
 
 
+Similar to Figure \@ref(fig:Ch2-creatingdraftWVdot), 
+the same draft linked micromap plot,\index{Linked micromap plot}
+shown in Figure \@ref(fig:Ch2-creatingdraftWVdotsf),
+can be created directly from the shapefile that also contains the data. 
+It is not necessary to call the `create_map_table()` function first.
+Also, the `stat.data` and `map.link` arguments are not needed as the `map.data` object
+contains all relevant geographic and statistical data.
+This draft linked micromap plot\index{Linked micromap plot}
+could be refined in a similar way as outlined in Section \@ref(Ch2-RefiningWV).
+
+
+```{r Ch2-creatingdraftWVdotsf, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. In contrast to the previous figure, this version has been created directly from the external shapefiles without using the `create_map_table()` function first.', fig.width = 7, fig.height = 7}
+wv_watershed_sf <- sf::st_read(
+  dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp"
+)
+
+class(wv_watershed_sf)
+
+head(wv_watershed_sf, n = 2)
+
+par(mar = c(0, 0, 0, 0))
+plot(st_geometry(wv_watershed_sf))
+
+mmplot(
+  map.data = wv_watershed_sf,
+  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
+  panel.data = list(NA, "Random_Wat", "cond_med1", "Cond_med", NA),
+  ord.by = "cond_med1", 
+  grouping = 5
+)
+```
+
+
 ### Refining the Linked Micromap Plot {#Ch2-RefiningWV}
 
 
