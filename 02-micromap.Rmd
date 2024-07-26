@@ -97,60 +97,6 @@ This chapter comes to a conclusion with a summary and suggestions for further re
 in Section \@ref(Ch2-SummaryFurtherReading).
 
 
-## Chapter Outline (Merge into Chapter Introduction at the End) {#Ch2-Outline}
-
-
-Note: Chapter \@ref(Ch1) will cover elements of a linked micromaps, 4 panels of legend, label, statistic, micromaps 
-and rows of perceptual groups? Also discussion of spatial patterns and interpretation of positive, negative
-(or no) association in statistical panels of dotplots.\index{Dotplot}
-- DONE - see Section \@ref(Ch1-LinkedMicromapPlotsDesignFeaturesInterpretation).
-
-
--	Overview of Four Steps (**Marcus**: Maybe a good figure could be a conceptual diagram showing the whole process?)
-    - Identifying and Geoprocessing of Spatial Boundary Data
-    - Linking Spatial Boundary Data and Statistical Data
-    - Creating a Draft Linked Micromap Plot
-    - Refining the Linked Micromap Plot
-    - DONE - see Section \@ref(Ch2-Steps).
-    
--	Spatial Polygons in R and micromap Package Updates (**Juergen**: How much of this do we need here in Chapter \@ref(Ch2)? Would it make more sense to mention this in Chapter \@ref(Ch4)?)
-    - Spatial objects and simple feature objects
-    - Updates
-    - BRIEFLY MENTIONED - more in Chapter \@ref(Ch4).
-    
--	Identifying and Geoprocessing of Spatial Boundary Data (**Marcus**: I think this is a good topic to discuss, but may be tricky to balance specificity with brevity.  I'm no expert on it, but I know there are a few different methods one could use.  Maybe just hit on the why and how, and briefly present tradeoffs of the different methods?  I think for MM, the goal is just to increase render time w/o sacrificing spatial specificity, so maybe the exact method is not important? -- **Juergen**: In fact, let's keep it simple here and work with ready-to-use shapefiles that are already available in some R packages; refer to Chapter \@ref(Ch4) how to bring in external shapefiles and modify them for use in micromaps)
-    - Keep this brief as Chapter \@ref(Ch4) might cover this in detail?
-    - Example of generalizing polygons Figure  (Use same figures as Chapter \@ref(Ch4)?)
-    - POSTPONED - to be discussed in Chapter \@ref(Ch4).
-
--	Linking Spatial Boundary Data and Statistical Data
-    - Explicit link to spatial object
-    - Under the hood link to simple features object
-    - ONLY AT THE TOP LEVEL - see Section \@ref(Ch2-Linking).
-
--	Creating a Draft Linked Micromap Plot
-    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
-    - DONE - see Section \@ref(Ch2-Creating).
-
--	Refining the Linked Micromap Plot
-    - Use workshop NARS pH sample & population estimates Figure (**Juergen**: Use simpler edPov data in first example)
-    - DONE - see Section \@ref(Ch2-Refining).
-
-- **Juergen**: Introducing a second basic example for a different geographic region, e.g., state level or environmental, and use of a different built-in plot type (e.g., boxplot). Similar four steps as before, but more condensed.
-    - DONE - see Section \@ref(Ch2-Example2)
-
--	Challenges to Visualizing Data with Linked Micromap Plots (**Marcus**: Not sure this is the right place for it, but maybe it's worth providing a brief contrast with micromapST?  Maybe include this in the overview at the top?  I think it would be useful for the reader to understand succinctly how the two differ and why there are two packages, though I'm sure these themes will be present throughout the book.  Perhaps the latter point is not that interesting, i.e., it's common to have "competing" software in an open source environment? -- **Juergen**: Yes, we need some discussions at the end of Chapters \@ref(Ch2) and \@ref(Ch3) that outline advantages and limitations of each of the two main micromap packages. Alternatively, there could be some table in Chapter \@ref(Ch1) that lists features (and limitations) of the two packages when they are first introduced to the reader. Overall, this last point may be a subsection in the Introduction, or become a final chapter at the end of the book which research is necessary in the future.)
-    - DONE in Sections \@ref(Ch1-LinkedMicromapPlotsSoftwareDevelopments), \@ref(Ch1-LinkedMicromapPlotsChallenges), and end of \@ref(Ch2-Introduction).
-
-    - Problem of many polygons (**Juergen**: There are other problems, e.g., many islands as in the Philippines, narrow shapes as for Chile, subregions of considerably different sizes as for Russia)
-    - DONE in Section \@ref(Ch1-LinkedMicromapPlotsChallenges).
-    
-    - Automating linked micromap plot production for reports and interactive visualizations (Check with Emma Jones at VA DEQ)
-    - I SUPPOSE DONE in Chapter \@ref(Ch7).
-    
-    - (**Marcus**: Related, a disadvantage of both packages is their lack of tighter integration with ggplot.  Not sure we want to go there though. -- **Juergen**: I wouldn't go there as these are the packages that currently exist and have to be used.)
-
-
 ## Steps to Create a Linked Micromap Plot with the **micromap**\index{R Packages!micromap} R Package {#Ch2-Steps}
 
 
