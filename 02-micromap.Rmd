@@ -804,12 +804,16 @@ a file with suffix `.prj` that contains the spatial coordinate system informatio
 two files with suffix `.sbn` and `.sbx` that store the spatial index of the features,
 and a file with suffix `.xml` that contains metadata for the shapefile.
 Additional suffixes may be used for a certain shapefile\index{Shapefiles} as outlined in @ESRI2016.
-
 For use in linked micromap plots\index{Linked micromap plot}
 that are created with the **micromap**\index{R Packages!micromap} R package,
-these external shapefiles\index{Shapefiles} typically are read in as a
-SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
-and are then split into the geographic information and the statistical data components.
+external shapefiles\index{Shapefiles} can be handled in two ways.
+
+Option (i) is to read in the external shapefile\index{Shapefiles} as a
+SpatialPolygonsDataFrame,\index{SpatialPolygonsDataFrame}
+and then split it into the geographic information and the statistical data component,
+use a modified statistical data component, or use a statistical data component from 
+a different source, in particular if the shapefile\index{Shapefiles} does not contain any
+statistical data.
 Numerous R packages, such as 
 **raster**\index{R Packages!raster} [@Hijmans2022raster],
 **sf**\index{R Packages!sf} [@Pebesma2022],
@@ -819,15 +823,32 @@ support the use of shapefiles\index{Shapefiles} in R.
 From these R packages, only the **raster**\index{R Packages!raster}
 R package directly creates a SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
 For functions from the other R packages, an additional transformation step would be needed.
-Therefore, we use the `raster::shapefile()` function here.
+Therefore, we use the `raster::shapefile()` function here to read in the shapefile.\index{Shapefiles}
 
+Option (ii) is to read in the external shapefile\index{Shapefiles} in a
+simple features\index{Simple features} format [@OGC2022] 
+via the `sf::st_read()` function 
+from the **sf**\index{R Packages!sf} R package [@Pebesma2022],
+instead of creating a
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}.
 It is worthwhile to mention that geography and attributes that are
-stored in a simple features\index{Simple features} format [@OGC2022] instead of a
-SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
-no longer have to be split. Rather, the **micromap**\index{R Packages!micromap} R package
-can handle these directly as can be seen in the R code for Figure \@ref(fig:Ch11-micromapWVDEP).
+stored in a simple features\index{Simple features} format 
+no longer have to be split when used in linked micromap plots.\index{Linked micromap plot} 
+Rather, the **micromap**\index{R Packages!micromap} R package
+can handle them directly from the simple features\index{Simple features} object.
 
-Moreover, in this example we introduce two new statistical displays
+Overall, options (i) and (ii) both will eventually result in the same final
+linked micromap plot.\index{Linked micromap plot} 
+Option (i) may be preferred if the external shapefile does not contain the statistical data
+or if some considerable modifications have to be made to the statistical data prior to
+creating the linked micromap plot.\index{Linked micromap plot}
+Not all R package can handle simple features\index{Simple features} objects so that
+a split geographic component and a statistical data component may be necessary anyway
+for some advanced processing of the statistical data.
+Option (ii) may be preferred if the statistical data from the external shapefile\index{Shapefiles}
+can be used almost as provided in the external shapefile.\index{Shapefiles}
+
+Moreover, in this second example we introduce two new statistical displays
 for the statistical graphics columns of the linked micromap plot\index{Linked micromap plot}:
 a boxplot\index{Boxplot} and a dotplot with confidence bounds\index{Dotplot with confidence bounds}. 
 Different arguments are used to fine-tune this linked micromap plot\index{Linked micromap plot}.
@@ -844,13 +865,18 @@ is stored in external shapefiles\index{Shapefiles} that can be
 read in as a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}
 via the `raster::shapefile()` function from the
 **raster**\index{R Packages!raster} R package [@Hijmans2022raster] 
-as discussed in the previous section. It contains
+or via the `sf::st_read()` function from the 
+**sf**\index{R Packages!sf} R package [@Pebesma2022]
+as discussed in the previous section. 
+
+It contains
 25 aggregated watersheds and subbasins in West Virginia in the United States. 
 These watersheds were introduced and discussed in more detail in @MPRG2016.
 In addition to the geographic information, this dataset also contains
 the statistical information for the linked micromap plots\index{Linked micromap plot} 
 created in this section.
 
+We first demonstrate the steps necessary for option (i).
 Similar to the first example in Section \@ref(Ch2-Identifying), 
 we verify that this object (once read into R) indeed is a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
@@ -879,7 +905,7 @@ third quartile, and maximum of a variable (here, specific conductance) in each o
 These will be used for the construction of boxplots\index{Boxplot}.
 
 
-(ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary dataset for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} in this section.
+(ref:Ch2-WV-cap) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary dataset for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} for option (i).
 
 
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
@@ -903,10 +929,36 @@ names(wv_data)
 dim(wv_data)
 ```
 
+Alternatively, we demonstrate the steps necessary for option (ii).
+Similar to option (i),
+we verify that this object (once read into R) indeed is in the
+simple features\index{Simple features} format, then look
+at some of the data of this sf object, and finally plot it,
+as shown in Figure \@ref(fig:Ch2-WV-sf).
+
+
+(ref:Ch2-WV-cap-sf) Map representation of the _WV_Watershed_\index{Datasets!WV\_Watershed} spatial boundary dataset for the 25 watersheds in West Virginia that is used as the basis for the linked micromap plots\index{Linked micromap plot} for option (ii). It is identical to the one for option (i) shown in Figure \@ref(fig:Ch2-WV).
+
+
+```{r Ch2-WV-sf, fig.cap = '(ref:Ch2-WV-cap-sf)', fig.width = 5, fig.height = 4}
+wv_watershed_sf <- sf::st_read(
+  dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
+  quiet = TRUE
+)
+
+class(wv_watershed_sf)
+
+head(wv_watershed_sf, n = 2)
+
+par(mar = c(0, 0, 0, 0))
+plot(sf::st_geometry(wv_watershed_sf))
+```
+
 
 ### Linking Spatial Boundary Data and Statistical Data {#Ch2-LinkingWV}
 
 
+This step is only required for option (i) and can be skipped entirely for option (ii).
 Similar to Section \@ref(Ch2-Linking),
 the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first is transformed
 into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
@@ -951,7 +1003,7 @@ all(sort(wv_data$Random_Wat) == sort(unique(wv_polys_table$ID)))
 
 We can now create a minimal draft linked micromap plot\index{Linked micromap plot} using the
 `mmplot()` function, based on the previously created 
-`wv_polys_table` and `wv_data` data frames.
+`wv_polys_table` and `wv_data` data frames for option (i).
 Similar to our first example in Section \@ref(Ch2-Creating),
 we only provide seven required arguments in our function call.
 None of these arguments has a default setting.
@@ -1013,29 +1065,20 @@ mmplot(
 ```
 
 
-Similar to Figure \@ref(fig:Ch2-creatingdraftWVdot), 
-the same draft linked micromap plot,\index{Linked micromap plot}
-shown in Figure \@ref(fig:Ch2-creatingdraftWVdotsf),
-can be created directly from the shapefile that also contains the data. 
+For option (ii), the same draft linked micromap plot\index{Linked micromap plot}
+can be created directly from the `wv_watershed_sf` object 
+(see Figure \@ref(fig:Ch2-creatingdraftWVdotsf)).
 It is not necessary to call the `create_map_table()` function first.
-Also, the `stat.data` and `map.link` arguments are not needed as the `map.data` object
+Also, the `stat.data` and `map.link` arguments are not needed as the `wv_watershed_sf` object
 contains all relevant geographic and statistical data.
-This draft linked micromap plot\index{Linked micromap plot}
-could be refined in a similar way as outlined in Section \@ref(Ch2-RefiningWV).
-We leave it to the reader to modify the subregion names in the sf object before creating
-the final refined linked micromap plot\index{Linked micromap plot} 
-that resembles the one in \@ref(fig:Ch2-refining2WV).
+The linked micromap plots\index{Linked micromap plot}
+in Figure \@ref(fig:Ch2-creatingdraftWVdot), 
+and Figure \@ref(fig:Ch2-creatingdraftWVdotsf) are identical.
+Both draft linked micromap plots\index{Linked micromap plot}
+can be refined in a similar way as shown in the next section.
 
 
 ```{r Ch2-creatingdraftWVdotsf, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first.', fig.width = 7, fig.height = 7}
-wv_watershed_sf <- sf::st_read(
-  dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp"
-)
-
-class(wv_watershed_sf)
-
-head(wv_watershed_sf, n = 2)
-
 mmplot(
   map.data = wv_watershed_sf,
   panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
@@ -1189,15 +1232,15 @@ mmplot(
       1,
       panel.width = 1.6,
       point.type = 15,
-      point.size = 1.2,
+      point.size = 0.85,
       point.border = TRUE
     ),
     list(
       2,
       header = "WVDEP\nSubbasins",
-      panel.width = 1.25,
+      panel.width = 1.3,
       align = "left",
-      text.size = 0.8
+      text.size = 0.75
     ),
     list(
       3,
@@ -1209,7 +1252,7 @@ mmplot(
       xaxis.labels.size = 1.25,
       xaxis.title = "[1,000 \u03BCS/cm]",
       xaxis.title.size = 1.25,
-      panel.width = 2,
+      panel.width = 2.1,
       right.margin = 0,
       left.margin = -0.5
     ),
@@ -1225,7 +1268,124 @@ mmplot(
       add.line.col = "black",
       add.line.typ = "dashed",
       xaxis.title.size = 1.25,
-      panel.width = 2,
+      panel.width = 2.1,
+      right.margin = 0.1,
+      left.margin = -0.5
+    ),
+    list(
+      5,
+      header = "Light Gray Means\nHighlighted Above",
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1.5,
+      panel.width = 1.5
+    )
+  )
+)
+```
+
+
+Similarly to the modifications for option (i), 
+we make changes of the subregion names of the `wv_watershed_sf` object
+and immediately create the final refined linked micromap plot\index{Linked micromap plot}
+(shown in Figure \@ref(fig:Ch2-refining2WVsf)) for option (ii),
+rather than splitting this into two steps.
+Again, it is not necessary to call the `create_map_table()` function first.
+Also, the `stat.data` and `map.link` arguments are not needed as the `wv_watershed_sf` object
+contains all relevant geographic and statistical data.
+All other arguments for the refinement remain the same as used for Figure \@ref(fig:Ch2-refining2WV).
+
+
+(ref:Ch2-refining2WVsf-cap) Second (and final) refined linked micromap plot\index{Linked micromap plot}, based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first. It is identical to the one for option (i) shown in Figure \@ref(fig:Ch2-refining2WV).
+
+
+```{r Ch2-refining2WVsf, fig.cap = '(ref:Ch2-refining2WVsf-cap)', fig.width = 7, fig.height = 7}
+wv_watershed_sf$short_name <- as.factor(wv_watershed_sf$Random_Wat)
+
+levels(wv_watershed_sf$short_name) <- list(
+  "S. Br. Potomac" = "South Branch Potomac",
+  "N. Br. Potomac" = "North Branch Potomac",
+  "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
+  "Potomac/Shen." = "Potomac Direct Drains/Shenandoah Jefferson",
+  "U. New/James" = "Upper New/James",
+  "Tygart Valley" = "Tygart Valley",
+  "West Fork" = "West Fork",
+  "Mononga./Dunk." = "Monongahela/Dunkard",
+  "Cheat/Youg." = "Cheat/Youghiogheny",
+  "U. Ohio N./S." = "Upper Ohio North/Upper Ohio South",
+  "M. Ohio N." = "Middle Ohio North",
+  "M. Ohio S." = "Middle Ohio South",
+  "Little Kanawha" = "Little Kanawha",
+  "Greenbrier" = "Greenbrier",
+  "L. New" = "Lower New",
+  "Gauley" = "Gauley",
+  "U. Kanawha" = "Upper Kanawha",
+  "Elk" = "Elk",
+  "L. Kanawha" = "Lower Kanawha",
+  "Coal" = "Coal",
+  "U. Guyandotte" = "Upper Guyandotte",
+  "L. Guyandotte" = "Lower Guyandotte",
+  "Tug Fork" = "Tug Fork",
+  "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
+  "Twelvepole" = "Twelvepole"
+)
+
+mmplot(
+  map.data = wv_watershed_sf,
+  panel.types = c("dot_legend", "labels", "box_summary", "dot_cl", "map"),
+  panel.data = list(
+    NA,
+    "short_name",
+    list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
+    list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
+    NA
+  ),
+  ord.by = "cond_med1",
+  rev.ord = TRUE,
+  grouping = 5,
+  plot.pGrp.spacing = 1.2,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1],
+  panel.att = list(
+    list(
+      1,
+      panel.width = 1.6,
+      point.type = 15,
+      point.size = 0.85,
+      point.border = TRUE
+    ),
+    list(
+      2,
+      header = "WVDEP\nSubbasins",
+      panel.width = 1.3,
+      align = "left",
+      text.size = 0.75
+    ),
+    list(
+      3,
+      header = "Observed specific conductance\n4th Order Streams or Less",
+      graph.bgcolor = "lightgray",
+      graph.bar.size = 0.7,
+      xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
+      xaxis.labels = c(0, 1, 2, 3, 4, 5),
+      xaxis.labels.size = 1.25,
+      xaxis.title = "[1,000 \u03BCS/cm]",
+      xaxis.title.size = 1.25,
+      panel.width = 2.1,
+      right.margin = 0,
+      left.margin = -0.5
+    ),
+    list(
+      4,
+      header = "Estimated specific conductance\n4th Order Streams or Less",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 150, 300, 450, 600, 750),
+      xaxis.labels = list(0, 150, 300, 450, 600, 750),
+      xaxis.labels.size = 1.25,
+      xaxis.title = "[\u03BCS/cm]",
+      add.line = 129,
+      add.line.col = "black",
+      add.line.typ = "dashed",
+      xaxis.title.size = 1.25,
+      panel.width = 2.1,
       right.margin = 0.1,
       left.margin = -0.5
     ),
