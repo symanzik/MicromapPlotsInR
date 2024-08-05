@@ -4,7 +4,7 @@
 \chapterauthor{J{\"u}rgen Symanzik, Marcus W. Beck, Michael G. McManus}
 
 
-The **micromap**\index{R Packages!micromap} R package [@PaOl2015],
+The **micromap**\index{R Packages!micromap} R package [@PaOl2024],
 accessible at https://cran.r-project.org/web/packages/micromap/index.html,
 will be introduced in this chapter. The reader will learn how to make use of the
 four main steps that are required to create a 
@@ -843,7 +843,7 @@ Option (i) may be preferred if the external shapefile does not contain the stati
 or if some considerable modifications have to be made to the statistical data prior to
 creating the linked micromap plot.\index{Linked micromap plot}
 Not all R package can handle simple features\index{Simple features} objects so that
-a split geographic component and a statistical data component may be necessary anyway
+a split into a geographic component and a statistical data component may be necessary anyway
 for some advanced processing of the statistical data.
 Option (ii) may be preferred if the statistical data from the external shapefile\index{Shapefiles}
 can be used almost as provided in the external shapefile.\index{Shapefiles}
@@ -1052,7 +1052,7 @@ helpful interpretation once we have created the final refined version of this fi
 in the next step.
 
 
-```{r Ch2-creatingdraftWVdot, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the previously created `wv_data` and `wv_polys_table` data frames for the West Virginia watershed dataset.', fig.width = 7, fig.height = 7}
+```{r Ch2-creatingdraftWVdot, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot} for option (i), based on the previously created `wv_data` and `wv_polys_table` data frames for the West Virginia watershed dataset.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1078,7 +1078,7 @@ Both draft linked micromap plots\index{Linked micromap plot}
 can be refined in a similar way as shown in the next section.
 
 
-```{r Ch2-creatingdraftWVdotsf, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first.', fig.width = 7, fig.height = 7}
+```{r Ch2-creatingdraftWVdotsf, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot} for option (ii), based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first.', fig.width = 7, fig.height = 7}
 mmplot(
   map.data = wv_watershed_sf,
   panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
@@ -1114,7 +1114,7 @@ occupies too much space in the final linked micromap plot\index{Linked micromap 
 ```{r Ch2-shortennamesWV}
 wv_data$short_name <- as.factor(wv_data$Random_Wat)
 
-levels(wv_data$short_name) <- list(
+wv_watershed_short <- list(
   "S. Br. Potomac" = "South Branch Potomac",
   "N. Br. Potomac" = "North Branch Potomac",
   "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
@@ -1141,10 +1141,12 @@ levels(wv_data$short_name) <- list(
   "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
   "Twelvepole" = "Twelvepole"
 )
+
+levels(wv_data$short_name) <- wv_watershed_short
 ```
 
 
-In the first refined linked micromap plot\index{Linked micromap plot}, shown in 
+In the first refined linked micromap plot\index{Linked micromap plot} for option (i), shown in 
 Figure \@ref(fig:Ch2-refining1WV), we make use of these abbreviations 
 via the newly added `short_name` variable of the `wv_data` data frame.
 Moreover, we introduce initial boxplots\index{Boxplot} and 
@@ -1169,7 +1171,7 @@ The `mmplot()` function does not calculate these summary
 statistics by itself from a provided data frame.
 
 
-```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are the introduction of abbreviated subregion names and initial boxplots\\index{Boxplot} and dotplots with confidence bounds\\index{Dotplot with confidence bounds} in the two statistical graphics columns.', fig.width = 7, fig.height = 7}
+```{r Ch2-refining1WV, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot} for option (i), based on the `wv_data` data frame. Main changes are the introduction of abbreviated subregion names and initial boxplots\\index{Boxplot} and dotplots with confidence bounds\\index{Dotplot with confidence bounds} in the two statistical graphics columns.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1188,7 +1190,7 @@ mmplot(
 ```
 
 
-In the second (and final) refined linked micromap plot\index{Linked micromap plot}, shown in 
+In the second (and final) refined linked micromap plot\index{Linked micromap plot} for option (i), shown in 
 Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
 refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
 This includes a reverse sorting (`rev.ord = TRUE`) that places 
@@ -1209,7 +1211,7 @@ across all 4th order streams (or less). The Greek letter $\mu$ in the two axis t
 produced via its unicode, i.e., `\u03BC`.
 
 
-```{r Ch2-refining2WV, fig.cap = 'Second (and final) refined linked micromap plot\\index{Linked micromap plot}, based on the `wv_data` data frame. Main changes are related to sorting, coloring, spacing, and labeling. An overall statistics (or criteria) line has been added to the second statistical graphics column.', fig.width = 7, fig.height = 7}
+```{r Ch2-refining2WV, fig.cap = 'Second (and final) refined linked micromap plot\\index{Linked micromap plot} for option (i), based on the `wv_data` data frame. Main changes are related to sorting, coloring, spacing, and labeling. An overall statistics (or criteria) line has been added to the second statistical graphics column.', fig.width = 7, fig.height = 7}
 mmplot(
   stat.data = wv_data,
   map.data = wv_polys_table,
@@ -1285,7 +1287,8 @@ mmplot(
 
 
 Similarly to the modifications for option (i), 
-we make changes of the subregion names of the `wv_watershed_sf` object
+we make changes of the subregion names of the `wv_watershed_sf` object 
+(using the previously created list of shortened subregion names in `wv_watershed_short`)
 and immediately create the final refined linked micromap plot\index{Linked micromap plot}
 (shown in Figure \@ref(fig:Ch2-refining2WVsf)) for option (ii),
 rather than splitting this into two steps.
@@ -1295,39 +1298,13 @@ contains all relevant geographic and statistical data.
 All other arguments for the refinement remain the same as used for Figure \@ref(fig:Ch2-refining2WV).
 
 
-(ref:Ch2-refining2WVsf-cap) Second (and final) refined linked micromap plot\index{Linked micromap plot}, based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first. It is identical to the one for option (i) shown in Figure \@ref(fig:Ch2-refining2WV).
+(ref:Ch2-refining2WVsf-cap) Second (and final) refined linked micromap plot\index{Linked micromap plot} for option (ii), based on the West Virginia watershed dataset. In contrast to the previous figure, this figure has been created directly from the external shapefiles without using the `create_map_table()` function first. It is identical to the one for option (i) shown in Figure \@ref(fig:Ch2-refining2WV).
 
 
 ```{r Ch2-refining2WVsf, fig.cap = '(ref:Ch2-refining2WVsf-cap)', fig.width = 7, fig.height = 7}
 wv_watershed_sf$short_name <- as.factor(wv_watershed_sf$Random_Wat)
 
-levels(wv_watershed_sf$short_name) <- list(
-  "S. Br. Potomac" = "South Branch Potomac",
-  "N. Br. Potomac" = "North Branch Potomac",
-  "Cacapon/Shen." = "Cacapon/Shenandoah Hardy",
-  "Potomac/Shen." = "Potomac Direct Drains/Shenandoah Jefferson",
-  "U. New/James" = "Upper New/James",
-  "Tygart Valley" = "Tygart Valley",
-  "West Fork" = "West Fork",
-  "Mononga./Dunk." = "Monongahela/Dunkard",
-  "Cheat/Youg." = "Cheat/Youghiogheny",
-  "U. Ohio N./S." = "Upper Ohio North/Upper Ohio South",
-  "M. Ohio N." = "Middle Ohio North",
-  "M. Ohio S." = "Middle Ohio South",
-  "Little Kanawha" = "Little Kanawha",
-  "Greenbrier" = "Greenbrier",
-  "L. New" = "Lower New",
-  "Gauley" = "Gauley",
-  "U. Kanawha" = "Upper Kanawha",
-  "Elk" = "Elk",
-  "L. Kanawha" = "Lower Kanawha",
-  "Coal" = "Coal",
-  "U. Guyandotte" = "Upper Guyandotte",
-  "L. Guyandotte" = "Lower Guyandotte",
-  "Tug Fork" = "Tug Fork",
-  "Big Sandy/L. Ohio" = "Big Sandy/Lower Ohio",
-  "Twelvepole" = "Twelvepole"
-)
+levels(wv_watershed_sf$short_name) <- wv_watershed_short
 
 mmplot(
   map.data = wv_watershed_sf,
@@ -1402,7 +1379,8 @@ mmplot(
 
 
 What remains to be done is a summary and interpretation of the 
-final refined linked micromap plot\index{Linked micromap plot} shown in Figure \@ref(fig:Ch2-refining2WV).
+final refined linked micromap plot\index{Linked micromap plot} shown 
+in Figures \@ref(fig:Ch2-refining2WV) and \@ref(fig:Ch2-refining2WVsf).
 This plot is related to specific conductance variables in 25 aggregated watersheds and 
 subbasins of 4th order streams (or less) in West Virginia in the United States. 
 
@@ -1442,7 +1420,7 @@ about `r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
 
 In this chapter, we have discussed the four main steps that are required 
 to create linked micromap plots\index{Linked micromap plot} with 
-the **micromap**\index{R Packages!micromap} R package [@PaOl2015].
+the **micromap**\index{R Packages!micromap} R package [@PaOl2024].
 This R package is one of two major R packages for the construction of 
 linked micromap plots.\index{Linked micromap plot}
 We will encounter it in several of the following chapters again.
@@ -1450,6 +1428,12 @@ When designing linked micromap plots\index{Linked micromap plot} in those chapte
 the authors typically have followed the same main steps. However,
 in most cases, only the final refined linked micromap plot\index{Linked micromap plot}
 will be shown in the following chapters.
+While most of those examples will follow option (i) and make use of the `create_map_table()` 
+function as outlined in Section \@ref(Ch2-Example2),
+the example shown in Figure \@ref(fig:Ch11-micromapWVDEP) 
+in Chapter \@ref(Ch11) follows option (ii)
+and directly creates a linked micromap plot\index{Linked micromap plot}
+from a simple features\index{Simple features} object.
 
 In Chapter \@ref(Ch4), we will see how to modify external shapefiles\index{Shapefiles}
 that contain too many edges and/or contain subregions that are too large, too small,
@@ -1472,17 +1456,18 @@ in the environmental field. We will see the example with the
 watersheds in West Virginia, first introduced in Section \@ref(Ch2-Example2),
 again in that chapter. These three chapters primarily make 
 use of the **micromap**\index{R Packages!micromap} R package
-although the **micromapST**\index{R Packages!micromapST} R package [@PeCa2022CRAN201]
+although the **micromapST**\index{R Packages!micromapST} R package [@PeCa2024CRAN303]
 could be used in a similar way.
 
 We do not want to forget that a user of linked micromap plots\index{Linked micromap plot}
 has a choice which R package to use for their creation. 
-Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN].
+Chapter \@ref(Ch3) introduces the **micromapST**\index{R Packages!micromapST} R package [@PeCa2024CRAN303].
 Chapters \@ref(Ch4b) and \@ref(Ch5b) resemble Chapters \@ref(Ch4) and \@ref(Ch5)
 and discuss how to process external shapefiles\index{Shapefiles}
 and display different types of statistical graphics with the
 **micromapST**\index{R Packages!micromapST} R package. 
-Each of the two R packages has its own strengths and weaknesses.
+Each of the two R packages for linked micromap plots\index{Linked micromap plot}
+has its own strengths and weaknesses.
 The **micromapST**\index{R Packages!micromapST} R package has a larger number of
 built-in types of statistical graphics for the statistical graphics columns
 while the **micromap**\index{R Packages!micromap} R package allows (at least in theory)
