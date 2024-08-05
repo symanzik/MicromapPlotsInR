@@ -1,7 +1,7 @@
 # Adding New Plot Types to Linked Micromap Plots (such as Arrow Plots, Line Charts, and Scatterplots) {#Ch5}
 
 
-\chapterauthor{Sarah Schwartz}
+\chapterauthor{Sarah Schwartz, J{\"u}rgen Symanzik}
 
 
 The primary graph types in the statistical panels that are supported by 
@@ -44,9 +44,113 @@ and quantile-quantile plot.\index{Quantile-quantile plot}
 
 - general principles of adding new graph types
 
-- Example 1: Arrow Plots for Differences
 
-- Example 2: Scatterplots
+## Example 1: Adding Arrow Plots for Differences as a New Plot Type {#Ch4-Example1}
+
+```{r Ch4-arrowplot, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9, eval = FALSE}
+library(micromap)
+library(ggplot2)
+
+data(USstates)
+data(edPov)
+
+set.seed(123)
+edPovnew <- edPov
+edPovnew$edrandom <- rnorm(51, mean = 0, sd = 2)
+
+myAtts <- sample_att()
+myNumber <- 1
+myAtts$colors <- c("red", "orange", "green", "blue")
+myAtts[[myNumber]]$panel.data <- c("zero", "change")
+myColors <- myAtts$colors
+myColumns <- myAtts[[myNumber]]$panel.data
+myTable <- data.frame(dummy = rep(1, 51))
+myTable$data1 <- edPovnew$ed # myTable[, myColumns[1]]
+myTable$data2 <- edPovnew$edrandom # myTable[, myColumns[2]]
+myPanel <- ggplot(myTable) +
+  geom_segment(
+    aes(
+      x = data1, 
+      y = -pGrpOrd,
+      xend = data2, 
+      yend = -pGrpOrd, 
+      colour = factor(color)
+    ),
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  facet_grid(pGrp ~ .) +
+  scale_colour_manual(values = myColors, guide = "none")
+
+assimilatePlot(myPanel, myNumber, myAtts)
+myPanelAtts <- standard_att()
+myPanelAtts <- append(
+  myPanelAtts,
+  list(line.width = 1, tip.length = 1)
+)
+
+arrow_plot_att <- function() {
+  myPanelAtts <- standard_att()
+  myPanelAtts <- append(
+    myPanelAtts,
+    list(line.width = 1, tip.length = 1)
+  )
+}
+
+arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
+  myColors <- myAtts$colors
+  myColumns <- myAtts[[myNumber]]$panel.data
+  myLineWidth <- myAtts[[myNumber]]$line.width
+  myTipLength <- myAtts[[myNumber]]$tip.length
+  myTable$data1 <- myNewStats[, myColumns[1]]
+  myTable$data2 <- myNewStats[, myColumns[2]]
+  myPanel <- ggplot(myTable) +
+    geom_segment(
+      aes(
+        x = data1, 
+        y = -pGrpOrd,
+        xend = data2, 
+        yend = -pGrpOrd,
+        colour = factor(color)
+      ),
+      arrow = arrow(length = unit(0.1 * myTipLength, "cm")),
+      size = myLineWidth
+    ) +
+    facet_grid(pGrp ~ ., space = "free", scales = "free_y") +
+    scale_colour_manual(values = myColors, guide = "none")
+  myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
+}
+
+
+```
+
+
+```{r Ch4-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
+
+library(micromap)
+library(ggplot2)
+
+data(USstates)
+data(edPov)
+
+state_polys_table <- create_map_table(
+  tmp.map = USstates,
+  IDcolumn = "ST"
+)
+
+mmplot(
+  stat.data = edPov,
+  map.data = state_polys_table,
+  map.link = c("StateAb", "ID"),
+  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
+  panel.data = list(NA, "state", "pov", "ed", NA),
+  ord.by = "pov",
+  grouping = 5
+)
+```
+
+
+## Example 2: Adding Scatterplots as a New Plot Type {#Ch4-Example2}
+
 
 
 ## Main {#Ch5-Main}
