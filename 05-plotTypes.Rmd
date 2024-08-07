@@ -42,21 +42,317 @@ and quantile-quantile plot.\index{Quantile-quantile plot}
 
 - overview of graph types that are part of the micromap R package
 
+panel.types (required) - a vector specifying the panels of the plot. Note:
+each `panel.type` (e.g. `map`, `labels`, `dot_cl`, etc.) is the name of a
+function that will be called to create that panel. Therefore a user can
+create a new panel type (e.g. `new.graph.type`) and the mmplot function
+will automatically go look for and call that function just by changing the
+entry here. See the section `Creating a New Panel Type`.
+
+`panel.types` from Chapter \@ref(Ch2):
+`dot_legend`, `labels`, `dot`, `map`,
+`box_summary`, `dot_cl`.
+
+also `bar_cl` from vignette
+
+Existing build functions from https://github.com/USEPA/micromap/blob/master/R/PanelBuilding.r
+
+`labels_build`, `bar_build`, `bar_cl_build`, `box_summary_build`, `dot_build`,
+`dot_cl_build`, `ranks_build`.
+
+
+
 - general principles of adding new graph types
 
+Examples \@ref(Ch4-Example1) and \@ref(Ch4-Example2)
+have been adapted from @SDWPM2014 where they have been introduced
+originally.
 
-## Example 1: Adding Arrow Plots for Differences as a New Plot Type {#Ch4-Example1}
 
-```{r Ch4-arrowplot, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9, eval = FALSE}
+
+## Example 1: Adding Bar Charts as a New Plot Type {#Ch4-Example1}
+
+
+```{r Ch4-barchartArgentina, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
 library(micromap)
 library(ggplot2)
+library(XML)
+library(dplyr)
 
-data(USstates)
-data(edPov)
 
-set.seed(123)
-edPovnew <- edPov
-edPovnew$edrandom <- rnorm(51, mean = 0, sd = 2)
+ArgShapefile <- as_Spatial(st_read("data/ARG_adm/ARG_adm1.shp"))
+
+names(ArgShapefile)
+ArgShapefile$NAME_1
+
+ArgShapefileThin <- st_as_sf(ArgShapefile) %>%
+  st_simplify(dTolerance = 1000,
+              preserveTopology = TRUE) %>%
+  as_Spatial()
+
+# manipulate population dataset
+  Argfile <- "data/List of Argentine provinces by population - Wikipedia, the free encyclopedia.htm"
+  Argtable <- readHTMLTable(Argfile)[[1]]
+
+
+Argtable <- Argtable[, -3]
+Argtable <- apply(Argtable, 2, function(x) gsub(".*00000", "", x))
+Argtable <- apply(Argtable, 2, function(x) gsub(",", "", x))
+Argtable <- as.data.frame(Argtable)
+Argtable[, 1] <- as.character(Argtable[, 1])
+Argtable[, 2] <- as.character(Argtable[, 2])
+Argtable[, 3] <- as.numeric(as.character(Argtable[, 3]))
+Argtable[, 4] <- as.numeric(as.character(Argtable[, 4]))
+Argtable[4, 2] <- "Ciudad de Buenos Aires"
+provincematch <- gregexpr("\\<[[:alpha:][:space:]]*", Argtable[, 2])
+Argtable[, 2] <- unlist(regmatches(Argtable[, 2], provincematch))
+colnames(Argtable) <- c("Rank", "provinces", "2010 Population", "2001 Population")
+Argtable[, "change"] <- Argtable[, 3] - Argtable[, 4]
+provinces <- as.character(sort(Argtable[, 2]))
+ArgShapefileThin@data <- cbind(ArgShapefileThin@data, provinces)
+Argtable[, 3:5] <- sapply(Argtable[, 3:5], function(x) x / 1000000)
+Argtable[, "ratio"] <- Argtable[, 3] / Argtable[, 4]
+
+# arg1_1 - figure not used in accompanying article
+
+ArgPolys <- create_map_table(ArgShapefileThin, "provinces")
+
+myTable <- create_DF_rank(Argtable,
+  ord.by = "2010 Population",
+  group = c(5, 5, 4, 5, 5), rev.ord = TRUE
+)
+myTable[11:14, "pGrpOrd"] <- myTable[11:14, "pGrpOrd"] + 0.5
+myAtts <- sample_att()
+myNumber <- 1
+myAtts$colors <- c("red", "orange", "green", "blue", "purple")
+myAtts[[myNumber]]$panel.data <- "change"
+myColors <- myAtts$colors
+myColumns <- myAtts[[myNumber]]$panel.data
+myTable$data1 <- myTable[, myColumns]
+myPanel <- ggplot(myTable) +
+  geom_segment(aes(
+    x = 0, y = -pGrpOrd, xend = data1, yend = -pGrpOrd,
+    colour = factor(color)
+  )) +
+  facet_grid(pGrp ~ .) +
+  scale_colour_manual(
+    values = myColors,
+    guide = "none"
+  )
+assimilatePlot(myPanel, myNumber, myAtts)
+
+myPanelAtts <- standard_att()
+myPanelAtts <- append(myPanelAtts, list(line.width = 4))
+
+bar_plot_att <- function() {
+  myPanelAtts <- standard_att()
+  myPanelAtts <- append(myPanelAtts, list(line.width = 4))
+}
+
+bar_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
+  myColors <- myAtts$colors
+  myColumns <- myAtts[[myNumber]]$panel.data
+  myLineWidth <- myAtts[[myNumber]]$line.width
+  myTipLength <- myAtts[[myNumber]]$tip.length
+  myTable$data1 <- myNewStats[, myColumns]
+  myPanel <- ggplot(myTable) +
+    geom_segment(
+      aes(
+        x = 0, y = -pGrpOrd,
+        xend = data1, yend = -pGrpOrd,
+        colour = factor(color)
+      ),
+      size = myLineWidth
+    ) +
+    facet_grid(pGrp ~ ., space = "free", scales = "free_y") +
+    scale_colour_manual(values = myColors, guide = "none")
+  myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
+}
+
+Argtable$ProvinceTemp <- as.character(Argtable$provinces)
+
+Greys6 <- brewer.pal(6, "Greys")[6:1]
+
+# mmplot(
+#   stat.data = Argtable,
+#   map.data = ArgPolys,
+#   panel.types = c("map", "labels", "dot", "bar_plot"),
+#   panel.data = list(NA, "ProvinceTemp", "2010 Population", "change"),
+#   ord.by = "2010 Population",
+#   rev.ord = TRUE,
+#   grouping = c(5, 5, 4, 5, 5),
+#   vertical.align = "center",
+#   map.link = c("provinces", "ID"),
+#   colors = Greys6,
+#   map.color2 = gray(0.95),
+#   panel.att = list(
+#     list(1,
+#       header = "Maps",
+#       panel.width = 0.6,
+#       active.border.color = "black",
+#       active.border.size = 0.5,
+#       inactive.border.color = gray(0.7),
+#       inactive.border.size = 0.5
+#     ),
+#     list(2,
+#       header = "Provinces",
+#       align = "center",
+#       text.size = 0.9,
+#       panel.width = 1.5
+#     ),
+#     list(3,
+#       header = "2010 Population",
+#       graph.bgcolor = gray(0.95),
+#       xaxis.ticks = list(0, 5, 10, 15, 20),
+#       xaxis.labels = list(0, 5, 10, 15, 20),
+#       xaxis.title = "People (Millions)",
+#       panel.width = 1.6
+#     ),
+#     list(4,
+#       header = "Population Increase\nfrom 2001 to 2010",
+#       graph.bgcolor = gray(0.95),
+#       xaxis.title = "People (Millions)",
+#       panel.width = 1.6
+#     )
+#   )
+# #  print.file = paste0("Output/ARG_1_1_08_06_2024_not_used.", outputFormat),
+# #  print.res = 300
+# )
+
+
+# arg1_2 - Figure 3
+mmplot(
+  stat.data = Argtable,
+  map.data = ArgPolys,
+  panel.types = c(
+    "map", "dot_legend", "labels",
+    "dot", "bar_plot", "dot"
+  ),
+  panel.data = list(
+    NA, "points", "ProvinceTemp",
+    "2010 Population", "change", "ratio"
+  ),
+  ord.by = "2010 Population",
+  rev.ord = TRUE,
+  grouping = c(5, 5, 4, 5, 5),
+  vertical.align = "center",
+  map.link = c("provinces", "ID"),
+  colors = Greys6,
+  map.color2 = gray(0.95),
+  plot.width = 10,
+  panel.att = list(
+    list(1,
+      header = "Maps",
+      panel.width = 0.6,
+      active.border.color = "black",
+      active.border.size = 0.5,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 0.5
+    ),
+    list(2, point.size = 0.8),
+    list(3,
+      header = "Provinces",
+      align = "left",
+      text.size = 1.0,
+      panel.width = 1.5
+    ),
+    list(4,
+      header = "2010 Population",
+      graph.bgcolor = gray(0.95),
+      xaxis.ticks = list(0, 4, 8, 12, 16),
+      xaxis.labels = list(0, 4, 8, 12, 16),
+      xaxis.title = "People (Millions)",
+      panel.width = 1.8
+    ),
+    list(5,
+      header = "Population Increase\nfrom 2001 to 2010",
+      graph.bgcolor = gray(0.95),
+      xaxis.ticks = list(0, 0.9, 1.8),
+      xaxis.labels = list(0, 0.9, 1.8),
+      xaxis.title = "People (Millions)",
+      panel.width = 1.8
+    ),
+    list(6,
+      header = "Ratio of 2010 Population\nto 2001 Population",
+      graph.bgcolor = gray(0.95),
+      xaxis.ticks = list(1, 1.2, 1.4),
+      xaxis.labels = list(1, 1.2, 1.4),
+      panel.width = 1.8
+    )
+  )
+#  print.file = paste0("Output/ARG_1_2_08_06_2024.", outputFormat),
+#  print.res = 300
+)
+
+
+```
+
+
+## Example 2: Adding Arrow Plots for Differences as a New Plot Type {#Ch4-Example2}
+
+
+```{r Ch4-arrowplotBrazil, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9}
+library(micromap)
+library(ggplot2)
+library(XML)
+library(dplyr)
+
+
+BraShapefile <- sf::as_Spatial(sf::st_read("data/BRA_adm/BRA_adm1.shp"))
+
+BraShapefileThin <- st_as_sf(BraShapefile) %>%
+  st_simplify(dTolerance = 1000,
+              preserveTopology = TRUE) %>%
+  as_Spatial()
+
+brazil4 <- BraShapefileThin
+
+Brafile <- "data/States of Brazil - Wikipedia, the free encyclopedia.htm"
+  Bratable <- readHTMLTable(Brafile)[[12]]
+
+Bratable <- apply(Bratable, 2, function(x) gsub("[(].*", "", x))
+Bratable <- apply(Bratable, 2, function(x) gsub(".*00000", "", x))
+Bratable <- apply(Bratable, 2, function(x) gsub("[,]", "", x))
+Bratable <- apply(Bratable, 2, function(x) gsub("[%]", "", x))
+Bratable[, 12] <- substr(Bratable[, 12], 1, nchar(Bratable[, 12]) - 1)
+Bratable <- as.data.frame(Bratable)
+Bratable <- data.frame(
+  Bratable[, 1:4],
+  sapply(Bratable[, 5:13], function(x) as.numeric(as.character(x)))
+)
+State <- as.character(sort(Bratable[, 2]))
+
+StateReordered <- State[c(16, 18:27, 15, 17)]
+State[15:27] <- StateReordered
+
+brazil4@data <- cbind(brazil4@data, State)
+Bratable[, 6] <- Bratable[, 6] / 1000000
+
+
+  
+
+BrazilPolys <- create_map_table(brazil4, "State")
+
+
+# bra2 - Figure 6
+
+  Brafile2 <- "data/List of Brazilian states by murder rate - Wikipedia, the free encyclopedia.htm"
+  Bratable2 <- readHTMLTable(Brafile2)[[1]]
+
+Bratable2 <- Bratable2[-c(8, 18, 23, 27, 32, 33), ]
+Bratable2[, 2:13] <- sapply(Bratable2[, 2:13], function(x) as.numeric(as.character(x)))
+Bratable2[, 1] <- as.character(Bratable2[, 1])
+Bratable2[, 1] <- substring(Bratable2[, 1], 2)
+Bratable2[, "change"] <- Bratable2[, 12] - Bratable2[, 2]
+Bratable2[, "zero"] <- 0
+Bratable2 <- Bratable2[order(Bratable2[, 1]), ]
+myTable <- create_DF_rank(Bratable2,
+  ord.by = "2008",
+  group = c(4, 4, 4, 3, 4, 4, 4), rev.ord = TRUE
+)
+myTable[13:15, "pGrpOrd"] <- myTable[13:15, "pGrpOrd"] + 0.6
+names(Bratable2)[1] <- "states"
+names(myTable)[2] <- "states"
 
 myAtts <- sample_att()
 myNumber <- 1
@@ -64,17 +360,13 @@ myAtts$colors <- c("red", "orange", "green", "blue")
 myAtts[[myNumber]]$panel.data <- c("zero", "change")
 myColors <- myAtts$colors
 myColumns <- myAtts[[myNumber]]$panel.data
-myTable <- data.frame(dummy = rep(1, 51))
-myTable$data1 <- edPovnew$ed # myTable[, myColumns[1]]
-myTable$data2 <- edPovnew$edrandom # myTable[, myColumns[2]]
+myTable$data1 <- myTable[, myColumns[1]]
+myTable$data2 <- myTable[, myColumns[2]]
 myPanel <- ggplot(myTable) +
   geom_segment(
     aes(
-      x = data1, 
-      y = -pGrpOrd,
-      xend = data2, 
-      yend = -pGrpOrd, 
-      colour = factor(color)
+      x = data1, y = -pGrpOrd,
+      xend = data2, yend = -pGrpOrd, colour = factor(color)
     ),
     arrow = arrow(length = unit(0.1, "cm"))
   ) +
@@ -106,10 +398,8 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myPanel <- ggplot(myTable) +
     geom_segment(
       aes(
-        x = data1, 
-        y = -pGrpOrd,
-        xend = data2, 
-        yend = -pGrpOrd,
+        x = data1, y = -pGrpOrd,
+        xend = data2, yend = -pGrpOrd,
         colour = factor(color)
       ),
       arrow = arrow(length = unit(0.1 * myTipLength, "cm")),
@@ -120,36 +410,67 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 
+Bratable2$StateMod <- as.character(Bratable2$states)
 
-```
+Greys5 <- brewer.pal(5, "Greys")[5:1]
 
 
-```{r Ch4-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
-
-library(micromap)
-library(ggplot2)
-
-data(USstates)
-data(edPov)
-
-state_polys_table <- create_map_table(
-  tmp.map = USstates,
-  IDcolumn = "ST"
-)
+###
 
 mmplot(
-  stat.data = edPov,
-  map.data = state_polys_table,
-  map.link = c("StateAb", "ID"),
-  panel.types = c("dot_legend", "labels", "dot", "dot", "map"),
-  panel.data = list(NA, "state", "pov", "ed", NA),
-  ord.by = "pov",
-  grouping = 5
+  stat.data = Bratable2,
+  map.data = BrazilPolys,
+  panel.types = c("map", "dot_legend", "labels", "dot", "arrow_plot"),
+  panel.data = list(NA, "points", "StateMod", "1998", c("zero", "change")),
+  ord.by = "1998",
+  rev.ord = TRUE,
+  grouping = c(4, 4, 4, 3, 4, 4, 4),
+  vertical.align = "center",
+  map.link = c("states", "ID"),
+  colors = Greys5,
+  map.color2 = gray(0.9),
+  panel.att = list(
+    list(1,
+      header = "Maps", panel.width = 0.8,
+      active.border.color = "black",
+      active.border.size = 0.5,
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 0.5
+    ),
+    list(2, point.size = 0.8),
+    list(3,
+      header = "States",
+      align = "left",
+      text.size = 0.9,
+      panel.width = 1.3
+    ),
+    list(4,
+      header = "Murder Rate\nin 1998",
+      point.type = 20,
+      point.size = 1.4,
+      graph.bgcolor = gray(0.9),
+      xaxis.ticks = list(0, 20, 40, 60),
+      xaxis.labels = list(0, 20, 40, 60),
+      xaxis.title = "Percent (%)",
+      panel.width = 1.8
+    ),
+    list(5,
+      header = "Murder Rate Change\nfrom 1998 to 2008",
+      graph.bgcolor = gray(0.9),
+      xaxis.title = "Percentage Points",
+      panel.width = 1.8
+    )
+  )
+#  print.file = paste0("Output/BRA_2_08_06_2024.", outputFormat),
+#  print.res = 300
 )
 ```
 
 
-## Example 2: Adding Scatterplots as a New Plot Type {#Ch4-Example2}
+
+
+
+## Example 3: Adding Scatterplots as a New Plot Type {#Ch4-Example3}
 
 
 
