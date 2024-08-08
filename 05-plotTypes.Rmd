@@ -61,38 +61,212 @@ Existing build functions from https://github.com/USEPA/micromap/blob/master/R/Pa
 `dot_cl_build`, `ranks_build`.
 
 
+(ref:Ch5-defaultplottypes-cap) Linked micromap plot,\index{Linked micromap plot} based on the West Virginia watershed dataset, that shows all pre-defined plot types of the **micromap**\index{R Packages!micromap} R package [@PaOl2015].
+
+
+```{r Ch5-defaultplottypes, fig.cap = '(ref:Ch5-defaultplottypes-cap)', fig.width = 7, fig.height = 7}
+library(micromap)
+
+wv_watershed_sf <- sf::st_read(
+  dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
+  quiet = TRUE
+)
+
+wv_watershed_sf$short_name <- as.factor(wv_watershed_sf$Random_Wat)
+
+wv_watershed_short <- list(
+  "SPotom" = "South Branch Potomac",
+  "NPotom" = "North Branch Potomac",
+  "Cacapo" = "Cacapon/Shenandoah Hardy",
+  "Potom" = "Potomac Direct Drains/Shenandoah Jefferson",
+  "UNew" = "Upper New/James",
+  "Tygart" = "Tygart Valley",
+  "WFork" = "West Fork",
+  "Monong" = "Monongahela/Dunkard",
+  "Cheat" = "Cheat/Youghiogheny",
+  "UOhio" = "Upper Ohio North/Upper Ohio South",
+  "MOhioN" = "Middle Ohio North",
+  "MOhioS" = "Middle Ohio South",
+  "LKana" = "Little Kanawha",
+  "Greenb" = "Greenbrier",
+  "LNew" = "Lower New",
+  "Gauley" = "Gauley",
+  "UKana" = "Upper Kanawha",
+  "Elk" = "Elk",
+  "LKana" = "Lower Kanawha",
+  "Coal" = "Coal",
+  "UGuya" = "Upper Guyandotte",
+  "LGuya" = "Lower Guyandotte",
+  "TugFork" = "Tug Fork",
+  "BigSand" = "Big Sandy/Lower Ohio",
+  "Twelvep" = "Twelvepole"
+)
+
+levels(wv_watershed_sf$short_name) <- wv_watershed_short
+
+mmplot(
+  map.data = wv_watershed_sf,
+  panel.types = c(
+    "dot_legend",
+    "ranks",
+    "labels",
+    "dot",
+    "dot_cl",
+    "bar",
+    "bar_cl",
+    "box_summary",
+    "map"
+  ),
+  panel.data = list(
+    NA,
+    NA,
+    "short_name",
+    "Cond_med",
+    list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
+    "Cond_med",
+    list("Cond_med", "Cond_LCB95", "Cond_UCB95"),
+    list("cond_min", "condq1", "cond_med1", "condq3", "cond_max"),
+    NA
+  ),
+  ord.by = "Cond_med",
+  rev.ord = TRUE,
+  grouping = 5,
+  plot.pGrp.spacing = 1.2,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1],
+  panel.att = list(
+    list(
+      1,
+      panel.width = 1.8,
+      point.type = 15,
+      point.size = 0.7,
+      point.border = TRUE,
+      xaxis.labels.size = 0.8
+    ),
+    list(
+      2,
+      header = "Rank\n(ranks)",
+      panel.width = 0.8,
+      align = "center",
+      text.size = 0.2,
+      xaxis.labels.size = 0.8,
+      right.margin = 0.4
+    ),
+    list(
+      3,
+      header = "Name\n(labels)",
+      panel.width = 0.8,
+      align = "left",
+      text.size = 0.75,
+      xaxis.labels.size = 0.8
+    ),
+    list(
+      4,
+      header = "Dotplot\n(dot)",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 250, 500),
+      xaxis.labels = list(0, 250, 500),
+      xaxis.labels.size = 0.8,
+      xaxis.title = "[\u03BCS/cm]",
+      left.margin = -0.5,
+      right.margin = 0.3
+    ),
+    list(
+      5,
+      header = "Dotplot & CI\n(dot_cl)",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 250, 500, 750),
+      xaxis.labels = list(0, 250, 500, 750),
+      xaxis.labels.size = 0.8,
+      xaxis.title = "[\u03BCS/cm]",
+      left.margin = -0.5,
+      right.margin = 0.3
+    ),
+    list(
+      6,
+      header = "Barchart\n(bar)",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 250, 500),
+      xaxis.labels = list(0, 250, 500),
+      xaxis.labels.size = 0.8,
+      xaxis.title = "[\u03BCS/cm]",
+      left.margin = -0.5,
+      right.margin = 0.3
+    ),
+    list(
+      7,
+      header = "Barchart & CI\n(bar_cl)",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(0, 250, 500, 750),
+      xaxis.labels = list(0, 250, 500, 750),
+      xaxis.labels.size = 0.8,
+      xaxis.title = "[\u03BCS/cm]",
+      left.margin = -0.5,
+      right.margin = 0.3
+    ),
+    list(
+      8,
+      header = "Boxplot\n(box_summary)",
+      graph.bgcolor = "lightgray",
+      graph.bar.size = 0.7,
+      xaxis.ticks = c(0, 1000, 2000, 3000, 4000, 5000),
+      xaxis.labels = c(0, 1, 2, 3, 4, 5),
+      xaxis.labels.size = 0.8,
+      xaxis.title = "[1,000 \u03BCS/cm]",
+      panel.width = 1.2,
+      left.margin = -0.5,
+      right.margin = 0.3
+    ),
+    list(
+      9,
+      header = "Maps\n(map)",
+      inactive.border.color = gray(0.7),
+      inactive.border.size = 1.5,
+      xaxis.labels.size = 0.8
+    )
+  )
+)
+```
+
 
 - general principles of adding new graph types
 
-Examples \@ref(Ch4-Example1) and \@ref(Ch4-Example2)
+Examples \@ref(Ch5-Example2) and \@ref(Ch5-Example3)
 have been adapted from @SDWPM2014 where they have been introduced
 originally.
 
 
+## Example 1: Adding Vignette Example {#Ch5-Example1}
 
-## Example 1: Adding Bar Charts as a New Plot Type {#Ch4-Example1}
 
-
-```{r Ch4-barchartArgentina, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
+```{r Ch5-vignettechart, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
 library(micromap)
 library(ggplot2)
 library(XML)
 library(dplyr)
 
 
+```
+
+
+## Example 2: Adding Bar Charts as a New Plot Type {#Ch5-Example2}
+
+
+```{r Ch5-barchartArgentina, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
 ArgShapefile <- as_Spatial(st_read("data/ARG_adm/ARG_adm1.shp"))
 
 names(ArgShapefile)
 ArgShapefile$NAME_1
 
 ArgShapefileThin <- st_as_sf(ArgShapefile) %>%
-  st_simplify(dTolerance = 1000,
-              preserveTopology = TRUE) %>%
+  st_simplify(
+    dTolerance = 1000,
+    preserveTopology = TRUE
+  ) %>%
   as_Spatial()
 
 # manipulate population dataset
-  Argfile <- "data/List of Argentine provinces by population - Wikipedia, the free encyclopedia.htm"
-  Argtable <- readHTMLTable(Argfile)[[1]]
+Argfile <- "data/List of Argentine provinces by population - Wikipedia, the free encyclopedia.htm"
+Argtable <- readHTMLTable(Argfile)[[1]]
 
 
 Argtable <- Argtable[, -3]
@@ -171,55 +345,6 @@ bar_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
 
 Argtable$ProvinceTemp <- as.character(Argtable$provinces)
 
-Greys6 <- brewer.pal(6, "Greys")[6:1]
-
-# mmplot(
-#   stat.data = Argtable,
-#   map.data = ArgPolys,
-#   panel.types = c("map", "labels", "dot", "bar_plot"),
-#   panel.data = list(NA, "ProvinceTemp", "2010 Population", "change"),
-#   ord.by = "2010 Population",
-#   rev.ord = TRUE,
-#   grouping = c(5, 5, 4, 5, 5),
-#   vertical.align = "center",
-#   map.link = c("provinces", "ID"),
-#   colors = Greys6,
-#   map.color2 = gray(0.95),
-#   panel.att = list(
-#     list(1,
-#       header = "Maps",
-#       panel.width = 0.6,
-#       active.border.color = "black",
-#       active.border.size = 0.5,
-#       inactive.border.color = gray(0.7),
-#       inactive.border.size = 0.5
-#     ),
-#     list(2,
-#       header = "Provinces",
-#       align = "center",
-#       text.size = 0.9,
-#       panel.width = 1.5
-#     ),
-#     list(3,
-#       header = "2010 Population",
-#       graph.bgcolor = gray(0.95),
-#       xaxis.ticks = list(0, 5, 10, 15, 20),
-#       xaxis.labels = list(0, 5, 10, 15, 20),
-#       xaxis.title = "People (Millions)",
-#       panel.width = 1.6
-#     ),
-#     list(4,
-#       header = "Population Increase\nfrom 2001 to 2010",
-#       graph.bgcolor = gray(0.95),
-#       xaxis.title = "People (Millions)",
-#       panel.width = 1.6
-#     )
-#   )
-# #  print.file = paste0("Output/ARG_1_1_08_06_2024_not_used.", outputFormat),
-# #  print.res = 300
-# )
-
-
 # arg1_2 - Figure 3
 mmplot(
   stat.data = Argtable,
@@ -237,7 +362,7 @@ mmplot(
   grouping = c(5, 5, 4, 5, 5),
   vertical.align = "center",
   map.link = c("provinces", "ID"),
-  colors = Greys6,
+  colors = brewer.pal(6, "Greys")[6:1],
   map.color2 = gray(0.95),
   plot.width = 10,
   panel.att = list(
@@ -280,18 +405,14 @@ mmplot(
       panel.width = 1.8
     )
   )
-#  print.file = paste0("Output/ARG_1_2_08_06_2024.", outputFormat),
-#  print.res = 300
 )
-
-
 ```
 
 
-## Example 2: Adding Arrow Plots for Differences as a New Plot Type {#Ch4-Example2}
+## Example 3: Adding Arrow Plots for Differences as a New Plot Type {#Ch5-Example3}
 
 
-```{r Ch4-arrowplotBrazil, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9}
+```{r Ch5-arrowplotBrazil, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9}
 library(micromap)
 library(ggplot2)
 library(XML)
@@ -301,14 +422,16 @@ library(dplyr)
 BraShapefile <- sf::as_Spatial(sf::st_read("data/BRA_adm/BRA_adm1.shp"))
 
 BraShapefileThin <- st_as_sf(BraShapefile) %>%
-  st_simplify(dTolerance = 1000,
-              preserveTopology = TRUE) %>%
+  st_simplify(
+    dTolerance = 1000,
+    preserveTopology = TRUE
+  ) %>%
   as_Spatial()
 
 brazil4 <- BraShapefileThin
 
 Brafile <- "data/States of Brazil - Wikipedia, the free encyclopedia.htm"
-  Bratable <- readHTMLTable(Brafile)[[12]]
+Bratable <- readHTMLTable(Brafile)[[12]]
 
 Bratable <- apply(Bratable, 2, function(x) gsub("[(].*", "", x))
 Bratable <- apply(Bratable, 2, function(x) gsub(".*00000", "", x))
@@ -328,16 +451,13 @@ State[15:27] <- StateReordered
 brazil4@data <- cbind(brazil4@data, State)
 Bratable[, 6] <- Bratable[, 6] / 1000000
 
-
-  
-
 BrazilPolys <- create_map_table(brazil4, "State")
 
 
 # bra2 - Figure 6
 
-  Brafile2 <- "data/List of Brazilian states by murder rate - Wikipedia, the free encyclopedia.htm"
-  Bratable2 <- readHTMLTable(Brafile2)[[1]]
+Brafile2 <- "data/List of Brazilian states by murder rate - Wikipedia, the free encyclopedia.htm"
+Bratable2 <- readHTMLTable(Brafile2)[[1]]
 
 Bratable2 <- Bratable2[-c(8, 18, 23, 27, 32, 33), ]
 Bratable2[, 2:13] <- sapply(Bratable2[, 2:13], function(x) as.numeric(as.character(x)))
@@ -412,11 +532,6 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
 
 Bratable2$StateMod <- as.character(Bratable2$states)
 
-Greys5 <- brewer.pal(5, "Greys")[5:1]
-
-
-###
-
 mmplot(
   stat.data = Bratable2,
   map.data = BrazilPolys,
@@ -427,7 +542,7 @@ mmplot(
   grouping = c(4, 4, 4, 3, 4, 4, 4),
   vertical.align = "center",
   map.link = c("states", "ID"),
-  colors = Greys5,
+  colors = brewer.pal(5, "Greys")[5:1],
   map.color2 = gray(0.9),
   panel.att = list(
     list(1,
@@ -461,16 +576,14 @@ mmplot(
       panel.width = 1.8
     )
   )
-#  print.file = paste0("Output/BRA_2_08_06_2024.", outputFormat),
-#  print.res = 300
+  #  print.file = paste0("Output/BRA_2_08_06_2024.", outputFormat),
+  #  print.res = 300
 )
 ```
 
 
 
-
-
-## Example 3: Adding Scatterplots as a New Plot Type {#Ch4-Example3}
+## Example 4: Adding Scatterplots as a New Plot Type {#Ch5-Example4}
 
 
 
@@ -498,10 +611,10 @@ lmplot(
   map.data = statePolys,
   panel.types = c("labels", "dot", "dot", "map"),
   panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
+  ord.by = "pov",
+  grouping = 5,
   median.row = TRUE,
-  plot.width = 2, 
+  plot.width = 2,
   plot.height = 6,
   map.link = c("StateAb", "ID")
 )
@@ -522,4 +635,3 @@ of micromaps that are related to the title and content of your chapter, etc.?
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
-
