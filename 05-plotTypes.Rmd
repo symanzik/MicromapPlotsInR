@@ -850,8 +850,1022 @@ mmplot(
 ```
 
 
-
 ## Example 4: Adding Scatterplots as a New Plot Type {#Ch5-Example4}
+
+
+```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9}
+### load packages
+library(micromap)
+library(ggplot2)
+library(grid)
+# library(rgdal)
+
+### read code to print at end
+# read_chunk("scatdot_build.R")
+# read_chunk("scatdot_att.R")
+# read_chunk("axis_opts_grid.R")
+
+### source the functions in to the global environment
+# source("scatdot_build.R")
+
+scatdot_build <- function(pl, p, DF, att) {
+  # define the data to use
+  DF$tmp.data1 <- DF[, unlist(att[[p]]$panel.data[1])]
+  DF$tmp.data2 <- DF[, unlist(att[[p]]$panel.data[2])]
+
+  DF <- alterForMedian(DF, att)
+
+  # set the x and y axis limits
+  # start with the ranges of the data
+  tmp.limsx <- range(DF[, unlist(att[[p]]$panel.data[1])], na.rm = T)
+  tmp.limsy <- range(DF[, unlist(att[[p]]$panel.data[2])], na.rm = T)
+
+  # expand if the ticks cover a wider range
+  if (any(!is.na(att[[p]]$xaxis.ticks))) {
+    tmp.limsx <- range(c(tmp.limsx, att[[p]]$xaxis.ticks))
+  }
+  if (any(!is.na(att[[p]]$yaxis.ticks))) {
+    tmp.limsy <- range(c(tmp.limsy, att[[p]]$yaxis.ticks))
+  }
+
+  # expand a bit more so things aren't bumping agains the edges
+  tmp.limsx <- tmp.limsx + c(-1, 1) * diff(tmp.limsx) * 0.05
+  tmp.limsy <- tmp.limsy + c(-1, 1) * diff(tmp.limsy) * 0.05
+
+  # ensure the range isn't zero
+  if (diff(tmp.limsx) == 0) {
+    tmp.limsx <- tmp.limsx + c(-0.5, 0.5)
+  }
+  if (diff(tmp.limsy) == 0) {
+    tmp.limsy <- tmp.limsy + c(-0.5, 0.5)
+  }
+
+  # median row margins, if needed
+  tmp.median.limsy <- NULL
+
+  if (att$median.row) {
+    if (!any(DF$median)) {
+      DF <- rbind(DF, transform(DF[1, ],
+        pGrpOrd  = 1,
+        pGrp     = att$m.pGrp,
+        median   = TRUE,
+        rank     = "",
+        tmp.data = median(DF$tmp.data)
+      ))
+    }
+    tmp.median.limsy <- c(-0.5, -1.5)
+  }
+
+  # create a new dataframe to hold the full set of points
+  # 'n' for every group, except the median
+  if (att[[p]]$annotate.all) {
+    fullDF <- tmpDF <- DF
+    list <- unique(DF$pGrp[!DF$median])
+    for (j in 1:length(list)) {
+      tmpDF$pGrp <- list[j]
+      tmpDF$color <- att$grouping + 2
+      tmpDF$median <- FALSE
+      fullDF <- merge(fullDF, tmpDF, all = TRUE)
+    }
+  } else {
+    fullDF <- DF
+  }
+
+  fullDF$ann <- (fullDF$color == att$grouping + 2) + 1
+
+
+  if (att$median.row) {
+    if (fullDF[fullDF$median, ]$pGrp %in% 1:max(fullDF$pGrp)) {
+      fullDF[fullDF$median, ]$pGrp <- fullDF[fullDF$median, ]$pGrp - 1
+      fullDF[fullDF$median, ]$color <- att$grouping + 1
+
+      copyMed <- fullDF[fullDF$median, ]
+      copyMed$pGrp <- copyMed$pGrp + 2
+
+      fullDF <- merge(fullDF, copyMed, all = TRUE)
+    } else {
+      fullDF <- fullDF[!fullDF$median, ]
+    }
+  }
+
+  att$colors <- c(
+    att$colors[1:att$grouping],
+    att[[p]]$median.point.color
+  )
+
+
+  # start the panel
+  pl <- ggplot(fullDF)
+
+  # plot points
+  pl <- pl + geom_point(aes(
+    x = tmp.data1,
+    y = tmp.data2,
+    color = as.factor(color),
+    size = as.factor(ann),
+    pch = as.factor(ann),
+    alpha = as.factor(ann)
+  ))
+
+  # use the correct colors, no legend needed
+  pl <- pl + scale_colour_manual(
+    values = c(
+      att$colors,
+      att[[p]]$annotate.color
+    ),
+    guide = "none"
+  )
+  pl <- pl + scale_size_manual(
+    values = c(
+      att[[p]]$point.size * 2,
+      att[[p]]$annotate.size * 2
+    ),
+    guide = "none"
+  )
+  pl <- pl + scale_shape_manual(
+    values = c(
+      att[[p]]$point.type,
+      att[[p]]$annotate.type
+    ),
+    guide = "none"
+  )
+  pl <- pl + scale_alpha_manual(
+    values = c(
+      att[[p]]$point.alpha,
+      att[[p]]$annotate.alpha
+    ),
+    guide = "none"
+  )
+
+  # use facet to split up the groups
+  pl <- pl + facet_grid(pGrp ~ .,
+    space = "free",
+    scales = "free_y",
+    drop = TRUE
+  )
+
+  # let the 3 package functions alter some basics
+  pl <- plot_opts(p, pl, att)
+  pl <- graph_opts(p, pl, att)
+  pl <- axis_opts_grid(p, pl, att,
+    limsx = tmp.limsx,
+    limsy = c(tmp.limsy, tmp.median.limsy),
+    border = att[[p]]$border
+  )
+  pl
+}
+
+# source("scatdot_att.R")
+
+scatdot_att <- function(show = FALSE) {
+  tmp.att <- list(
+    panel.header = NA,
+    panel.header.size = as.numeric(1),
+    panel.header.color = "black",
+    panel.header.face = "plain",
+    panel.header.font = NA,
+    panel.header.lineheight = as.numeric(1),
+    panel.width = as.numeric(1),
+    panel.bgcolor = NA,
+    left.margin = NA,
+    right.margin = NA,
+    panel.margins = c(1, -0.25, 1, -1.5),
+    graph.grid.major = as.logical(TRUE),
+    graph.grid.major.lty = as.numeric(1),
+    graph.grid.major.col = "dark gray",
+    graph.grid.minor = as.logical(TRUE),
+    graph.grid.minor.lty = as.numeric(3),
+    graph.grid.minor.col = "light gray",
+    graph.bgcolor = NA,
+    graph.border.color = "black",
+    xaxis.title = "",
+    xaxis.ticks = NA,
+    xaxis.labels = NA,
+    xaxis.line.display = as.logical(TRUE),
+    xaxis.ticks.display = as.logical(TRUE),
+    xaxis.text.display = as.logical(TRUE),
+    xaxis.labels.size = as.numeric(1),
+    xaxis.labels.angle = NULL,
+    xaxis.labels.hjust = NULL,
+    xaxis.labels.vjust = NULL,
+    xaxis.title.size = as.numeric(1),
+    xaxis.title.color = "black",
+    xaxis.title.face = "plain",
+    xaxis.title.font = NA,
+    xaxis.title.lineheight = as.numeric(1),
+    yaxis.title = "",
+    yaxis.ticks = NA,
+    yaxis.labels = NA,
+    yaxis.line.display = as.logical(TRUE),
+    yaxis.ticks.display = as.logical(TRUE),
+    yaxis.text.display = as.logical(TRUE),
+    yaxis.labels.size = as.numeric(1),
+    yaxis.labels.angle = NULL,
+    yaxis.labels.hjust = NULL,
+    yaxis.labels.vjust = NULL,
+    yaxis.title.size = as.numeric(1),
+    yaxis.title.color = "black",
+    yaxis.title.face = "plain",
+    yaxis.title.font = NA,
+    yaxis.title.lineheight = as.numeric(1),
+    panel.margins = c(1, -0.25, 1, 1.5),
+    point.size = as.numeric(2),
+    point.type = as.numeric(19),
+    point.alpha = as.numeric(0.9),
+    median.line = as.logical(FALSE),
+    median.line.col = "black",
+    median.line.typ = "longdash",
+    median.line.size = as.numeric(1),
+    median.point.color = "dark gray",
+    border = as.logical(TRUE),
+    graph.margin = as.numeric(1),
+    annotate.all = as.logical(TRUE),
+    annotate.size = as.numeric(0.5),
+    annotate.color = "gray",
+    annotate.type = as.numeric(19),
+    annotate.alpha = as.numeric(1)
+  )
+  if (show) {
+    tmp.att
+  } else {
+    invisible(tmp.att)
+  }
+}
+
+# source("axis_opts_grid.R")
+
+axis_opts_grid <- function(i, pl, a,
+                           limsx = NA,
+                           limsy = NA,
+                           border = TRUE,
+                           expx = FALSE) {
+  # if missing a background color specification, default to white
+  bgcolor <- ifelse(!is.na(a[[i]]$panel.bgcolor),
+    a[[i]]$panel.bgcolor,
+    "white"
+  )
+
+  # there is only one axis label size
+  label.size <- as.numeric(max(all_atts(a, "xaxis.labels.size"))) * 10
+
+
+  ### --------------------------------------------------------- ###
+  ### x-axis title
+  ### --------------------------------------------------------- ###
+
+  # start off with everything set clean
+  x.breaks <- x.labels <- x.limits <- x.expand <- FALSE
+  xstr.title <- "''"
+
+  if (!all(is.na(all_atts(a, "xaxis.title")))) {
+    tmp.size <- max(as.numeric(all_atts(
+      a,
+      "xaxis.title.size"
+    ))) * 8
+    tmp.lineheight <- as.numeric(all_atts(
+      a,
+      "xaxis.title.lineheight"
+    ))
+    tmp.lineheight <- tmp.lineheight[which.max(abs(tmp.lineheight - 1))]
+
+    tmp.titles <- lapply(
+      all_atts(a, "xaxis.title"),
+      function(t) {
+        if (is.na(t) | t == "") {
+          t <- " "
+        } else {
+          t
+        }
+      }
+    )
+    tmp.title <- tmp.titles[[i]]
+    ns <- max(unlist(lapply(
+      tmp.titles,
+      function(x) {
+        length(strsplit(x, "\n")[[1]])
+      }
+    ))) -
+      length(strsplit(tmp.title, "\n")[[1]])
+    if (ns > 0) {
+      tmp.title <- paste(tmp.title, rep(" \n ", ns), sep = "")
+    }
+    xstr.title <- paste("'", tmp.title, "'", sep = "")
+
+    pl <- pl +
+      theme(
+        axis.title.x =
+          element_text(
+            family = a[[i]]$xaxis.title.font,
+            face = a[[i]]$xaxis.title.face,
+            colour = a[[i]]$xaxis.title.color,
+            size = tmp.size,
+            lineheight = tmp.lineheight
+          )
+      )
+  }
+
+  if (all(is.na(all_atts(a, "xaxis.title")))) {
+    pl <- pl + theme(axis.title.x = element_blank())
+  }
+
+  ### --------------------------------------------------------- ###
+
+  if (!any(is.na(limsx))) {
+    x.limits <- TRUE
+  }
+  if (!expx) {
+    x.expand <- TRUE
+    xstr.expand <- as.character(", expand=c(0,0)")
+  }
+
+  xstr.limits <- as.character(paste(
+    "c(",
+    min(limsx),
+    ",",
+    max(limsx),
+    ")"
+  ))
+  xstr.limits <- paste(", limits=", xstr.limits)
+
+
+  ### --------------------------------------------------------- ###
+  ### Axis line display
+  ### --------------------------------------------------------- ###
+
+  if (!a[[i]]$xaxis.line.display & !a[[i]]$yaxis.line.display) {
+    pl <- pl + theme(axis.line = element_line(colour = bgcolor))
+  } else {
+    pl <- pl + theme(axis.line = element_line(colour = "black"))
+  }
+
+  pl <- pl + theme(axis.ticks = element_blank())
+
+
+  ### --------------------------------------------------------- ###
+  ### x-axis text display & text, labels, ticks
+  ### --------------------------------------------------------- ###
+
+  if (!any(all_attsb(a, "xaxis.text.display"))) {
+    pl <- pl + theme(axis.text.x = element_blank())
+  } else if (!a[[i]]$xaxis.text.display) {
+    pl <- pl + theme(axis.text.x = element_text(
+      colour = bgcolor,
+      size = label.size
+    ))
+  } else if (!is.na(unlist(a[[i]]$xaxis.labels)[1]) &
+    !is.na(unlist(a[[i]]$xaxis.ticks)[1])) {
+    tmpTheme <- "theme(axis.text.x = element_text(size=label.size"
+    if (!is.null(a[[i]]$xaxis.labels.angle)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        angle = ",
+        a[[i]]$xaxis.labels.angle
+      )
+    }
+    if (!is.null(a[[i]]$xaxis.labels.hjust)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        hjust =",
+        a[[i]]$xaxis.labels.hjust
+      )
+    }
+    if (!is.null(a[[i]]$xaxis.labels.vjust)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        vjust =",
+        a[[i]]$xaxis.labels.vjust
+      )
+    }
+    tmpTheme <- paste(tmpTheme, "))")
+
+    pl <- pl + eval(parse(text = tmpTheme))
+
+    x.breaks <- x.labels <- TRUE
+    xstr.breaks <- paste(",
+                         breaks=c(",
+      make.string(a[[i]]$xaxis.ticks),
+      ")",
+      sep = ""
+    )
+    xstr.labels <- paste(",
+                         labels=c(",
+      make.string(a[[i]]$xaxis.labels),
+      ")",
+      sep = ""
+    )
+  } else if (!is.na(unlist(a[[i]]$xaxis.labels)[1]) |
+    !is.na(unlist(a[[i]]$xaxis.ticks)[1])) {
+    print("Warning: both axis labels AND tick location must be specified")
+  }
+
+
+
+  ### --------------------------------------------------------- ###
+  ### scale_x_continuous
+  ### --------------------------------------------------------- ###
+
+  xstr <- paste("scale_x_continuous(", xstr.title)
+  if (x.expand) {
+    xstr <- paste(xstr, xstr.expand)
+  }
+  if (x.breaks) {
+    xstr <- paste(xstr, xstr.breaks)
+  }
+  if (x.labels) {
+    xstr <- paste(xstr, xstr.labels)
+  }
+  if (x.limits) {
+    xstr <- paste(xstr, xstr.limits)
+  }
+  xstr <- paste(xstr, ")")
+
+  pl <- pl + eval(parse(text = xstr))
+
+
+
+
+  ### --------------------------------------------------------- ###
+  ### y-axis title
+  ### --------------------------------------------------------- ###
+
+  # start off with everything set clean
+  y.breaks <- y.labels <- y.limits <- y.expand <- FALSE
+  ystr.title <- "''"
+  if (!all(is.na(all_atts(a, "yaxis.title")))) {
+    tmp.size <- max(as.numeric(all_atts(
+      a,
+      "yaxis.title.size"
+    ))) * 8
+    tmp.lineheight <- as.numeric(all_atts(
+      a,
+      "yaxis.title.lineheight"
+    ))
+    tmp.lineheight <- tmp.lineheight[which.max(abs(tmp.lineheight - 1))]
+
+    tmp.titles <- lapply(
+      all_atts(a, "yaxis.title"),
+      function(t) {
+        if (is.na(t) | t == "") {
+          t <- " "
+        } else {
+          t
+        }
+      }
+    )
+    tmp.title <- tmp.titles[[i]]
+    ns <- max(unlist(lapply(
+      tmp.titles,
+      function(y) {
+        length(strsplit(y, "\n")[[1]])
+      }
+    ))) -
+      length(strsplit(tmp.title, "\n")[[1]])
+    if (ns > 0) {
+      tmp.title <- paste(tmp.title, rep(" \n ", ns), sep = "")
+    }
+    ystr.title <- paste("'", tmp.title, "'", sep = "")
+
+    pl <- pl +
+      theme(
+        axis.title.y =
+          element_text(
+            family = a[[i]]$yaxis.title.font,
+            face = a[[i]]$yaxis.title.face,
+            colour = a[[i]]$yaxis.title.color,
+            size = tmp.size,
+            lineheight = tmp.lineheight
+          )
+      )
+  }
+  if (all(is.na(all_atts(a, "yaxis.title")))) {
+    pl <- pl + theme(axis.title.y = element_blank())
+  }
+
+  ### --------------------------------------------------------- ###
+
+  if (!any(is.na(limsy))) {
+    y.limits <- TRUE
+  }
+  if (!expx) {
+    y.expand <- TRUE
+    ystr.expand <- as.character(", expand=c(0,0)")
+  }
+  ystr.limits <- as.character(paste(
+    "c(",
+    min(limsy),
+    ",",
+    max(limsy),
+    ")"
+  ))
+  ystr.limits <- paste(", limits=", ystr.limits)
+
+
+  ### --------------------------------------------------------- ###
+  ### axis line display
+  ### --------------------------------------------------------- ###
+
+  if (!a[[i]]$xaxis.line.display & !a[[i]]$yaxis.line.display) {
+    pl <- pl + theme(axis.line = element_line(colour = bgcolor))
+  } else {
+    pl <- pl + theme(axis.line = element_line(colour = "black"))
+  }
+
+  pl <- pl + theme(axis.ticks = element_blank())
+
+
+  ### --------------------------------------------------------- ###
+  ### y-axis text display & text, labels, ticks
+  ### --------------------------------------------------------- ###
+
+
+  if (!any(all_attsb(a, "yaxis.text.display"))) {
+    pl <- pl + theme(axis.text.y = element_blank())
+  } else if (!a[[i]]$yaxis.text.display) {
+    pl <- pl + theme(
+      axis.text.y =
+        element_text(
+          colour = bgcolor,
+          size = label.size
+        )
+    )
+  } else if (!is.na(unlist(a[[i]]$yaxis.labels)[1]) &
+    !is.na(unlist(a[[i]]$yaxis.ticks)[1])) {
+    tmpTheme <- "theme(axis.text.y = element_text(size=label.size"
+    if (!is.null(a[[i]]$yaxis.labels.angle)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        angle = ",
+        a[[i]]$yaxis.labels.angle
+      )
+    }
+    if (!is.null(a[[i]]$yaxis.labels.hjust)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        hjust =",
+        a[[i]]$yaxis.labels.hjust
+      )
+    }
+    if (!is.null(a[[i]]$yaxis.labels.vjust)) {
+      tmpTheme <- paste(
+        tmpTheme, ",
+                        vjust =",
+        a[[i]]$yaxis.labels.vjust
+      )
+    }
+    tmpTheme <- paste(tmpTheme, "))")
+
+    pl <- pl + eval(parse(text = tmpTheme))
+
+    y.breaks <- y.labels <- TRUE
+    ystr.breaks <- paste(", breaks = c(",
+      make.string(a[[i]]$yaxis.ticks),
+      ")",
+      sep = ""
+    )
+    ystr.labels <- paste(", labels = c(",
+      make.string(a[[i]]$yaxis.labels),
+      ")",
+      sep = ""
+    )
+  } else if (!is.na(unlist(a[[i]]$yaxis.labels)[1]) |
+    !is.na(unlist(a[[i]]$yaxis.ticks)[1])) {
+    print("Warning: both axis labels AND tick location must be specified")
+  }
+
+
+
+  ### --------------------------------------------------------- ###
+  ### scale_y_continuous
+  ### --------------------------------------------------------- ###
+
+  ystr <- paste("scale_y_continuous(", ystr.title)
+  if (y.expand) {
+    ystr <- paste(ystr, ystr.expand)
+  }
+  if (y.breaks) {
+    ystr <- paste(ystr, ystr.breaks)
+  }
+  if (y.labels) {
+    ystr <- paste(ystr, ystr.labels)
+  }
+  if (y.limits) {
+    ystr <- paste(ystr, ystr.limits)
+  }
+  ystr <- paste(ystr, ")")
+
+  pl <- pl + eval(parse(text = ystr))
+
+
+  ### --------------------------------------------------------- ###
+  ### Grid Lines & vertical gap between scatter plots
+  ### --------------------------------------------------------- ###
+
+  # some specific theme items different than the basic
+  pl <- pl + theme(
+    panel.grid.major =
+      element_line(
+        linetype =
+          a[[i]]$graph.grid.major.lty,
+        colour =
+          a[[i]]$graph.grid.major.col
+      ),
+    panel.grid.minor =
+      element_line(
+        linetype =
+          a[[i]]$graph.grid.minor.lty,
+        colour =
+          a[[i]]$graph.grid.minor.col
+      ),
+    panel.margin = unit(
+      a[[i]]$graph.margin,
+      "lines"
+    )
+  )
+
+
+  ### --------------------------------------------------------- ###
+  ### Grid's border
+  ### --------------------------------------------------------- ###
+
+  borderx <- range(limsx) + c(1, -1) * diff(range(limsx)) * 0.001
+  bordery <- range(limsy) + c(0, -1) * diff(range(limsy)) * 0.001
+
+  facetNum <- unique(pl$data$pGrp)
+  if (a$median.row) {
+    facetNum <- facetNum[facetNum != a$m.pGrp]
+  }
+
+  tmp.border <- data.frame(
+    pGrp = rep(facetNum, each = 2),
+    ymin = bordery[1],
+    ymax = bordery[2],
+    xmin = borderx[1],
+    xmax = borderx[2]
+  )
+  if (border) {
+    border.color <- a[[i]]$graph.border.color
+  } else {
+    border.color <- NA
+  }
+
+  # draw a rectange instead of a border
+  pl <- pl + geom_rect(
+    aes(
+      xmin = xmin,
+      xmax = xmax,
+      ymin = ymin,
+      ymax = ymax
+    ),
+    data = tmp.border,
+    colour = border.color,
+    fill = NA
+  )
+
+  # set the boarder off
+  pl <- pl + theme(axis.line = element_blank())
+
+  pl
+}
+
+### read in the statistical data
+# religion <- read.csv("Main Document-ReligionData.csv",
+#                     header = TRUE)
+
+religion <- read.csv(
+  file = "data/China_ReligionData.csv",
+  header = TRUE
+)
+
+### read in the map dta
+# ChinaShape <- readOGR("China_Provinces_Thinned",
+#                       "ChinaThinned",
+#                       verbose = TRUE)
+
+ChinaShapefile <- sf::as_Spatial(sf::st_read("data/China_Shapefiles/export.shp"))
+
+ChinaShapefileThin <- sf::st_read("data/China_Shapefiles/export.shp") %>%
+  st_simplify(dTolerance = 2000) %>%
+  as_Spatial()
+
+# gIsValid(ChinaShape, byid = TRUE, reason = TRUE)
+ChinaPolys <- create_map_table(ChinaShapefileThin, "ename")
+
+
+
+mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c(
+    "labels",
+    "dot_legend",
+    "dot",
+    "scatdot",
+    "map"
+  ),
+  panel.data = list(
+    "Province",
+    NA,
+    "Daoism",
+    c("Christianity", "Buddhism"),
+    NA
+  ),
+  ord.by = "Daoism",
+  map.link = c("Province", "ID"),
+  grouping = 5
+)
+
+
+### set tick mark sequence
+Daoism.tick <- seq(from = 0, to = 2000, by = 1000)
+Christ.tick <- seq(from = 0, to = 3000, by = 1000)
+Buddhi.tick <- seq(from = 0, to = 3000, by = 1000)
+Islam.tick <- seq(from = 0, to = 25000, by = 10000)
+Total.tick <- seq(from = 0, to = 25000, by = 10000)
+
+Total.tick.less <- seq(from = 0, to = 10000, by = 5000)
+Islam.tick.less <- seq(from = 0, to = 4000, by = 1000)
+
+
+mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c(
+    "labels",
+    "dot_legend",
+    "dot",
+    "scatdot",
+    "map"
+  ),
+  panel.data = list(
+    "Province",
+    NA,
+    "Daoism",
+    c("Christianity", "Buddhism"),
+    NA
+  ),
+  ord.by = "Daoism",
+  map.link = c("Province", "ID"),
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  median.color = "dark gray",
+  colors = brewer.pal(5, "RdYlBu"),
+  two.ended.maps = TRUE,
+  map.all = TRUE,
+  map.color2 = "lightgray",
+  plot.header = "Religion in China",
+  plot.header.size = 2,
+  plot.header.color = "black",
+  plot.panel.spacing = 0,
+  plot.pGrp.spacing = 2,
+  panel.att = list(
+    list(
+      1,
+      header = "Provinces",
+      panel.width = .5,
+      align = "right",
+      text.size = 1
+    ),
+    list(
+      2,
+      header = "",
+      point.type = 20,
+      point.size = 2
+    ),
+    list(
+      3,
+      header = "Daoism",
+      point.type = 20,
+      point.size = 2,
+      graph.grid.minor = TRUE,
+      xaxis.title = "Daoism, in thousands",
+      xaxis.ticks = Daoism.tick,
+      xaxis.labels = Daoism.tick / 1000
+    ),
+    list(
+      4,
+      header = "Christianity vs.Buddhism",
+      point.type = 20,
+      point.alpha = 0.8,
+      left.margin = 1.6,
+      xaxis.title = "Christianity, in thousands",
+      xaxis.ticks = Christ.tick,
+      xaxis.labels = Christ.tick / 1000,
+      yaxis.title = "Buddhism, in thousands",
+      yaxis.ticks = Buddhi.tick,
+      yaxis.labels = Buddhi.tick / 1000,
+      graph.margin = 0.5,
+      border = TRUE
+    ),
+    list(
+      5,
+      header = "Two-ended\nCumulative Maps",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.2
+    )
+  )
+)
+
+
+Paired5 <- brewer.pal(5, "Paired")[5:1]
+Paired6 <- brewer.pal(6, "Paired")[6:1]
+Divergent5 <- brewer.pal(5, "RdYlBu")
+
+### ======================================================================== ###
+### Create a plot WITHOUT a median row, but TWO scatdot panels
+### ======================================================================== ###
+
+mmplot(
+  stat.data = religion[religion$Province != "Xinjiang", ],
+  map.data = ChinaPolys,
+  panel.types = c(
+    "labels",
+    "dot_legend",
+    "dot",
+    "scatdot",
+    "scatdot",
+    "map"
+  ),
+  panel.data = list(
+    "Province",
+    NA,
+    "Total",
+    c("Christianity", "Buddhism"),
+    c("Daoism", "Islam"),
+    NA
+  ),
+  ord.by = "Total",
+  map.link = c("Province", "ID"),
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = FALSE,
+  # colors = Divergent5,
+  colors = Paired5,
+  plot.width = 10,
+  plot.height = 10,
+  two.ended.maps = TRUE,
+  map.all = TRUE,
+  map.color2 = "lightgray",
+  plot.header = "Religion in China",
+  plot.header.size = 2,
+  plot.header.color = "black",
+  plot.panel.spacing = 0,
+  plot.pGrp.spacing = 2,
+  panel.att = list(
+    list(1,
+      header = "Provinces",
+      panel.width = .5,
+      align = "right",
+      text.size = 1
+    ),
+    list(2,
+      header = "",
+      point.type = 20,
+      point.size = 2
+    ),
+    list(3,
+      header = "Total",
+      panel.width = 0.75,
+      point.type = 20,
+      point.size = 2,
+      graph.grid.minor = TRUE,
+      xaxis.title = "Total, in thousands",
+      xaxis.ticks = Total.tick.less,
+      xaxis.labels = Total.tick.less / 1000
+    ),
+    list(4,
+      header = "Christianity vs. Buddhism",
+      point.type = 20,
+      # point.size = 3,
+      point.alpha = 0.95,
+      point.border = FALSE,
+      left.margin = 1.5,
+      # panel.width = 1.5,
+      xaxis.title = "Christianity, in thousands",
+      xaxis.ticks = Christ.tick,
+      xaxis.labels = Christ.tick / 1000,
+      yaxis.title = "Buddhism, in thousands",
+      yaxis.ticks = Buddhi.tick,
+      yaxis.labels = Buddhi.tick / 1000,
+      graph.grid.major.col = "dark gray",
+      graph.grid.minor.col = "dark gray",
+      graph.margin = 0.5
+    ),
+    list(5,
+      header = "Daoism vs. Islam",
+      point.type = 20,
+      # point.size = 3,
+      point.alpha = 0.95,
+      point.border = FALSE,
+      left.margin = 1.5,
+      # panel.width = 1.5,
+      xaxis.title = "Daoism, in thousands",
+      xaxis.ticks = Daoism.tick,
+      xaxis.labels = Daoism.tick / 1000,
+      yaxis.title = "Islam, in thousands",
+      yaxis.ticks = Islam.tick.less,
+      yaxis.labels = Islam.tick.less / 1000,
+      graph.grid.major.col = "dark gray",
+      graph.grid.minor.col = "dark gray",
+      graph.margin = 0.5
+    ),
+    list(6,
+      header = "Two-ended\nCumulative Maps",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.2
+    )
+  )
+)
+
+
+### ======================================================================== ###
+### Create a plot WITH a median row
+### ======================================================================== ###
+
+mmplot(
+  stat.data = religion,
+  map.data = ChinaPolys,
+  panel.types = c(
+    "labels",
+    "dot_legend",
+    "dot",
+    "scatdot",
+    "map"
+  ),
+  panel.data = list(
+    "Province",
+    NA,
+    "Daoism",
+    c("Christianity", "Buddhism"),
+    NA
+  ),
+  ord.by = "Daoism",
+  map.link = c("Province", "ID"),
+  rev.ord = TRUE,
+  grouping = 5,
+  median.row = TRUE,
+  colors = Paired5,
+  plot.width = 10,
+  plot.height = 10,
+  two.ended.maps = TRUE,
+  map.all = TRUE,
+  map.color2 = "lightgray",
+  plot.header = "Religion in China",
+  plot.header.size = 2,
+  plot.header.color = "black",
+  plot.panel.spacing = 0,
+  plot.pGrp.spacing = 2,
+  panel.att = list(
+    list(1,
+      header = "Provinces",
+      panel.width = .5,
+      align = "right",
+      text.size = 1
+    ),
+    list(2,
+      header = "",
+      point.type = 20,
+      point.size = 2
+    ),
+    list(3,
+      header = "Daoism",
+      point.type = 20,
+      point.size = 2,
+      graph.grid.minor = TRUE,
+      xaxis.title = "Daoism",
+      xaxis.ticks = Daoism.tick,
+      xaxis.labels = Daoism.tick
+    ),
+    list(4,
+      header = "Christianity vs.Buddhism",
+      point.type = 20,
+      # point.size = 2.5,
+      point.alpha = 0.8,
+      point.border = FALSE,
+      left.margin = 1.6,
+      # panel.width = 1.5,
+      xaxis.title = "Christianity, in thousands",
+      xaxis.ticks = Christ.tick,
+      xaxis.labels = Christ.tick / 1000,
+      yaxis.title = "Buddhism, in thousands",
+      yaxis.ticks = Buddhi.tick,
+      yaxis.labels = Buddhi.tick / 1000,
+      graph.grid.major.col = "dark gray",
+      graph.grid.minor.col = "dark gray",
+      graph.margin = 0.5,
+      border = TRUE
+    ),
+    list(5,
+      header = "Two-ended\nCumulative Maps",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 1,
+      panel.width = 1.2
+    )
+  )
+)
+```
 
 
 
