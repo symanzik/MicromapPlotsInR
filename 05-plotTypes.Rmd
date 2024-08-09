@@ -61,6 +61,53 @@ Existing build functions from https://github.com/USEPA/micromap/blob/master/R/Pa
 `dot_cl_build`, `ranks_build`.
 
 
+Figure \@ref(fig:Ch5-defaultplottypes) shows one linked micromap plot\index{Linked micromap plot}
+with the all pre-defined plot types of the **micromap**\index{R Packages!micromap} R package [@PaOl2015]. This figure is an extension of 
+Figures \@ref(fig:Ch2-refining2WV) and \@ref(fig:Ch2-refining2WVsf) from 
+Chapter \@ref(Ch2) that previously dealt with the 
+_WV\_Watershed_\index{Datasets!WV\_Watershed} dataset.
+
+There are 41 variables in the underlying data frame.
+Similar to Chapter \@ref(Ch2) we will focus on the specific conductance variables
+in the following linked micromap plots.\index{Linked micromap plot}
+
+Variable names beginning with an uppercase letter, e.g., `Cond_med`, `Cond_LCB95`,
+`Cond_UCB95`, are the population estimates, representing the median,
+the lower 95% confidence bound, and the upper 95% confidence bound of a variable
+(here, specific conductance) in each of the 25 watersheds, respectively.
+These variables will be used for the construction of 
+dotplots,\index{Dotplot}
+dotplots with confidence bounds,\index{Dotplot with confidence bounds}
+bar charts,\index{Bar chart} and
+bar charts with confidence bounds.\index{Bar chart with confidence bounds}
+
+Variable names starting with a lowercase letter, e.g., 
+`cond_min`, `condq1`, `cond_med1`, `cond_q3`, `cond_max`,
+are the descriptive statistics, representing the minimum, first quartile, median,
+third quartile, and maximum of a variable (here, specific conductance) in each of the 25 watersheds, respectively.
+These will be used for the construction of boxplots\index{Boxplot}.
+
+The main purpose of the linked micromap plot\index{Linked micromap plot} 
+shown in Figure \@ref(fig:Ch5-defaultplottypes) is to introduce 
+all pre-defined panel and plot types of the **micromap**\index{R Packages!micromap} R package.
+Therefore, we have omitted a meaningful header for all columns
+in this figure and rather titled each column with the type of the information
+shown in that column and the corrsponding entry for the `panel.types` list.
+We have also further shortened the abbreviations for the subregions
+shown in this linked micromap plot.\index{Linked micromap plot}
+Readers interested in the full names of these subregions are
+referred to Section \@ref(Ch2-RefiningWV).
+Also, from a practical perspective, it makes little sense to include
+dotplots,\index{Dotplot}
+dotplots with confidence bounds,\index{Dotplot with confidence bounds}
+bar charts,\index{Bar chart} and
+bar charts with confidence bounds\index{Bar chart with confidence bounds}
+of the same statistical variable in one figure. Typically,
+just a dotplot with confidence bounds\index{Dotplot with confidence bounds}
+or a bar chart with confidence bounds\index{Bar chart with confidence bounds}
+would have been sufficient to show the underlying statistical data.
+
+
 (ref:Ch5-defaultplottypes-cap) Linked micromap plot,\index{Linked micromap plot} based on the West Virginia watershed dataset, that shows all pre-defined plot types of the **micromap**\index{R Packages!micromap} R package [@PaOl2015].
 
 
@@ -98,7 +145,7 @@ wv_watershed_short <- list(
   "UGuya" = "Upper Guyandotte",
   "LGuya" = "Lower Guyandotte",
   "TugFork" = "Tug Fork",
-  "BigSand" = "Big Sandy/Lower Ohio",
+  "BigSan" = "Big Sandy/Lower Ohio",
   "Twelvep" = "Twelvepole"
 )
 
@@ -136,11 +183,13 @@ mmplot(
   panel.att = list(
     list(
       1,
-      panel.width = 1.8,
+      header = "Symbol\n(dot_legend)",
+      panel.width = 5.5,
       point.type = 15,
-      point.size = 0.7,
+      point.size = 0.9,
       point.border = TRUE,
-      xaxis.labels.size = 0.8
+      xaxis.labels.size = 0.8,
+      right.margin = 0.4
     ),
     list(
       2,
@@ -1872,35 +1921,7 @@ mmplot(
 ## Main {#Ch5-Main}
 
 
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch5-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
-
-
-```{r Ch5-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",
-  grouping = 5,
-  median.row = TRUE,
-  plot.width = 2,
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
-)
-```
+TEXT
 
 
 ## Summary and Further Reading {#Ch5-SummaryFurtherReading}
