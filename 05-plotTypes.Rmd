@@ -238,13 +238,267 @@ originally.
 ## Example 1: Adding Vignette Example {#Ch5-Example1}
 
 
-```{r Ch5-vignettechart, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
+```{r Ch5-vignettechart, fig.cap = 'Arrow plot from vignette.', fig.width = 7, fig.height = 9}
 library(micromap)
 library(ggplot2)
+library(grid)
 library(XML)
 library(dplyr)
 
+data("USstates")
+statePolys <- create_map_table(USstates, IDcolumn = "ST")
 
+data(lungMort)
+myStats <- lungMort
+head(myStats)
+
+myStats <- subset(myStats, !StateAb == "DC")
+
+myNewStats <- create_DF_rank(myStats, ord.by = "Rate_00", group = 5)
+head(myNewStats)
+
+ggplot(myNewStats) +
+  geom_segment(
+    aes(
+      x = Rate_95,
+      y = -pGrpOrd,
+      xend = Rate_00,
+      yend = -pGrpOrd,
+      colour = factor(color)
+    ),
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  facet_grid(pGrp ~ .,
+    scales = "free_y"
+  ) +
+  scale_colour_manual(
+    values = c("red", "orange", "green", "blue", "purple"),
+    guide = "none"
+  )
+
+myAtts <- sample_att()
+myNumber <- 1
+myAtts$colors <- c("red", "orange", "green", "blue", "purple")
+myAtts[[myNumber]]$panel.data <- c("Rate_95", "Rate_00")
+
+myColors <- myAtts$colors
+# pulls color out of the plot level
+# section of the "myAtts" attributes list
+
+myColumns <- myAtts[[myNumber]]$panel.data
+# looks in the panel level section numbered
+# "myNumber" of the "myAtts" attributes list
+
+myNewStats$data1 <- myNewStats[, myColumns[1]]
+myNewStats$data2 <- myNewStats[, myColumns[2]]
+myPanel <- ggplot(myNewStats) +
+  geom_segment(
+    aes(
+      x = data1,
+      y = -pGrpOrd,
+      xend = data2,
+      yend = -pGrpOrd,
+      colour = factor(color)
+    ),
+    arrow = arrow(length = unit(0.1, "cm"))
+  ) +
+  facet_grid(pGrp ~ .) +
+  scale_colour_manual(
+    values = myColors,
+    guide = "none"
+  )
+myPanel
+
+assimilatePlot(myPanel, myNumber, myAtts)
+
+arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
+  myColors <- myAtts$colors
+  myColumns <- myAtts[[myNumber]]$panel.data
+  myNewStats$data1 <- myNewStats[, myColumns[1]]
+  myNewStats$data2 <- myNewStats[, myColumns[2]]
+  myPanel <- ggplot(myNewStats) +
+    geom_segment(
+      aes(
+        x = data1,
+        y = -pGrpOrd,
+        xend = data2,
+        yend = -pGrpOrd,
+        colour = factor(color)
+      ),
+      arrow = arrow(length = unit(0.1, "cm"))
+    ) +
+    facet_grid(pGrp ~ .) +
+    scale_colour_manual(
+      values = myColors,
+      guide = "none"
+    )
+  myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
+}
+myPanel
+
+arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
+  myColors <- myAtts$colors
+  myColumns <- myAtts[[myNumber]]$panel.data
+  myNewStats$data1 <- myNewStats[, myColumns[1]]
+  myNewStats$data2 <- myNewStats[, myColumns[2]]
+  myNewStats <- alterForMedian(myNewStats, myAtts)
+  myPanel <- ggplot(myNewStats) +
+    geom_segment(
+      aes(
+        x = data1,
+        y = -pGrpOrd,
+        xend = data2,
+        yend = -pGrpOrd,
+        colour = factor(color)
+      ),
+      arrow = arrow(length = unit(0.1, "cm"))
+    ) +
+    facet_grid(pGrp ~ .,
+      space = "free",
+      scales = "free_y"
+    ) +
+    scale_colour_manual(
+      values = myColors,
+      guide = "none"
+    )
+  myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
+}
+myPanel
+
+
+# print(myAtts)
+
+myPanelAtts <- standard_att()
+myPanelAtts <- append(
+  myPanelAtts,
+  list(line.width = 1, tip.length = 1)
+)
+
+arrow_plot_att <- function() {
+  myPanelAtts <- standard_att()
+  myPanelAtts <- append(
+    myPanelAtts,
+    list(line.width = 1, tip.length = 1)
+  )
+}
+
+
+arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
+  myColors <- myAtts$colors
+  myColumns <- myAtts[[myNumber]]$panel.data
+  myLineWidth <- myAtts[[myNumber]]$line.width
+  # Again, note that these are stored in the panel level section of the
+  myTipLength <- myAtts[[myNumber]]$tip.length # attributes object
+  myNewStats$data1 <- myNewStats[, myColumns[1]]
+  myNewStats$data2 <- myNewStats[, myColumns[2]]
+  myNewStats <- alterForMedian(myNewStats, myAtts)
+  myPanel <- ggplot(myNewStats) +
+    geom_segment(
+      aes(
+        x = data1,
+        y = -pGrpOrd,
+        xend = data2,
+        yend = -pGrpOrd,
+        colour = factor(color)
+      ),
+      arrow = arrow(length = unit(0.1 * myTipLength, "cm")),
+      size = myLineWidth
+    ) +
+    facet_grid(pGrp ~ .,
+      space = "free",
+      scales = "free_y"
+    ) +
+    scale_colour_manual(
+      values = myColors,
+      guide = "none"
+    )
+  myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
+}
+myPanel
+
+
+mmplot(
+  stat.data = myStats,
+  map.data = statePolys,
+  panel.types = c("map", "labels", "arrow_plot"),
+  panel.data = list(NA, "State", list("Rate_95", "Rate_00")),
+  ord.by = "Rate_00",
+  grouping = 5,
+  map.link = c("StateAb", "ID"),
+  panel.att =
+    list(
+      list(
+        3,
+        line.width = 1.25,
+        tip.length = 1.5
+      )
+    )
+)
+
+data(lungMort)
+myStats <- lungMort
+
+
+mmplot(
+  stat.data = myStats,
+  map.data = statePolys,
+  panel.types = c("map", "dot_legend", "labels", "dot_cl", "arrow_plot"),
+  panel.data = list(
+    NA,
+    "points",
+    "State",
+    list("Rate_00", "Lower_00", "Upper_00"),
+    list("Rate_95", "Rate_00")
+  ),
+  ord.by = "Rate_00",
+  grouping = 5,
+  median.row = TRUE,
+  map.link = c("StateAb", "ID"),
+  plot.height = 10,
+  colors = c("red", "orange", "green", "blue", "purple"),
+  panel.att = list(
+    list(
+      1,
+      header = "Light Gray Means\nHighlighted Above",
+      map.all = TRUE,
+      fill.regions = "two ended",
+      inactive.fill = "lightgray",
+      inactive.border.color = gray(.7),
+      inactive.border.size = 2,
+      panel.width = 1
+    ),
+    list(
+      2,
+      point.type = 20,
+      point.border = TRUE
+    ),
+    list(
+      3,
+      header = "U.S. \nStates ",
+      panel.width = .8,
+      align = "left",
+      text.size = .9
+    ),
+    list(
+      4,
+      header = "State 2000\n Rate and 95% CI",
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(20, 30, 40, 50),
+      xaxis.labels = list(20, 30, 40, 50),
+      xaxis.title = "Deaths per 100,000"
+    ),
+    list(
+      5,
+      header = "State Rate Change\n 1995-99 to 2000-04",
+      line.width = 1.25,
+      tip.length = 1.5,
+      graph.bgcolor = "lightgray",
+      xaxis.ticks = list(20, 30, 40, 50),
+      xaxis.labels = list(20, 30, 40, 50),
+      xaxis.title = "Deaths per 100,000"
+    )
+  )
+)
 ```
 
 
@@ -366,7 +620,8 @@ mmplot(
   map.color2 = gray(0.95),
   plot.width = 10,
   panel.att = list(
-    list(1,
+    list(
+      1,
       header = "Maps",
       panel.width = 0.6,
       active.border.color = "black",
@@ -374,14 +629,19 @@ mmplot(
       inactive.border.color = gray(0.7),
       inactive.border.size = 0.5
     ),
-    list(2, point.size = 0.8),
-    list(3,
+    list(
+      2,
+      point.size = 0.8
+    ),
+    list(
+      3,
       header = "Provinces",
       align = "left",
       text.size = 1.0,
       panel.width = 1.5
     ),
-    list(4,
+    list(
+      4,
       header = "2010 Population",
       graph.bgcolor = gray(0.95),
       xaxis.ticks = list(0, 4, 8, 12, 16),
@@ -389,7 +649,8 @@ mmplot(
       xaxis.title = "People (Millions)",
       panel.width = 1.8
     ),
-    list(5,
+    list(
+      5,
       header = "Population Increase\nfrom 2001 to 2010",
       graph.bgcolor = gray(0.95),
       xaxis.ticks = list(0, 0.9, 1.8),
@@ -397,7 +658,8 @@ mmplot(
       xaxis.title = "People (Millions)",
       panel.width = 1.8
     ),
-    list(6,
+    list(
+      6,
       header = "Ratio of 2010 Population\nto 2001 Population",
       graph.bgcolor = gray(0.95),
       xaxis.ticks = list(1, 1.2, 1.4),
@@ -545,21 +807,28 @@ mmplot(
   colors = brewer.pal(5, "Greys")[5:1],
   map.color2 = gray(0.9),
   panel.att = list(
-    list(1,
-      header = "Maps", panel.width = 0.8,
+    list(
+      1,
+      header = "Maps",
+      panel.width = 0.8,
       active.border.color = "black",
       active.border.size = 0.5,
       inactive.border.color = gray(0.7),
       inactive.border.size = 0.5
     ),
-    list(2, point.size = 0.8),
-    list(3,
+    list(
+      2,
+      point.size = 0.8
+    ),
+    list(
+      3,
       header = "States",
       align = "left",
       text.size = 0.9,
       panel.width = 1.3
     ),
-    list(4,
+    list(
+      4,
       header = "Murder Rate\nin 1998",
       point.type = 20,
       point.size = 1.4,
@@ -569,15 +838,14 @@ mmplot(
       xaxis.title = "Percent (%)",
       panel.width = 1.8
     ),
-    list(5,
+    list(
+      5,
       header = "Murder Rate Change\nfrom 1998 to 2008",
       graph.bgcolor = gray(0.9),
       xaxis.title = "Percentage Points",
       panel.width = 1.8
     )
   )
-  #  print.file = paste0("Output/BRA_2_08_06_2024.", outputFormat),
-  #  print.res = 300
 )
 ```
 
