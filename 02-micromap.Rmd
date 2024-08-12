@@ -797,7 +797,7 @@ Here, for the _WV_Watershed_\index{Datasets!WV\_Watershed} dataset, four additio
 a file with suffix `.prj` that contains the spatial coordinate system information (i.e., the projection), 
 two files with suffix `.sbn` and `.sbx` that store the spatial index of the features,
 and a file with suffix `.xml` that contains metadata for the shapefile.
-Additional suffixes may be used for a other shapefiles\index{Shapefiles} as outlined in @ESRI2016.
+Additional suffixes may be used for other shapefiles\index{Shapefiles} as outlined in @ESRI2016.
 For use in linked micromap plots\index{Linked micromap plot}
 that are created with the **micromap**\index{R Packages!micromap} R package,
 external shapefiles\index{Shapefiles} can be handled in two ways.
