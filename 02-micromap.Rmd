@@ -51,7 +51,7 @@ May 2012 [@PWMO2012] and April 2013 [@PWMKO2013].
 At about the same time, in December 2012, the first publicly available 
 version of the **micromap**\index{R Packages!micromap} R package (version 1.5
 to be precise), was released to CRAN [@PaOl2012].
-Eventually, Marcus W. Beck, then also with the USEPA in Corvallis, Oregon,
+Eventually, Marcus W. Beck, then also with the USEPA in Gulf Breeze, Florida,
 joined the team of the original developers with the release of version 1.9.3
 of this R package in February 2018 [@PaOl2018] and has also served as the maintainer of
 this R package since then.
@@ -62,7 +62,7 @@ R package for linked micromap plots.\index{Linked micromap plot}
 Independently, but motivated by similar past uses and resources,
 the **micromapST**\index{R Packages!micromapST} R package
 has been developed in parallel and its first version (version 1.0)
-has been released to CRAN in June 2013 [@CP2013CRAN], i.e., 
+was released to CRAN in June 2013 [@CP2013CRAN], i.e., 
 only a few months after the first release of the
 **micromap**\index{R Packages!micromap} R package.
 The **micromapST**\index{R Packages!micromapST} R package will be extensively discussed in 
@@ -83,7 +83,7 @@ create their own plot types for use in the **micromap**\index{R Packages!microma
 as discussed in Chapter \@ref(Ch5) and
 incorporate external shapefiles,\index{Shapefile} into the 
 **micromapST**\index{R Packages!micromapST} R package as discussed in Chapter \@ref(Ch4b).
-Ultimately, one has to make one's own decision which of these two R packages
+Ultimately, the decision is up to the analyst on which of these two R packages
 to use for the construction of linked micromap plots.\index{Linked micromap plot}
 
 The remainder of this chapter is organized as follows:
@@ -93,7 +93,7 @@ basic linked micromap plot\index{Linked micromap plot} via the **micromap**\inde
 Examples in Section \@ref(Ch2-Example1) and Section \@ref(Ch2-Example2) will outline how to apply these steps
 to data for the for the 50 U.S. States and Washington, D.C. and 
 to data for watersheds in West Virginia, respectively.
-This chapter comes to a conclusion with a summary and suggestions for further reading
+This chapter concludes with a summary and suggestions for further reading
 in Section \@ref(Ch2-SummaryFurtherReading).
 
 
@@ -130,13 +130,13 @@ with the **micromap**\index{R Packages!micromap} R package:
 1. **Identifying and Geoprocessing of Spatial Boundary Data** 
 (see Sections \@ref(Ch2-Identifying) and \@ref(Ch2-IdentifyingWV) for details): 
 In addition to a data frame that contains the statistical data,
-the user must identify a data structure that contains the spatial boundary data for the region and subregions that have
-to be colored in the maps. This spatial boundary data typically comes in the form of a
+the user must identify a data structure that contains the spatial boundary data for the region and subregions that are 
+colored in the maps. This spatial boundary data typically comes in the form of a
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}. In this chapter, we will work with ready-to-use
 boundary files. In Chapter \@ref(Ch4), we will discuss how to make use of boundary files that are
 provided as external shapefiles\index{Shapefiles}. In particular, we will see in that chapter how
-to simplify complex boundaries, enlarge small subregions in the maps, and move subregions that are far away closer
-to the main area of the map.
+to simplify complex boundaries, enlarge small subregions in the maps, and move subregions closer that are far
+from the main area of the map.
 
 2. **Linking Spatial Boundary Data and Statistical Data** 
 (see Sections \@ref(Ch2-Linking) and \@ref(Ch2-LinkingWV) for details): 
@@ -155,8 +155,8 @@ SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
 While not necessary, it is always a good idea to first create a minimal
 linked micromap plot\index{Linked micromap plot} to ensure that the statistical data and boundary data
 are matching and a correct draft linked micromap plot\index{Linked micromap plot} is created. Skipping this
-step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may make it hard
-to find possible errors in the R code.
+step and trying to create a complex linked micromap plot\index{Linked micromap plot} immediately may complicate
+debugging the R code.
 
 4. **Refining the Linked Micromap Plot** 
 (see Sections \@ref(Ch2-Refining) and \@ref(Ch2-RefiningWV) for details): 
@@ -181,10 +181,10 @@ We follow the four steps outlined in Section \@ref(Ch2-Steps).
 
 _USstates_\index{Datasets!USstates} is a SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} for 
 the 50 U.S. states (and Washington, D.C.) 
-that was created for use in linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
+that was created for use with linked micromap plots\index{Linked micromap plot}. Notably, the boundaries
 of many of the states have been simplified, Alaska and Hawaii have been moved closer to the
-contiguous 48 states (and also have been resized), and Washington, D.C., has been pulled out of the
-main map and has been placed further to the east (and also has been enlarged)
+contiguous 48 states (and also have been resized), and Washington, D.C. has been pulled out of the
+main map, placed further to the east, and also has been enlarged
 as shown in Figure \@ref(fig:Ch2-USstates). In the following R code,
 we first load the **micromap**\index{R Packages!micromap} R package and the
 _USstates_\index{Datasets!USstates} dataset, verify that this object indeed is a
@@ -199,10 +199,8 @@ the reader will notice that it depends on the
 **RColorBrewer**\index{R Packages!RColorBrewer} [@Neuwirth2022], 
 **sp**\index{R Packages!sp} [@PeBi2022], 
 and **sf**\index{R Packages!sf} [@Pebesma2022] R packages.
-All of these R packages should
-be installed locally so they can be loaded automatically when the
-**micromap**\index{R Packages!micromap} R package is loaded.
-
+These packages are dependencies for **micromap**\index{R Packages!micromap} and
+are installed automatically with the package.
 
 ```{r Ch2-USstates, fig.cap = 'Map representation of the _USstates_\\index{Datasets!USstates} spatial boundary dataset for the United States that frequently is used as the basis for linked micromap plots\\index{Linked micromap plot} that are created with the **micromap**\\index{R Packages!micromap} R package.', fig.width = 7, fig.height = 4}
 library(micromap)
@@ -224,11 +222,10 @@ In this step, the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} first
 into a regular data frame for use in a linked micromap plot\index{Linked micromap plot}
 via the `create_map_table()` function. We have to indicate a variable from the `data`
 component of the SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} object that 
-can be used as an ID column. 
-A matching ID column has to be identified in the statistical dataset. These two ID columns
-have to be used for linking the two datasets. For the _USstates_\index{Datasets!USstates} dataset,
-this is usually the `ST` variable that contains the 51 abbreviations for the 50 U.S. states (and for Washington, D.C.).
-
+can be used as an ID column. A matching ID column must also be identified in the statistical 
+dataset for linking with the spatial boundary dataset. For the _USstates_\index{Datasets!USstates} 
+dataset, this is usually the `ST` variable that contains the 51 abbreviations for the 50 U.S. 
+states (and for Washington, D.C.).
 
 ```{r Ch2-linkingdataframesUSstates}
 head(USstates@data$ST)
@@ -257,13 +254,10 @@ two datasets. Here, this is the `StateAb` variable.
 
 The last expression in the following R code verifies that there is indeed at least one matching ID 
 in the `state_polys_table` data frame for each ID in the _edPov_\index{Datasets!edPov} dataset.
-Mismatching or missing IDs in the statistical data frame may cause
-that data for some subregions do not appear
-on any of the maps later on or that some subregions shown on the maps do not get colored in any of the maps.
-While this often can be contributed to missing data in the statistical data frame, e.g., there is
-only data for the 50 U.S. states but not for Washington, D.C., mismatching identifiers also can be
-the underlying reason (e.g., if the statistical data frame uses `D.C.` as ID while
-the spatial data frame uses `DC`). Here, everything is matching.
+Missing IDs in the statistical data frame may prevent data from appearing on the 
+maps. Similarly, mismatching identifiers in the statistical data frame may also prevent data from 
+being shown on the maps, e.g., if the statistical data frame uses `D.C.` as ID while
+the spatial data frame uses `DC`. Here, everything is matching.
 
 
 ```{r Ch2-linkingdataframesedPov}
@@ -283,12 +277,12 @@ all(sort(edPov$StateAb) == sort(unique(state_polys_table$ID)))
 Now we can create a minimal draft linked micromap plot\index{Linked micromap plot} using the
 `mmplot()` function, based on the previously created 
 `state_polys_table` data frame and the _edPov_\index{Datasets!edPov} dataset.
-In our function call, we only provide seven required arguments. None of these arguments has a default setting.
+In our function call, seven arguments are required, none of which have a default value.
 For all other arguments of this function, the default settings will be used here. 
 The statistical data (_edPov_\index{Datasets!edPov}) is assigned to the `stat.data` argument
 and the spatial boundary data (in the `state_polys_table` data frame) is assigned to the `map.data` argument.
 
-The `map.link` argument is needed to tell the function how to link the statistical data
+The `map.link` argument is needed to link the statistical data
 and the spatial boundary data. A vector with the names of the two linking variables 
 identified in the previous step is needed for this argument.
 The first variable name (`StateAb`) must come from the statistical data (here _edPov_\index{Datasets!edPov})
@@ -316,8 +310,8 @@ The variables `pov` and `ed` from _edPov_ are used for the statistical displays 
 It should be noted that all data specified in `panel.data` by default is taken from the
 data frame specified in the `stat.data` argument.
 The fifth and final column contains the micromaps. Their boundaries are obtained from
-the `map.data` data frame. Thus, no further data has to be specified here. Instead, `NA` 
-is assigned here.
+the `map.data` data frame. Thus, no further data has to be specified here and `NA` 
+is assigned instead.
 
 Two more arguments have to be specified: `ord.by` specifies the sorting variable of the 
 rows in the linked micromap plot\index{Linked micromap plot}. Here, `pov` 
@@ -331,8 +325,8 @@ Here, `grouping` is set to `5`, meaning there are five rows of data in each perc
 
 The resulting draft linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-creatingdraft). It is noteworthy that there are eleven perceptual groups
-overall --- ten with five subregions and one with just one subregion. This is due to the fact
-that there are 51 subregions overall: The 50 U.S. states and Washington, D.C.
+overall --- ten with five subregions and one with just one subregion. This is because 
+there are 51 subregions overall: The 50 U.S. states and Washington, D.C.
 This results in only one row of data and one subregion highlighted in the final (bottom) perceptual
 group. There is no automatic balancing of the number of rows in each perceptual group.
 A layout such as the default one shown in Figure \@ref(fig:Ch2-creatingdraft) 
@@ -342,10 +336,9 @@ We will also address this as one of the refinement steps in the next section.
 
 We abstain from interpreting this figure at this stage, but we will provide some
 helpful interpretation once we have created the last refined version of this figure
-at the end of the next section. However, we encourage the reader to take a look
-at the consecutive maps at this time and determine whether any spatial
-patterns may be visible and to assess the statistical relationship
-between the two variables shown in the third and fourth columns of the plot.
+at the end of the next section. However, we encourage the reader to examine the draft maps 
+at this time and determine whether any spatial patterns may be visible and to assess the 
+statistical relationship between the two variables shown in the third and fourth columns of the plot.
 
 
 ```{r Ch2-creatingdraft, fig.cap = 'Draft linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset.', fig.width = 7, fig.height = 9}
@@ -369,7 +362,7 @@ section and refine it in multiple small steps. This refinement process should on
 functional R code has been obtained in the previous step and an initial 
 linked micromap plot\index{Linked micromap plot} has been created.
 
-First, we get rid of the eleventh perceptual group (with just one subregion) and introduce
+First, we remove the eleventh perceptual group (with just one subregion) and introduce
 a median row via `median.row = TRUE` instead. A median row is often a good solution if the 
 number of subregions is odd such as for the 50 U.S. states (and Washington, D.C.).
 Here, Wyoming is the state shown in the median row. It has the 
@@ -383,12 +376,12 @@ smallest (at the bottom).
 The resulting linked micromap plot\index{Linked micromap plot} is shown in
 Figure \@ref(fig:Ch2-refining1).
 While we keep `pov` as the sorting variable in this first refined version,
-the reader is encouraged to use `ed` as sorting variable and see how
+the reader is encouraged to use `ed` as the sorting variable to see how
 the spatial patterns highlighted in the maps change. This can be done
 for the original sorting order or for the reversed sorting order.
 The rows can even be sorted by `region` or alphabetically 
 by `state` or `StateAb` even though such an alphabetical sorting
-in most cases is not very meaningful, at least not for this specific example.
+in most cases is not very meaningful.
 
 
 ```{r Ch2-refining1, fig.cap = 'First refined linked micromap plot\\index{Linked micromap plot}, based on the _edPov_\\index{Datasets!edPov} dataset. Main changes are the introduction of a median row instead of the eleventh perceptual group and the reverse ordering of the `pov` data in the first statistical graphics column.', fig.width = 7, fig.height = 9}
@@ -406,12 +399,12 @@ mmplot(
 ```
 
 
-We continue with this first refined linked micromap plot\index{Linked micromap plot}
-and make further modifications. Next, we change the order of the two statistical graphics columns,
+We continue with modifications to the first refined linked micromap plot\index{Linked micromap plot}. 
+Next, we change the order of the two statistical graphics columns,
 i.e., we place `ed` to the left of `pov` and use `ed` as the sorting variable (in reverse order).
 While any column of the linked micromap plot\index{Linked micromap plot} or even
-variables not shown in it can be used as sorting variables, in most cases,
-the first (leftmost) statistical graphics column is used for sorting purposes.
+variables not shown can be used as sorting variables, in most cases,
+the first (leftmost) statistical graphics column is used for sorting.
 Moreover, we place the maps on the left side of the plot. As previously stated,
 the `panel.types` and `panel.data` arguments of the `mmplot()` function
 are closely related. Thus, if we change the order of one, the order of the
@@ -470,9 +463,9 @@ After this experiment with a different grouping, we revert back to the more trad
 of ten perceptual groups with five rows each and a median row that is frequently used
 for the 50 U.S. states (and Washington, D.C.) 
 as suggested as Partitioning 1 from Table \@ref(tab:Ch1-PartitioningTable) in Chapter \@ref(Ch1).
-What we want to discuss next is the choice of colors
+Next, the choice of colors
 for the subregions in each map (and thus for the `dot_legend` appearance in the
-`panel.type` argument as well). The default setting for the `colors` argument
+`panel.type` argument as well) is discussed. The default setting for the `colors` argument
 makes use of `max(grouping)` different colors from a spectral color scheme.
 Thus, when `grouping = 5` as in Figures \@ref(fig:Ch2-creatingdraft)-\@ref(fig:Ch2-refining2),
 a five-class spectral color scheme\index{Color scheme!Spectral} is selected, 
@@ -525,7 +518,7 @@ mmplot(
 ```
 
 
-So far, there are no labels for the columns and no titles for the statistical graphics columns shown.
+So far, labels for the columns and titles for the statistical graphics columns are not shown.
 Tic marks and tic mark labels, in particular in the second statistical graphics column, could be improved,
 background colors in the statistical graphics columns and maps could be modified, 
 font and symbol sizes could be modified, and the widths of the columns could be adjusted.
@@ -540,7 +533,7 @@ in the linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining5).
 
 We leave it to the reader to further experiment with the different elements in these lists.
-If the purpose of a certain element is not immediately obvious, it might be a good idea
+If the purpose of a certain element is not immediately obvious, it is useful
 to considerably increase or decrease the numeric value of that element or change the color to
 `red` or `yellow` to highlight that element. 
 
@@ -623,7 +616,8 @@ mmplot(
 In the final refined linked micromap plot\index{Linked micromap plot} shown in
 Figure \@ref(fig:Ch2-refining6), we make three more types of changes.
 First, we make use of the `labeling::extended()` function of 
-the **labeling**\index{R Packages!labeling} R package [@Talbot2020].
+the **labeling**\index{R Packages!labeling} R package [@Talbot2020].  This package is not 
+included with **micromap**\index{R Packages!micromap} and it must be installed separately. 
 This function is provided with the minimum and maximum values of a variable and the tentative
 number of tic marks and tic marks labels for that variable and it then creates a vector with
 near-optimal axis labels. The argument `m` is used as a guideline for the number of axis labels,
@@ -774,7 +768,7 @@ but given these two major outliers and several minor outliers
 despite being among the bottom-10 states with respect to the percentage of
 adults with four or more years of college), the (negative) correlation is relatively weak.
 The correlation coefficient $r$ is
-only about `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
+only `r round(cor(edPov$ed, edPov$pov), digits = 2)`.
 
 
 ## Example 2: A Linked Micromap Plot for Watersheds in West Virginia {#Ch2-Example2}
@@ -788,7 +782,7 @@ We follow the four general steps outlined in Section \@ref(Ch2-Steps) again.
 However, there are several differences compared to the first example in Section \@ref(Ch2-Example1).
 
 First, we work with external shapefiles\index{Shapefiles} [@ESRI1998]
-that contain both, the boundary for watersheds in West Virginia and the statistical data
+that contain both the boundary for watersheds in West Virginia and the statistical data
 used in the following linked micromap plots\index{Linked micromap plot}, rather than having
 a separate dataset for the statistical data. 
 In general, shapefiles\index{Shapefiles} are a collection of related files 
@@ -803,7 +797,7 @@ Here, for the _WV_Watershed_\index{Datasets!WV\_Watershed} dataset, four additio
 a file with suffix `.prj` that contains the spatial coordinate system information (i.e., the projection), 
 two files with suffix `.sbn` and `.sbx` that store the spatial index of the features,
 and a file with suffix `.xml` that contains metadata for the shapefile.
-Additional suffixes may be used for a certain shapefile\index{Shapefiles} as outlined in @ESRI2016.
+Additional suffixes may be used for a other shapefiles\index{Shapefiles} as outlined in @ESRI2016.
 For use in linked micromap plots\index{Linked micromap plot}
 that are created with the **micromap**\index{R Packages!micromap} R package,
 external shapefiles\index{Shapefiles} can be handled in two ways.
@@ -869,7 +863,7 @@ or via the `sf::st_read()` function from the
 **sf**\index{R Packages!sf} R package [@Pebesma2022]
 as discussed in the previous section. 
 
-It contains
+The shapefile contains
 25 aggregated watersheds and subbasins in West Virginia in the United States. 
 These watersheds were introduced and discussed in more detail in @MPRG2016.
 In addition to the geographic information, this dataset also contains
@@ -879,8 +873,8 @@ created in this section.
 We first demonstrate the steps necessary for option (i).
 Similar to the first example in Section \@ref(Ch2-Identifying), 
 we verify that this object (once read into R) indeed is a
-SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then look
-at some of the data in the `data` component of this object, and finally plot it,
+SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame}, then view 
+some of the data in the `data` component of this object, and finally plot it,
 as shown in Figure \@ref(fig:Ch2-WV).
 The last step is the extraction of the statistical data from this
 SpatialPolygonsDataFrame\index{SpatialPolygonsDataFrame} into a regular data frame.
@@ -911,7 +905,7 @@ These will be used for the construction of boxplots\index{Boxplot}.
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
 library(raster)
 
-wv_watershed <- raster::shapefile(
+wv_watershed <- shapefile(
   x = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
   verbose = FALSE
 )
@@ -941,7 +935,9 @@ as shown in Figure \@ref(fig:Ch2-WV-sf).
 
 
 ```{r Ch2-WV-sf, fig.cap = '(ref:Ch2-WV-cap-sf)', fig.width = 5, fig.height = 4}
-wv_watershed_sf <- sf::st_read(
+library(sf)
+
+wv_watershed_sf <- st_read(
   dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
   quiet = TRUE
 )
@@ -1006,7 +1002,7 @@ We can now create a minimal draft linked micromap plot\index{Linked micromap plo
 `wv_polys_table` and `wv_data` data frames for option (i).
 Similar to our first example in Section \@ref(Ch2-Creating),
 we only provide seven required arguments in our function call.
-None of these arguments has a default setting.
+None of these arguments have a default setting.
 For all other arguments of this function, the default settings will be used here. 
 The statistical data (`wv_data`) is assigned to the `stat.data` argument
 and the spatial boundary data (in the `wv_polys_table` data frame) is assigned to the `map.data` argument.
@@ -1107,8 +1103,8 @@ Overall, the following abbreviations are introduced and added as part of the new
 to the `wv_data` data frame: 
 L. (Lower), M. (Middle), U. (Upper), N. (North), S. (South),
 Br. (Branch), Dunk. (Dunkard), Mononga. (Monongahela), Shen. (Shenandoah), and Youg. (Youghiogheny).
-Shortening the subregion names often is recommended to avoid that the names column 
-occupies too much space in the final linked micromap plot\index{Linked micromap plot}.
+Shortening the subregion names often is recommended to prevent the names column from
+occupying too much space in the final linked micromap plot\index{Linked micromap plot}.
 
 
 ```{r Ch2-shortennamesWV}
@@ -1191,7 +1187,7 @@ mmplot(
 
 
 In the second (and final) refined linked micromap plot\index{Linked micromap plot} for option (i), shown in 
-Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through six
+Figure \@ref(fig:Ch2-refining2WV), we make similar changes as for the third through sixth
 refined linked micromap plots\index{Linked micromap plot} in Section \@ref(Ch2-Refining).
 This includes a reverse sorting (`rev.ord = TRUE`) that places 
 the largest observed median specific conductance at the top, 
@@ -1397,7 +1393,7 @@ Each consecutive map shows which subregions have been colored previously in the 
 There is a weak spatial pattern with the highest median observed specific conductance in the northern and 
 western subbasins of West Virginia. There is a notable spatial cluster in the 
 central-eastern subbasins of West Virginia with the five lowest median observed specific conductance
-shown in the perceptual group at the bottom of the plot.
+values shown in the perceptual group at the bottom of the plot.
 
 The second statistical graphics column reveals that there is a remarkable relationship between 
 the widths of the confidence bounds and the estimated specific conductance. The higher the 
@@ -1412,7 +1408,7 @@ in the Little Kanawha subbasin and of about 4,000 $\mu$S/cm in the Lower (L.) Ka
 While this is hard to visually detect due to these extreme outliers, there is a 
 considerable positive correlation between the observed median specific conductance and 
 the estimated median specific conductance. Not surprisingly, the correlation coefficient $r$ is 
-about `r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
+`r round(cor(wv_data$cond_med1, wv_data$Cond_med), digits = 2)`.
 
 
 ## Summary and Further Reading {#Ch2-SummaryFurtherReading}
@@ -1478,8 +1474,7 @@ while the **micromap**\index{R Packages!micromap} R package
 makes it easy to quickly construct linked micromap plots\index{Linked micromap plot}
 whenever external shapefiles\index{Shapefiles} are available.
 Such an option also exists for the **micromapST**\index{R Packages!micromapST} R package,
-but it takes additional work to process external shapefiles\index{Shapefiles}
-for use in that R package.
+but it takes additional work to process external shapefiles\index{Shapefiles}.
 Ultimately, it is up to the user of linked micromap plots\index{Linked micromap plot}
 to decide which of these two R packages to use.
 
