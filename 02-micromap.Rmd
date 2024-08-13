@@ -903,9 +903,7 @@ These will be used for the construction of boxplots\index{Boxplot}.
 
 
 ```{r Ch2-WV, fig.cap = '(ref:Ch2-WV-cap)', fig.width = 5, fig.height = 4}
-library(raster)
-
-wv_watershed <- shapefile(
+wv_watershed <- raster::shapefile(
   x = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
   verbose = FALSE
 )
@@ -935,9 +933,7 @@ as shown in Figure \@ref(fig:Ch2-WV-sf).
 
 
 ```{r Ch2-WV-sf, fig.cap = '(ref:Ch2-WV-cap-sf)', fig.width = 5, fig.height = 4}
-library(sf)
-
-wv_watershed_sf <- st_read(
+wv_watershed_sf <- sf::st_read(
   dsn = "data/WV_Watershed/RandomWatershed2_stats_smooth.shp",
   quiet = TRUE
 )
