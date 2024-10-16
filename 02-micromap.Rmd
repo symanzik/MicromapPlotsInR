@@ -42,21 +42,21 @@ In fact, @PWMO2012 observed that
 typically been somewhat difficult, and therefore LMplots
 have seen limited use." However, linked micromap plots\index{Linked micromap plot}
 continued to play an important role at the USEPA. Eventually, a team of 
-researchers around Anthony R. Olsen, Quinn C. Payton, Michael G. McManus,
+researchers including Anthony R. Olsen, Quinn C. Payton, Michael G. McManus,
 Marc H. Weber, and Thomas M. Kincaid, all originally with the USEPA
 in Corvallis, Oregon, started to develop an R package for 
 linked micromap plots.\index{Linked micromap plot}
 First uses of this package can be seen in poster presentations in
 May 2012 [@PWMO2012] and April 2013 [@PWMKO2013].
 At about the same time, in December 2012, the first publicly available 
-version of the **micromap**\index{R Packages!micromap} R package (version 1.5
-to be precise), was released to CRAN [@PaOl2012].
+version of the **micromap**\index{R Packages!micromap} R package (version 1.5), 
+was released to CRAN [@PaOl2012].
 Eventually, Marcus W. Beck, then also with the USEPA in Gulf Breeze, Florida,
 joined the team of the original developers with the release of version 1.9.3
 of this R package in February 2018 [@PaOl2018] and has also served as the maintainer of
 this R package since then.
 
-As it frequently has happened in an open software environment such as R,
+As frequently happens in an open software environment such as R,
 the **micromap**\index{R Packages!micromap} R package is not the only 
 R package for linked micromap plots.\index{Linked micromap plot}
 Independently, but motivated by similar past uses and resources,
@@ -70,10 +70,10 @@ Chapter \@ref(Ch3).
 
 From a user's perspective, there are little differences in the
 appearance and quality of the final linked micromap plots\index{Linked micromap plot}
-that can be created by these two R packages. However, there are some relatively minor details how
-linked micromap plots\index{Linked micromap plot}
-differ that have been created via the two R packages, but those differences may be essential for individual users.
-Perhaps the two biggest differences between the two packages at first glance are that
+that can be created by these two R packages. 
+There are, however, differences in details in how linked micromap plots\index{Linked micromap plot}
+are created in each package that can be important for users.
+Perhaps the two biggest differences between the two packages are that
 the **micromap**\index{R Packages!micromap} R package makes it easy to bring
 in one's own boundary files, in particular external shapefiles,\index{Shapefile}
 while the **micromapST**\index{R Packages!micromapST} R package
