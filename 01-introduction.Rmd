@@ -179,13 +179,9 @@ nj_shapefile <- raster::shapefile(
 proj4string(nj_shapefile) <- sp::CRS(projargs = "+init=epsg:4326")
 
 # thin shapefile
-nj_shapefile_thin <- maptools::thinnedSpatialPoly(
-  SP = nj_shapefile,
-  tolerance = 0.005,
-  minarea = 0.01,
-  topologyPreserve = TRUE,
-  avoidGEOS = TRUE
-)
+nj_shapefile_thin <- sf::st_as_sf(nj_shapefile) %>%
+  st_simplify(dTolerance = 50) %>%
+  as_Spatial()
 
 # create map table
 nj_polys_table <- create_map_table(
