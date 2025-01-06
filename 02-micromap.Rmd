@@ -87,7 +87,7 @@ Ultimately, the decision is up to the analyst on which of these two R packages
 to use for the construction of linked micromap plots.\index{Linked micromap plot}
 
 The remainder of this chapter is organized as follows:
-Section \@ref(Ch2-Steps), will introduce the
+In Section \@ref(Ch2-Steps), we will introduce the
 four main steps that are required to create a 
 basic linked micromap plot\index{Linked micromap plot} via the **micromap**\index{R Packages!micromap} R package. 
 Examples in Section \@ref(Ch2-Example1) and Section \@ref(Ch2-Example2) will outline how to apply these steps
@@ -149,6 +149,18 @@ allow us to link statistical data and boundary data for each subregion.
 This step is not required when the spatial boundary data and statistical data are adequately
 stored in a simple features\index{Simple features} (sf) format [@OGC2022] instead of a
 SpatialPolygonsDataFrame.\index{SpatialPolygonsDataFrame}
+From a user's perspective, we think that the approach that links 
+a data frame with the statistical data to another data frame with the underlying 
+spatial boundary data is the easier approach for most users.
+First, this approach is most intuitive if the statistical data is stored
+in an external Excel file that is read into a data frame in R before 
+any linked micromap plot\index{Linked micromap plot} is created.
+Second, this approach does not require any familiarity 
+with spatial objects in R and spatial data in general.
+For more advanced users, we recommend experimenting with the approach
+that is based on the simple features\index{Simple features} format,
+in particular if the external shapefile\index{Shapefile} contains both,
+the statistical data and the boundary data.
 
 3. **Creating a Draft Linked Micromap Plot** 
 (see Sections \@ref(Ch2-Creating) and \@ref(Ch2-CreatingWV) for details): 
