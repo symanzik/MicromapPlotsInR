@@ -161,10 +161,10 @@ For more advanced users, we recommend experimenting with the approach
 that is based on the simple features\index{Simple features} format,
 in particular if the external shapefile\index{Shapefile} contains both,
 the statistical data and the boundary data.
-While most of the linked micromap plots\index{Linked micromap plot} 
+While most of the linked micromap plots\index{Linked micromap plot} in this book
 that are created via the **micromap**\index{R Packages!micromap} R package
 make use of the more traditional approach that links the two data frames,
-Example 2 in Section \@ref(Ch2-Example2) demonstrates how both approaches
+Example 2 (in Section \@ref(Ch2-Example2)) demonstrates how both approaches
 can be used for the same underlying data sets. 
 One example in Section \@ref(Ch11-Spatial-Surveys) directly creates
 a linked micromap plot\index{Linked micromap plot} based on the
@@ -1441,13 +1441,13 @@ the authors typically have followed the same main steps. However,
 in most cases, only the final refined linked micromap plot\index{Linked micromap plot}
 will be shown in the following chapters.
 While most of those examples will follow option (i) and make use of the `create_map_table()` 
-function as outlined in Section \@ref(Ch2-Example2),
+function as outlined in Section \@ref(Ch2-Example1),
 the example shown in Figure \@ref(fig:Ch11-micromapWVDEP) 
 in Chapter \@ref(Ch11) follows option (ii)
 and directly creates a linked micromap plot\index{Linked micromap plot}
 from a simple features\index{Simple features} object.
-Additional details and examples for both options can also be found in the
-vignette [@PBWMOK2024Vignette] of the **micromap**\index{R Packages!micromap} R package.
+Additional details and examples for both options can also be found in Section \@ref(Ch2-Example2)
+and in the vignette [@PBWMOK2024Vignette] of the **micromap**\index{R Packages!micromap} R package.
 
 In Chapter \@ref(Ch4), we will see how to modify external shapefiles\index{Shapefiles}
 that contain too many edges and/or contain subregions that are too large, too small,
