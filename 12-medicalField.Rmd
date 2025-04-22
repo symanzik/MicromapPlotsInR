@@ -1,141 +1,286 @@
-# Applications for the Medical Field  {#Ch12}
+\usepackage(hyperref)
+\usepackage(tabulary)   # 4 lines added by LP 4/30/25
+\usepackage(colortbl)
+\usepackage(lipsum)
+\usepackage(suffix)
+---
+output:
+  pdf_document: default
+  html_document: default
+  epub_document: default  # added by LP 4/30/25
+---
+# Application of Linked Micromaps in the Medical Field {#Ch12}
 
-
-\chapterauthor{Samson Y. Gebreab}
-
-
-This chapter will focus on micromap applications from the medical field. 
-Similar to the previous chapter, components from several of the previous chapters 
-are revisited here, e.g., how to include non-standard geographic boundaries, e.g., 
-health service areas, handle point locations, and deal with non-standard graph types 
-such as scatterplots to emphasize on the relationship of two variables.
-
+\chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr.}
 
 ## Introduction {#Ch12-Introduction}
 
+Public health studies often begin with an exploratory analysis of available data in order to generate hypotheses about a medical problem noticed in the population. Increasing disease rates over time or geospatial clusters of high rates typically trigger this sort of analysis. Questions asked in this preliminary stage include what lifestyle and environmental factors seem associated with the rates and where the problem seems to be concentrated. The latter "cluster analysis" leads epidemiologists to locations where a more in-depth study could be undertaken with sufficient numbers of cases for analysis. These questions lend themselves well to the use of linked micromaps.
 
-Visualization and disease mapping have long been part of medical field since John snow’s map of the Cholera Outbreak in London of 1854.  Snow drew dots on a map background which he subsequently used to trace the source of the cholera outbreak, i.e., fecal-contaminated water supplied by the Broad Street pump [@Snow1936]. His direct action in dismantling the pump saved many lives. However, since this investigation, advances in Geographic Information Systems (GIS), spatial statistical methods, coupled with developments in digital and computing resources, has led to a very powerful synergistic toolset that now supplies the means with which to effectively analyze and visualize any data that is spatially distributed. 
+In the early chapters of this book, the reader has learned about the structure and use of linked micromap plots and how to create them using two different R packages. In this chapter, the linked micromap plot will be applied to health data to illustrate how they can be useful in an exploratory analysis and subsequent communication of results to the public.
 
-Over many years, many visualization tools have been developed to convert tabular information into visual graphs or plots (e.g. , @Carr1994a). Visualization tools offer a set of tools that can be used to simplify large and complex datasets into more comprehensible forms. Recent development in the field highlights the use of linked micromap (LM) plots [@CaPi1996]
-as a way of displaying geographically indexed data. LM plots use multiple small maps (called micromaps) to visualize complex data structures in a geographical context. LM plots have already been used in many fields, including environmental science [@CaPi1996;@COPC1998;@SCAWWW1999], ecology [@COPC2000], epidemiology [@CWC2000;@SGGW2003ASA], and in the case of federal statistical summaries [@HSG2003].
+## Background {#Ch12-Background}
+One of the successes in cancer screening has been the continuing decline of colorectal cancer (CRC) incidence and mortality in the U.S. since screening methods became available about 50 years ago [REF SEER]. A colonoscopy can find and remove pre-cancerous polyps before they become malignant. However, it has become apparent recently that rates among people under age 50, the recommended age to start screening, have started to rise not just in the U.S. but around the world [REF]. Researchers are puzzled by the increase. Risk factors identified for CRC occurrence in older adults include obesity, a sedentary lifestyle, smoking, excessive alcohol use and first degree relatives who also had CRC; higher death rates are seen in areas with lower screening [REF]. We will use the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN], accessible at https://cran.r-project.org/web/packages/micromapST/index.html, to explore CRC mortality data to see if the plots can shed light on this new trend.
 
-History of LM plots in medical field:  application to birth defects data, Cardiovascular disease, Cancer, West Nile virus **(I will further expand this from literature review)**
+### Data {#Ch12-Data} 
+Mortality data were obtained from the Centers for Disease Control and Prevention (CDC) online Wonder system [REF]; rates are age-adjusted using the U.S. 2000 standard population. Risk factor data were collected by CDC's Behavioral Risk Factor Surveillance System [REF] and downloaded from the National Cancer Institutes's (NCI) State Cancer Profiles system [REF]. The observed count in any strata, e.g., by state, age, sex, race or year, was suppressed in the original files if it was less than 16. Mortality data by state were available for 1999-2021, grouped into periods 1999-2001, 2002-2006, 2007-2011, 2012-2016, 2017-2021. All rates are shown as # deaths per 100,000 population. 
+Risk factor data were available for 2022. Note that using this most recent risk factor data violates a major epidemiologic principle, i.e., that the putative risk factor must have occurred well prior to the initiation of the cancer. Nevertheless, these data will serve to illustrate the use of linked micromaps but we should be cautious about the interpretation of the results.
 
-
-The primary objective of this chapter is to demonstrate the applications of LM plots in presenting spatially and temporally indexed medical and health data. Specifically, it will describe the steps for generating various LM Plots and graph types (e.g., box plots, bar plots, scatter plots, and time series) using R programing language to summarize and visualize health outcomes and associated risk factors. This chapter will also provide examples of LM plots using non-standard geographic boundaries (e.g., census division). In conclusion, the chapter we will describe how LM plot can be a valuable tool to identify patterns, trends, relationships, and anomalies that were not at first obvious in the tables can be revealed quickly. Moreover, it will highlight the effectiveness of LM in communicating valuable medical information to the public and policy makers.
-
-
-## Types of Medial Field Data {#Ch12-Types-Medical-Data}
-
-
-## Applications of Linked Micromaps in Medical Field {#Ch12-Applications-Medical-Field}
+### Preliminary U.S. analysis {#Ch12-Preliminary}
+First, let's look at the U.S. CRC mortality rates over time, comparing rates among those under age 50 and those 50 and older.
 
 
-### Classic Three-Column Linked Micromaps
-
-- Data Source CDC: Age-standardized Cancer Mortality Rate FY2020, Smoking rate FY 2019, Poverty FY 2019
-    -State Rates dots -classic three-Column Version with confidence interval)
--	Data Source: CVH, Stroke and CHD [@GDSMGD2015]
-
-
-### Linked Micromaps with Bars and Boxplots
-
--	Data Source CDC: Age-standardized stroke death rates and annual percentage change by state  FY2000, and FY 2015 
-    -State rates dots with confidence interval rates and bars for annual percentage change
--	Data Source CDC: Age-standardized heart Disease Mortality Data Among US Adults (35+) 
-    -State rates dots with confidence interval rates, and county rates with boxplots 
-
-
-### Time Series Linked Micromaps 
-
--	Data Source: CDC United States COVD-19 cases by state and time (Months: FY2020-2022)
-    -Timeseries of COVID-19 Death by months (Jan- Dec), and  total cases dots with confidence interval  for FY 2020, FY2021, and FY2022
-
-
-###	Linked Micromaps with Non-traditional Boundaries 
-
--	Data Source Gebreab et al published: Utah Birth defects  (classic three-Column Version with confidence interval)
--	Data Source CDC: Tobacco Use by US Census Division FY2018
-
-
-## Concluding Remarks  {#Ch12-Concluding-Remarks}
-
-
-The chapter illustrated the applications of LM plots in visualizing spatially indexed medical data. It demonstrated that LM plots can be valuable tools to graphically relate health outcomes and their associated demographic, social  and behavioral factors. Overall, the chapter highlighted that LM plots can be effective tools to identify geographic patterns, regional similarities, medically vulnerable populations, health outcomes, risk factors, trends, and the relationships between them **( I will further expand this).**
-
-
-
-## Provided Template (To Be Deleted) {#Ch12-Template}
-
-
-As a reminder, see Chapter \@ref(Ch1) for general style requirements
-for our `Micromap Plots in R` book. In particular, please do the following:
-
-- Introduce meaningful labels for the sections, figures, and tables in your chapter.
-
-- Create index entries for all R packages (such as the **micromap**\index{R Packages!micromap} R package)
-and for all datasets (such as the _USstates_\index{Datasets!USstates} and _edPov_\index{Datasets!edPov} datasets)
-that are used in your chapter.
-
-- Include references for R packages and publications related to your chapter,
-such as for the **micromap**\index{R Packages!micromap} [@PaOl2015] and 
-**micromapST**\index{R Packages!micromapST} [@CP2015CRAN] R packages
-and some micromap articles, book chapters, and books [@Carr2001;@SC2008;@CP2010].
-
-- Also create index entries for main topics such as
-linked micromap plots,\index{Linked micromap plot}
-conditioned choropleth maps,\index{Conditioned choropleth map}
-perceptual group,\index{Perceptual group}
-color blindness,\index{Color blindness},
-and quantile-quantile plot.\index{Quantile-quantile plot}
-
-
-## Main {#Ch12-Main}
-
-
-Here goes the main content of your chapter. Introduce additional sections as needed.
-
-For convenience, Figure \@ref(fig:Ch12-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
-
-
-```{r Ch12-micromap1, fig.cap = 'Here is a first micromap example for this chapter. Note that the figure is formatted in a slightly more meaningful way this time.', fig.width = 7, fig.height = 9}
-library(micromap)
-
-# initial example
-
-data(USstates)
-statePolys <- create_map_table(USstates, "ST")
-data(edPov)
-
-# basic figure 1
-lmplot(
-  stat.data = edPov,
-  map.data = statePolys,
-  panel.types = c("labels", "dot", "dot", "map"),
-  panel.data = list("state", "pov", "ed", NA),
-  ord.by = "pov",   
-  grouping = 5, 
-  median.row = TRUE,
-  plot.width = 2, 
-  plot.height = 6,
-  map.link = c("StateAb", "ID")
+```{r Ch12-readMortUS}
+# Input data files.
+# Data Set # 1
+mort_ratesUS <- read.csv("data/Ch12-data/USMortRateTrends.csv", skip = 2
 )
+head(mort_ratesUS, n = 2L)
 ```
 
 
-## Further Reading {#Ch12-FurtherReading}
+```{r Ch12-USAgePlot, fig.cap = 'U. S. Colorectal cancer mortality rates, 1990-2022 by age group <50 and 50+', fig.width = 7, fig.height = 4}
+plot(mort_ratesUS$Year,mort_ratesUS$AllMFOld,type = 'l',xlab = 'Year', ylab = 'Age-adjusted rate', ylim = c(0,85))
+lines(mort_ratesUS$Year,mort_ratesUS$AllMFYoung, lty = 'dashed', col = 'blue')
+legend(x = 'topright', legend = c('ages 50+','ages <50'), col = c('black','blue'), lty = c('solid','dashed'))
+
+```
+
+Because of the scale differences between the rates for the two age groups, we don't notice that the younger rates increased 20% while the older rates declined over 50% over this time span. From this point on, we will focus on the younger group. The numbers of deaths are relatively small, despite increasing rates, on the order of 1.5 per 100,000 population. In order to do a visual analysis of rates at the state level, how can the data be aggregated to provide reasonably stable rates and to avoid too much data suppression?
+
+Aggregation over race/ethnic categories is a possibility, but because the non-Hispanic white category is so much larger than others, aggregate patterns will largely reflect the patterns of whites. Therefore further analyses are restricted to non-Hispanic whites.
+
+Exploratory analyses are often conducted separately on males and females but, in the interest of avoiding small numbers in the strata, could we combine the two groups?
+
+```{r Ch12-USSexPlot, fig.cap = 'U. S. Colorectal cancer mortality rates among white non-Hispanics ages <50, 1990-2022 for males, females and both', fig.width = 7, fig.height = 4}
+plot(mort_ratesUS$Year,mort_ratesUS$WMYoung,type = 'l',lty = 'dotted', lwd = 2, col = 'blue', xlab = 'Year', ylab = 'Age-adjusted rate', ylim = c(0,3))
+lines(mort_ratesUS$Year,mort_ratesUS$WFYoung, lty = 'dashed', col = 'green', lwd = 2)
+lines(mort_ratesUS$Year,mort_ratesUS$WMFYoung, lty = 'solid', col = 'black', lwd = 2)
+legend(x = 'bottomright', legend = c('Male','Female', 'Both'), col = c('blue','green','black'), lty = c('dotted','dashed','solid'), lwd = 2)
+
+```
+
+Although male rates are slightly higher than female rates, the trend lines are fairly parallel. A trend analysis showed that rates in all three groups began to increase approximately 1.6% per year since 2004, compared to a decline of 2% or more per year for whites over age 50 [REF StCaPro]. Subsequent analyses will combine white males and females.
+
+One danger of any mortality analysis is that patterns in death rates might not reflect patterns in the underlying occurrence (incidence) due to changes in treatment or screening for that disease. For example, prostate cancer mortality rates dropped rapidly when the PSA screening test became widely available, even as incidence rates continued to rise. For CRC though, incidence rates for those under age 50 have been rising on pace with the mortality rates. This suggests that changes in screening or treatment for CRC are not the causes of the rising rates.
+
+Researchers have not uncovered reasons for the recent increase in CRC rates among the young, although the recommended age to start screening has been lowered from 50 to 45. Risk factors for CRC occurrence in the older group include: CRC cancer in close relatives, excessive alcohol use, smoking, obesity and a sedentary lifestyle [REF NCI]. Aspirin use, hormonal therapy and pre-cancerous polyp removal seem to reduce the risk of CRC.
+
+DATA AVAILABILITY FOR THESE RISK FACTORS
+STATE DATA
+SET UP LINKED MM PLOTS
+
+```
+#read csv files for mortality and risk factors, merge together.
+#
+#dDir <- "c:/projects/statnet/HealthChapter/"
+dDir <- "c:/MicromapBook/JuergenBase/MicromapPlotsInR-master/"
+File1  <- "data/Ch12-data/CRCMortData.csv"
+File2  <- "data/Ch12-data/CRCRiskFactors.csv"
+
+MortData  <- read.csv(paste0(dDir,File1), header=TRUE, stringsAsFactors = FALSE)
+RiskData  <- read.csv(paste0(dDir,File2), header=TRUE, stringsAsFactors = FALSE)
+MAbbr     <- MortData[,2]
+RAbbr     <- RiskData[,1]
+Mord      <- order(MAbbr)
+Rord      <- order(RAbbr)
+MortData2 <- MortData[Mord,]
+RiskData2 <- RiskData[Rord,]
+names(MortData2)[2] <- "MAbbr"
+names(RiskData2)[1] <- "RAbbr"
+row.names(MortData2) <- MortData2$MAbbr
+row.names(RiskData2) <- RiskData2$RAbbr
+AllData   <- cbind(MortData2,RiskData2)
+
+stAbbr   <- MortData2$MAbbr
+head(AllData)
+```
+COMMENT
+```
+{r Ch12-StateLMMRates, fig.cap = 'Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
+# Linked MM Columns: latest time period rate, % time change from period 1 to 5, full time series
+# Compute % change, 
+SexBYrRates <- MortData2[,c("MAbbr","SexBYrAllAgeY","SexBYr1AgeY","SexBYr2AgeY","SexBYr3AgeY","SexBYr4AgeY","SexBYr5AgeY")]
+row.names(SexBYrRates) <- stAbbr
+names(SexBYrRates) <- c("Abbr","Yr0","Yr1","Yr2","Yr3","Yr4","Yr5")   # Yr0 is the ALL data over 1 to 5.
+ColNames <- c("Yr0", "Yr1", "Yr2", "Yr3", "Yr4", "Yr5")
+
+SexByrRatesArr <- array(dim=c(51,5,2),dimnames=list(stAbbr, ColNames[2:6])  )
+
+for (ind in row.names(SexByrRatesArr)) {
+     y <- as.numeric(SexBYrRates[ind,c("Yr1","Yr2","Yr3","Yr4","Yr5")])
+     #names(y) <- c("Yr1","Yr2","Yr3","Yr4","Yr5")
+     SexByrRatesArr[ind,,1] <- c(1,2,3,4,5)  # x value for each y
+     SexByrRatesArr[ind,,2] <- y
+     #print(y)
+}
+
+AllData <- cbind(MortData2,RiskData2)
+AllData$Delta51  <- ( AllData$SexBYr5AgeY - AllData$SexBYr1AgeY )
+AllData$PctChange <- ( AllData$SexBYr5AgeY - AllData$SexBYr1AgeY ) / AllData$SexBYr1AgeY * 100
+```
+
+```
+# set up micromapST
+#1) "Time Trends of Colorectal Cancer Mortality Among White Ages < 50"
+#
+#Columns:	latest time period rate, % time change from period 1 to 5, full time series.
+
+panelHC01 <- data.frame(type=c("mapcum","id","dot","dot","ts"),
+      lab1=c(NA,   NA,  "Rate",        "Pct Change",    "Time Series"),
+      lab2=c(NA,   NA,  "2017-2021",   "1999-2001 to 2017-2021", "1999-2021"),
+      col1=c(NA,   NA,  "SexBYr5AgeY", "PctChange",     NA),
+      panelData=c(NA,NA, NA,            NA,          "SexByrRatesArr"),
+      refVals=c(NA,NA,   1.8,           20,             NA),
+      refTexts=c(NA,NA,  "US 2017-2021",     "US Pct Chg",   NA)
+  )
+
+#Title <- c("Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50")
+
+pdf(paste0(dDir,"HC01-TimeTrendsofColorectalCancerMortalityAmongWhitesAgeslessthan50SY5Rate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC01,sortVar="SexBYr5AgeY",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr"
+  )
+dev.off()
+
+#Title <- c("Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50")
+```
+RESORTED
+```
+{r Ch12-StateLMMTrends, fig.cap = 'Time Trends of Colorectal Cancer Mortality, Sorted by percent change","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
+
+pdf(paste0(dDir,"HC02-TimeTrendsofColorectalCancerMortalityAmongWhitesAg
+eslessthan50SPctChgRate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC01,sortVar="PctChange",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr"
+ )			 
+
+dev.off()
+```
+
+COMMENT ON THIS LMM
+
+REDO WITH RATE & LIFESTYLE FACTORS
+
+```
+{r Ch12-StateLMMRisks, fig.cap = 'Colorectal Cancer Mortality Among Whites, < 50, and related 
+lifestyle factors', fig.width = 7, fig.height = 4}
+
+panelHC03 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",     "dot"),
+                        lab1=c(NA,   NA,  "Rate", "Pct Ever",  "Pct",     "Pct Binge",     "Pct"),
+                        lab2=c(NA,   NA,  "2017-2021", "Smoked",    "Obese",   "Drinking",   "No Exercise"),
+                        col1=c(NA,NA,"SexBYr5AgeY","PctEverSmk","PctObese","PctBinge","PctNoExer"),
+                        refVals=c(NA,NA,   1.8,          NA,         NA,        NA,        NA),
+                        refTexts=c(NA,NA,  "US Rate",    NA,         NA,        NA,        NA)
+                   )
+
+Title<-c("Colorectal Cancer Mortality Among Whites, < 50,","and related 
+lifestyle factors.")
+
+pdf(paste0(dDir,"HC03-ColorectalCancerMortalityAmongWhiteslessthan50andrelatedLifestyleSRate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC03,sortVar="SexBYr5AgeY",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE    )			 
+
+dev.off()
+```
+
+LMM FOR SCREENING AND POVERTY
+
+```
+{r Ch12-StateLMMScreen, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
+
+panelHC05 <- data.frame(type=c("mapcum","id","dot",     "dot",          "dot"),
+                        lab1=c(NA,   NA,  "Rate",       "Pct CRC",          "Pct"),
+                        lab2=c(NA,   NA,  "2017-2021",       "Screening",   "Poverty"),
+                        col1=c(NA,   NA,  "SexBYr5AgeY", "PctCRCScreen", "PctPov"),
+                        refVals=c(NA,NA,   1.8,          NA,            NA),
+                        refTexts=c(NA,NA,  "US Rate",    NA,            NA)
+                        
+                     )
+
+#Title <- c("Mortality Rates and Screening for Colorectal Cancer", "among Whites, ages < 50")
+ 
+pdf(paste0(dDir,"HC05-ScreeningforColorectalCancerMortalityamongWhitesAgeslessthan50SYr5Rate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC05,sortVar="SexBYr5AgeY",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE
+  )			 
+
+dev.off()
+```
+ 
+COMMENT ON THIS LMM
+
+REDO WITH SORT VAR = % CHANGE
+
+``` 
+{r Ch12-StateLMMScreenTrends, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
+#Title <- c("Screening for Colorectal Cancer Mortality","among Whites, ages < 50")
+ 
+pdf(paste0(dDir,"HC06-ScreeningforColorectalCancerMortalityamongWhitesAgeslessthan50SChgRate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC05,sortVar="PctChange",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE
+    )			 
+
+dev.off()
+```
+COMMENT
+PUT IMPORTANT FACTORS ON SAME MM PLOT
+
+```
+{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+panelHC07 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",       "dot"),
+                        lab1=c(NA,   NA,  "Rate",       "Prd 1 to 5","Pct",     "Pct",       "Pct"),
+                        lab2=c(NA,   NA,  "Yr 5",       "Pct Chg",   "Poverty", "Obesity",   "No Exercise"),
+                        col1=c(NA,   NA,  "SexBYr5AgeY","PctChange", "PctPov",  "PctObese",  "PctNoExer"),
+                        refVals=c(NA,NA,   1.8,         20,          NA,        NA,          NA),
+                        refTexts=c(NA,NA,  "USYr5",     "USPctC",    NA,        NA,          NA)            
+                        
+                     )
+
+#Title <- c("Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer")
+ 
+pdf(paste0(dDir,"HC07-ColorectalCancerMortalityamongWhitesAgeslessthan50-Pov-Obe-NoE-SYr5Rate.pdf"),height=10.5,width=7.5)
+
+micromapST(AllData,panelHC07,sortVar="SexBYr5AgeY",ascend=FALSE, 
+                   rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE    )			 
+
+dev.off()
+```
+RESORTED
+
+```
+{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+#Title <- c("Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer")
+  
+pdf(paste0(dDir,"HC08-ColorectalCancerMortalityamongWhitesAgeslessthan50-Pov-Obe-NoE-SYr5Rate.pdf"),height=10.5,width=7.5)
+ 
+micromapST(AllData,panelHC07,sortVar="PctPov",ascend=FALSE, 
+                    rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE
+    )			 
+ 
+ dev.off()
+```
+COMMENT
+```
+{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+# Title <- c("Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer")
+  
+ pdf(paste0(dDir,"HC09-ColorectalCancerMortalityamongWhitesAgeslessthan50-Pov-Obe-NoE-SYr5Rate.pdf"),height=10.5,width=7.5)
+ 
+ micromapST(AllData,panelHC07,sortVar="PctObese",ascend=FALSE, 
+                    rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE
+    )			 
+ 
+ dev.off()
+```
 
 
-Introduce cross-references to other chapters, e.g., Chapter \@ref(Ch1) and Chapter \@ref(Ch2),
-where related work and further examples can be found in this book that match the content of this
-chapter, that follow up on this chapter, or that are a prerequisite of this chapter.
-
-Also, do some scientific literature review here that is specific to your chapter.
-Where has this R package been introduced and used before, where have other plot types
-or different countries been used in micromaps, what were other applications 
-of micromaps that are related to the title and content of your chapter, etc.?
+## Summary and Further Reading {#Ch12-Summary}
 
 
-\printbibliography[segment=\therefsegment,heading=subbibliography]
-
+#\printbibliography[segment=\therefsegment,heading=subbibliography]
