@@ -2,66 +2,66 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     USstBG   2025-03-26 16:05:36 
+     USstBG   2025-04-22 19:49:14 
 
-
-   ab                 full id alt_ab                alias
-AL AL              Alabama 01     AL              Alabama
-AK AK               Alaska 02     AK               Alaska
-AZ AZ              Arizona 04     AZ              Arizona
-AR AR             Arkansas 05     AR             Arkansas
-CA CA           California 06     CA           California
-CO CO             Colorado 08     CO             Colorado
-CT CT          Connecticut 09     CT          Connecticut
-DE DE             Delaware 10     DE             Delaware
-DC DC District of Columbia 11     DC District of Columbia
-FL FL              Florida 12     FL              Florida
-GA GA              Georgia 13     GA              Georgia
-HI HI               Hawaii 15     HI               Hawaii
-ID ID                Idaho 16     ID                Idaho
-IL IL             Illinois 17     IL             Illinois
-IN IN              Indiana 18     IN              Indiana
-IA IA                 Iowa 19     IA                 Iowa
-KS KS               Kansas 20     KS               Kansas
-KY KY             Kentucky 21     KY             Kentucky
-LA LA            Louisiana 22     LA            Louisiana
-ME ME                Maine 23     ME                Maine
-MD MD             Maryland 24     MD             Maryland
-MA MA        Massachusetts 25     MA        Massachusetts
-MI MI             Michigan 26     MI             Michigan
-MN MN            Minnesota 27     MN            Minnesota
-MS MS          Mississippi 28     MS          Mississippi
-MO MO             Missouri 29     MO             Missouri
-MT MT              Montana 30     MT              Montana
-NE NE             Nebraska 31     NE             Nebraska
-NV NV               Nevada 32     NV               Nevada
-NH NH        New Hampshire 33     NH        New Hampshire
-NJ NJ           New Jersey 34     NJ           New Jersey
-NM NM           New Mexico 35     NM           New Mexico
-NY NY             New York 36     NY             New York
-NC NC       North Carolina 37     NC       North Carolina
-ND ND         North Dakota 38     ND         North Dakota
-OH OH                 Ohio 39     OH                 Ohio
-OK OK             Oklahoma 40     OK             Oklahoma
-OR OR               Oregon 41     OR               Oregon
-PA PA         Pennsylvania 42     PA         Pennsylvania
-RI RI         Rhode Island 44     RI         Rhode Island
-SC SC       South Carolina 45     SC       South Carolina
-SD SD         South Dakota 46     SD         South Dakota
-TN TN            Tennessee 47     TN            Tennessee
-TX TX                Texas 48     TX                Texas
-UT UT                 Utah 49     UT                 Utah
-VT VT              Vermont 50     VT              Vermont
-VA VA             Virginia 51     VA             Virginia
-WA WA           Washington 53     WA           Washington
-WV WV        West Virginia 54     WV        West Virginia
-WI WI            Wisconsin 55     WI            Wisconsin
-WY WY              Wyoming 56     WY              Wyoming
+   Abbr                 Name ID Alt_Abbr                Alias
+AL   AL              ALABAMA 01       AL              ALABAMA
+AK   AK               ALASKA 02       AK               ALASKA
+AZ   AZ              ARIZONA 04       AZ              ARIZONA
+AR   AR             ARKANSAS 05       AR             ARKANSAS
+CA   CA           CALIFORNIA 06       CA           CALIFORNIA
+CO   CO             COLORADO 08       CO             COLORADO
+CT   CT          CONNECTICUT 09       CT          CONNECTICUT
+DE   DE             DELAWARE 10       DE             DELAWARE
+DC   DC DISTRICT OF COLUMBIA 11       DC DISTRICT OF COLUMBIA
+FL   FL              FLORIDA 12       FL              FLORIDA
+GA   GA              GEORGIA 13       GA              GEORGIA
+HI   HI               HAWAII 15       HI               HAWAII
+ID   ID                IDAHO 16       ID                IDAHO
+IL   IL             ILLINOIS 17       IL             ILLINOIS
+IN   IN              INDIANA 18       IN              INDIANA
+IA   IA                 IOWA 19       IA                 IOWA
+KS   KS               KANSAS 20       KS               KANSAS
+KY   KY             KENTUCKY 21       KY             KENTUCKY
+LA   LA            LOUISIANA 22       LA            LOUISIANA
+ME   ME                MAINE 23       ME                MAINE
+MD   MD             MARYLAND 24       MD             MARYLAND
+MA   MA        MASSACHUSETTS 25       MA        MASSACHUSETTS
+MI   MI             MICHIGAN 26       MI             MICHIGAN
+MN   MN            MINNESOTA 27       MN            MINNESOTA
+MS   MS          MISSISSIPPI 28       MS          MISSISSIPPI
+MO   MO             MISSOURI 29       MO             MISSOURI
+MT   MT              MONTANA 30       MT              MONTANA
+NE   NE             NEBRASKA 31       NE             NEBRASKA
+NV   NV               NEVADA 32       NV               NEVADA
+NH   NH        NEW HAMPSHIRE 33       NH        NEW HAMPSHIRE
+NJ   NJ           NEW JERSEY 34       NJ           NEW JERSEY
+NM   NM           NEW MEXICO 35       NM           NEW MEXICO
+NY   NY             NEW YORK 36       NY             NEW YORK
+NC   NC       NORTH CAROLINA 37       NC       NORTH CAROLINA
+ND   ND         NORTH DAKOTA 38       ND         NORTH DAKOTA
+OH   OH                 OHIO 39       OH                 OHIO
+OK   OK             OKLAHOMA 40       OK             OKLAHOMA
+OR   OR               OREGON 41       OR               OREGON
+PA   PA         PENNSYLVANIA 42       PA         PENNSYLVANIA
+RI   RI         RHODE ISLAND 44       RI         RHODE ISLAND
+SC   SC       SOUTH CAROLINA 45       SC       SOUTH CAROLINA
+SD   SD         SOUTH DAKOTA 46       SD         SOUTH DAKOTA
+TN   TN            TENNESSEE 47       TN            TENNESSEE
+TX   TX                TEXAS 48       TX                TEXAS
+UT   UT                 UTAH 49       UT                 UTAH
+VT   VT              VERMONT 50       VT              VERMONT
+VA   VA             VIRGINIA 51       VA             VIRGINIA
+WA   WA           WASHINGTON 53       WA           WASHINGTON
+WV   WV        WEST VIRGINIA 54       WV        WEST VIRGINIA
+WI   WI            WISCONSIN 55       WI            WISCONSIN
+WY   WY              WYOMING 56       WY              WYOMING
 
 
 
 
 Name Table Layer 2 and Regional Values
+
    L2_ID L2_ID_Name regID   regName
 AL     2      South     2     South
 AK     0   Offshore     0  Offshore
@@ -117,6 +117,7 @@ WY     4       West     4      West
 
 
 Name Table Modifications and Map Label Values
+
    Xoffset Yoffset Scale Rotate MapL     MapX       MapY
 AL     0.0    0.00    NA     NA <NA>       NA         NA
 AK    36.5  -36.00   0.3      0   AK -1507092 -1306811.4
@@ -172,5 +173,5 @@ WY     0.0    0.00    NA     NA <NA>       NA         NA
 
 
 Any entries in the name table with location ids with a value 
- of 'NA', '', or ' ' are considered empty and will not be ignored.
+ of 'NA', '', or ' ' are considered empty and will be ignored.
 
