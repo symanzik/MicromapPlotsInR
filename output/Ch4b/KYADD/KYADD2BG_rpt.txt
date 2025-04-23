@@ -2,29 +2,28 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     KYADD2BG   2025-03-26 16:06:39 
+     KYADD2BG   2025-04-22 19:50:19 
 
-
-                full ab   id    alias alt_ab
-BR      Barren River BR 2102   Barren     BR
-BS         Big Sandy BS 2103    Sandy     BS
-BG         Bluegrass BG 2101    Blueg     BG
-BT     Buffalo Trace BT 2104  Buffalo     BT
-CV Cumberland Valley CV 2105   Valley     CV
-FI             Fivco FI 2106      Fiv     FI
-GA           Gateway GA 2107    Gatew     GA
-GR       Green River GR 2108    Green     GR
-KR    Kentucky River KR 2110 Kentucky     KR
-KI             Kipda KI 2109    Kipda     KI
-LC   Lake Cumberland LC 2111     Lake     LC
-LT     Lincoln Trail LT 2112  Lincoln     LT
-NK Northern Kentucky NK 2113 Northern     NK
-PE         Pennyrile PE 2114    Penny     PE
-PU          Purchase PU 2115    Purch     PU
+                Name Abbr   ID    Alias Alt_Abbr
+BR      BARREN RIVER   BR 2102   Barren       BR
+BS         BIG SANDY   BS 2103    Sandy       BS
+BG         BLUEGRASS   BG 2101    Blueg       BG
+BT     BUFFALO TRACE   BT 2104  Buffalo       BT
+CV CUMBERLAND VALLEY   CV 2105   Valley       CV
+FI             FIVCO   FI 2106      Fiv       FI
+GA           GATEWAY   GA 2107    Gatew       GA
+GR       GREEN RIVER   GR 2108    Green       GR
+KR    KENTUCKY RIVER   KR 2110 Kentucky       KR
+KI             KIPDA   KI 2109    Kipda       KI
+LC   LAKE CUMBERLAND   LC 2111     Lake       LC
+LT     LINCOLN TRAIL   LT 2112  Lincoln       LT
+NK NORTHERN KENTUCKY   NK 2113 Northern       NK
+PE         PENNYRILE   PE 2114    Penny       PE
+PU          PURCHASE   PU 2115    Purch       PU
 
 
 
 
 Any entries in the name table with location ids with a value 
- of 'NA', '', or ' ' are considered empty and will not be ignored.
+ of 'NA', '', or ' ' are considered empty and will be ignored.
 

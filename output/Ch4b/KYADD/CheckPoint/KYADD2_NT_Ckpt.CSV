@@ -1,16 +1,16 @@
 "Name","Abbr","ID","Alias","Alt_Abbr","Key","Xoffset","Yoffset","Scale","Rotate","DoAdj","MapL","MapX","MapY","CCode"
-"Barren River","BR","2102","Barren","BR","BR",0,0,1,0,FALSE,NA,NA,NA,1
-"Big Sandy","BS","2103","Sandy","BS","BS",0,0,1,0,FALSE,NA,NA,NA,1
-"Bluegrass","BG","2101","Blueg","BG","BG",0,0,1,0,FALSE,NA,NA,NA,1
-"Buffalo Trace","BT","2104","Buffalo","BT","BT",0,0,1,0,FALSE,NA,NA,NA,3
-"Cumberland Valley","CV","2105","Valley","CV","CV",0,0,1,0,FALSE,NA,NA,NA,2
-"Fivco","FI","2106","Fiv","FI","FI",0,0,1,0,FALSE,NA,NA,NA,4
-"Gateway","GA","2107","Gatew","GA","GA",0,0,1,0,FALSE,NA,NA,NA,2
-"Green River","GR","2108","Green","GR","GR",0,0,1,0,FALSE,NA,NA,NA,3
-"Kentucky River","KR","2110","Kentucky","KR","KR",0,0,1,0,FALSE,NA,NA,NA,3
-"Kipda","KI","2109","Kipda","KI","KI",0,0,1,0,FALSE,NA,NA,NA,3
-"Lake Cumberland","LC","2111","Lake","LC","LC",0,0,1,0,FALSE,NA,NA,NA,3
-"Lincoln Trail","LT","2112","Lincoln","LT","LT",0,0,1,0,FALSE,NA,NA,NA,2
-"Northern Kentucky","NK","2113","Northern","NK","NK",0,0,1,0,FALSE,NA,NA,NA,2
-"Pennyrile","PE","2114","Penny","PE","PE",0,0,1,0,FALSE,NA,NA,NA,2
-"Purchase","PU","2115","Purch","PU","PU",0,0,1,0,FALSE,NA,NA,NA,1
+"BARREN RIVER","BR","2102","Barren","BR","BR",0,0,1,0,FALSE,NA,NA,NA,1
+"BIG SANDY","BS","2103","Sandy","BS","BS",0,0,1,0,FALSE,NA,NA,NA,1
+"BLUEGRASS","BG","2101","Blueg","BG","BG",0,0,1,0,FALSE,NA,NA,NA,1
+"BUFFALO TRACE","BT","2104","Buffalo","BT","BT",0,0,1,0,FALSE,NA,NA,NA,3
+"CUMBERLAND VALLEY","CV","2105","Valley","CV","CV",0,0,1,0,FALSE,NA,NA,NA,2
+"FIVCO","FI","2106","Fiv","FI","FI",0,0,1,0,FALSE,NA,NA,NA,4
+"GATEWAY","GA","2107","Gatew","GA","GA",0,0,1,0,FALSE,NA,NA,NA,2
+"GREEN RIVER","GR","2108","Green","GR","GR",0,0,1,0,FALSE,NA,NA,NA,3
+"KENTUCKY RIVER","KR","2110","Kentucky","KR","KR",0,0,1,0,FALSE,NA,NA,NA,3
+"KIPDA","KI","2109","Kipda","KI","KI",0,0,1,0,FALSE,NA,NA,NA,3
+"LAKE CUMBERLAND","LC","2111","Lake","LC","LC",0,0,1,0,FALSE,NA,NA,NA,3
+"LINCOLN TRAIL","LT","2112","Lincoln","LT","LT",0,0,1,0,FALSE,NA,NA,NA,2
+"NORTHERN KENTUCKY","NK","2113","Northern","NK","NK",0,0,1,0,FALSE,NA,NA,NA,2
+"PENNYRILE","PE","2114","Penny","PE","PE",0,0,1,0,FALSE,NA,NA,NA,2
+"PURCHASE","PU","2115","Purch","PU","PU",0,0,1,0,FALSE,NA,NA,NA,1

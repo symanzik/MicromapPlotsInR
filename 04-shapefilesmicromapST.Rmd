@@ -588,7 +588,7 @@ BuildBorderGroup(
 load(paste0(output_dir_KY, "/KY_countiesBG.rda")) # this loads new border group
 
 par(mar = c(0, 0, 0, 0))
-PlotVis(VisB = areaVisBorders, xLwd = 1)
+Plot_Vis(VisB = areaVisBorders, xLwd = 1)
 ```
 
 

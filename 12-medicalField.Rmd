@@ -1,14 +1,15 @@
-\usepackage(hyperref)
-\usepackage(tabulary)   # 4 lines added by LP 4/30/25
-\usepackage(colortbl)
-\usepackage(lipsum)
-\usepackage(suffix)
----
-output:
-  pdf_document: default
-  html_document: default
-  epub_document: default  # added by LP 4/30/25
----
+<!-- \usepackage(hyperref) -->
+<!-- \usepackage(tabulary)   # 4 lines added by LP 4/30/25 -->
+<!-- \usepackage(colortbl) -->
+<!-- \usepackage(lipsum) -->
+<!-- \usepackage(suffix) -->
+<!-- --- -->
+<!-- output: -->
+<!--   pdf_document: default -->
+<!--   html_document: default -->
+<!--   epub_document: default  # added by LP 4/30/25 -->
+<!-- --- -->
+
 # Application of Linked Micromaps in the Medical Field {#Ch12}
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr.}
@@ -27,10 +28,13 @@ Mortality data were obtained from the Centers for Disease Control and Prevention
 Risk factor data were available for 2022. Note that using this most recent risk factor data violates a major epidemiologic principle, i.e., that the putative risk factor must have occurred well prior to the initiation of the cancer. Nevertheless, these data will serve to illustrate the use of linked micromaps but we should be cautious about the interpretation of the results.
 
 ### Preliminary U.S. analysis {#Ch12-Preliminary}
+
 First, let's look at the U.S. CRC mortality rates over time, comparing rates among those under age 50 and those 50 and older.
 
 
 ```{r Ch12-readMortUS}
+library(micromapST)
+
 # Input data files.
 # Data Set # 1
 mort_ratesUS <- read.csv("data/Ch12-data/USMortRateTrends.csv", skip = 2
@@ -43,7 +47,6 @@ head(mort_ratesUS, n = 2L)
 plot(mort_ratesUS$Year,mort_ratesUS$AllMFOld,type = 'l',xlab = 'Year', ylab = 'Age-adjusted rate', ylim = c(0,85))
 lines(mort_ratesUS$Year,mort_ratesUS$AllMFYoung, lty = 'dashed', col = 'blue')
 legend(x = 'topright', legend = c('ages 50+','ages <50'), col = c('black','blue'), lty = c('solid','dashed'))
-
 ```
 
 Because of the scale differences between the rates for the two age groups, we don't notice that the younger rates increased 20% while the older rates declined over 50% over this time span. From this point on, we will focus on the younger group. The numbers of deaths are relatively small, despite increasing rates, on the order of 1.5 per 100,000 population. In order to do a visual analysis of rates at the state level, how can the data be aggregated to provide reasonably stable rates and to avoid too much data suppression?
@@ -57,7 +60,6 @@ plot(mort_ratesUS$Year,mort_ratesUS$WMYoung,type = 'l',lty = 'dotted', lwd = 2, 
 lines(mort_ratesUS$Year,mort_ratesUS$WFYoung, lty = 'dashed', col = 'green', lwd = 2)
 lines(mort_ratesUS$Year,mort_ratesUS$WMFYoung, lty = 'solid', col = 'black', lwd = 2)
 legend(x = 'bottomright', legend = c('Male','Female', 'Both'), col = c('blue','green','black'), lty = c('dotted','dashed','solid'), lwd = 2)
-
 ```
 
 Although male rates are slightly higher than female rates, the trend lines are fairly parallel. A trend analysis showed that rates in all three groups began to increase approximately 1.6% per year since 2004, compared to a decline of 2% or more per year for whites over age 50 [REF StCaPro]. Subsequent analyses will combine white males and females.
@@ -70,16 +72,17 @@ DATA AVAILABILITY FOR THESE RISK FACTORS
 STATE DATA
 SET UP LINKED MM PLOTS
 
-```
+```{r Ch12-readFiles}
 #read csv files for mortality and risk factors, merge together.
 #
 #dDir <- "c:/projects/statnet/HealthChapter/"
-dDir <- "c:/MicromapBook/JuergenBase/MicromapPlotsInR-master/"
+#dDir <- "c:/MicromapBook/JuergenBase/MicromapPlotsInR-master/"
+dDir <- "output/Ch12/"
 File1  <- "data/Ch12-data/CRCMortData.csv"
 File2  <- "data/Ch12-data/CRCRiskFactors.csv"
 
-MortData  <- read.csv(paste0(dDir,File1), header=TRUE, stringsAsFactors = FALSE)
-RiskData  <- read.csv(paste0(dDir,File2), header=TRUE, stringsAsFactors = FALSE)
+MortData  <- read.csv(File1, header=TRUE, stringsAsFactors = FALSE)
+RiskData  <- read.csv(File2, header=TRUE, stringsAsFactors = FALSE)
 MAbbr     <- MortData[,2]
 RAbbr     <- RiskData[,1]
 Mord      <- order(MAbbr)
@@ -95,9 +98,10 @@ AllData   <- cbind(MortData2,RiskData2)
 stAbbr   <- MortData2$MAbbr
 head(AllData)
 ```
+
 COMMENT
-```
-{r Ch12-StateLMMRates, fig.cap = 'Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
+
+```{r Ch12-StateLMMRates, fig.cap = 'Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
 # Linked MM Columns: latest time period rate, % time change from period 1 to 5, full time series
 # Compute % change, 
 SexBYrRates <- MortData2[,c("MAbbr","SexBYrAllAgeY","SexBYr1AgeY","SexBYr2AgeY","SexBYr3AgeY","SexBYr4AgeY","SexBYr5AgeY")]
@@ -120,7 +124,7 @@ AllData$Delta51  <- ( AllData$SexBYr5AgeY - AllData$SexBYr1AgeY )
 AllData$PctChange <- ( AllData$SexBYr5AgeY - AllData$SexBYr1AgeY ) / AllData$SexBYr1AgeY * 100
 ```
 
-```
+```{r Ch12-setup}
 # set up micromapST
 #1) "Time Trends of Colorectal Cancer Mortality Among White Ages < 50"
 #
@@ -146,12 +150,12 @@ dev.off()
 
 #Title <- c("Time Trends of Colorectal Cancer Mortality","Among Whites, Ages < 50")
 ```
-RESORTED
-```
-{r Ch12-StateLMMTrends, fig.cap = 'Time Trends of Colorectal Cancer Mortality, Sorted by percent change","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
 
-pdf(paste0(dDir,"HC02-TimeTrendsofColorectalCancerMortalityAmongWhitesAg
-eslessthan50SPctChgRate.pdf"),height=10.5,width=7.5)
+RESORTED
+
+```{r Ch12-StateLMMTrends, fig.cap = 'Time Trends of Colorectal Cancer Mortality, Sorted by percent change","Among Whites, Ages < 50', fig.width = 7, fig.height = 4}
+
+pdf(paste0(dDir,"HC02-TimeTrendsofColorectalCancerMortalityAmongWhitesAgeslessthan50SPctChgRate.pdf"),height=10.5,width=7.5)
 
 micromapST(AllData,panelHC01,sortVar="PctChange",ascend=FALSE, 
                    rowNames="ab", rowNamesCol="MAbbr"
@@ -164,10 +168,7 @@ COMMENT ON THIS LMM
 
 REDO WITH RATE & LIFESTYLE FACTORS
 
-```
-{r Ch12-StateLMMRisks, fig.cap = 'Colorectal Cancer Mortality Among Whites, < 50, and related 
-lifestyle factors', fig.width = 7, fig.height = 4}
-
+```{r Ch12-StateLMMRisks, fig.cap = 'Colorectal Cancer Mortality Among Whites, < 50, and related lifestyle factors', fig.width = 7, fig.height = 4}
 panelHC03 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",     "dot"),
                         lab1=c(NA,   NA,  "Rate", "Pct Ever",  "Pct",     "Pct Binge",     "Pct"),
                         lab2=c(NA,   NA,  "2017-2021", "Smoked",    "Obese",   "Drinking",   "No Exercise"),
@@ -189,8 +190,7 @@ dev.off()
 
 LMM FOR SCREENING AND POVERTY
 
-```
-{r Ch12-StateLMMScreen, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
+```{r Ch12-StateLMMScreen, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
 
 panelHC05 <- data.frame(type=c("mapcum","id","dot",     "dot",          "dot"),
                         lab1=c(NA,   NA,  "Rate",       "Pct CRC",          "Pct"),
@@ -214,10 +214,9 @@ dev.off()
  
 COMMENT ON THIS LMM
 
-REDO WITH SORT VAR = % CHANGE
+REDO WITH SORT VAR = \% CHANGE
 
-``` 
-{r Ch12-StateLMMScreenTrends, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
+```{r Ch12-StateLMMScreenTrends, fig.cap = 'Mortality Rates and Screening for Colorectal Cancer, among Whites, ages < 50', fig.width = 7, fig.height = 4}
 #Title <- c("Screening for Colorectal Cancer Mortality","among Whites, ages < 50")
  
 pdf(paste0(dDir,"HC06-ScreeningforColorectalCancerMortalityamongWhitesAgeslessthan50SChgRate.pdf"),height=10.5,width=7.5)
@@ -228,11 +227,11 @@ micromapST(AllData,panelHC05,sortVar="PctChange",ascend=FALSE,
 
 dev.off()
 ```
+
 COMMENT
 PUT IMPORTANT FACTORS ON SAME MM PLOT
 
-```
-{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+```{r Ch12-StateLMMAllv1, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
 panelHC07 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",       "dot"),
                         lab1=c(NA,   NA,  "Rate",       "Prd 1 to 5","Pct",     "Pct",       "Pct"),
                         lab2=c(NA,   NA,  "Yr 5",       "Pct Chg",   "Poverty", "Obesity",   "No Exercise"),
@@ -251,10 +250,10 @@ micromapST(AllData,panelHC07,sortVar="SexBYr5AgeY",ascend=FALSE,
 
 dev.off()
 ```
+
 RESORTED
 
-```
-{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+```{r Ch12-StateLMMAllv2, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
 #Title <- c("Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer")
   
 pdf(paste0(dDir,"HC08-ColorectalCancerMortalityamongWhitesAgeslessthan50-Pov-Obe-NoE-SYr5Rate.pdf"),height=10.5,width=7.5)
@@ -265,9 +264,10 @@ micromapST(AllData,panelHC07,sortVar="PctPov",ascend=FALSE,
  
  dev.off()
 ```
+
 COMMENT
-```
-{r Ch12-StateLMMAll, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
+
+```{r Ch12-StateLMMAllv3, fig.cap = 'Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer', fig.width = 7, fig.height = 4}
 # Title <- c("Colorectal Cancer Mortality among Whites, ages < 50","Pct Poverty, Pct Obese, Pct No Exer")
   
  pdf(paste0(dDir,"HC09-ColorectalCancerMortalityamongWhitesAgeslessthan50-Pov-Obe-NoE-SYr5Rate.pdf"),height=10.5,width=7.5)
@@ -283,4 +283,4 @@ COMMENT
 ## Summary and Further Reading {#Ch12-Summary}
 
 
-#\printbibliography[segment=\therefsegment,heading=subbibliography]
+\printbibliography[segment=\therefsegment,heading=subbibliography]
