@@ -1,16 +1,3 @@
-
-<!-- \usepackage(hyperref) -->
-<!-- \usepackage(tabulary)   # 4 lines added by LP 4/30/25 -->
-<!-- \usepackage(colortbl) -->
-<!-- \usepackage(lipsum) -->
-<!-- \usepackage(suffix) -->
-<!-- --- -->
-<!-- output: -->
-<!--   pdf_document: default -->
-<!--   html_document: default -->
-<!--   epub_document: default  # added by LP 4/30/25 -->
-<!-- --- -->
-
 # Application of Linked Micromaps in the Medical Field {#Ch12}
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr.}
@@ -279,15 +266,18 @@ The scatter plots clearly show that Vermont (VT) is a high-rate outlier even tho
 
 As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST} package is no longer limited to displaying U.S. states. To illustrate, we will explore patterns in colorectal cancer mortality rates among those under age 50 in Kentucky. Low rates in this age group preclude examination by county, so we will display rates by Area Development District (ADD), aggregations of the 120 Kentucky counties [@KCADD2024]\index{Kentucky!Area Development Districts}. First, we need to create a working file of mortality and risk factor data. The border group (boundary file) used for these displays of Kentucky ADD data was created in Chapter \@ref(Ch4b).
 
-``` {r Ch12-KYADDAllPrint}
+```{r Ch12-KYADDAllPrint,eval=FALSE}
 #
 #  To see the name, abbr and ID values that can be used in the data:
 #
 library(micromapST)
 library(stringr)
-jDir     <- "h:/juergenMicromapBook/RProjectFile/MicromapPlotsInR-master/"
+#jDir     <- "h:/juergenMicromapBook/RProjectFile/MicromapPlotsInR-master/"
+jDir <- ""
 
-dataDir  <- "h:/juergenMicromapBook/HealthChapter/"
+#dataDir  <- "h:/juergenMicromapBook/HealthChapter/"
+dataDir <- ""
+
 dataFile <- "data/Ch12-data/KYCRCData.csv"
 
 outDir     <- "output/Ch12/"
@@ -336,7 +326,7 @@ KYADDAllData				# print dataset
 
 Next, we will display a linked micromap plot for the 2017-2021 rates and the change in rates since 2012-2016.\index{micromapST!Dot plot}
 
-```{r Ch12-KYLMMRates, fig.cap='Rates and time trends of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10}
+```{r Ch12-KYLMMRates, fig.cap='Rates and time trends of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10,eval=FALSE}
 
 # NOTE: NA data is present in the 4yr and 5yr groups.  Buffalo Trace, FIVCO, Gateway, Kentucky River
 #    Pennyrile and Purchase.
@@ -366,7 +356,7 @@ Even after aggregating the data to 15 ADDs, there are four ADDs with supressed m
 
 There are clear geospatial clusters of ADDs with similar rates. The arrow plots indicate that the highest rate places have seen the greatest increase since the earlier period.\index{micromapST!Arrow plot} Next, we plot the risk factor data at the ADD level.
 
-```{r Ch12-KYLMMRisk, fig.cap='Rates and risk factors of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10}
+```{r Ch12-KYLMMRisk, fig.cap='Rates and risk factors of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10,eval=FALSE}
 
 #
 #  Plot the risk factor data.
@@ -389,8 +379,7 @@ The measures of the behavioral factors displayed in Figure \@ref(fig:Ch12-KYLMMR
 An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region is often used for studies in that area [@AppRegion]. 
 
 ```{r Ch12-KYAppMap, echo=FALSE, fig.cap='Appalachian counties in Kentucky', out.width="75%"}
-knitr::include_graphics('img/KYAppCounties.pdf')
-
+knitr::include_graphics(path = "img/KYAppCounties.pdf")
 ```
 
 Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@KYAppRates], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@KYAppRates]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@KYAppRates].
