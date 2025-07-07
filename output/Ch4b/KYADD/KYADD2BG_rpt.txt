@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     KYADD2BG   2025-05-07 15:24:30 
+     KYADD2BG   2025-07-07 14:00:59 
 
                 Name Abbr   ID    Alias Alt_Abbr
 BR      BARREN RIVER   BR 2102   Barren       BR
