@@ -1,3 +1,16 @@
+
+<!-- \usepackage(hyperref) -->
+<!-- \usepackage(tabulary)   # 4 lines added by LP 4/30/25 -->
+<!-- \usepackage(colortbl) -->
+<!-- \usepackage(lipsum) -->
+<!-- \usepackage(suffix) -->
+<!-- --- -->
+<!-- output: -->
+<!--   pdf_document: default -->
+<!--   html_document: default -->
+<!--   epub_document: default  # added by LP 4/30/25 -->
+<!-- --- -->
+
 # Application of Linked Micromaps in the Medical Field {#Ch12}
 
 \chapterauthor{Linda Williams Pickle, James Blackwood Pearson, Jr.}
@@ -266,44 +279,27 @@ The scatter plots clearly show that Vermont (VT) is a high-rate outlier even tho
 
 As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST} package is no longer limited to displaying U.S. states. To illustrate, we will explore patterns in colorectal cancer mortality rates among those under age 50 in Kentucky. Low rates in this age group preclude examination by county, so we will display rates by Area Development District (ADD), aggregations of the 120 Kentucky counties [@KCADD2024]\index{Kentucky!Area Development Districts}. First, we need to create a working file of mortality and risk factor data. The border group (boundary file) used for these displays of Kentucky ADD data was created in Chapter \@ref(Ch4b).
 
-```{r Ch12-KYADDAllPrint,eval=FALSE}
-#
-#  To see the name, abbr and ID values that can be used in the data:
-#
+``` {r Ch12-KYADDAllPrint}
 library(micromapST)
 library(stringr)
-#jDir     <- "h:/juergenMicromapBook/RProjectFile/MicromapPlotsInR-master/"
-jDir <- ""
-
-#dataDir  <- "h:/juergenMicromapBook/HealthChapter/"
-dataDir <- ""
-
-dataFile <- "data/Ch12-data/KYCRCData.csv"
-
-outDir     <- "output/Ch12/"
-oDir     <- paste0(jDir,outDir)
-
-bdDir    <- "data/Ch4b/"
-bdGroup  <- "KYADDBG"
-BordDir  <- paste0(jDir,bdDir)
+BordDir    <- "data/Ch4b/"
+bdGroup    <- "KYADDBG"
 BordGrpKYADDFile <- paste0(BordDir,bdGroup,".rda")
 
-BGData           <- load(file=BordGrpKYADDFile)
+BGData     <- load(file=BordGrpKYADDFile)
 
-ShtNT <- (areaNamesAbbrsIDs[,c("Name","Abbr","ID")])
+ShtNT      <- (areaNamesAbbrsIDs[,c("Name","Abbr","ID")])
 ShtNT$Name <- str_to_upper(ShtNT$Name)
 
 #  BuildBorderGroup saves a copy of this table for publication to 
 #  <bgname>_rpt.txt in the same directory the <bgname>.rda file is written.
 #
 #  Load the data for the linked micromap
-#
-# Risk Data
-RiskName  <- "KYADDRiskFactors.csv"
-MortName  <- "CRC Mortality Rates by KY ADDs.csv"
+MortName  <- "data/Ch12-data/KYCRCData.csv"
+RiskName  <- "data/Ch12-data/KYADDRiskFactors.csv"
 
-KYADDMort <- read.csv(paste0(dataDir,MortName),header=TRUE,stringsAsFactors=FALSE)
-KYADDRisk <- read.csv(paste0(dataDir,RiskName),header=TRUE,stringsAsFactors=FALSE)
+KYADDMort <- read.csv(MortName,header=TRUE,stringsAsFactors=FALSE)
+KYADDRisk <- read.csv(RiskName,header=TRUE,stringsAsFactors=FALSE)
 
 KYADDRisk[,"X"] <- NULL
 names(KYADDRisk)[1] <- "KYADD"
@@ -326,18 +322,14 @@ KYADDAllData				# print dataset
 
 Next, we will display a linked micromap plot for the 2017-2021 rates and the change in rates since 2012-2016.\index{micromapST!Dot plot}
 
-```{r Ch12-KYLMMRates, fig.cap='Rates and time trends of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10,eval=FALSE}
+```{r Ch12-KYLMMRates, fig.cap='Rates and time trends of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10}
 
-# NOTE: NA data is present in the 4yr and 5yr groups.  Buffalo Trace, FIVCO, Gateway, Kentucky River
-#    Pennyrile and Purchase.
+# NOTE: NA data is present in the rate data for Buffalo Trace, FIVCO, Gateway,
+#       Kentucky River, Pennyrile and Purchase.
 
 #  Assumptions are the rows will have the ADD abbreviation as the row.name and 
-#  the columns provided are: RateYr5, and RateYr4 for the rates and KYCRCScreen, KYobese, 
-#  KYpoverty, and KYcursmk as the percentage values.
-#
-
-#
-#  Plot the data.
+#  the columns provided are: RateYr5, and RateYr4 for the rates and
+#  KYCRCScreen, KYobese, KYpoverty, and KYcursmk as the percentage values.
 #
 
 panelHC11 <- data.frame(type=c("mapcum", "id", "dot",          "arrow"),
@@ -348,19 +340,14 @@ panelHC11 <- data.frame(type=c("mapcum", "id", "dot",          "arrow"),
                        )
 
  micromapST(KYADDAllData,panelHC11,sortVar="RateYr5",ascend=FALSE, 
-       rowNames="ab", rowNamesCol="Abbr",
-       bordDir=BordDir, bordGrp=bdGroup)
+       rowNames="ab", rowNamesCol="Abbr", bordDir=BordDir, bordGrp=bdGroup)
 ```       
 
 Even after aggregating the data to 15 ADDs, there are four ADDs with supressed mortality rates, i.e., with fewer than 10 deaths\index{Data suppression}. These ADDS are in eastern Kentucky, an area found to have many poor health outcomes and poor health behaviors in a recent assessment by the Kentucky Department for Public Health [@KYHealth2023]. These four ADDs also have the smallest populations among the 15 ADDs and so it is not surprising that only a few deaths occurred in each area due to a rare cause. 
 
 There are clear geospatial clusters of ADDs with similar rates. The arrow plots indicate that the highest rate places have seen the greatest increase since the earlier period.\index{micromapST!Arrow plot} Next, we plot the risk factor data at the ADD level.
 
-```{r Ch12-KYLMMRisk, fig.cap='Rates and risk factors of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10,eval=FALSE}
-
-#
-#  Plot the risk factor data.
-#
+```{r Ch12-KYLMMRisk, fig.cap='Rates and risk factors of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10}
 
 panelHC12 <- 
   data.frame(type=c("mapcum", "id", "dot",  "dot",         "dot",       "dot", "dot"),
@@ -370,8 +357,7 @@ panelHC12 <-
                        )
 
  micromapST(KYADDAllData,panelHC12,sortVar="RateYr5",ascend=FALSE, 
-       rowNames="ab", rowNamesCol="Abbr",
-       bordDir=BordDir, bordGrp=bdGroup)
+       rowNames="ab", rowNamesCol="Abbr", bordDir=BordDir, bordGrp=bdGroup)
 ```   
 
 The measures of the behavioral factors displayed in Figure \@ref(fig:Ch12-KYLMMRisk) are based on survey samples of these small populations and so would be expected to have a high degree of uncertainty. We hesitate to draw any conclusions from the Kentucky linked micromap plots because of this small numbers problem, although we saw nothing at the ADD level in Kentucky that contradicts the associations noted at the U.S. state level. If we had the underlying data, we could attempt to stabilize these rates and factors by aggregating ADDs to even larger areas using the methods shown in Chapter \@ref(Ch4b). 
@@ -379,7 +365,8 @@ The measures of the behavioral factors displayed in Figure \@ref(fig:Ch12-KYLMMR
 An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region is often used for studies in that area [@AppRegion]. 
 
 ```{r Ch12-KYAppMap, echo=FALSE, fig.cap='Appalachian counties in Kentucky', out.width="75%"}
-knitr::include_graphics(path = "img/KYAppCounties.pdf")
+knitr::include_graphics('data/Ch12-data/KYAppCounties.pdf')
+
 ```
 
 Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@KYAppRates], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@KYAppRates]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@KYAppRates].
