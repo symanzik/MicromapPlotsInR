@@ -9,19 +9,19 @@ Public health studies often begin with an exploratory analysis of available data
 In the early chapters of this book, the reader learned about the structure and use of linked micromap plots and how to create them using two different R packages\index{Linked micromap plots}. In this chapter, the linked micromap plot will be applied to health data to illustrate how it can be useful in an exploratory analysis and subsequent communication of results to the public.
 
 ## Background {#Ch12-Background}
-One of the successes in cancer screening has been the continuing decline of colorectal cancer (CRC) rates in the U.S. since screening methods became available about 50 years ago [@SFA2017]\index{Colorectal cancer!Time trends}. A colonoscopy can find and remove pre-cancerous polyps before they become malignant, thus reducing both incidence and mortality of CRC. However, it has become apparent recently that rates among people under age 50, the recommended age to start screening, have started to rise not just in the U.S. but around the world [@CCBlog2020]\index{Colorectal cancer!Early onset}. As a result, many countries have recently lowered the initial screening age to 45. Researchers are puzzled by the increase in rates in the younger group [@CCBlog2025]. Risk factors identified for CRC occurrence in older adults include obesity, a sedentary lifestyle, smoking, excessive alcohol use and first degree relatives who also had CRC\index{Colorectal cancer!Risk factors}. Aspirin use, hormonal therapy and pre-cancerous polyp removal during screening are thought to reduce the risk of CRC. [@CRCPDQ2025]. In this chapter, we will explore CRC mortality data using the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN], accessible at https://cran.r-project.org/web/packages/micromapST/index.html to see if the plots can shed light on this new trend.
+One of the successes in cancer screening has been the continuing decline of colorectal cancer (CRC) rates in the U.S. since screening methods became available about 50 years ago [@SFA2017]\index{Colorectal cancer!Time trends}. A colonoscopy can find and remove pre-cancerous polyps before they become malignant, thus reducing both incidence and mortality of CRC. However, it has become apparent recently that rates among people under age 50, the recommended age to start screening, have started to rise not just in the U.S. but around the world [@NCI2020Colorectal]\index{Colorectal cancer!Early onset}. As a result, many countries have recently lowered the initial screening age to 45. Researchers are puzzled by the increase in rates in the younger group [@NCI2025YoungerPeople]. Risk factors identified for CRC occurrence in older adults include obesity, a sedentary lifestyle, smoking, excessive alcohol use and first degree relatives who also had CRC\index{Colorectal cancer!Risk factors}. Aspirin use, hormonal therapy and pre-cancerous polyp removal during screening are thought to reduce the risk of CRC. [@NCI2025ColorectalPrev]. In this chapter, we will explore CRC mortality data using the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN], accessible at https://cran.r-project.org/web/packages/micromapST/index.html to see if the plots can shed light on this new trend.
 
 ### Data {#Ch12-Data} 
-Mortality data for U.S. states were obtained from the Centers for Disease Control and Prevention (CDC) \index{Centers for Disease Control and Prevention} online Wonder system [@CDCWonder2025]; rates are directly age-adjusted using the U.S. 2000 standard population. The rate in any strata, e.g., by state, age (<50, 50+), sex, race or year, was suppressed (shown as NA) in the original files if the number of cases was less than 16.\index{Data suppression} Mortality data by state were available for 1999-2021, which were grouped into periods 1999-2001, 2002-2006, 2007-2011, 2012-2016, 2017-2021 for trend analysis. This aggregation over time eliminated most of the suppressed state counts. However, the District of Columbia (DC) still had suppressed counts and so was eliminated from the data file. Annual U.S. mortality rates for 1990-2022 were obtained from the NCI State Cancer Profiles web site [@StCaPro2025].\index{National Cancer Institute!State Cancer Profiles} All rates are shown as the number of deaths per 100,000 population.
+Mortality data for U.S. states were obtained from the Centers for Disease Control and Prevention (CDC) \index{Centers for Disease Control and Prevention} online Wonder system [@CDC2025Wonder]; rates are directly age-adjusted using the U.S. 2000 standard population. The rate in any strata, e.g., by state, age (<50, 50+), sex, race or year, was suppressed (shown as NA) in the original files if the number of cases was less than 16.\index{Data suppression} Mortality data by state were available for 1999-2021, which were grouped into periods 1999-2001, 2002-2006, 2007-2011, 2012-2016, 2017-2021 for trend analysis. This aggregation over time eliminated most of the suppressed state counts. However, the District of Columbia (DC) still had suppressed counts and so was eliminated from the data file. Annual U.S. mortality rates for 1990-2022 were obtained from the NCI State Cancer Profiles web site [@NCI2025StateCancerProfiles].\index{National Cancer Institute!State Cancer Profiles} All rates are shown as the number of deaths per 100,000 population.
 
-Not all of the risk and protective factors of interest were available from a nationwide survey that was reasonably representative of each state's population. However, the CDC's Behavioral Risk Factor Surveillance System (BRFSS) [@StCaPro2025] provided state-level survey data for:
+Not all of the risk and protective factors of interest were available from a nationwide survey that was reasonably representative of each state's population. However, the CDC's Behavioral Risk Factor Surveillance System (BRFSS) [@NCI2025StateCancerProfiles] provided state-level survey data for:
 
 - Smoking: Ever smoked at least 100 cigarettes in their lifetime
 - Binge drinking: On one occasion in the last 30 days had 5 or more alcoholic beverages (4 for women)
 - Sedentary lifestyle: During the past month, had no leisure time physical activity
 - Obesity (BMI >=30): calculated from self-reported height and weight.
 - CRC Screening: Received at least 1 recommended CRC screening test
-- Poverty: persons living below the federal poverty level in each state. [@ACSPov2025;@StCaPro2025]
+- Poverty: persons living below the federal poverty level in each state. [@USCensus2025ACS;@NCI2025StateCancerProfiles]
 
 Poverty was included because of its possible association with access to screening or other unmeasured socio-economic factors. All of these factors are represented as percentages in the linked micromap plots.
 
@@ -29,7 +29,7 @@ Risk factor data were available for 2022 but not earlier. Note that using this m
 
 Data for Kentucky Area Development Districts were provided directly by Drs. Bin Huang and Thomas Tucker of the Kentucky Cancer Registry.\index{Kentucky!Cancer data}
 
-### Preliminary U.S. analysis {#Ch12-Preliminary}
+### Preliminary U.S. Analysis {#Ch12-Preliminary}
 
 First, let's look at the U.S. CRC mortality rates over time, comparing rates among those under age 50 and those 50 and older.
 \index{Datasets!mort\_ratesUS}
@@ -68,11 +68,11 @@ legend(x = 'bottomright', legend = c('Male','Female', 'Both'),
        col = c('blue','green','black'), lty = c('dotted','dashed','solid'), lwd = 2)
 ```
 
-Although male rates are slightly higher than female rates, the trend lines are fairly parallel. A trend analysis showed that rates in all three groups began to increase approximately 1.6% per year since 2004, compared to a decline of 2% or more per year for whites over age 50 [@StCaPro2025]. Subsequent analyses will combine white males and females.
+Although male rates are slightly higher than female rates, the trend lines are fairly parallel. A trend analysis showed that rates in all three groups began to increase approximately 1.6% per year since 2004, compared to a decline of 2% or more per year for whites over age 50 [@NCI2025StateCancerProfiles]. Subsequent analyses will combine white males and females.
 
 One danger of any mortality analysis is that patterns in death rates might not reflect patterns in the underlying occurrence (incidence) due to changes in treatment or screening for that disease. For example, prostate cancer mortality rates dropped rapidly when the PSA screening test became widely available, even as incidence rates continued to rise\index{Prostate cancer}. For CRC though, incidence rates for those under age 50 have been rising on pace with the mortality rates. This suggests that changes in screening or treatment for CRC are not the causes of the rising mortality rates.
 
-## State-level analysis {#Ch12-State}
+## State-level Analysis {#Ch12-State}
 
 First, the mortality and risk factor data files are merged into a single working file. Column names for the mortality rates indicate the category for: 
 
@@ -206,7 +206,7 @@ micromapST(AllData,panelHC05,sortVar="SexBYr5AgeY",ascend=FALSE,
 
 ```
 
-In addition to data exploration, we can use the linked micromap plots to communicate our findings to others\index{Data communication}. The next two plots illustrate different ways to do that - using simple dot plots or comparing state rates to each risk factor by means of a scatter plot.\index{micromapST!Dot plot} A new feature of micromapST, the locally weighted scatterplot smoothing line (LOWESS; [@LOWESS]), is added to aid trend visualization.\index{micromapST!LOWESS smoother}
+In addition to data exploration, we can use the linked micromap plots to communicate our findings to others\index{Data communication}. The next two plots illustrate different ways to do that - using simple dot plots or comparing state rates to each risk factor by means of a scatter plot.\index{micromapST!Dot plot} A new feature of micromapST, the locally weighted scatterplot smoothing line (LOWESS; [@Cle81]), is added to aid trend visualization.\index{micromapST!LOWESS smoother}
 
 ```{r Ch12-StateLMMAllv1, fig.cap = 'Colorectal cancer mortality among whites ages < 50 and Pct Poverty, Pct Obese, Pct No Exercise', fig.width = 8, fig.height = 10}
 panelHC07 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",       "dot"),
@@ -262,9 +262,9 @@ micromapST(AllData2,panelHC10,sortVar="SexBYr5AgeY",ascend=FALSE,
 
 The scatter plots clearly show that Vermont (VT) is a high-rate outlier even though it is one of the lower states for percent poverty, obesity and sedentary lifestyle\index{micromapST!Scatter plot}. Mississippi (MS) has the highest rate, slightly higher than Vermont, but also has high levels of all three risk factors. The highest obesity rates are in states along the MIssissippi River (Figure \@ref(fig:Ch12-StateLMMAllv3). Rates vary across states almost three-fold, from Rhode Islane (RI) to Mississippi. The LOWESS scatter plot smoothing line has a positive slope for all three plotted factors, indicating a positive association between them and the mortality rates.\index{micromapST!LOWESS smoother}
 
-## Applying linked micromap plots to sub-state data
+## Applying Linked Micromap Plots to Sub-state Data
 
-As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST} package is no longer limited to displaying U.S. states. To illustrate, we will explore patterns in colorectal cancer mortality rates among those under age 50 in Kentucky. Low rates in this age group preclude examination by county, so we will display rates by Area Development District (ADD), aggregations of the 120 Kentucky counties [@KCADD2024]\index{Kentucky!Area Development Districts}. First, we need to create a working file of mortality and risk factor data. The border group (boundary file) used for these displays of Kentucky ADD data was created in Chapter \@ref(Ch4b).
+As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST} package is no longer limited to displaying U.S. states. To illustrate, we will explore patterns in colorectal cancer mortality rates among those under age 50 in Kentucky. Low rates in this age group preclude examination by county, so we will display rates by Area Development District (ADD), aggregations of the 120 Kentucky counties [@KCADD2025]\index{Kentucky!Area Development Districts}. First, we need to create a working file of mortality and risk factor data. The border group (boundary file) used for these displays of Kentucky ADD data was created in Chapter \@ref(Ch4b).
 
 ``` {r Ch12-KYADDAllPrint}
 library(micromapST)
@@ -330,7 +330,7 @@ panelHC11 <- data.frame(type=c("mapcum", "id", "dot",          "arrow"),
        rowNames="ab", rowNamesCol="Abbr", bordDir=BordDir, bordGrp=bdGroup)
 ```       
 
-Even after aggregating the data to 15 ADDs, there are four ADDs with supressed mortality rates, i.e., with fewer than 10 deaths\index{Data suppression}. These ADDS are in eastern Kentucky, an area found to have many poor health outcomes and poor health behaviors in a recent assessment by the Kentucky Department for Public Health [@KYHealth2023]. These four ADDs also have the smallest populations among the 15 ADDs and so it is not surprising that only a few deaths occurred in each area due to a rare cause. 
+Even after aggregating the data to 15 ADDs, there are four ADDs with supressed mortality rates, i.e., with fewer than 10 deaths\index{Data suppression}. These ADDS are in eastern Kentucky, an area found to have many poor health outcomes and poor health behaviors in a recent assessment by the Kentucky Department for Public Health [@KDPH2023]. These four ADDs also have the smallest populations among the 15 ADDs and so it is not surprising that only a few deaths occurred in each area due to a rare cause. 
 
 There are clear geospatial clusters of ADDs with similar rates. The arrow plots indicate that the highest rate places have seen the greatest increase since the earlier period.\index{micromapST!Arrow plot} Next, we plot the risk factor data at the ADD level.
 
@@ -349,14 +349,14 @@ panelHC12 <-
 
 The measures of the behavioral factors displayed in Figure \@ref(fig:Ch12-KYLMMRisk) are based on survey samples of these small populations and so would be expected to have a high degree of uncertainty. We hesitate to draw any conclusions from the Kentucky linked micromap plots because of this small numbers problem, although we saw nothing at the ADD level in Kentucky that contradicts the associations noted at the U.S. state level. If we had the underlying data, we could attempt to stabilize these rates and factors by aggregating ADDs to even larger areas using the methods shown in Chapter \@ref(Ch4b). 
 
-An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region is often used for studies in that area [@AppRegion]. 
+An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region is often used for studies in that area [@ARC2025]. 
 
 ```{r Ch12-KYAppMap, echo=FALSE, fig.cap='Appalachian counties in Kentucky', out.width="75%"}
 knitr::include_graphics('img/KYAppCounties.pdf')
 
 ```
 
-Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@KYAppRates], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@KYAppRates]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@KYAppRates].
+Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@HBPHHV2024], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@HBPHHV2024]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@HBPHHV2024].
 
 
 ## Summary and Further Reading {#Ch12-Summary}
@@ -364,7 +364,7 @@ Previous research has shown significant differences between all-age colorectal c
 We have shown in this chapter how linked micromap plots might be used to explore and communicate health data\index{Data communication}\index{Exploratory spatial data analysis}. Specifically, we examined deaths due to colorectal cancer among persons less than age 50\index{Colorectal cancer!Early onset}, rates that have been rising in recent years, unlike rapidly declining rates among persons 50 and older who are recommended for regular CRC screening. Despite the lack of risk factor data collected well before the cancer occurred, our exploratory analysis at the U.S. state level did find associations between the younger CRC rates and factors found to be associated with older CRC. Drilling down to the sub-state level, however, was less productive, due to suppressed data, but our results were consistent with analyses of similar data for broader geographic areas. The R code included in this chapter demonstrates how to apply typical steps to explore health rates not only for U.S. states but for sub-state areas defined by the user.
 
 
-Readers interested in delving further into health applications such as those described in this chapter are referred to an epidemiology textbook, such as the classic Gordis Epidemiology [@GordisEpi] or the more practical Essential Epidemiology in Public Health. [@AschEpi]
+Readers interested in delving further into health applications such as those described in this chapter are referred to an epidemiology textbook, such as the classic Gordis Epidemiology [@CSF2024] or the more practical Essential Epidemiology in Public Health [@Aschengrau2025].
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]
