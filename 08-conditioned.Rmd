@@ -367,6 +367,149 @@ http://www.geo.hunter.cuny.edu/~ssun/R-Spatial/mapping.html
 as the basis to experiment with CCmaps in ggplot / ggmap.
 
 
+## Examples from Brent Mast {#Ch8-Examples}
+
+
+```{r Ch8-ccmap1, fig.cap = 'Conditioned choropleth map 1.', fig.width = 7, fig.height = 6}
+# Original file: WV_counties2.R
+# Original output: WV_2way_CCmap.jpeg
+# Original data: wv_merged.rdata
+
+# setwd("C:\\Users\\bmast\\GD\\Chapters\\WV")
+# install.packages("maptools")
+# #library(maptools)
+library(lattice)
+library(sf)
+library(dplyr)
+library(sp)
+
+poly <- st_read("data/Ch08/WV_Counties.shp",
+  crs = "+proj=longlat +ellps=clrk66"
+)
+summary(poly)
+poly$fips <- as.character(poly$FIPS)
+head(poly$fips)
+
+load("data/Ch08/wv_merged.Rdata")
+summary(wv_merged)
+head(wv_merged$fips)
+
+poly2 <- 
+inner_join(poly, wv_merged,join_by(fips))
+summary(poly2)
+
+
+wv <- as_Spatial(poly2)
+summary(wv)
+rownames(slot(wv, "data")) <- wv$fips
+
+mi_ec <-equal.count(wv$MI,3,overlap=0)
+coi_ec <-equal.count(wv$z_COI_nat,3,overlap=0)
+
+myCCmaps(
+  obj = wv,
+  zcol = "viol_rate",
+  cvar = list(
+    "COI" =coi_ec,
+    "Median_Income" =mi_ec 
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  main = "Violent Crimes per 10,000 Population",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap2, fig.cap = 'Conditioned choropleth map 2.', fig.width = 7, fig.height = 6}
+# Original file: WV_counties3.R
+# Original output: WV_2way_CCmap2.jpeg
+# Original data: No new data file
+
+# setwd("C:\\Users\\bmast\\GD\\Chapters\\WV")
+# install.packages("maptools")
+# #library(maptools)
+library(lattice)
+library(sf)
+library(dplyr)
+library(sp)
+
+poly <- st_read("data/Ch08/WV_Counties.shp",
+  crs = "+proj=longlat +ellps=clrk66"
+)
+
+poly$fips <- as.character(poly$FIPS)
+head(poly$fips)
+
+load("data/Ch08/wv_merged.Rdata")
+summary(wv_merged)
+head(wv_merged$fips)
+
+poly2 <- 
+inner_join(poly, wv_merged,join_by(fips))
+summary(poly2)
+
+
+wv <- as_Spatial(poly2)
+summary(wv)
+rownames(slot(wv, "data")) <- wv$fips
+
+prop_ec <-equal.count(wv$prop_rate,3,overlap=0)
+viol_ec <-equal.count(wv$viol_rate,3,overlap=0)
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Property_Crime_Rate" =prop_ec,
+    "Violent_Crime_Rate" =viol_ec 
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  main = "Child Opportunity Index",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap3, fig.cap = 'Conditioned choropleth map 3.', fig.width = 7, fig.height = 6, eval = FALSE}
+# Original file: DC_Youth_Crime.R
+# Original output: DC_1way_CCmap.jpeg
+# Original data: No new data file
+
+# Note that the DC_HPN.shp shapefile does not exist in the local directory.
+# No replacement shapefile could be identified.
+
+# setwd("C:\\Users\\bmast\\GD\\Chapters\\Crime")
+library(lattice)
+library(sf)
+library(dplyr)
+library(sp)
+
+poly <- st_read("DC_HPN.shp",
+  crs = "+proj=longlat +ellps=clrk66"
+)
+summary(poly)
+
+dc <- as_Spatial(poly)
+summary(dc)
+rownames(slot(dc, "data")) <- dc$GIS_ID
+
+youth_ec <-equal.count(dc$PCT_0_17,6,overlap=0)
+youth_ec
+
+myCCmaps(
+  obj = dc,
+  zcol = "V_R_2021",
+  cvar = list(
+    "Percent_Youth" =youth_ec
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Violent Crimes Per 10,000 Population",
+  layout = c(3, 3)
+)
+```
+
 
 ## Further Reading {#Ch8-FurtherReading}
 
