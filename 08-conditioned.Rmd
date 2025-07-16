@@ -41,14 +41,11 @@ and quantile-quantile plot.\index{Quantile-quantile plot}
 
 Here goes the main content of your chapter. Introduce additional sections as needed.
 
-For convenience, Figure \@ref(fig:Ch8-micromap1) shows one linked micromap plot\index{Linked micromap plot}
-(which is the same as in Figure \@ref(fig:Ch1-micromap1)), but now formatted in a slightly more meaningful way.
+For convenience, Figures \@ref(fig:Ch8-CCmap1NC) and \@ref(fig:Ch8-CCmap2NC) show basic
+conditioned choropleth maps (CCmaps)plot\index{Conditioned choropleth map.}
 
 
-```{r Ch8-micromap1, fig.cap = 'Trivial conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
-# Based on code from the help page at
-#  https://maptools.r-forge.r-project.org/reference/CCmaps.html
-
+```{r Ch8-CCmaps-function}
 # Original CCmaps function taken from the maptools R package (now retired and archived on CRAN)
 
 library(lattice)
@@ -318,6 +315,12 @@ myCCmaps <- function(
   }
   invisible(obj)
 }
+```
+
+
+```{r Ch8-CCmap1NC, fig.cap = 'Trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+# Based on R code from the help page at
+#  https://maptools.r-forge.r-project.org/reference/CCmaps.html
 
 # nc.sids_orig <- readShapeSpatial(
 #   system.file("shapes/sids.shp",
@@ -337,13 +340,17 @@ nc.sids$ft.SID74 <- sqrt(1000) * (sqrt(nc.sids$SID74 / nc.sids$BIR74) +
   sqrt((nc.sids$SID74 + 1) / nc.sids$BIR74))
 nc.sids$ft.NWBIR74 <- sqrt(1000) * (sqrt(nc.sids$NWBIR74 / nc.sids$BIR74) +
   sqrt((nc.sids$NWBIR74 + 1) / nc.sids$BIR74))
+sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number = 4, overlap = 1 / 5)
 
-# sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number=4, overlap=1/5)
-# CCmaps(nc.sids, "ft.SID74", list("Nonwhite_births"=sh_nw4),
-#       col.regions=colorRampPalette(c("yellow1", "brown3"))(20),
-#       main="Transformed SIDS rates 1974-8")
+myCCmaps(nc.sids, "ft.SID74", list("Nonwhite_births" = sh_nw4),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  main = "Transformed SIDS rates 1974-8"
+)
+```
 
-##
+
+```{r Ch8-CCmap2NC, fig.cap = 'Trivial 2-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+# Extended R code for 2 dimensions
 
 sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number = 3, overlap = 0)
 sh_bir <- equal.count(nc.sids$BIR79, number = 3, overlap = 0)
@@ -394,8 +401,8 @@ load("data/Ch08/wv_merged.Rdata")
 summary(wv_merged)
 head(wv_merged$fips)
 
-poly2 <- 
-inner_join(poly, wv_merged,join_by(fips))
+poly2 <-
+  inner_join(poly, wv_merged, join_by(fips))
 summary(poly2)
 
 
@@ -403,15 +410,15 @@ wv <- as_Spatial(poly2)
 summary(wv)
 rownames(slot(wv, "data")) <- wv$fips
 
-mi_ec <-equal.count(wv$MI,3,overlap=0)
-coi_ec <-equal.count(wv$z_COI_nat,3,overlap=0)
+mi_ec <- equal.count(wv$MI, 3, overlap = 0)
+coi_ec <- equal.count(wv$z_COI_nat, 3, overlap = 0)
 
 myCCmaps(
   obj = wv,
   zcol = "viol_rate",
   cvar = list(
-    "COI" =coi_ec,
-    "Median_Income" =mi_ec 
+    "COI" = coi_ec,
+    "Median_Income" = mi_ec
   ),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
   main = "Violent Crimes per 10,000 Population",
@@ -444,8 +451,8 @@ load("data/Ch08/wv_merged.Rdata")
 summary(wv_merged)
 head(wv_merged$fips)
 
-poly2 <- 
-inner_join(poly, wv_merged,join_by(fips))
+poly2 <-
+  inner_join(poly, wv_merged, join_by(fips))
 summary(poly2)
 
 
@@ -453,8 +460,8 @@ wv <- as_Spatial(poly2)
 summary(wv)
 rownames(slot(wv, "data")) <- wv$fips
 
-prop_ec <-equal.count(wv$prop_rate,3,overlap=0)
-viol_ec <-equal.count(wv$viol_rate,3,overlap=0)
+prop_ec <- equal.count(wv$prop_rate, 3, overlap = 0)
+viol_ec <- equal.count(wv$viol_rate, 3, overlap = 0)
 
 myCCmaps(
   obj = wv,
@@ -462,8 +469,8 @@ myCCmaps(
   # zcol = "COI",
   zcol = "z_COI_nat",
   cvar = list(
-    "Property_Crime_Rate" =prop_ec,
-    "Violent_Crime_Rate" =viol_ec 
+    "Property_Crime_Rate" = prop_ec,
+    "Violent_Crime_Rate" = viol_ec
   ),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
   main = "Child Opportunity Index",
@@ -495,14 +502,14 @@ dc <- as_Spatial(poly)
 summary(dc)
 rownames(slot(dc, "data")) <- dc$GIS_ID
 
-youth_ec <-equal.count(dc$PCT_0_17,6,overlap=0)
+youth_ec <- equal.count(dc$PCT_0_17, 6, overlap = 0)
 youth_ec
 
 myCCmaps(
   obj = dc,
   zcol = "V_R_2021",
   cvar = list(
-    "Percent_Youth" =youth_ec
+    "Percent_Youth" = youth_ec
   ),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
   main = "Violent Crimes Per 10,000 Population",
