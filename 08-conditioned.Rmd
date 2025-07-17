@@ -348,21 +348,51 @@ myCCmaps(nc.sids, "ft.SID74", list("Nonwhite_births" = sh_nw4),
 )
 ```
 
+```{r Ch8-CCmap1NCmod1, fig.cap = 'Modified 1 trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+sh_nw4nooverlap <- equal.count(nc.sids$ft.NWBIR74, number = 4, overlap = 0)
+
+myCCmaps(
+  obj = nc.sids,
+  zcol = "ft.SID74",
+  cvar = list("Nonwhite_births" = sh_nw4nooverlap),
+  at = seq(0, 7, by = 0.5),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(14),
+  main = "Transformed SIDS rates 1974-8",
+  scales = list(draw = TRUE)
+)
+```
+
+
+```{r Ch8-CCmap1NCmod2, fig.cap = 'Modified 2 trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+# modified 2
+
+myCCmaps(
+  obj = nc.sids,
+  zcol = "ft.SID74",
+  cvar = list("Nonwhite_births" = sh_nw4nooverlap),
+  pretty = TRUE,
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(14),
+  main = "Transformed SIDS rates 1974-8",
+  scales = list(draw = TRUE)
+)
+```
+
 
 ```{r Ch8-CCmap2NC, fig.cap = 'Trivial 2-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
 # Extended R code for 2 dimensions
 
-sh_nw4 <- equal.count(nc.sids$ft.NWBIR74, number = 3, overlap = 0)
-sh_bir <- equal.count(nc.sids$BIR79, number = 3, overlap = 0)
+sh_nw3 <- equal.count(nc.sids$ft.NWBIR74, number = 3, overlap = 0)
+sh_bir3 <- equal.count(nc.sids$BIR79, number = 3, overlap = 0)
 
 myCCmaps(
   obj = nc.sids,
   zcol = "ft.SID74",
   cvar = list(
-    "Nonwhite_births" = sh_nw4,
-    "Births79" = sh_bir
+    "Nonwhite_births" = sh_nw3,
+    "Births79" = sh_bir3
   ),
-  col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  at = seq(0, 7, by = 0.5),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(14),
   main = "Transformed SIDS rates 1974-78",
   layout = c(3, 3)
 )
@@ -393,7 +423,7 @@ library(sp)
 poly <- st_read("data/Ch08/WV_Counties.shp",
   crs = "+proj=longlat +ellps=clrk66"
 )
-summary(poly)
+# summary(poly)
 poly$fips <- as.character(poly$FIPS)
 head(poly$fips)
 
@@ -401,13 +431,12 @@ load("data/Ch08/wv_merged.Rdata")
 summary(wv_merged)
 head(wv_merged$fips)
 
-poly2 <-
-  inner_join(poly, wv_merged, join_by(fips))
-summary(poly2)
+poly2 <- inner_join(poly, wv_merged, join_by(fips))
+# summary(poly2)
 
 
 wv <- as_Spatial(poly2)
-summary(wv)
+# summary(wv)
 rownames(slot(wv, "data")) <- wv$fips
 
 mi_ec <- equal.count(wv$MI, 3, overlap = 0)
@@ -427,6 +456,24 @@ myCCmaps(
 ```
 
 
+```{r Ch8-ccmap1mod, fig.cap = 'Modified conditioned choropleth map 1.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = wv,
+  zcol = "viol_rate",
+  cvar = list(
+    "COI" = coi_ec,
+    "Median_Income" = mi_ec
+  ),
+  at = seq(0, 400, by = 50),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(8),
+  main = "Violent Crimes per 10,000 Population",
+  layout = c(3, 3)
+)
+```
+
+
 ```{r Ch8-ccmap2, fig.cap = 'Conditioned choropleth map 2.', fig.width = 7, fig.height = 6}
 # Original file: WV_counties3.R
 # Original output: WV_2way_CCmap2.jpeg
@@ -440,6 +487,8 @@ library(sf)
 library(dplyr)
 library(sp)
 
+library(RColorBrewer)
+
 poly <- st_read("data/Ch08/WV_Counties.shp",
   crs = "+proj=longlat +ellps=clrk66"
 )
@@ -448,16 +497,14 @@ poly$fips <- as.character(poly$FIPS)
 head(poly$fips)
 
 load("data/Ch08/wv_merged.Rdata")
-summary(wv_merged)
+# summary(wv_merged)
 head(wv_merged$fips)
 
-poly2 <-
-  inner_join(poly, wv_merged, join_by(fips))
-summary(poly2)
-
+poly2 <- inner_join(poly, wv_merged, join_by(fips))
+# summary(poly2)
 
 wv <- as_Spatial(poly2)
-summary(wv)
+# summary(wv)
 rownames(slot(wv, "data")) <- wv$fips
 
 prop_ec <- equal.count(wv$prop_rate, 3, overlap = 0)
@@ -473,6 +520,26 @@ myCCmaps(
     "Violent_Crime_Rate" = viol_ec
   ),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(20),
+  main = "Child Opportunity Index",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap2mod, fig.cap = 'Modified conditioned choropleth map 2.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Property_Crime_Rate" = prop_ec,
+    "Violent_Crime_Rate" = viol_ec
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
   layout = c(3, 3)
 )
