@@ -79,7 +79,8 @@ library(sf)
 
 myCCmaps <- function(
     obj, zcol = NULL, cvar = NULL, cvar.names = NULL, ...,
-    names.attr, scales = list(draw = FALSE), xlab = NULL, ylab = NULL,
+    names.attr, scales = list(draw = FALSE),
+    xlab = NULL, ylab = NULL,
     aspect = mapasp(obj, xlim, ylim), sp.layout = NULL,
     xlim = sp::bbox(obj)[1, ], ylim = sp::bbox(obj)[2, ]) {
   stopifnot(is(obj, "SpatialPolygonsDataFrame"))
@@ -125,26 +126,37 @@ myCCmaps <- function(
     nms <- names(obj)
     nms <- nms[-(match(zcol, nms))]
     if (fcc[1]) {
-      lattice:::print.trellis(x = spplot(obj,
-        zcol = nms, ..., scales = scales,
-        xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
-        xlim = xlim, ylim = ylim, strip = strip.custom(
-          which.given = 1,
-          factor.levels = lcc[[1]], par.strip.text = list(cex = 0.8),
-          bg = "grey95"
+      lattice:::print.trellis(
+        x = spplot(obj,
+          zcol = nms, ..., scales = scales,
+          xlab = xlab, ylab = ylab,
+          aspect = aspect, sp.layout = sp.layout,
+          xlim = xlim, ylim = ylim,
+          strip = strip.custom(
+            which.given = 1,
+            factor.levels = lcc[[1]],
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95"
+          )
         )
-      ))
+      )
     } else {
-      lattice:::print.trellis(x = spplot(obj,
-        zcol = nms, ..., scales = scales,
-        xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
-        xlim = xlim, ylim = ylim, strip = strip.custom(
-          which.given = 1,
-          shingle.intervals = as.matrix(lcc[[1]]), var.name = cvar.names[1],
-          par.strip.text = list(cex = 0.8), bg = "grey95",
-          fg = "grey75"
+      lattice:::print.trellis(
+        x = spplot(obj,
+          zcol = nms, ..., scales = scales,
+          xlab = xlab, ylab = ylab,
+          aspect = aspect, sp.layout = sp.layout,
+          xlim = xlim, ylim = ylim,
+          strip = strip.custom(
+            which.given = 1,
+            shingle.intervals = as.matrix(lcc[[1]]),
+            var.name = cvar.names[1],
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95",
+            fg = "grey75"
+          )
         )
-      ))
+      )
     }
   } else {
     if (all(fcc)) {
@@ -170,19 +182,26 @@ myCCmaps <- function(
       }
       lcc2 <- lcc[[2]]
       xlcc2 <- rep(lcc2, nlcc[1])
-      lattice:::print.trellis(x = spplot(obj,
-        zcol = nms, ..., scales = scales,
-        xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
-        xlim = xlim, ylim = ylim, strip = strip.custom(
-          which.given = 1,
-          factor.levels = xlcc, par.strip.text = list(cex = 0.8),
-          bg = "grey95"
-        ), strip.left = strip.custom(
-          which.given = 1,
-          factor.levels = xlcc2, par.strip.text = list(cex = 0.8),
-          bg = "grey95"
+      lattice:::print.trellis(
+        x = spplot(obj,
+          zcol = nms, ..., scales = scales,
+          xlab = xlab, ylab = ylab,
+          aspect = aspect, sp.layout = sp.layout,
+          xlim = xlim, ylim = ylim,
+          strip = strip.custom(
+            which.given = 1,
+            factor.levels = xlcc,
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95"
+          ),
+          strip.left = strip.custom(
+            which.given = 1,
+            factor.levels = xlcc2,
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95"
+          )
         )
-      ))
+      )
     } else if (any(fcc)) {
       if (fcc[1]) {
         jlcc <- do.call("rbind", lcc[[2]])
@@ -211,21 +230,28 @@ myCCmaps <- function(
           byrow = TRUE,
           ncol = 2
         )
-        lattice:::print.trellis(x = spplot(obj,
-          zcol = nms, ..., scales = scales,
-          xlab = xlab, ylab = ylab, aspect = aspect,
-          sp.layout = sp.layout, xlim = xlim, ylim = ylim,
-          strip = strip.custom(
-            which.given = 1, factor.levels = xlcc,
-            par.strip.text = list(cex = 0.8), bg = "grey95"
-          ),
-          strip.left = strip.custom(
-            which.given = 1,
-            shingle.intervals = xlcc2, var.name = cvar.names[2],
-            par.strip.text = list(cex = 0.8), bg = "grey95",
-            fg = "grey75"
+        lattice:::print.trellis(
+          x = spplot(obj,
+            zcol = nms, ..., scales = scales,
+            xlab = xlab, ylab = ylab,
+            aspect = aspect, sp.layout = sp.layout,
+            xlim = xlim, ylim = ylim,
+            strip = strip.custom(
+              which.given = 1,
+              factor.levels = xlcc,
+              par.strip.text = list(cex = 0.8),
+              bg = "grey95"
+            ),
+            strip.left = strip.custom(
+              which.given = 1,
+              shingle.intervals = xlcc2,
+              var.name = cvar.names[2],
+              par.strip.text = list(cex = 0.8),
+              bg = "grey95",
+              fg = "grey75"
+            )
           )
-        ))
+        )
       } else {
         ilcc <- do.call("rbind", lcc[[1]])
         for (i in 1:nlcc[1]) {
@@ -253,20 +279,28 @@ myCCmaps <- function(
         xlcc <- xlcc[-1, ]
         lcc2 <- lcc[[2]]
         xlcc2 <- rep(lcc2, nlcc[1])
-        lattice:::print.trellis(x = spplot(obj,
-          zcol = nms, ..., scales = scales,
-          xlab = xlab, ylab = ylab, aspect = aspect,
-          sp.layout = sp.layout, xlim = xlim, ylim = ylim,
-          strip = strip.custom(
-            which.given = 1, shingle.intervals = xlcc,
-            var.name = cvar.names[1], par.strip.text = list(cex = 0.8),
-            bg = "grey95", fg = "grey75"
-          ), strip.left = strip.custom(
-            which.given = 1,
-            factor.levels = xlcc2, par.strip.text = list(cex = 0.8),
-            bg = "grey95"
+        lattice:::print.trellis(
+          x = spplot(obj,
+            zcol = nms, ..., scales = scales,
+            xlab = xlab, ylab = ylab,
+            aspect = aspect, sp.layout = sp.layout,
+            xlim = xlim, ylim = ylim,
+            strip = strip.custom(
+              which.given = 1,
+              shingle.intervals = xlcc,
+              var.name = cvar.names[1],
+              par.strip.text = list(cex = 0.8),
+              bg = "grey95",
+              fg = "grey75"
+            ),
+            strip.left = strip.custom(
+              which.given = 1,
+              factor.levels = xlcc2,
+              par.strip.text = list(cex = 0.8),
+              bg = "grey95"
+            )
           )
-        ))
+        )
       }
     } else {
       ilcc <- do.call("rbind", lcc[[1]])
@@ -296,21 +330,30 @@ myCCmaps <- function(
         byrow = TRUE,
         ncol = 2
       )
-      lattice:::print.trellis(x = spplot(obj,
-        zcol = nms, ..., scales = scales,
-        xlab = xlab, ylab = ylab, aspect = aspect, sp.layout = sp.layout,
-        xlim = xlim, ylim = ylim, strip = strip.custom(
-          which.given = 1,
-          shingle.intervals = xlcc, var.name = cvar.names[1],
-          par.strip.text = list(cex = 0.8), bg = "grey95",
-          fg = "grey75"
-        ), strip.left = strip.custom(
-          which.given = 1,
-          shingle.intervals = xlcc2, var.name = cvar.names[2],
-          par.strip.text = list(cex = 0.8), bg = "grey95",
-          fg = "grey75"
+      lattice:::print.trellis(
+        x = spplot(obj,
+          zcol = nms, ..., scales = scales,
+          xlab = xlab, ylab = ylab,
+          aspect = aspect, sp.layout = sp.layout,
+          xlim = xlim, ylim = ylim,
+          strip = strip.custom(
+            which.given = 1,
+            shingle.intervals = xlcc,
+            var.name = cvar.names[1],
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95",
+            fg = "grey75"
+          ),
+          strip.left = strip.custom(
+            which.given = 1,
+            shingle.intervals = xlcc2,
+            var.name = cvar.names[2],
+            par.strip.text = list(cex = 0.8),
+            bg = "grey95",
+            fg = "grey75"
+          )
         )
-      ))
+      )
     }
   }
   invisible(obj)
@@ -563,10 +606,10 @@ library(sp)
 poly <- st_read("DC_HPN.shp",
   crs = "+proj=longlat +ellps=clrk66"
 )
-summary(poly)
+# summary(poly)
 
 dc <- as_Spatial(poly)
-summary(dc)
+# summary(dc)
 rownames(slot(dc, "data")) <- dc$GIS_ID
 
 youth_ec <- equal.count(dc$PCT_0_17, 6, overlap = 0)
@@ -582,6 +625,190 @@ myCCmaps(
   main = "Violent Crimes Per 10,000 Population",
   layout = c(3, 3)
 )
+```
+
+
+```{r Ch8-ccmap4, fig.cap = 'Conditioned choropleth map 4.', fig.width = 7, fig.height = 6}
+# Original file: NJ_Counties2.R
+# Original output: NJ_One_Way_CCMap.jpeg
+# Original data: nj_cnty_disab_gaps.csv
+
+# setwd("C:\\Users\\bmast\\GD\\NJ_Counties")
+library(stringr)
+library(tidyr)
+library(sf)
+library(dplyr)
+library(cdlTools)
+library(lattice)
+library(sf)
+library(sp)
+
+# Note that tl_2024_us_county.shp is > 100MB and can't be stored on GitHub.
+# Moreover, these are the political boundaries of the states.
+# Work with smaller state boundary file that contains the water boundaries.
+#
+# poly <- st_read("data/Ch08/tl_2024_us_county.shp",
+#   crs = "+proj=longlat +ellps=clrk66"
+# )
+# summary(poly)
+
+# nj <- subset(poly, STATEFP == "34")
+# head(nj$GEOID)
+
+nj <- st_read("data/Ch08/NJ_Counties_3424.shp")
+head(nj$COUNTY)
+head(nj$FIPSSTCO)
+
+data <- read.csv("data/Ch08/nj_cnty_disab_gaps.csv")
+# summary(data)
+
+# data$GEOID <- as.character(data$FIPS_CNTY_CD)
+data$FIPSSTCO <- as.character(data$FIPS_CNTY_CD)
+
+data$abs_gap_read <- abs(data$gap_read)
+data$abs_gap_math <- abs(data$gap_math)
+# summary(data)
+
+# poly2 <- inner_join(nj, data, join_by(GEOID))
+poly2 <- inner_join(nj, data, join_by(FIPSSTCO))
+# summary(poly2)
+
+nj2 <- as_Spatial(poly2)
+# rownames(slot(nj2, "data")) <- nj2$GEOID
+rownames(slot(nj2, "data")) <- nj2$FIPSSTCO
+# save(nj2,file="nj2.Rdata")
+
+reading_gap_ec <- equal.count(nj2$abs_gap_read, 6, overlap = 0)
+reading_gap_ec
+
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Math Achievement Gap",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap4mod, fig.cap = 'Modified conditioned choropleth map 4.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec
+  ),
+  at = seq(10, 35, by = 5),
+  col.regions = brewer.pal(5, "YlOrBr"),
+  main = "Math Achievement Gap",
+  layout = c(3, 2)
+)
+```
+
+
+```{r Ch8-ccmap5, fig.cap = 'Conditioned choropleth map 5.', fig.width = 7, fig.height = 6}
+# Original file: NJ_Counties3.R
+# Original output: NJ_One_Way_CCMap.jpeg
+# Original data: No new data file
+
+# setwd("C:\\Users\\bmast\\GD\\NJ_Counties")
+library(stringr)
+library(tidyr)
+library(sf)
+library(dplyr)
+library(cdlTools)
+library(lattice)
+library(sf)
+library(sp)
+
+# Note that tl_2024_us_county.shp is > 100MB and can't be stored on GitHub.
+# Moreover, these are the political boundaries of the states.
+# Work with smaller state boundary file that contains the water boundaries.
+#
+# poly <- st_read("data/Ch08/tl_2024_us_county.shp",
+#   crs = "+proj=longlat +ellps=clrk66"
+# )
+# summary(poly)
+
+# nj <- subset(poly, STATEFP == "34")
+# head(nj$GEOID)
+
+nj <- st_read("data/Ch08/NJ_Counties_3424.shp")
+head(nj$COUNTY)
+head(nj$FIPSSTCO)
+
+data <- read.csv("data/Ch08/nj_cnty_disab_gaps.csv")
+# summary(data)
+
+# data$GEOID <- as.character(data$FIPS_CNTY_CD)
+data$FIPSSTCO <- as.character(data$FIPS_CNTY_CD)
+
+data$abs_gap_read <- abs(data$gap_read)
+data$abs_gap_math <- abs(data$gap_math)
+# summary(data)
+
+# poly2 <- inner_join(nj, data, join_by(GEOID))
+poly2 <- inner_join(nj, data, join_by(FIPSSTCO))
+# summary(poly2)
+
+nj2 <- as_Spatial(poly2)
+# rownames(slot(nj2, "data")) <- nj2$GEOID
+rownames(slot(nj2, "data")) <- nj2$FIPSSTCO
+# save(nj2,file="nj2.Rdata")
+
+reading_gap_ec <- equal.count(nj2$abs_gap_read, 6, overlap = 0)
+reading_gap_ec
+
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Math Achievement Gap",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap5mod, fig.cap = 'Modified conditioned choropleth map 5.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec
+  ),
+  at = seq(10, 35, by = 2.5),
+  col.regions = brewer.pal(10, "BrBG"),
+  main = "Math Achievement Gap",
+  layout = c(3, 2)
+)
+```
+
+
+## Additional Figures from Brent Mast {#Ch8-Figures}
+
+
+```{r Ch8-ccmap-include1, fig.cap = 'CCmap Include 1', echo = FALSE, out.width = '150%'}
+knitr::include_graphics(path = "img/NJ_Two_Way_CCMap.jpeg")
+```
+
+
+```{r Ch8-ccmap-include2, fig.cap = 'CCmap Include 2', echo = FALSE, out.width = '150%'}
+knitr::include_graphics(path = "img/NJ_Two_Way_CCMap2.jpeg")
+```
+
+
+```{r Ch8-ccmap-include3, fig.cap = 'CCmap Include 3', echo = FALSE, out.width = '150%'}
+knitr::include_graphics(path = "img/DC_1way_CCmap2.jpeg")
 ```
 
 
