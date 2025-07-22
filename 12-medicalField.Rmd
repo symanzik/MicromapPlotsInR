@@ -269,8 +269,10 @@ As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST
 ``` {r Ch12-KYADDAllPrint}
 library(micromapST)
 library(stringr)
-BordDir    <- "data/Ch4b/"
-bdGroup    <- "KYADD2BG"
+# BordDir    <- "data/Ch4b/"
+# bdGroup    <- "KYADD2BG"
+BordDir    <- "data/Ch12-data/"
+bdGroup    <- "KYADDBG"
 BordGrpKYADDFile <- paste0(BordDir,bdGroup,".rda")
 
 BGData     <- load(file=BordGrpKYADDFile)
