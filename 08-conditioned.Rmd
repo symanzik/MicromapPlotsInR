@@ -471,7 +471,7 @@ poly$fips <- as.character(poly$FIPS)
 head(poly$fips)
 
 load("data/Ch08/wv_merged.Rdata")
-summary(wv_merged)
+# summary(wv_merged)
 head(wv_merged$fips)
 
 poly2 <- inner_join(poly, wv_merged, join_by(fips))
