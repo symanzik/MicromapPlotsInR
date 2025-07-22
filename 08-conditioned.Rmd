@@ -4,6 +4,9 @@
 \chapterauthor{Brent D. Mast}
 
 
+Test
+
+
 Conditioned micromaps, sometimes also called conditioned choropleth maps (CC maps) 
 are the second of the three main variations of micromap visualizations. 
 They allow an exploratory investigation of two explanatory variables 
