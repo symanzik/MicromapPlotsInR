@@ -269,8 +269,8 @@ As we saw in Chapter \@ref(Ch4b), the **micromapST**\index{R Packages!micromapST
 ``` {r Ch12-KYADDAllPrint}
 library(micromapST)
 library(stringr)
-BordDir    <- "data/Ch12-data/"
-bdGroup    <- "KYADDBG"
+BordDir    <- "data/Ch4b/"
+bdGroup    <- "KYADD2BG"
 BordGrpKYADDFile <- paste0(BordDir,bdGroup,".rda")
 
 BGData     <- load(file=BordGrpKYADDFile)
@@ -364,7 +364,7 @@ Previous research has shown significant differences between all-age colorectal c
 We have shown in this chapter how linked micromap plots might be used to explore and communicate health data\index{Data communication}\index{Exploratory spatial data analysis}. Specifically, we examined deaths due to colorectal cancer among persons less than age 50\index{Colorectal cancer!Early onset}, rates that have been rising in recent years, unlike rapidly declining rates among persons 50 and older who are recommended for regular CRC screening. Despite the lack of risk factor data collected well before the cancer occurred, our exploratory analysis at the U.S. state level did find associations between the younger CRC rates and factors found to be associated with older CRC. Drilling down to the sub-state level, however, was less productive, due to suppressed data, but our results were consistent with analyses of similar data for broader geographic areas. The R code included in this chapter demonstrates how to apply typical steps to explore health rates not only for U.S. states but for sub-state areas defined by the user.
 
 
-Readers interested in delving further into health applications such as those described in this chapter are referred to an epidemiology textbook, such as the classic Gordis Epidemiology [@CSF2024] or the more practical Essential Epidemiology in Public Health [@Aschengrau2025].
+Readers interested in delving further into the study of public health patterns are referred to an epidemiology textbook, such as the classic Gordis Epidemiology [@CSF2024] or the more practical Essential Epidemiology in Public Health [@Aschengrau2025]. Carr's first application of linked micromaps was to environmental data [@COPC2000], while specific health applications such as those described in this chapter are shown in the Carr and Pickle book [@CP2010] and in a summary article @PiCa2010. 
 
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]

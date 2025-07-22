@@ -135,7 +135,7 @@ rownames(temp_rates) <- st_postal
 head(temp_rates, n = 3L)
 ```
 
-First we need to convert the character-format dates to objects of class "Date".The following code defines the input column names as dates in the format "mmm_dd_yyyy", where mmm, dd and yyyy represent the character month abbreviation, numeric day and 4-digit year, respectively, with underscores between them. These dates are represented internally as the number of days since January 1, 1970, although they are printed in the default date format.
+First we need to convert the character-format dates to objects of class "Date". The following code defines the input column names as dates in the format "mmm_dd_yyyy", where mmm, dd and yyyy represent the character month abbreviation, numeric day and 4-digit year, respectively, with underscores between them. These dates are represented internally as the number of days since January 1, 1970, although they are printed in the default date format.
 
 ```{r Ch5b-dates-setup}
 # temp_dates is a properly formed date vector.
@@ -259,7 +259,7 @@ The box plot \index{Boxplot} values are displayed in a typical format. The box e
 
 Many surveys collect responses that have a rank order but are not strictly quantifiable. For example, the Likert scale [@Lik1932] \index{Likert scale} is a commonly-used set of symmetric responses for the respondent's agreement or disagreement with a series of questions; a five-category scale would typically be "Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree" and "Strongly agree". The number of responses for each of these choices can be compared across categories of respondents, geographic areas, etc. 
 
-**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, \index{Bars, segmented} normalized to 100% total bar length \index{Bars, normalized} or centered on a particular cutpoint \index{Bars, centered}. Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [@NCES2011]. \index{Datasets!MathProficiency8thGr2011}
+**micromapST** can display these sorts of data in several ways: segmenting a full bar into component parts, \index{Bars, segmented} normalized to 100% total bar length \index{Bars, normalized} or centered on a particular cutpoint. \index{Bars, centered} Up to nine bar segments (response categories) can be displayed. The bar segments are colored in light to dark shades of the hue assigned to each geographic unit. To illustrate, we compare the math results for eighth-graders from the 2011 National Assessment of Educational Progress, standardized tests given to students in all states [@NCES2011]. \index{Datasets!MathProficiency8thGr2011}
 
 In Figure \@ref(fig:Ch5b-micromap3), the first column plots the average math scores for students in each state. The second column displays individual student scores categorized into proficiency classes: "Less than basic", "Basic", "Proficient" and "Advanced". Except for a few missing scores, each state's total is nearly 100%, so the basic horizontal stacked bar design (`type = "segbar"`) is used. No scaling to 100% (`type = "normbar"`) is needed. The states are sorted in ascending order of the average math scores.
 
@@ -294,7 +294,7 @@ The order of states ranges from Washington DC as worst to Massachusetts as best 
 
 Except for the leftmost bar ("< Basic") that has its leftmost edge at 0, it is difficult to compare the lengths of the other category bars because they are not aligned with each other in any way. @HeRo2014 suggested that segmented (stacked) horizontal bars be centered on the middle category so that the reader can judge the lengths of the segments to the right and to the left of center, a task that most people can easily do [@CleMc84]. The `type = "ctrbar"` option in **micromapST** will do this, centering at the midpoint of the middle bar if there is an odd number of bars and at the segment boundary dividing an even number of bars in half. Here we add a label at the bottom of the column to aid the reader's interpretation of this double-ended bar (`"% less than proficient  | % at least proficient"`). The scale is automatically relabeled to reflect the centering.
 
-```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. Proficient or Advanced.', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap4, fig.cap = 'Stacked Bars: Educational Progress (NAEP) in Math, 2011, 8th Grade, centered at Not Proficient vs. At Least Proficient.', fig.width = 7, fig.height = 9}
 library(micromapST)
 # Figure - dots and centered bar (source of code sample for section 4.7)
 
@@ -302,7 +302,7 @@ panel_desc_math_ctrbar <- data.frame(
   type = c("mapcum", "id", "dot", "ctrbar"),
   lab1 = c("", "", "Avg. Scores", "Math Proficiency"),
   lab2 = c("", "", "", "<Basic, Basic, Proficient, Advanced"),
-  lab3 = c("", "", "", "     % less than proficient  | % proficient+adv."),
+  lab3 = c("", "", "", "     % less than proficient  | % at least proficient"),
   col1 = c(NA, NA, "avgscore", "PctBelowBasic"),
   col2 = c(NA, NA, NA, "PctAdvanced")
 )
@@ -325,7 +325,7 @@ Adding cumulative shading \index{Cumulative shading} to this plot highlights the
 
 One of the simplest types of graphs is the two-dimensional scatter plot, which displays pairwise values, usually denoted (x, y). However, this graphic presents challenges in the linked micromap design - each state's micromap row is too small to display a two-dimensional plot and, even if we could scale such a plot to be visible, we would lose the information about where that state's value fits within the entire bivariate distribution of all states. The solution implemented in **micromapST** is to display a scatter plot for each panel, i.e., for five states in the default design. Each scatter plot contains dots for every state, with only those dots representing the states in that panel colored in. The colors for the state dots match the colors for other column glyphs, the state name key and on the map, just as in every other micromap design.
 
-To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [@NRC2022] \index{Datasets!MDPovEducACSData20162020}. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot.
+To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [@NRC2022] \index{Datasets!MDPovEducACSData20162020}. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot. However, we will overlay each plot with a locally-weighted scatterplot smoothing line (LOWESS; [@Cle81]),\index{LOWESS smoother} new in the 2025 package. 
 
 ```{r Ch5b-micromap5, fig.cap = 'Scatter plot of percent of residents with income < 150% federal poverty level and percent with 4+ years of college, sorted by percent who attended college 4+ years.', fig.width = 7, fig.height = 9}
 library(micromapST)
@@ -336,7 +336,7 @@ MD_pov_ed <- read.csv(
   "data/MDPovEducACSData20162020.csv",
   row.names = 3
 )
-head(MD_pov_ed)
+head(MD_pov_ed, n = 3L)
 
 panel_desc_MD_poved <- data.frame(
   type = c("mapcum", "id", "scatdot"),
@@ -344,7 +344,8 @@ panel_desc_MD_poved <- data.frame(
   col1 = c(NA, NA, "PctBachDegree"),
   col2 = c(NA, NA, "PctLess150Pov"),
   lab3 = c(NA, NA, "% college"),
-  lab4 = c(NA, NA, "% poverty")
+  lab4 = c(NA, NA, "% poverty"),
+  parm = I(list(NA, NA, list(line = "LOWESS", line.lwd = 2)))
 )
 
 # sort by % college
@@ -360,7 +361,7 @@ micromapST(
 )
 ```
 
-This gives a clearer picture of the relationship between poverty and education in Maryland. Howard and Montgomery counties are outliers with high percents of college-educated residents. Excluding these outliers, the other counties do show a fairly strong negative correlation between poverty and college education. 
+This gives a clearer picture of the relationship between poverty and education in Maryland. Howard and Montgomery counties are outliers with high percents of college-educated residents. Excluding these outliers, the other counties do show a fairly strong negative correlation between poverty and college education, an association highlighted by the smoothing line.
 
 
 ## Summary and Further Reading {#Ch5b-Summary}

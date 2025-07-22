@@ -13,9 +13,9 @@ accessible at https://cran.r-project.org/web/packages/micromapST/. In this chapt
 
 Although the original package was written to display U.S. states exclusively, over time other geographies have been added at the request of users. Starting in version 2.0 of **micromapST**, the process used to create these other boundary files has been codified into a new function to allow the user to create linked micromap plots with their geographic areas of choice.
 
-The resulting map serves as the visual element linking graphed data to spatial aspects of the data, and so must be accurate enough to allow the user to identify the geographic space it represents. This is a challenge, as the maps in a linked micromap design are typically exceedingly small, about 1” x 1.5”, but the overall map area and its sub-units need to be recognizable. 
+The resulting map serves as the visual element linking graphed data to spatial aspects of the data, and so must be accurate enough to allow the user to identify the geographic space it represents. This is a challenge, as the maps in a linked micromap design are typically exceedingly small, about 1” x 1.5”, but the overall map area and its sub-unit boundaries and fill colors need to be recognizable. 
 
-The micromap design includes multiple map images, one for each perceptual group \index{Perceptual group} of geographic units. These maps must be displayed as fast as possible to make the display process usable, especially for iterative data exploration. By using a minimal set of boundary points, **micromapST** can use a fundamental function in R (`polygon`) \index{polygon} to quickly draw the multiple maps. For example, the SpatialPolygons, Spatial Polygon Data frame and Simple Features structures used for spatial objects in R by the packages sp, \index{R packages!sp} spdf \index{R packages!spdf} and sf, \index{R packages!sf}  respectively, are more complicated than are needed by **micromapST**. Using a more basic structure and not needing to call another plotting package helps **micromapST** provide the requested linked micromap plot almost instantaneously.
+The micromap design includes multiple map images, one for each perceptual group \index{Perceptual group} of geographic units. These maps must be displayed as fast as possible to make the display process usable, especially for iterative data exploration. By using a minimal set of boundary points, **micromapST** can use a fundamental function in R (`polygon`) \index{polygon} to quickly draw the multiple maps. For example, the Spatial Polygon Data frame and simple feature structures used for spatial objects in R are more complicated than are needed by **micromapST**. Using a more basic structure and not needing to call another plotting package helps **micromapST** provide the requested linked micromap plot almost instantaneously.
 
 In addition to speed, by reducing the number of coordinates in the boundary file to only the essential ones, the boundary data can be greatly reduced in both size and complexity. This enables the reader to better see the area borders and internal shading. For example, the U.S. Census Bureau 2000 shapefile of the boundaries for the U. S. states and DC is 2,360,011 bytes. After the simplification process described in this chapter, the U.S. state dataset is only 29,092 bytes, a 98.8% reduction.
 
@@ -30,14 +30,14 @@ In the next section, we describe the boundary files included in the **micromapST
 We will refer to a collection of boundaries for a geographic entity as a "border group", giving it a data frame name ending in "BG". The following border groups were created by request over the years and were available beginning with version 2.0 of **micromapST**:
 
 -   USStatesBG, data from the original micromapST package for the 50 U.S. states and the District of Columbia;
--   USSeerBG, data for the 21 cancer registry areas of the U.S. National Cancer Institute [@NCISEER2022About]; \index{Surveillance, Epidemiology and End Results (SEER) boundary file}
+-   USSeerBG, data for the 21 cancer registry areas of the U.S. National Cancer Institute [@NCISEER2022About] and their state boundaries; \index{Surveillance, Epidemiology and End Results (SEER) boundary file}
 -   KansasBG, data for the 105 counties in the state of Kansas; \index{Kansas county boundary file}
 -   NewYorkBG, data for the 62 counties in the state of New York; \index{New York county boundary file}
 -   MarylandBG, data for the 23 counties and Baltimore City in the state of Maryland; \index{Maryland county boundary file}
 -   UtahBG, data for the 29 counties in the state of Utah; \index{Utah county boundary file}
 -   ChinaBG, 35 provinces, regions and municipalities in the country of China; \index{China boundary file}
 -   UKIrelandBG, 219 administrative areas in UK, Ireland and Isle of Man; \index{UK, Ireland boundary file}
--   SeoulKoreaBG, 25 districts in Seoul, S. Korea; \index{Korea, Seoul city district boundary file}
+-   SeoulKoreaBG, 25 districts in the city of Seoul, S. Korea; \index{Korea, Seoul city district boundary file}
 -   AfricaBG, 52 countries on the African continent. \index{Africa country boundary file}
 
 For simplicity, hereafter we will refer generically to U.S. states, even though DC is a district, not a state. Each of these border groups can be specified for use by including `bordGrp = "MarylandBG"`, for example, in the `micromapST` function call. An example is shown in Figure \@ref(fig:Ch3-LMMMDpoved).
@@ -70,7 +70,7 @@ The original Census boundaries for U.S. states illustrate challenges to clear ma
 
 ```{r Ch4b-USmapRAW, fig.cap = 'U.S. state boundaries plotted with latitude/longitude coordinates as provided by the U.S. Census Bureau [@USCensus2021Shape].', fig.width = 8, fig.height = 2}
 library(sf)
-
+# assume a working directory has been set
 shp_dir <- "data/Ch4b"
 shp_file <- "st99_d00" # Census 2000 US state boundary shapefile
 US_shp <- sf::st_read(shp_dir, shp_file)
@@ -124,7 +124,7 @@ Most of the time, we will need to smooth our shapefile to some extent so that it
 ### Build a U.S. Name Table {#Ch4b-USExample-NameTable}
 
 
-The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column. Each row in the Name Table represents one area, in this example a state, and "rowNames" specifies which location ID will be used in the statistical data when calling **micromapST**. Puerto Rico was excluded from our Name Table, so it will be excluded from the resulting map when the `BuildBorderGroup` function links the Name Table with the shapefile polygons. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states.
+The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column. Each row in the Name Table represents one area, in this example a state. The `rowNames` call parameter specifies which location ID will be used in the statistical data when calling **micromapST**. Puerto Rico was excluded from our Name Table, so it will be excluded from the resulting map when the `BuildBorderGroup` function links the Name Table with the shapefile polygons. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states.
 
 
 ```{r Ch4b-USbasictable, echo = FALSE}
@@ -143,7 +143,7 @@ knitr::kable(
 
 U.S. states have standardized names, abbreviations (postal codes), and numeric identifiers (Federal Information Processing Standard (FIPS) codes [@USCensus2022ANSI]). However, this is not always the case for other countries or for non-standard U.S. geographies, so **micromapST** allows the user to specify the primary abbreviation “Abbr” and an alternate abbreviation “Alt_Abbr” for the areas if there are two sets of commonly-acceptable abbreviations. 
 
-A more complicated issue is when the user only has a string name to identify each area, e.g., names of NCI cancer registries. In this case, **micromapST** can perform a wildcard match of a field in the Name Table, provided in the optional "Alias" column, against the user-provided area name. The user can request the wildcard matching by specifying `rowNames = ”alias”`. The Alias column must be in the initial Name Table and must link to a valid area. This is a very unusual situation and the authors do not expect it to be used by average users. 
+A more complicated issue is when the user only has a string name to identify each area, e.g., names of NCI cancer registries. In this case, **micromapST** can perform a wildcard match of a field in the Name Table, provided in the optional "Alias" column, against the user-provided area name. The user can request the wildcard matching by specifying `rowNames = ”alias”`. The Alias column must be in the initial Name Table and must link to a single valid area. This is a very unusual situation and the authors do not expect it to be used by average users. 
 
 If the areas are organized by regions, such as Census regions comprised of U. S. states, then the "regID" and optional "regName" columns can be specified in the Name Table to associate the areas (e.g., states) with the larger regions. One option that uses these region definitions is `dataRegionsOnly = TRUE` in the **micromapST** function call. Including this option will cause only the regions with any data to be mapped.
 
@@ -224,7 +224,9 @@ When the Name Table is read in, its contents and columns are validated to ensure
 ### Process the U.S. Shapefile {#Ch4b-USExample-shapefile}
 
 
-First, the shapefile is read in using `sf::st_read` which creates an sf data frame. An sf data frame has information beyond a non-spatial data frame that is needed to process and plot the spatial object. These are organized as data frame columns and a geometry column with rows for each spatial entity. Included in the structure are:
+First, the user's boundary file is read in using `sf::st_read` which creates an `sf` data frame. This function will read many boundary file formats, but we use the commonly-available shapefile format (.SHP).\index{Shapefile}
+
+An `sf` data frame has information beyond a non-spatial data frame that is needed to process and plot the spatial object. These are organized as data frame columns and a geometry column with rows for each spatial entity. Included in the structure are:
 
 -    The Geometry Type
 -    Dimension: XY
@@ -590,7 +592,6 @@ load(paste0(output_dir_KY, "/KY_countiesBG.rda")) # this loads new border group
 par(mar = c(0, 0, 0, 0))
 Plot_Vis(VisB = areaVisBorders, xLwd = 1)
 ```
-
 
 
 Note that the smoothing did not eliminate the small non-contiguous segment of Fulton County at the far western end of the state. This is not an island but land separated from the rest of the county by the Kentucky Bend of the Mississippi River.
