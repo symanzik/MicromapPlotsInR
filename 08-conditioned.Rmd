@@ -1125,6 +1125,121 @@ myCCmaps(
 ```
 
 
+## Conditioned Choropleth Maps with Factors {#Ch8-Factors}
+
+
+```{r Ch8-ccmap-cat1, fig.cap = 'Conditioned choropleth map 1 for 1 categorical variable.', fig.width = 7, fig.height = 6}
+female_majority <- as.factor(wv$FEMALES > wv$MALES)
+levels(female_majority)
+levels(female_majority) <- c("Female_Majority_FALSE", "Female_Majority_TRUE")
+levels(female_majority)
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Female_Majority" = female_majority
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(2, 1)
+)
+```
+
+
+```{r Ch8-ccmap-cat2, fig.cap = 'Conditioned choropleth map 2 for 1 categorical and 1 quantitative variable.', fig.width = 7, fig.height = 6}
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Property_Crime_Rate" = prop_ec,
+    "Female_Majority" = female_majority
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(2, 3)
+)
+```
+
+
+```{r Ch8-ccmap-cat3, fig.cap = 'Conditioned choropleth map 3 for 1 quantitative and 1 categorical variable (order switched).', fig.width = 7, fig.height = 6}
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Female_Majority" = female_majority,
+    "Property_Crime_Rate" = prop_ec
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(3, 2)
+)
+```
+
+
+```{r Ch8-ccmap-cat4, fig.cap = 'Conditioned choropleth map 4 for 2 categorical variables.', fig.width = 7, fig.height = 6}
+pop_growth <- as.factor(wv$POP2000 > wv$POP1986)
+levels(pop_growth)
+levels(pop_growth) <- c("Population_Growth_FALSE", "Population_Growth_TRUE")
+levels(pop_growth)
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Female_Majority" = female_majority,
+    "Pop_Growth" = pop_growth
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(2, 2)
+)
+```
+
+
+```{r Ch8-ccmap-cat5, fig.cap = 'Conditioned choropleth map 5 for 2 categorical variables (with more than 2 factor levels).', fig.width = 7, fig.height = 6}
+pop_growth3 <- factor(
+  ifelse(wv$POP1986 - wv$POP2000 > 1000,
+    "Major_Pop_Decrease",
+    ifelse(wv$POP1986 - wv$POP2000 < -1000,
+      "Major_Pop_Increase",
+      "Minor_Pop_Change"
+    )
+  ),
+  levels = c("Major_Pop_Decrease", "Minor_Pop_Change", "Major_Pop_Increase")
+)
+
+levels(pop_growth3)
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Female_Majority" = female_majority,
+    "Pop_Growth3" = pop_growth3
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(3, 2)
+)
+```
+
+
 ## Additional Figures from Brent Mast {#Ch8-Figures}
 
 
