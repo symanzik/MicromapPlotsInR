@@ -272,7 +272,7 @@ library(stringr)
 # BordDir    <- "data/Ch4b/"
 # bdGroup    <- "KYADD2BG"
 BordDir    <- "data/Ch12-data/"
-bdGroup    <- "KYADDBG"
+bdGroup    <- "KYADD2BG"
 BordGrpKYADDFile <- paste0(BordDir,bdGroup,".rda")
 
 BGData     <- load(file=BordGrpKYADDFile)
