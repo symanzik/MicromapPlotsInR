@@ -450,7 +450,8 @@ myCCmaps <- function(
         x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab,
-          aspect = aspect, sp.layout = sp.layout,
+          aspect = aspect, 
+          sp.layout = sp.layout,
           xlim = xlim, ylim = ylim,
           strip = strip.custom(
             which.given = 1,
@@ -465,7 +466,11 @@ myCCmaps <- function(
         x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab,
-          aspect = aspect, sp.layout = sp.layout,
+          aspect = aspect, 
+          sp.layout = list(list("sp.text", c(-83, 34.5), sprintf("%.1f", mean(obj[[nms[1]]], na.rm = TRUE)), which = 1),
+                           list("sp.text", c(-84, 34.5), "B", which = 2),
+                           list("sp.text", c(-84, 34.5), "C", which = 3),
+                           list("sp.text", c(-83, 34.5), sprintf("%.1f", mean(obj[[nms[4]]], na.rm = TRUE)), which = 4)),
           xlim = xlim, ylim = ylim,
           strip = strip.custom(
             which.given = 1,
