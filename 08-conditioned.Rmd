@@ -394,12 +394,25 @@ library(sp)
 # library(raster)
 library(sf)
 
+library(latex2exp)
+
 myCCmaps <- function(
     obj, zcol = NULL, cvar = NULL, cvar.names = NULL, ...,
     names.attr, scales = list(draw = FALSE),
     xlab = NULL, ylab = NULL,
     aspect = mapasp(obj, xlim, ylim), sp.layout = NULL,
-    xlim = sp::bbox(obj)[1, ], ylim = sp::bbox(obj)[2, ]) {
+    xlim = sp::bbox(obj)[1, ], ylim = sp::bbox(obj)[2, ],
+    pstat.function = "none",
+    pstat.loc = "LL",
+    pstat.digits = 0) {
+  #  obj <- nc.sids
+  #  zcol <- "ft.SID74"
+  #  cvar <- list("Nonwhite_births" = sh_nw4)
+  #  col.regions <- colorRampPalette(c("yellow1", "brown3"))(20)
+
+
+
+
   stopifnot(is(obj, "SpatialPolygonsDataFrame"))
   stopifnot(!is.null(zcol), !is.null(cvar))
   n <- length(slot(obj, "polygons"))
@@ -412,6 +425,12 @@ myCCmaps <- function(
   nlcc <- integer(ncc)
   lcc <- vector(mode = "list", length = ncc)
   fcc <- logical(ncc)
+
+  stopifnot(pstat.function %in% c("none", "mean", "median"))
+  stopifnot(pstat.loc %in% c("LL", "UL", "LR", "UR"))
+  stopifnot(is.numeric(pstat.digits))
+  stopifnot(pstat.digits >= 0)
+
   for (i in 1:ncc) {
     cat("for-loop 1: i = ", i, "\n")
     ccc <- class(cvar[[i]])
@@ -423,7 +442,55 @@ myCCmaps <- function(
   }
   obj <- obj[zcol]
   zcol <- names(obj)
-  Outside <- function(x, y, z) (x < y | x > z)
+
+  Outside <- function(x, y, z) {
+    (x < y | x > z)
+  }
+
+  CreatePStat <- function(obj, nms, j, xlim, ylim,
+                          pstat.function,
+                          pstat.loc,
+                          pstat.digits) {
+    if (pstat.loc == "LL") {
+      textloc <- c(xlim[1] + 0.2 * (xlim[2] - xlim[1]), ylim[1] + 0.1 * (ylim[2] - ylim[1]))
+    } else if (pstat.loc == "UL") {
+      textloc <- c(xlim[1] + 0.2 * (xlim[2] - xlim[1]), ylim[2] - 0.1 * (ylim[2] - ylim[1]))
+    } else if (pstat.loc == "LR") {
+      textloc <- c(xlim[2] - 0.2 * (xlim[2] - xlim[1]), ylim[1] + 0.1 * (ylim[2] - ylim[1]))
+    } else if (pstat.loc == "UR") {
+      textloc <- c(xlim[2] - 0.2 * (xlim[2] - xlim[1]), ylim[2] - 0.1 * (ylim[2] - ylim[1]))
+    }
+
+    if (pstat.function == "mean") {
+      pmean <- round(mean(obj[[nms[j]]], na.rm = TRUE), pstat.digits)
+      list("sp.text",
+        # c(-83, 34.5),
+        textloc,
+        # sprintf("mean = %.1f", mean(obj[[nms[j]]], na.rm = TRUE)),
+        # bquote(bar(x) == .(pmean)),
+        # expression(bar(x) == pmean),
+        # TeX(sprintf(r'($\overline{x} = %f$)', pmean)),
+        # TeX(r'($\overline{x} = $)'),
+        # bquote("Boxplot for MFE, h" <= ~ .(pmean)),
+        as.expression(bquote(bar(x) == .(pmean))),
+        # paste("avg = ", round(mean(obj[[nms[j]]], na.rm = TRUE), pstat.digits)),
+        which = j
+      )
+      # check here:
+      # https://stackoverflow.com/questions/16369872/how-to-create-lattice-plot-title-with-new-line-italics-and-variable-names-in-r
+      # https://kevcaz.insileco.io/notes/2019/08/2019-08-02_variables_in_mathematical/
+      # https://stackoverflow.com/questions/24130448/bquote-how-to-include-an-expression-saved-as-a-string-object
+    } else if (pstat.function == "median") {
+      list("sp.text",
+        # c(-83, 34.5),
+        textloc,
+        # sprintf("median = %.1f", median(obj[[nms[j]]], na.rm = TRUE)),
+        paste("m = ", round(median(obj[[nms[j]]], na.rm = TRUE), pstat.digits)),
+        which = j
+      )
+    }
+  }
+
   if (ncc == 1) {
     if (fcc[1]) {
       for (j in 1:nlcc[1]) {
@@ -445,12 +512,25 @@ myCCmaps <- function(
     }
     nms <- names(obj)
     nms <- nms[-(match(zcol, nms))]
+    if (pstat.function != "none") {
+      sp.layout <- vector(mode = "list", length = nlcc[1])
+      for (j in 1:nlcc[1]) {
+        sp.layout[[j]] <- CreatePStat(
+          obj, nms, j, xlim, ylim,
+          pstat.function, pstat.loc, pstat.digits
+        )
+        #       sp.layout[[j]] <- list("sp.text",
+        #                                c(-83, 34.5),
+        #                                sprintf("%.1f", mean(obj[[nms[j]]], na.rm = TRUE)), which = j)
+      }
+    }
+
     if (fcc[1]) {
       lattice:::print.trellis(
         x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab,
-          aspect = aspect, 
+          aspect = aspect,
           sp.layout = sp.layout,
           xlim = xlim, ylim = ylim,
           strip = strip.custom(
@@ -466,11 +546,14 @@ myCCmaps <- function(
         x = spplot(obj,
           zcol = nms, ..., scales = scales,
           xlab = xlab, ylab = ylab,
-          aspect = aspect, 
-          sp.layout = list(list("sp.text", c(-83, 34.5), sprintf("%.1f", mean(obj[[nms[1]]], na.rm = TRUE)), which = 1),
-                           list("sp.text", c(-84, 34.5), "B", which = 2),
-                           list("sp.text", c(-84, 34.5), "C", which = 3),
-                           list("sp.text", c(-83, 34.5), sprintf("%.1f", mean(obj[[nms[4]]], na.rm = TRUE)), which = 4)),
+          aspect = aspect,
+          sp.layout = sp.layout,
+          # sp.layout = list(list("sp.text", c(-83, 34.5),
+          #                       sprintf("%.1f", mean(obj[[nms[1]]], na.rm = TRUE)), which = 1),
+          #                  list("sp.text", c(-84, 34.5), "B", which = 2),
+          #                  list("sp.text", c(-84, 34.5), "C", which = 3),
+          #                  list("sp.text", c(-83, 34.5),
+          #                       sprintf("%.1f", mean(obj[[nms[4]]], na.rm = TRUE)), which = 4)),
           xlim = xlim, ylim = ylim,
           strip = strip.custom(
             which.given = 1,
@@ -501,6 +584,18 @@ myCCmaps <- function(
       }
       nms <- names(obj)
       nms <- nms[-(match(zcol, nms))]
+
+      #### Work here
+      if (pstat.function != "none") {
+        sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+        for (j in 1:(nlcc[1] * nlcc[2])) {
+          sp.layout[[j]] <- CreatePStat(
+            obj, nms, j, xlim, ylim,
+            pstat.function, pstat.loc, pstat.digits
+          )
+        }
+      }
+
       lcc1 <- lcc[[1]]
       xlcc <- NULL
       for (i in 1:nlcc[1]) {
@@ -548,6 +643,17 @@ myCCmaps <- function(
         }
         nms <- names(obj)
         nms <- nms[-(match(zcol, nms))]
+
+        if (pstat.function != "none") {
+          sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+          for (j in 1:(nlcc[1] * nlcc[2])) {
+            sp.layout[[j]] <- CreatePStat(
+              obj, nms, j, xlim, ylim,
+              pstat.function, pstat.loc, pstat.digits
+            )
+          }
+        }
+
         lcc1 <- lcc[[1]]
         xlcc <- NULL
         for (i in 1:nlcc[1]) {
@@ -599,6 +705,17 @@ myCCmaps <- function(
         }
         nms <- names(obj)
         nms <- nms[-(match(zcol, nms))]
+
+        if (pstat.function != "none") {
+          sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+          for (j in 1:(nlcc[1] * nlcc[2])) {
+            sp.layout[[j]] <- CreatePStat(
+              obj, nms, j, xlim, ylim,
+              pstat.function, pstat.loc, pstat.digits
+            )
+          }
+        }
+
         lcc1 <- matrix(unlist(lcc[[1]]), ncol = 2, byrow = TRUE)
         xlcc <- matrix(ncol = 2)
         for (i in 1:nlcc[1]) {
@@ -649,6 +766,17 @@ myCCmaps <- function(
       }
       nms <- names(obj)
       nms <- nms[-(match(zcol, nms))]
+
+      if (pstat.function != "none") {
+        sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+        for (j in 1:(nlcc[1] * nlcc[2])) {
+          sp.layout[[j]] <- CreatePStat(
+            obj, nms, j, xlim, ylim,
+            pstat.function, pstat.loc, pstat.digits
+          )
+        }
+      }
+
       lcc1 <- matrix(unlist(lcc[[1]]), ncol = 2, byrow = TRUE)
       xlcc <- matrix(ncol = 2)
       for (i in 1:nlcc[1]) {
@@ -773,7 +901,10 @@ myCCmaps(
   at = seq(0, 7, by = 0.5),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(14),
   main = "Transformed SIDS rates 1974-78",
-  layout = c(3, 3)
+  layout = c(3, 3),
+  pstat.function = "median",
+  pstat.loc = "LL",
+  pstat.digits = 1
 )
 ```
 
@@ -848,7 +979,10 @@ myCCmaps(
   at = seq(0, 400, by = 50),
   col.regions = colorRampPalette(c("yellow1", "brown3"))(8),
   main = "Violent Crimes per 10,000 Population",
-  layout = c(3, 3)
+  layout = c(3, 3),
+  pstat.function = "mean",
+  pstat.loc = "UL",
+  pstat.digits = 0
 )
 ```
 
@@ -920,7 +1054,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(3, 3)
+  layout = c(3, 3),
+  pstat.function = "mean",
+  pstat.loc = "UR",
+  pstat.digits = 3
 )
 ```
 
@@ -1042,7 +1179,10 @@ myCCmaps(
   at = seq(10, 35, by = 5),
   col.regions = brewer.pal(5, "YlOrBr"),
   main = "Math Achievement Gap",
-  layout = c(3, 2)
+  layout = c(3, 2),
+  pstat.function = "median",
+  pstat.loc = "LR",
+  pstat.digits = 0
 )
 ```
 
@@ -1125,7 +1265,10 @@ myCCmaps(
   at = seq(10, 35, by = 2.5),
   col.regions = brewer.pal(10, "BrBG"),
   main = "Math Achievement Gap",
-  layout = c(3, 2)
+  layout = c(3, 2),
+  pstat.function = "median",
+  pstat.loc = "LL",
+  pstat.digits = 0
 )
 ```
 
@@ -1150,7 +1293,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(2, 1)
+  layout = c(2, 1),
+  pstat.function = "mean",
+  pstat.loc = "LR",
+  pstat.digits = 4
 )
 ```
 
@@ -1168,7 +1314,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(2, 3)
+  layout = c(2, 3),
+  pstat.function = "mean",
+  pstat.loc = "LR",
+  pstat.digits = 4
 )
 ```
 
@@ -1186,7 +1335,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(3, 2)
+  layout = c(3, 2),
+  pstat.function = "median",
+  pstat.loc = "UR",
+  pstat.digits = 3
 )
 ```
 
@@ -1209,7 +1361,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(2, 2)
+  layout = c(2, 2),
+  pstat.function = "median",
+  pstat.loc = "UR",
+  pstat.digits = 3
 )
 ```
 
@@ -1240,7 +1395,10 @@ myCCmaps(
   at = seq(-0.06, 0.02, by = 0.01),
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
-  layout = c(3, 2)
+  layout = c(3, 2),
+  pstat.function = "mean",
+  pstat.loc = "UR",
+  pstat.digits = 3
 )
 ```
 
