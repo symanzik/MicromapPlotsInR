@@ -476,13 +476,14 @@ myCCmaps <- function(
     nms <- nms[-(match(zcol, nms))]
 
     if (pstat.function != "none") {
-      sp.layout <- vector(mode = "list", length = nlcc[1])
+      sp.layout.add <- vector(mode = "list", length = nlcc[1])
       for (j in 1:nlcc[1]) {
-        sp.layout[[j]] <- CreatePStat(
+        sp.layout.add[[j]] <- CreatePStat(
           obj, nms, j, xlim, ylim,
           pstat.function, pstat.loc, pstat.digits, pstat.cex
         )
       }
+      sp.layout <- c(sp.layout, sp.layout.add)
     }
 
     if (fcc[1]) {
@@ -536,13 +537,14 @@ myCCmaps <- function(
       nms <- nms[-(match(zcol, nms))]
 
       if (pstat.function != "none") {
-        sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+        sp.layout.add <- vector(mode = "list", length = nlcc[1] * nlcc[2])
         for (j in 1:(nlcc[1] * nlcc[2])) {
-          sp.layout[[j]] <- CreatePStat(
+          sp.layout.add[[j]] <- CreatePStat(
             obj, nms, j, xlim, ylim,
             pstat.function, pstat.loc, pstat.digits, pstat.cex
           )
         }
+        sp.layout <- c(sp.layout, sp.layout.add)
       }
 
       lcc1 <- lcc[[1]]
@@ -590,13 +592,14 @@ myCCmaps <- function(
         nms <- nms[-(match(zcol, nms))]
 
         if (pstat.function != "none") {
-          sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+          sp.layout.add <- vector(mode = "list", length = nlcc[1] * nlcc[2])
           for (j in 1:(nlcc[1] * nlcc[2])) {
-            sp.layout[[j]] <- CreatePStat(
+            sp.layout.add[[j]] <- CreatePStat(
               obj, nms, j, xlim, ylim,
               pstat.function, pstat.loc, pstat.digits, pstat.cex
             )
           }
+          sp.layout <- c(sp.layout, sp.layout.add)
         }
 
         lcc1 <- lcc[[1]]
@@ -647,13 +650,14 @@ myCCmaps <- function(
         nms <- nms[-(match(zcol, nms))]
 
         if (pstat.function != "none") {
-          sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+          sp.layout.add <- vector(mode = "list", length = nlcc[1] * nlcc[2])
           for (j in 1:(nlcc[1] * nlcc[2])) {
-            sp.layout[[j]] <- CreatePStat(
+            sp.layout.add[[j]] <- CreatePStat(
               obj, nms, j, xlim, ylim,
               pstat.function, pstat.loc, pstat.digits, pstat.cex
             )
           }
+          sp.layout <- c(sp.layout, sp.layout.add)
         }
 
         lcc1 <- matrix(unlist(lcc[[1]]), ncol = 2, byrow = TRUE)
@@ -710,13 +714,14 @@ myCCmaps <- function(
       nms <- nms[-(match(zcol, nms))]
 
       if (pstat.function != "none") {
-        sp.layout <- vector(mode = "list", length = nlcc[1] * nlcc[2])
+        sp.layout.add <- vector(mode = "list", length = nlcc[1] * nlcc[2])
         for (j in 1:(nlcc[1] * nlcc[2])) {
-          sp.layout[[j]] <- CreatePStat(
+          sp.layout.add[[j]] <- CreatePStat(
             obj, nms, j, xlim, ylim,
             pstat.function, pstat.loc, pstat.digits, pstat.cex
           )
         }
+        sp.layout <- c(sp.layout, sp.layout.add)
       }
 
       lcc1 <- matrix(unlist(lcc[[1]]), ncol = 2, byrow = TRUE)
@@ -1344,6 +1349,45 @@ myCCmaps(
   col.regions = brewer.pal(11, "RdYlBu")[1:8],
   main = "Child Opportunity Index",
   layout = c(3, 2),
+  pstat.function = "mean",
+  pstat.loc = "UR",
+  pstat.digits = 3,
+  pstat.cex = 0.9
+)
+```
+
+
+
+```{r Ch8-ccmap-cat6, fig.cap = 'Conditioned choropleth map 6 for 2 categorical variables (with more than 2 factor levels). Also with externally provided text information.', fig.width = 7, fig.height = 4.5}
+xlim <- sp::bbox(wv)[1, ]
+ylim <- sp::bbox(wv)[2, ]
+textloc <- c(xlim[1] + 0.1 * (xlim[2] - xlim[1]), ylim[2] - 0.1 * (ylim[2] - ylim[1])) # UL
+textloc2 <- c(xlim[2] - 0.2 * (xlim[2] - xlim[1]), ylim[1] + 0.1 * (ylim[2] - ylim[1])) # LR
+
+sp.layout.external <- list(
+  list("sp.text", textloc, "(a)", which = 4),
+  list("sp.text", textloc, "(b)", which = 5),
+  list("sp.text", textloc, "(c)", which = 6),
+  list("sp.text", textloc, "(d)", which = 1),
+  list("sp.text", textloc, "(e)", which = 2),
+  list("sp.text", textloc, "(f)", which = 3),
+  list("sp.text", textloc2, "WV")
+)
+
+myCCmaps(
+  obj = wv,
+  # Note that COI variable does not exist in local data set; use z_COI_nat instead
+  # zcol = "COI",
+  zcol = "z_COI_nat",
+  cvar = list(
+    "Female_Majority" = female_majority,
+    "Pop_Growth3" = pop_growth3
+  ),
+  at = seq(-0.06, 0.02, by = 0.01),
+  col.regions = brewer.pal(11, "RdYlBu")[1:8],
+  main = "Child Opportunity Index",
+  layout = c(3, 2),
+  sp.layout = sp.layout.external,
   pstat.function = "mean",
   pstat.loc = "UR",
   pstat.digits = 3,
