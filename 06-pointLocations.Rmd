@@ -730,7 +730,7 @@ most of Scotland and Northern Ireland and only keeps England and Wales.
 
 ```{r Ch6-CheckCRSStadiums}
 st_crs(uk_map) == st_crs(stadium_circles)
-uk_map <- st_transform(uk_map, st_crs(stadium_circles))
+# uk_map <- st_transform(uk_map, st_crs(stadium_circles))
 ```
 
 
@@ -798,20 +798,20 @@ between points (see the function documentation for details).
 Note that points that are already far apart are not moved. 
 
 ```{r Ch6-RepelPointsStadium}
-stadiums_repel <- point_repel(stadiums, rep.fact = 50, adj.max = 1)
+stadiums_repel <- point_repel(stadiums, rep.fact = 50, adj.max = 5, rep.dist.lmt = 5, attr.fact = 0.01)
 par(mfrow = c(1, 2))
 plot(stadiums$geometry,
-  main = "Original point locations"
+  main = "Original Point Locations"
 )
 plot(stadiums_repel$geometry,
-  main = "Repelled points"
+  main = "Repelled Point Locations"
 )
 ```
 
 Now circles need to be drawn around the points.
 
 ```{r Ch6-CreateCirclesAndMapTableStadiums}
-stadium_circles_repel <- points2circles(stadiums_repel, radius = 6)
+stadium_circles_repel <- points2circles(stadiums_repel, radius = 8)
 
 stadiums_map_repel <- rbind(
   uk_map["stadium"],
@@ -829,58 +829,74 @@ stadiums_map_repel_df <- create_map_table(
 mmplot(
   stat.data = st_drop_geometry(stadiums),
   map.data = stadiums_map_repel_df,
-  panel.types = c("labels", "dot_legend", "dot", "map", "labels"),
-  panel.data = list("stadium", NA, "capacity", NA, "team"),
+  panel.types = c("map", "labels", "dot_legend", "labels", "dot", "dot"),
+  panel.data = list(NA, "stadium", NA, "team", "capacity", "average"),
   map.link = c("stadium", "ID"),
   ord.by = "capacity",
+  rev.ord = TRUE,
   grouping = 5,
+  colors = RColorBrewer::brewer.pal(n = 5, name = "RdYlBu")[5:1],
   panel.att = list(
     list(
       1,
-      header = "Stadium",
-      align = "right",
-      text.size = 0.7,
-      right.margin = 0,
-      panel.width = 1.65
-    ),
-    list(
-      2,
-      point.type = 20,
-      point.border = TRUE,
-      point.size = 1.8,
-      panel.width = 1.55
-    ),
-    list(
-      3,
-      header = "Stadium\nCapacity",
-      graph.bgcolor = "lightgray",
-      point.size = 1.3,
-      xaxis.ticks = list(0, 40000, 80000),
-      xaxis.labels = list(0, 40000, 80000),
-      xaxis.labels.size = 0.5,
-      right.margin = 0.4,
-      panel.width = 1.4
-    ),
-    list(
-      4,
       header = "Light Gray Means\nHighlighted Above",
       map.all = TRUE,
       active.border.color = "black",
       active.border.size = 0.3,
       inactive.border.color = "gray",
       inactive.border.size = 0.3,
-      panel.width = 1.5,
+      panel.width = 1.7,
       outer.hull = FALSE,
       nodata.border.color = "black",
       nodata.border.size = 0.5,
       outer.hull.size = 0.5
     ),
     list(
-      5,
+      2,
+      header = "Stadium",
+      align = "right",
+      text.size = 0.7,
+      left.margin = -0.7,
+      right.margin = -0.2,
+      panel.width = 1.65
+    ),
+    list(
+      3,
+      point.type = 20,
+      point.border = TRUE,
+      point.size = 1.8,
+      panel.width = 1.8
+    ),
+    list(
+      4,
       header = "Team",
       align = "left",
       text.size = 0.7,
-      panel.width = 1.8
+      panel.width = 1.65
+    ),
+    list(
+      5,
+      header = "Stadium\nCapacity",
+      graph.bgcolor = "lightgray",
+      point.size = 1.3,
+      xaxis.ticks = list(0, 40000, 80000),
+      xaxis.labels = list(0, 40000, 80000),
+      xaxis.labels.size = 0.5,
+      left.margin = -0.5,
+      right.margin = 0.25,
+      panel.width = 1.4
+    ),
+    list(
+      6,
+      header = "Average\nAttendance",
+      graph.bgcolor = "lightgray",
+      point.size = 1.3,
+      xaxis.ticks = list(0, 40000, 80000),
+      xaxis.labels = list(0, 40000, 80000),
+      xaxis.labels.size = 0.5,
+      left.margin = -0.5,
+      right.margin = 0.5,
+      panel.width = 1.4
     )
   )
 )
