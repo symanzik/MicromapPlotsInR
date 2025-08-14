@@ -1224,6 +1224,149 @@ myCCmaps(
 ```
 
 
+```{r Ch8-ccmap6, fig.cap = 'Conditioned choropleth map 6.', fig.width = 7, fig.height = 6}
+# Original file: NJ_Counties4.R
+# Original output: NJ_Two_Way_CCMap.jpeg
+# Original data: nj_cnty_disab_gaps.csv & nj_mi2.Rdata
+
+setwd("C:\\Users\\bmast\\GD\\NJ_Counties")
+library(stringr)
+library(tidyr)
+library(sf)
+library(dplyr)
+library(cdlTools)
+library(lattice)
+library(sf)
+library(sp)
+
+poly <- st_read("tl_2024_us_county.shp",
+  crs = "+proj=longlat +ellps=clrk66"
+)
+summary(poly)
+
+nj <- subset(poly, STATEFP=="34")
+
+head(nj$GEOID)
+
+
+data <- read.csv('nj_cnty_disab_gaps.csv')
+summary(data)
+data$GEOID <- as.character(data$FIPS_CNTY_CD)
+data$abs_gap_read <- abs(data$gap_read)
+data$abs_gap_math <- abs(data$gap_math)
+summary(data)
+
+load("nj_mi2.Rdata")
+nj_mi2$GEOID <- nj_mi2$GEO_ID
+
+data2 <- 
+inner_join(data, nj_mi2, join_by(GEOID))
+summary(data2)
+cor(subset(data2,select=c("abs_gap_read","abs_gap_math","mi")))
+
+poly2 <- 
+inner_join(nj, data2, join_by(GEOID))
+summary(poly2)
+
+nj2 <- as_Spatial(poly2)
+rownames(slot(nj2, "data")) <- nj2$GEOID
+save(nj2,file="nj2.Rdata")
+
+reading_gap_ec <-equal.count(nj2$abs_gap_read,3,overlap=0)
+reading_gap_ec
+mi_ec <-equal.count(nj2$mi,3,overlap=0)
+mi_ec
+math_gap_ec <-equal.count(nj2$abs_gap_math,3,overlap=0)
+math_gap_ec
+
+
+# Code for "NJ_Two_Way_CCMap.jpeg" 
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+     "Reading_Gap" =reading_gap_ec,
+     "Median_Income" =mi_ec
+    	
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Math Achievement Gap",
+  layout = c(3, 3)
+)
+
+# Code for "NJ_Two_Way_CCMap2.jpeg"
+myCCmaps(
+  obj = nj2,
+  zcol = "mi",
+  cvar = list(
+    "Reading_Gap" =reading_gap_ec,
+    "Math_Gap" =math_gap_ec	
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Median Income",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap7, fig.cap = 'Conditioned choropleth map 7.', fig.width = 7, fig.height = 6}
+# Original file: NJ_Counties4.R
+# Original output: NJ_Two_Way_CCMap2.jpeg
+# Original data: No new data file
+
+# Code for "NJ_Two_Way_CCMap2.jpeg"
+myCCmaps(
+  obj = nj2,
+  zcol = "mi",
+  cvar = list(
+    "Reading_Gap" =reading_gap_ec,
+    "Math_Gap" =math_gap_ec	
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Median Income",
+  layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap8, fig.cap = 'Conditioned choropleth map 8.', fig.width = 7, fig.height = 6}
+# Original file: DC_Youth_Crime2.R
+# Original output: DC_1way_CCmap2.jpeg
+# Original data: DC_HPN.shp
+
+setwd("C:\\Users\\bmast\\GD\\Chapters\\Crime")
+library(lattice)
+library(sf)
+library(dplyr)
+library(sp)
+
+poly <- st_read("DC_HPN.shp",
+  crs = "+proj=longlat +ellps=clrk66"
+)
+summary(poly)
+sub <- subset(poly,!(CODE %in% "N0"))
+summary(sub)
+
+dc <- as_Spatial(sub)
+summary(dc)
+rownames(slot(dc, "data")) <- dc$GIS_ID
+
+youth_ec <-equal.count(dc$PCT_0_17,6,overlap=0)
+youth_ec
+
+myCCmaps(
+  obj = dc,
+  zcol = "V_R_2021",
+  cvar = list(
+    "Percent_Youth" =youth_ec
+  ),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
+  main = "Violent Crimes Per 10,000 Population",
+  layout = c(3, 3)
+)
+```
+
+
 ## Conditioned Choropleth Maps with Factors {#Ch8-Factors}
 
 
