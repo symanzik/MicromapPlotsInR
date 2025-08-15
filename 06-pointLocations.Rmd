@@ -600,9 +600,8 @@ mmplot(
   panel.data = list(NA, NA, "county_seat", "elevation", "pop_last_cen"),
   map.link = c("county_seat", "ID"),
   ord.by = "elevation",
-  grouping = c(4, 4, 4, 5, 4, 4, 4),
-  # grouping = c(5, 5, 4, 4, 5, 5),
-  # median.row = TRUE,
+  grouping = c(5, 5, 4, 4, 5, 5),
+  median.row = TRUE,
   colors = RColorBrewer::brewer.pal(n = 5, name = "YlGnBu")[5:1],
   vertical.align = "center",
   panel.att = list(
@@ -658,25 +657,6 @@ mmplot(
 )
 ```
 
-```{r Ch6-MicromapSeat-error, fig.cap = "Micromap showing the elevations and population at the last Census of county seats in Utah. Some locations have been adjusted to decrease overplotting.", fig.width = 5, fig.height = 7}
-mmplot(
-  stat.data = seats_df,
-  map.data = seat_map_df,
-  panel.types = c("map", "dot_legend", "labels", "dot"),
-  panel.data = list(NA, NA, "county_seat", "elevation"),
-  map.link = c("county_seat", "ID"),
-  ord.by = "elevation",
-  grouping = c(5, 5, 4, 4, 5, 5),
-  median.row = TRUE,
-  panel.att = list(
-    list(
-      1,
-      map.all = TRUE,
-      nodata.border.color = "black"
-    )
-  )
-)
-```
 
 ## Premier League Football Stadiums in England and Wales {#Ch6-Example3}
 
