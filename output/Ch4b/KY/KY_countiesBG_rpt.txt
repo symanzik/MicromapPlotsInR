@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     KY_countiesBG   2025-08-15 13:48:14 
+     KY_countiesBG   2025-08-15 16:27:18 
 
                      Name  ID         Abbr     Alt_Abbr        Alias
 ADAIR               ADAIR 072        ADAIR        ADAIR        ADAIR

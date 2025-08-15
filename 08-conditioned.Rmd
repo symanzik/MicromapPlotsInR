@@ -804,7 +804,7 @@ myCCmaps(
 )
 ```
 
-```{r Ch8-CCmap1NCmod1, fig.cap = 'Modified 1 trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+```{r Ch8-CCmap1NCmod1, fig.cap = 'First modified trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
 sh_nw4nooverlap <- equal.count(nc.sids$ft.NWBIR74, number = 4, overlap = 0)
 
 myCCmaps(
@@ -819,7 +819,7 @@ myCCmaps(
 ```
 
 
-```{r Ch8-CCmap1NCmod2, fig.cap = 'Modified 2 trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
+```{r Ch8-CCmap1NCmod2, fig.cap = 'Second modified trivial 1-dimensional conditioned choropleth maps example based on the CCmaps() function from the maptools R package.', fig.width = 7, fig.height = 4}
 # modified 2
 
 myCCmaps(
@@ -894,7 +894,6 @@ head(wv_merged$fips)
 
 poly2 <- inner_join(poly, wv_merged, join_by(fips))
 # summary(poly2)
-
 
 wv <- as_Spatial(poly2)
 # summary(wv)
@@ -1013,13 +1012,10 @@ myCCmaps(
 ```
 
 
-```{r Ch8-ccmap3, fig.cap = 'Conditioned choropleth map 3.', fig.width = 7, fig.height = 6, eval = FALSE}
+```{r Ch8-ccmap3, fig.cap = 'Conditioned choropleth map 3.', fig.width = 7, fig.height = 6}
 # Original file: DC_Youth_Crime.R
 # Original output: DC_1way_CCmap.jpeg
-# Original data: No new data file
-
-# Note that the DC_HPN.shp shapefile does not exist in the local directory.
-# No replacement shapefile could be identified.
+# Original data: DC_HPN.shp
 
 # setwd("C:\\Users\\bmast\\GD\\Chapters\\Crime")
 library(lattice)
@@ -1027,7 +1023,7 @@ library(sf)
 library(dplyr)
 library(sp)
 
-poly <- st_read("DC_HPN.shp",
+poly <- st_read("data/Ch08/DC_HPN.shp",
   crs = "+proj=longlat +ellps=clrk66"
 )
 # summary(poly)
@@ -1048,6 +1044,26 @@ myCCmaps(
   col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
   main = "Violent Crimes Per 10,000 Population",
   layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap3mod, fig.cap = 'Modified conditioned choropleth map 3.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = dc,
+  zcol = "V_R_2021",
+  cvar = list(
+    "Percent_Youth" = youth_ec
+  ),
+  at = seq(0, 250, by = 25),
+  col.regions = colorRampPalette(c("yellow1", "red"))(10),
+  main = "Violent Crimes Per 10,000 Population",
+  layout = c(3, 2),
+  pstat.function = "median",
+  pstat.loc = "UR",
+  pstat.cex = 0.8
 )
 ```
 
@@ -1268,13 +1284,13 @@ nj_mi2$FIPSSTCO <- nj_mi2$GEO_ID
 
 # data2 <- inner_join(data, nj_mi2, join_by(GEOID))
 data2 <- inner_join(data, nj_mi2, join_by(FIPSSTCO))
-
 summary(data2)
+
 cor(subset(data2, select = c("abs_gap_read", "abs_gap_math", "mi")))
 
 # poly2 <- inner_join(nj, data2, join_by(GEOID))
 poly2 <- inner_join(nj, data2, join_by(FIPSSTCO))
-summary(poly2)
+# summary(poly2)
 
 nj2 <- as_Spatial(poly2)
 # rownames(slot(nj2, "data")) <- nj2$GEOID
@@ -1283,8 +1299,10 @@ rownames(slot(nj2, "data")) <- nj2$FIPSSTCO
 
 reading_gap_ec <- equal.count(nj2$abs_gap_read, 3, overlap = 0)
 reading_gap_ec
+
 mi_ec <- equal.count(nj2$mi, 3, overlap = 0)
 mi_ec
+
 math_gap_ec <- equal.count(nj2$abs_gap_math, 3, overlap = 0)
 math_gap_ec
 
@@ -1300,6 +1318,27 @@ myCCmaps(
   col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
   main = "Math Achievement Gap",
   layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap6mod, fig.cap = 'Modified conditioned choropleth map 6.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = nj2,
+  zcol = "abs_gap_math",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec,
+    "Median_Income" = mi_ec
+  ),
+  at = seq(10, 35, by = 5),
+  col.regions = brewer.pal(5, "YlOrBr"),
+  main = "Math Achievement Gap",
+  layout = c(3, 3),
+  pstat.function = "median",
+  pstat.loc = "LR",
+  pstat.cex = 0.8
 )
 ```
 
@@ -1324,6 +1363,27 @@ myCCmaps(
 ```
 
 
+```{r Ch8-ccmap7mod, fig.cap = 'Modified conditioned choropleth map 7.', fig.width = 7, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = nj2,
+  zcol = "mi",
+  cvar = list(
+    "Reading_Gap" = reading_gap_ec,
+    "Math_Gap" = math_gap_ec
+  ),
+  at = seq(60000, 150000, by = 10000),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(9),
+  main = "Median Income",
+  layout = c(3, 3),
+  pstat.function = "median",
+  pstat.loc = "LR",
+  pstat.cex = 0.6
+)
+```
+
+
 ```{r Ch8-ccmap8, fig.cap = 'Conditioned choropleth map 8.', fig.width = 7, fig.height = 6}
 # Original file: DC_Youth_Crime2.R
 # Original output: DC_1way_CCmap2.jpeg
@@ -1338,13 +1398,13 @@ library(sp)
 poly <- st_read("data/Ch08/DC_HPN.shp",
   crs = "+proj=longlat +ellps=clrk66"
 )
-summary(poly)
+# summary(poly)
 
 sub <- subset(poly, !(CODE %in% "N0"))
-summary(sub)
+# summary(sub)
 
 dc <- as_Spatial(sub)
-summary(dc)
+# summary(dc)
 rownames(slot(dc, "data")) <- dc$GIS_ID
 
 youth_ec <- equal.count(dc$PCT_0_17, 6, overlap = 0)
@@ -1359,6 +1419,26 @@ myCCmaps(
   col.regions = colorRampPalette(c("yellow1", "brown3"))(18),
   main = "Violent Crimes Per 10,000 Population",
   layout = c(3, 3)
+)
+```
+
+
+```{r Ch8-ccmap8mod, fig.cap = 'Modified conditioned choropleth map 8.', fig.width = 5, fig.height = 6}
+# modified
+
+myCCmaps(
+  obj = dc,
+  zcol = "V_R_2021",
+  cvar = list(
+    "Percent_Youth" = youth_ec
+  ),
+  at = seq(0, 100, by = 10),
+  col.regions = colorRampPalette(c("yellow1", "brown3"))(10),
+  main = "Violent Crimes Per 10,000 Population",
+  layout = c(2, 3),
+  pstat.function = "median",
+  pstat.loc = "UR",
+  pstat.cex = 0.6
 )
 ```
 
@@ -1532,24 +1612,6 @@ myCCmaps(
   pstat.digits = 3,
   pstat.cex = 0.9
 )
-```
-
-
-## Additional Figures from Brent Mast {#Ch8-Figures}
-
-
-```{r Ch8-ccmap-include1, fig.cap = 'CCmap Include 1', echo = FALSE, out.width = '150%'}
-knitr::include_graphics(path = "img/NJ_Two_Way_CCMap.jpeg")
-```
-
-
-```{r Ch8-ccmap-include2, fig.cap = 'CCmap Include 2', echo = FALSE, out.width = '150%'}
-knitr::include_graphics(path = "img/NJ_Two_Way_CCMap2.jpeg")
-```
-
-
-```{r Ch8-ccmap-include3, fig.cap = 'CCmap Include 3', echo = FALSE, out.width = '150%'}
-knitr::include_graphics(path = "img/DC_1way_CCmap2.jpeg")
 ```
 
 
