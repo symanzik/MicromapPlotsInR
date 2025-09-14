@@ -901,8 +901,12 @@ mmplot(
 
 ## Example 4: Adding Scatterplots as a New Plot Type {#Ch5-Example4}
 
+NOTE: Error in this code chunk after upgrade to ggplot2 4.0.0
+See here for further discussion of the error and possible fixes
+  https://github.com/tidyverse/ggplot2/issues/6507
 
-```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9}
+
+```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9,eval=FALSE}
 ### load packages
 library(micromap)
 library(ggplot2)
@@ -1600,28 +1604,30 @@ ChinaShapefileThin <- sf::st_read("data/China_Shapefiles/export.shp") %>%
 ChinaPolys <- create_map_table(ChinaShapefileThin, "ename")
 
 
+# Error: <ggplot2::element_text> object properties are invalid:
+# - @family must be <NULL> or <character>, not <logical>
 
-mmplot(
-  stat.data = religion,
-  map.data = ChinaPolys,
-  panel.types = c(
-    "labels",
-    "dot_legend",
-    "dot",
-    "scatdot",
-    "map"
-  ),
-  panel.data = list(
-    "Province",
-    NA,
-    "Daoism",
-    c("Christianity", "Buddhism"),
-    NA
-  ),
-  ord.by = "Daoism",
-  map.link = c("Province", "ID"),
-  grouping = 5
-)
+# mmplot(
+#   stat.data = religion,
+#   map.data = ChinaPolys,
+#   panel.types = c(
+#     "labels",
+#     "dot_legend",
+#     "dot",
+#     "scatdot",
+#     "map"
+#   ),
+#   panel.data = list(
+#     "Province",
+#     NA,
+#     "Daoism",
+#     c("Christianity", "Buddhism"),
+#     NA
+#   ),
+#   ord.by = "Daoism",
+#   map.link = c("Province", "ID"),
+#   grouping = 5
+# )
 
 
 ### set tick mark sequence
