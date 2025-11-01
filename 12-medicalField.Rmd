@@ -206,7 +206,7 @@ micromapST(AllData,panelHC05,sortVar="SexBYr5AgeY",ascend=FALSE,
 
 ```
 
-In addition to data exploration, we can use the linked micromap plots to communicate our findings to others\index{Data communication}. The next two plots illustrate different ways to do that - using simple dot plots or comparing state rates to each risk factor by means of a scatter plot.\index{micromapST!Dot plot} A new feature of micromapST, the locally weighted scatterplot smoothing line (LOWESS; [@Cle81]), is added to aid trend visualization.\index{micromapST!LOWESS smoother}
+In addition to data exploration, we can use the linked micromap plots to communicate our findings to others\index{Data communication}. The next two plots illustrate different ways to do that - using simple dot plots (Figure \@ref(fig:Ch12-StateLMMAllv1)) or comparing state rates to each risk factor by means of a scatter plot (Figure \@ref(fig:Ch12-StateLMMAllv4)).\index{micromapST!Dot plot} A new feature of micromapST, the locally weighted scatterplot smoothing line (LOWESS; [@Cle81]), is added to aid trend visualization.\index{micromapST!LOWESS smoother}
 
 ```{r Ch12-StateLMMAllv1, fig.cap = 'Colorectal cancer mortality among whites ages < 50 and Pct Poverty, Pct Obese, Pct No Exercise', fig.width = 8, fig.height = 10}
 panelHC07 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",       "dot"),
@@ -222,13 +222,6 @@ micromapST(AllData,panelHC07,sortVar="SexBYr5AgeY",ascend=FALSE,
                    rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE    )			 
 ```
 
-
-```{r Ch12-StateLMMAllv3, fig.cap = 'Colorectal cancer mortality among whites ages < 50 and Pct Poverty, Pct Obese, Pct No Exerercise', fig.width = 8, fig.height = 10}
-
- micromapST(AllData,panelHC07,sortVar="PctObese",ascend=FALSE, 
-                    rowNames="ab", rowNamesCol="MAbbr", staggerLab=TRUE
-    )			 
-```
 ```{r Ch12-StateLMMAllv4, fig.cap = 'Colorectal cancer mortality among whites ages < 50, scatter plots of rates and main risk factors', fig.width = 8, fig.height = 10}
 
 # Eliminate X and Y pairs and States that have an NA as a value.
