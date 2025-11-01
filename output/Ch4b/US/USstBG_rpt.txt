@@ -2,7 +2,7 @@
 
 
 PUBLICATION INFORMATION FOR NAME TABLE IN BORDER GROUP : 
-     USstBG   2025-10-15 15:25:42 
+     USstBG   2025-11-01 14:12:27 
 
    Abbr                 Name ID Alt_Abbr                Alias
 AL   AL              ALABAMA 01       AL              ALABAMA
