@@ -327,7 +327,7 @@ One of the simplest types of graphs is the two-dimensional scatter plot, which d
 
 To simplify our example, we will plot the same data used in Section \@ref(Ch3-Geog), Maryland counties' percent of residents living below 150% of the federal poverty level versus the percent of residents with at least four years of college education [@NRC2022] \index{Datasets!MDPovEducACSData20162020}. In Chapter \@ref(Ch3), we compared two parallel columns of dots of these values, looking for an inverted "V" shape that would indicate negative correlation between them. Here in Figure \@ref(fig:Ch5b-micromap5), we can judge correlation more easily on the full scatter plot. Axis labels for the two dimensions of the scatter plot are specified in `lab3` and `lab4`. By default, a white line represents equal x and y values on the plot. However, we will overlay each plot with a locally-weighted scatterplot smoothing line (LOWESS; [@Cle81]),\index{LOWESS smoother} new in the 2025 package. 
 
-```{r Ch5b-micromap5, fig.cap = 'Scatter plot of percent of residents with income < 150% federal poverty level and percent with 4+ years of college, sorted by percent who attended college 4+ years.', fig.width = 7, fig.height = 9}
+```{r Ch5b-micromap5, fig.cap = 'Scatter plot of percent of residents with income < 150% federal poverty level and percent with 4+ years of college, sorted by percent who attended college 4+ years. A LOWESS smoothing line has been overlaid.', fig.width = 7, fig.height = 9}
 library(micromapST)
 
 # Input data files.
