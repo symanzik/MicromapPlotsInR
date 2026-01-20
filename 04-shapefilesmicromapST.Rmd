@@ -183,6 +183,8 @@ knitr::kable(
 ```{r Ch4b-USFinalTable, echo = FALSE}
 library(kableExtra)
 
+US_name_table <- read.csv("data/Ch4b/USNameTable.csv")
+
 landscape(
   knitr::kable(
     head(
