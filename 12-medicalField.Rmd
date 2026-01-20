@@ -155,8 +155,7 @@ micromapST(AllData,panelHC01,sortVar="SexBYr5AgeY",ascend=FALSE,
 
 ```
 
-The first linked micromap plot, Figure \@ref(fig:Ch12-StateLMMRates), displays state mortality rates for the latest time period (2017-2021), the calculated percent change in rates from the first to last time period, and a time series plot of all of the period rates. This plot is sorted in descending order by the latest period rates.\index{micromapST!Dot plot}
-Most of the highest rates for 2017-2021 are in the southern U.S. The U.S. rate (1.8) is shown as a vertical green line for reference. As we can see from the cumulative shading on the maps (second map from the top), 9 of the 10 highest-rate states cluster in the south-central region. The time series plots of the five time-period rates show that changes have been gradual over time, not a sudden recent spike. 
+The first linked micromap plot, Figure \@ref(fig:Ch12-StateLMMRates), displays state mortality rates for the latest time period (2017-2021), the calculated percent change in rates from the first to last time period, and a time series plot of all of the period rates. This plot is sorted in descending order by the latest period rates.\index{micromapST!Dot plot} Most of the highest rates for 2017-2021 are in the southern U.S. The U.S. rate (1.8) and change over time (20%) are shown as vertical green lines for reference. As we can see from the cumulative shading on the maps (second map from the top), 9 of the 10 highest-rate states cluster in the south-central region. The time series plots of the five time-period rates show that changes have been gradual over time, not a sudden recent spike. 
 
 Resorting by the percent change in rates (Figure \@ref(fig:Ch12-StateLMMTrends)), we can also see that many states with the highest recent rates have also had the most rapid increases over the past 20 years.
 
@@ -174,12 +173,12 @@ The recent CRC rates appear to be positively correlated with obesity, sedentary 
 
 
 ```{r Ch12-StateLMMRisks, fig.cap = 'Colorectal cancer mortality among whites ages < 50, and related lifestyle factors', fig.width = 8, fig.height = 10}
-panelHC03 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",     "dot"),
-                        lab1=c(NA,   NA,  "Rate", "Pct Ever",  "Pct",     "Pct Binge",     "Pct"),
-                        lab2=c(NA,   NA,  "2017-2021", "Smoked",    "Obese",   "Drinking",   "No Exercise"),
-                        col1=c(NA,NA,"SexBYr5AgeY","PctEverSmk","PctObese","PctBinge","PctNoExer"),
-                        refVals=c(NA,NA,   1.8,          NA,         NA,        NA,        NA),
-                        refTexts=c(NA,NA,  "US Rate",    NA,         NA,        NA,        NA)
+panelHC03 <- data.frame(type=c("mapcum","id","dot", "dot", "dot", "dot",  "dot"),
+                  lab1=c(NA,   NA,  "Rate", "Pct Ever", "Pct",  "Pct Binge",  "Pct"),
+                  lab2=c(NA,   NA,  "2017-2021", "Smoked", "Obese", "Drinking", "No Exercise"),
+                  col1=c(NA,NA,"SexBYr5AgeY","PctEverSmk","PctObese","PctBinge","PctNoExer"),
+                  refVals=c(NA,NA,   1.8,          NA,         NA,        NA,        NA),
+                  refTexts=c(NA,NA,  "US Rate",    NA,         NA,        NA,        NA)
                    )
 
 Title<-c("Colorectal Cancer Mortality Among whites, < 50,","and related 
@@ -209,12 +208,12 @@ micromapST(AllData,panelHC05,sortVar="SexBYr5AgeY",ascend=FALSE,
 In addition to data exploration, we can use the linked micromap plots to communicate our findings to others\index{Data communication}. The next two plots illustrate different ways to do that - using simple dot plots (Figure \@ref(fig:Ch12-StateLMMAllv1)) or comparing state rates to each risk factor by means of a scatter plot (Figure \@ref(fig:Ch12-StateLMMAllv4)).\index{micromapST!Dot plot} A new feature of micromapST, the locally weighted scatterplot smoothing line (LOWESS; [@Cle81]), is added to aid trend visualization.\index{micromapST!LOWESS smoother}
 
 ```{r Ch12-StateLMMAllv1, fig.cap = 'Colorectal cancer mortality among whites ages < 50 and Pct Poverty, Pct Obese, Pct No Exercise', fig.width = 8, fig.height = 10}
-panelHC07 <- data.frame(type=c("mapcum","id","dot",     "dot",       "dot",     "dot",       "dot"),
-                        lab1=c(NA,   NA,  "Rate",       "Pct Chg","Pct",     "Pct",       "Pct"),
-                        lab2=c(NA,   NA,  "2017-2021",  "from 1999-2001", "Poverty", "Obesity",   "No Exercise"),
-                        col1=c(NA,   NA,  "SexBYr5AgeY","PctChange", "PctPov",  "PctObese",  "PctNoExer"),
-                        refVals=c(NA,NA,   1.8,         20,          NA,        NA,          NA),
-                        refTexts=c(NA,NA,  "USYr5",     "USPctC",    NA,        NA,          NA)            
+panelHC07 <- data.frame(type=c("mapcum","id","dot", "dot",  "dot",  "dot", "dot"),
+                  lab1=c(NA,   NA,  "Rate", "Pct Chg", "Pct", "Pct",  "Pct"),
+                  lab2=c(NA,   NA,  "2017-2021",  "from 1999-2001", "Poverty", "Obesity", "No Exercise"),
+                  col1=c(NA,   NA,  "SexBYr5AgeY","PctChange", "PctPov",  "PctObese",  "PctNoExer"),
+                  refVals=c(NA,NA,   1.8,         20,          NA,  NA, NA),
+                  refTexts=c(NA,NA,  "USYr5",     "USPctC",    NA,  NA, NA)            
                         
                      )
 
@@ -236,10 +235,10 @@ xGood <- !xBad
 AllData2 <- AllData[xGood,]
 
 panelHC10 <- data.frame(type=c("mapcum", "id", "dot","scatdot", "scatdot", "scatdot"),
-                        lab1=c(NA,       NA,   "Rate","Rate vs.","Rate vs.", "Rate vs."),
-                        lab2=c(NA,       NA,   NA,    "Pct Poverty","Pct Obese","Pct No Exer."),
-                        col1=c(NA,       NA,   "SexBYr5AgeY","PctPov","PctObese","PctNoExer"),
-                        col2=c(NA,       NA,   NA,           "SexBYr5AgeY","SexBYr5AgeY","SexBYr5AgeY")
+                  lab1=c(NA,  NA, "Rate","Rate vs.","Rate vs.", "Rate vs."),
+                  lab2=c(NA,  NA, NA, "Pct Poverty","Pct Obese","Pct No Exer."),
+                  col1=c(NA,  NA, "SexBYr5AgeY","PctPov","PctObese","PctNoExer"),
+                  col2=c(NA,  NA, NA, "SexBYr5AgeY","SexBYr5AgeY","SexBYr5AgeY")
                         
                        )
                        
@@ -253,7 +252,7 @@ micromapST(AllData2,panelHC10,sortVar="SexBYr5AgeY",ascend=FALSE,
        
 ```
 
-The scatter plots clearly show that Vermont (VT) is a high-rate outlier even though it is one of the lower states for percent poverty, obesity and sedentary lifestyle\index{micromapST!Scatter plot}. Mississippi (MS) has the highest rate, slightly higher than Vermont, but also has high levels of all three risk factors. The highest obesity rates are in states along the MIssissippi River (Figure \@ref(fig:Ch12-StateLMMAllv3). Rates vary across states almost three-fold, from Rhode Islane (RI) to Mississippi. The LOWESS scatter plot smoothing line has a positive slope for all three plotted factors, indicating a positive association between them and the mortality rates.\index{micromapST!LOWESS smoother}
+The scatter plots clearly show that Vermont (VT) is a high-rate outlier even though it is one of the lower states for percent poverty, obesity and sedentary lifestyle\index{micromapST!Scatter plot}. Mississippi (MS) has the highest rate, slightly higher than Vermont, but also has high levels of all three risk factors. The highest obesity rates are in states along the Mississippi River. Rates vary across states almost three-fold, from Rhode Islane (RI) to Mississippi. The LOWESS scatter plot smoothing line has a positive slope for all three plotted factors, indicating a positive association between them and the mortality rates.\index{micromapST!LOWESS smoother}
 
 ## Applying Linked Micromap Plots to Sub-state Data
 
@@ -325,17 +324,17 @@ panelHC11 <- data.frame(type=c("mapcum", "id", "dot",          "arrow"),
        rowNames="ab", rowNamesCol="Abbr", bordDir=BordDir, bordGrp=bdGroup)
 ```       
 
-Even after aggregating the data to 15 ADDs, there are four ADDs with supressed mortality rates, i.e., with fewer than 10 deaths\index{Data suppression}. These ADDS are in eastern Kentucky, an area found to have many poor health outcomes and poor health behaviors in a recent assessment by the Kentucky Department for Public Health [@KDPH2023]. These four ADDs also have the smallest populations among the 15 ADDs and so it is not surprising that only a few deaths occurred in each area due to a rare cause. 
+Even after aggregating the data to 15 ADDs, there are four ADDs with supressed mortality rates, i.e., with fewer than 10 deaths\index{Data suppression}(Figure \@ref(fig:Ch12-KYLMMRates)). These ADDS are in eastern Kentucky, an area found to have many poor health outcomes and poor health behaviors in a recent assessment by the Kentucky Department for Public Health [@KDPH2023]. These four ADDs also have the smallest populations among the 15 ADDs and so it is not surprising that only a few deaths occurred in each area due to a rare cause. 
 
 There are clear geospatial clusters of ADDs with similar rates. The arrow plots indicate that the highest rate places have seen the greatest increase since the earlier period.\index{micromapST!Arrow plot} Next, we plot the risk factor data at the ADD level.
 
 ```{r Ch12-KYLMMRisk, fig.cap='Rates and risk factors of colorectal cancer mortality among whites ages <50 by Area Development Districts in Kentucky', fig.width=8, fig.height=10}
 
 panelHC12 <- 
-  data.frame(type=c("mapcum", "id", "dot",  "dot",         "dot",       "dot", "dot"),
-                        lab1=c(NA,       NA,   "Rate", "Pct Current", "Pct Obese", "Pct Poverty","Pct Screen"),
-                        lab2=c(NA,       NA,   "2017-2021",  "Smoking",     NA,          NA,           NA),
-                        col1=c(NA,       NA,   "RateYr5",        "KYcursmk",    "KYobesity", "KYpoverty",  "KYCRCScreen")
+  data.frame(type=c("mapcum", "id", "dot",  "dot",  "dot",  "dot", "dot"),
+                  lab1=c(NA,  NA, "Rate", "Pct Current", "Pct Obese", "Pct Poverty","Pct Screen"),
+                  lab2=c(NA,  NA, "2017-2021",  "Smoking",  NA, NA, NA),
+                  col1=c(NA,  NA, "RateYr5",  "KYcursmk", "KYobesity", "KYpoverty",  "KYCRCScreen")
                        )
 
  micromapST(KYADDAllData,panelHC12,sortVar="RateYr5",ascend=FALSE, 
@@ -344,14 +343,12 @@ panelHC12 <-
 
 The measures of the behavioral factors displayed in Figure \@ref(fig:Ch12-KYLMMRisk) are based on survey samples of these small populations and so would be expected to have a high degree of uncertainty. We hesitate to draw any conclusions from the Kentucky linked micromap plots because of this small numbers problem, although we saw nothing at the ADD level in Kentucky that contradicts the associations noted at the U.S. state level. If we had the underlying data, we could attempt to stabilize these rates and factors by aggregating ADDs to even larger areas using the methods shown in Chapter \@ref(Ch4b). 
 
-An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region is often used for studies in that area [@ARC2025]. 
-
 ```{r Ch12-KYAppMap, echo=FALSE, fig.cap='Appalachian counties in Kentucky', out.width="75%"}
 knitr::include_graphics('img/KYAppCounties.pdf')
 
 ```
 
-Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@HBPHHV2024], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@HBPHHV2024]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@HBPHHV2024].
+An aggregation of Kentucky counties into an Appalachian versus non-Appalachian region (Figure \@ref(fig:Ch12-KYAppMap)) is often used for studies in that area [@ARC2025]. Previous research has shown significant differences between all-age colorectal cancer rates in Appalachian versus non-Appalachian counties in Kentucky [@HBPHHV2024], with Appalachian incidence and mortality rates being 20% and 13% higher, respectively [@HBPHHV2024]. Thus, while our linked micromap plots were hampered by suppressed data due to small numbers of deaths in eastern Kentucky ADDs, results of the visual exploratory analysis are consistent with analyses at a broader geographic level. In addition, residents of Appalachian counties were more likely to be obese and to smoke and were less likely to have been screened for CRC [@HBPHHV2024].
 
 
 ## Summary and Further Reading {#Ch12-Summary}

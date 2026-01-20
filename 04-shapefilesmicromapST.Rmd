@@ -1,7 +1,6 @@
 # Using Your Own Boundary Files in the **micromapST** R Package {#Ch4b}
 
-
-\chapterauthor{James Blackwood Pearson, Jr., Linda Williams Pickle, Daniel B. Carr}
+\chapterauthor{James Blackwood Pearson, Jr., Linda Williams Pickle}
 
 
 Chapter \@ref(Ch3) described how to create a simple linked micromap plot \index{Linked micromap plot} for U.S. states and Maryland counties using the **micromapST** \index{R Packages!micromapST} R package [@CP2015CRAN],
@@ -15,11 +14,11 @@ Although the original package was written to display U.S. states exclusively, ov
 
 The resulting map serves as the visual element linking graphed data to spatial aspects of the data, and so must be accurate enough to allow the user to identify the geographic space it represents. This is a challenge, as the maps in a linked micromap design are typically exceedingly small, about 1” x 1.5”, but the overall map area and its sub-unit boundaries and fill colors need to be recognizable. 
 
-The micromap design includes multiple map images, one for each perceptual group \index{Perceptual group} of geographic units. These maps must be displayed as fast as possible to make the display process usable, especially for iterative data exploration. By using a minimal set of boundary points, **micromapST** can use a fundamental function in R (`polygon`) \index{polygon} to quickly draw the multiple maps. For example, the Spatial Polygon Data frame and simple feature structures used for spatial objects in R are more complicated than are needed by **micromapST**. Using a more basic structure and not needing to call another plotting package helps **micromapST** provide the requested linked micromap plot almost instantaneously.
+The micromap design includes multiple map images, one for each perceptual group \index{Perceptual group} of geographic units. These maps must be displayed as fast as possible to make the display process usable, especially for iterative data exploration. By using a minimal set of boundary points, **micromapST** can use a fundamental function in R (`polygon`) \index{polygon} to quickly draw the multiple maps. For example, the spatial polygon data frame and simple feature structures used for spatial objects in R are more complicated than are needed by **micromapST**. Using a more basic structure and not needing to call another plotting package helps **micromapST** provide the requested linked micromap plot almost instantaneously.
 
 In addition to speed, by reducing the number of coordinates in the boundary file to only the essential ones, the boundary data can be greatly reduced in both size and complexity. This enables the reader to better see the area borders and internal shading. For example, the U.S. Census Bureau 2000 shapefile of the boundaries for the U. S. states and DC is 2,360,011 bytes. After the simplification process described in this chapter, the U.S. state dataset is only 29,092 bytes, a 98.8% reduction.
 
-The boundary data used for the default map of U.S. states in **micromapST** is based on Mark Monmonier's "visibility map" [@Mon93], \index{visibility map} a caricature map of the U. S. states and DC. By highly smoothing the state boundaries and slightly enlarging several small states, these maps are not only fast to draw but minimize the boundary ink that can hamper identification of the interior color shading for small areas. This is especially a problem in coastal areas, where the complexity of coastlines can lead to black border lines folding in on themselves, resulting in the border ink masking the interior color. Of course, the degree of smoothing necessary depends on the size of the final map. As an example, the outline of the state in the linked micromap of Maryland counties (Figure \@ref(fig:Ch3-LMMMDpoved)) includes the Chesapeake Bay with some coastline detail whereas the boundary of Maryland within the larger U.S. map does not.
+The boundary data used for the default map of U.S. states in **micromapST** was designed by Dan Carr based on Mark Monmonier's "visibility map" [@Mon93], \index{visibility map} a caricature map of the U. S. states and DC. By highly smoothing the state boundaries and slightly enlarging several small states, these maps are not only fast to draw but minimize the boundary ink that can hamper identification of the interior color shading for small areas. This is especially a problem in coastal areas, where the complexity of coastlines can lead to black border lines folding in on themselves, resulting in the border ink masking the interior color. Of course, the degree of smoothing necessary depends on the size of the final map. As an example, the outline of the state in the linked micromap of Maryland counties (Figure \@ref(fig:Ch3-LMMMDpoved)) includes the Chesapeake Bay with some coastline detail whereas the boundary of Maryland within the larger U.S. map does not.
 
 In the next section, we describe the boundary files included in the **micromapST** package. Then in following sections, the reader will learn how to read and process an external boundary file for use in **micromapST**.
 
@@ -126,21 +125,6 @@ Most of the time, we will need to smooth our shapefile to some extent so that it
 
 The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column. Each row in the Name Table represents one area, in this example a state. The `rowNames` call parameter specifies which location ID will be used in the statistical data when calling **micromapST**. Puerto Rico was excluded from our Name Table, so it will be excluded from the resulting map when the `BuildBorderGroup` function links the Name Table with the shapefile polygons. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states.
 
-
-```{r Ch4b-USbasictable, echo = FALSE}
-library(kableExtra)
-
-US_name_table <- read.csv("data/Ch4b/USNameTable.csv")
-knitr::kable(
-  head(US_name_table[, 1:3], n = 15L),
-  booktabs = TRUE,
-  caption = "Miminum information needed in the Name Table: First 15 U.S. states."
-) %>%
-  kable_styling(
-    latex_options = "striped"
-  )
-```
-
 U.S. states have standardized names, abbreviations (postal codes), and numeric identifiers (Federal Information Processing Standard (FIPS) codes [@USCensus2022ANSI]). However, this is not always the case for other countries or for non-standard U.S. geographies, so **micromapST** allows the user to specify the primary abbreviation “Abbr” and an alternate abbreviation “Alt_Abbr” for the areas if there are two sets of commonly-acceptable abbreviations. 
 
 A more complicated issue is when the user only has a string name to identify each area, e.g., names of NCI cancer registries. In this case, **micromapST** can perform a wildcard match of a field in the Name Table, provided in the optional "Alias" column, against the user-provided area name. The user can request the wildcard matching by specifying `rowNames = ”alias”`. The Alias column must be in the initial Name Table and must link to a single valid area. This is a very unusual situation and the authors do not expect it to be used by average users. 
@@ -232,7 +216,7 @@ An `sf` data frame has information beyond a non-spatial data frame that is neede
 -    Dimension: XY
 -    Bounding box: xmin: -179 ymin: 17 xmax: 179  ymax: 71
 -    CRS:  NA
--    Features - one per geometry include data and geometry.
+-    One set of features per spatial entity, including the geometry of the area and other related data.
 
 The U.S. Census state boundary shapefile (st99_d00) was read in Section \@ref(Ch4b-NewBGs-Challenges). We can inspect this shapefile and determine what variables will be available and if the shapefile variables need to be modified.
 
@@ -244,7 +228,7 @@ head(US_shp_data)
 
 This shapefile has 273 polygons, far more than the number of states, because most states are made up of multiple land masses. For example, Alaska has 81 polygons and Hawaii has 27 polygons. By the end of this process, all areas with multiple polygons will be combined so there will be one element per area, possibly with multiple polygons in each element. \index{Multipolygon areas}
 
-THe shapefile has a variable “NAME” in the shapefile that can be used to link the polygons to the Name Table area rows. Alternatively, the "STATE" variable in the shapefile could be linked to "ID" in the Name Table (see Table \@ref(tab:Ch4b-USFinalTable)). No additional Name Table column or shapefile variable needs to be added, but the `BuildBorderGroup` function call must contain `NameTableLink = "Name" and ShapeLinkName = "NAME”`, specifying the names of the linking variable in both sources, respectively.
+The shapefile has a variable “NAME” in the shapefile that can be used to link the polygons to the Name Table area rows. Alternatively, the "STATE" variable in the shapefile could be linked to "ID" in the Name Table (see Table \@ref(tab:Ch4b-USFinalTable)). No additional Name Table column or shapefile variable needs to be added, but the `BuildBorderGroup` function call must contain `NameTableLink = "Name" and ShapeLinkName = "NAME”`, specifying the names of the linking variable in both sources, respectively.
 
 The shapefile is expected to be in the standard ESRI shapefile structure [@ESRI1998].\index{ESRI} The projection can be missing or should be specified as longitude/latitude, the projection most publicly available shapefiles use. All U.S. Census Bureau shapefiles are provided in longitude/latitude coordinates. \index{longitude/latitude coordinates} If the shapefile’s projection \index{projection of coordinates} is in longitude/latitude coordinates, the user can  further specify the projection of the boundaries before they are converted to the **micromapST** format by using the `proj4` call parameter. This option was added because some states require that any maps of their state be presented in a particular projection. If no `proj4` parameter is present, the function will estimate an Albers equal area projection \index{projection, Albers equal area} based on the centroid of the map with the extra latitudes set to ¼ of the height above and below the center latitude. This produces a good projection for use with linked micromaps and ensures that the land areas are not distorted.  
 
@@ -343,7 +327,7 @@ plot_grid(fig1, fig2, fig3, fig4, ncol = 2, labels = "AUTO")
 
 The progression from the original Census shapefile (Figure \@ref(fig:Ch4b-USmapRAW)) to the final image created by `BuildBorderGroup` is shown in Figure \@ref(fig:Ch4b-USExample-BBG). The color shading is random to illustrate how a shaded map might look. The first intermediate map (A) is smoothed from the original but still has the problem of a very small continental U.S. The second step (B), moving and scaling Alaska and Hawaii, improved this. Except for a difference in map projections used, the final map (C) looks quite similar to the caricature map used by **micromapST** (D) and would be a suitable substitute for it. This illustrates the trade-off: a caricature-type map might be preferred for a particular application but `BuildBorderGroup` can provide a reasonable alternative without the effort to hand draw a better map. 
 
-Some readers may prefer a less smoothed map or may need guidance as to the degree of smoothing needed for their own shapefile. To this end, we repeated the `BuildBorderGroup` call with various levels of smoothing. The function call is exactly as shown above except that only the final map image is saved (`debug = 1152`) and `ReducePC` was changed to specify smoothing levels from none (`ReducePC = 100`) to 99.9% reduction (`ReducePC = 0.1`). 
+Some readers may prefer a less smoothed map or may need guidance as to the degree of smoothing needed for their own shapefile. To this end, we repeated the `BuildBorderGroup` call with various levels of smoothing (Figure \@ref(fig:Ch4b-USExample-smooths)). The function call is exactly as shown above except that only the final map image is saved (`debug = 1152`) and `ReducePC` was changed to specify smoothing levels from none (`ReducePC = 100`) to 99.9% reduction (`ReducePC = 0.1`). 
 
 ```{r Ch4b-BuildBorderGroupUS-smooth1, echo = FALSE, results = 'hide'}
 # generate maps with various levels of smoothing
@@ -528,7 +512,7 @@ The maximum number of areas that can be easily visualized in a linked micromap p
 ### Creating Long Linked Micromap Plots {#Ch4b-Many-Areas-Long}
 
 
-We will use cancer data from the state of Kentucky, \index{Kentucky cancer data} with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [@UofKYMCC2022]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later [@NCI2021Cervical] but implementation of preventive measures is hampered by high poverty and low educational attainment in many parts of the state. In an effort to reduce these high cancer rates, the state public health department examines geospatial patterns within the state by county and by county aggregations when data are sparse. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most, e.g., implementing preventive measures in the high-rate eastern counties. Examining their cancer patterns in this way, the state health department has made some progress recently toward reducing their cervical cancer rates. 
+We will use cancer data from the state of Kentucky, \index{Kentucky cancer data} with 120 counties, to illustrate a long linked micromap plot display. Kentucky had the highest invasive cervical cancer rate among women in the U.S. for the period 2014-2018 [@UofKYMCC2022]. There is a test to detect this cancer at an early stage and a vaccine to prevent infections that can lead to cancer later [@NCI2021Cervical] but implementation of preventive measures is hampered by high poverty and low educational attainment in many parts of the state. In an effort to reduce these high cancer rates, the state health department examines geospatial patterns within the state by county and by county aggregations when data are sparse. A linked micromap plot of cervical cancer incidence rates can display these patterns and help the state target their scarce resources to where they are needed most, e.g., implementing preventive measures in the high-rate eastern counties. Examining their cancer patterns in this way, the state health department has made some progress recently toward reducing their cervical cancer rates. 
 
 After reading the Kentucky county shapefile, we need to call `BuildBorderGroup` to create the internal tables needed for **micromapST**. We will request some smoothing of the boundaries and plot the resulting map. 
 
@@ -594,7 +578,7 @@ Plot_Vis(VisB = areaVisBorders, xLwd = 1)
 ```
 
 
-Note that the smoothing did not eliminate the small non-contiguous segment of Fulton County at the far western end of the state. This is not an island but land separated from the rest of the county by the Kentucky Bend of the Mississippi River.
+Note that the smoothing did not eliminate the small non-contiguous segment of Fulton County at the far western end of the state (Figure\@ref(fig:Ch4b-KY-counties)). This is not an island but land separated from the rest of the county by the Kentucky Bend of the Mississippi River.
 
 Now we set up the linked micromap plot to display the county rates with their 95% confidence intervals, sorted in descending order. The data are invasive cervical cancer incidence rates, age-adjusted to the 2000 standard million population, downloaded from the Kentucky Cancer Registry website (https://www.kcr.uky.edu/) In order to have sufficient vertical space for the micromaps, we specify the figure dimensions as 7" by 15". 
 
@@ -632,7 +616,7 @@ micromapST(
 )
 ```
 
-Clearly this tests the limits of map visibility, but it does work, although the package warns that the calculated panel height is about 0.5 inches, less than the minimum recommended height of 1 inch. However, there are more serious problems with the data than with the small map images. Many of the counties had unstable rates as evidenced by very wide confidence intervals. Furthermore, nearly half of the counties had fewer than five cases and so their data were suppressed (or shown as 0) on the plot, making it difficult to discern any geospatial pattern. 
+Figure \@ref(fig:Ch4b-KY-county-LMM) clearly tests the limits of map visibility, but it does work, although the package warns that the calculated panel height is about 0.5 inches, less than the minimum recommended height of 1 inch. However, there are more serious problems with the data than with the small map images. Many of the counties had unstable rates as evidenced by very wide confidence intervals. Furthermore, nearly half of the counties had fewer than five cases and so their data were suppressed (or shown as 0) on the plot, making it difficult to discern any geospatial pattern. 
 
 
 ### Aggregating counties to Area Development Districts in Kentucky {#Ch4b-Aggregate}
@@ -740,7 +724,7 @@ BuildBorderGroup(
 )
 ```
 
-Save and print the resulting image: 
+Save and print the resulting image in Figure \@ref(fig:Ch4b-KY-ADDs). 
 
 ```{r Ch4b-KY-ADDs, fig.cap = 'Kentucky smoothed Area Development Districts.', echo = FALSE}
 border_group_file <- "KYADD2BG.rda"
@@ -762,7 +746,6 @@ x <- dev.off()
 par(mar = c(0, 0, 0, 0))
 knitr::include_graphics(paste0(output_dir_KYADD, "/KYADD2.png"), auto_pdf = TRUE)
 ```
-
 
 
 The original Kentucky ADD map didn't require any scaling or moving, so probably would be adequate, but this smoothed version will give a better color visualization in a very small linked micromap plot.
@@ -806,14 +789,17 @@ micromapST(
 )
 ```
 
-This is much clearer. All ADDs have sufficient data to display. Eight of the highest 10 rates have confidence intervals that do not include the U.S. rate, while all five of the lowest rates do include it. Buffalo Trace's confidence is very wide because it has the lowest population of any ADD. We also can see a clear geospatial pattern, with the highest rates occurring in what is known to be the poorest part of the state. 
+This is much clearer. All ADDs have sufficient data to display (Figure \@ref(fig:Ch4b-KY-ADD-LMM)). Eight of the highest 10 rates have confidence intervals that do not include the U.S. rate, while all five of the lowest rates do include it. Buffalo Trace's confidence interval is very wide because it has the lowest population of any ADD. We also can see a clear geospatial pattern, with the highest rates occurring in what is known to be the poorest part of the state. 
 
 
 ## Summary and Further Reading {#Ch4b-Summary}
 
 
-The **micromapST** package is quite flexible and can generate many types of graphics to explore and communicate data. However, its use was at first limited to U.S states. More recent versions included other built-in boundary files, including counties within a few U.S. states and other countries, but the latest version allows the user to create linked micromap plots using their own boundary file. The new `BuildBorderGroup` function has options to read in shapefiles directly and link them to a user-provided data table. Because the linked micromaps are very small, this function can smooth the original borders to better display the interior shading at that scale. This new capability widens the scope of linked micromap plots that can be produced by **micromapST**.
+The **micromapST** package is quite flexible and can generate many types of graphics to explore and communicate data. However, its use was at first limited to U.S states. More recent versions included other built-in boundary files, including counties within a few U.S. states and other countries, but the latest version allows the user to create linked micromap plots using their own boundary file. The new `BuildBorderGroup` function has options to read in shapefiles directly and link them to a user-provided data table. Because the linked micromaps are very small, this function can smooth the original borders to better display the interior shading at that scale. Automating the steps to create these map caricatures in R eliminates the need for the user to edit their boundary files in a GIS package, thus simplifying creation of linked micromaps for customized geographic areas. 
 
 Further information about shapefiles is available at [@ESRI1998] and more details about some of the spatial functions used to process them is available in [@PeBi2023].
+
+\section*{Acknowledgement}
+The work described in this chapter extends Dan Carr's original U.S. state map for linked micromaps. We appreciate Dan's sharing of his original code and his stimulating discussions on linked micromap graphical design.  
 
 \printbibliography[segment=\therefsegment,heading=subbibliography]

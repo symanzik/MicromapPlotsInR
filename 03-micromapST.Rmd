@@ -7,10 +7,7 @@
 Similar to Chapter \@ref(Ch2), the **micromapST**\index{R Packages!micromapST} R package [@CP2015CRAN],
 accessible at https://cran.r-project.org/web/packages/micromapST/index.html,
 will be introduced in this chapter. The reader will learn how to create a 
-basic linked micromap plot\index{Linked micromap plot} via this R package.  
-Although the default parameter settings give publication-ready output,
-details will be provided on additional display options for U.S. states and other geospatial
-boundary files.
+basic linked micromap plot\index{Linked micromap plot} via this R package. Although the default parameter settings give publication-ready output, details will be provided on additional display options for U.S. states and other geospatial boundary files.
 
 
 ## Introduction {#Ch3-Introduction}
@@ -76,9 +73,9 @@ micromapST(
 )
 ```
 
-This is a nice-looking plot that would work well for the task of reading the case rates for particular states. Thin black horizontal lines delineate the perceptual groups of 5 states each and white vertical lines on the light gray background help guide the reader's eye up or down to the axis labels. The default grouping for 51 areas is 10 groups of 5 areas each with the median-valued area shown separately in the middle of the plot.
+The resulting Figure \@ref(fig:Ch3-LMMalpha) is a nice-looking plot that would work well for the task of reading the case rates for particular states. Thin black horizontal lines delineate the perceptual groups of 5 states each and white vertical lines on the light gray background help guide the reader's eye up or down to the axis labels. The default grouping for 51 areas is 10 groups of 5 areas each with the median-valued area shown separately in the middle of the plot.
 
-The default order of the states in a column is alphabetic by U.S. state postal codes. This order is not useful for identifying geospatial patterns in the data. Sorting the column of states by their data values, such as covid case rates on November 20, 2020, provides a more useful design. Since this variable is already included in the `panel_desc_covid1` data frame, the arguments `sortVar = "Nov_20_2020"` and `ascend = FALSE` in the **micromapST**\index{R Packages!micromapST} function call are the only additions needed to plot the states in a descending case rate order.
+The default order of the states in a column is alphabetic by U.S. state postal codes. This order is not useful for identifying geospatial patterns in the data. Sorting the column of states by their data values, such as covid case rates on November 20, 2020, provides a more useful design. Since this variable is already included in the `panel_desc_covid1` data frame, the arguments `sortVar = "Nov_20_2020"` and `ascend = FALSE` in the **micromapST**\index{R Packages!micromapST} function call are the only additions needed to plot the states in a descending case rate order (Figure \@ref(fig:Ch3-LMMsorted)).
 \index{Datasets!st\_covid\_case\_rates}
 ```{r Ch3-LMMsorted, fig.cap = 'Cumulative number of covid-19 cases reported by U.S. states on Nov. 20, 2020.', fig.width = 7, fig.height = 9}
 micromapST(
@@ -115,7 +112,7 @@ micromapST(
 )
 ```
 
-There appears to be a negative correlation between the two variables. For example, we can see that the Dakotas had very high covid totals by November 2020 and residents there reported relatively low mask wearing in September. This micromap supports the theory that the Sturgis motorcycle rally was a covid superspreader event, i.e., exposure in South Dakota in August led to covid infections soon after in surrounding states where most attendees came from. This example examines the influence of mask wearing on covid case rates. The states could be sorted instead by the mask-wearing variable to look for the reverse relationship. An epidemiologic study would be needed to confirm any apparent relationship between the two variables, but this example illustrates how linked micromaps can be used to quickly identify case clusters and explore suspected risk factors.
+Figure \@ref(fig:Ch3-LMMmask) appears to show a negative correlation between the two variables. For example, we can see that the Dakotas had very high covid totals by November 2020 and residents there reported relatively low mask wearing in September. This micromap supports the theory that the Sturgis motorcycle rally was a covid superspreader event, i.e., exposure in South Dakota in August led to covid infections soon after in surrounding states where most attendees came from. This example examines the influence of mask wearing on covid case rates. The states could be sorted instead by the mask-wearing variable to look for the reverse relationship. An epidemiologic study would be needed to confirm any apparent relationship between the two variables, but this example illustrates how linked micromaps can be used to quickly identify case clusters and explore suspected risk factors.
 
 
 ## Display Options {#Ch3-DisplayOpt}
@@ -129,7 +126,7 @@ Another addition to `panelDesc` here is `refVals`, which defines a vertical dash
 
 Finally, we request cumulative map shading\index{Cumulative map shading} by changing `map` to `mapcum` in the column definitions (`type`). This option shades in light yellow any map areas that had been already displayed above. That is, from the top down, each map shows the active perceptual group's\index{Perceptual group} colored areas as well as the previous groups' areas shaded in yellow. This extra color\index{Colors!micromapST options} fill pops the previously-displayed states into the foreground so that any growing geospatial cluster\index{Geospatial clusters} of sorted values is evident. This alleviates the problem of missing a cluster of similar-valued states that may fall into different, but adjacent, perceptual groups. The shading can be defined to accumulate from the top down (`mapcum`) or from the extremes to the middle (`maptail`). A third option (`mapmedian`) is a simple binary shading whereby areas that have values above the median are shaded in one color in the upper maps and areas in the lower maps with values below the median are shaded in another color.
 
-In general, options for the display of the statistical data and glyphs are specified in `panelDesc` while options for the entire micromap display are specified in the function call to **micromapST**\index{R Packages!micromapST}. In this example, the geographic identifier is full state names, rather than the default state postal codes used in the previous examples (`plotNames = "full"`).
+In general, options for the display of the statistical data and glyphs are specified in `panelDesc` while options for the entire micromap display are specified in the function call to **micromapST**\index{R Packages!micromapST}. In this example (Figure \@ref(fig:Ch3-LMMoptions)), the geographic identifier is full state names, rather than the default state postal codes used in the previous examples (`plotNames = "full"`).
 \index{Datasets!st\_covid\_case\_rates}
 ```{r Ch3-LMMoptions, fig.cap = 'Cumulative number of covid-19 cases by state on Nov. 20, 2020, and percent who usually wore a mask in Sep 2020, with optional error bars, cumulative map shading and full state names.', fig.width = 7, fig.height = 9}
 panel_desc_covid2 <- data.frame(
@@ -157,7 +154,7 @@ micromapST(
 
 Looking down the map column with cumulative shading from the highest to lowest case rates reveals an enlarging cluster of states that starts in the North Central region of the U.S. This is consistent with the superspreader South Dakota motorcycle rally hypothesis. By adding an error bar to the mask-wearing dot, we can see that even though North Dakota, South Dakota and Wyoming have wide error bars, mostly due to their smaller populations, they still appear to have values lower than most other states. There appears to be a slight negative correlation between the case and mask columns. Adding the U.S. value referent line (85%) shows that nearly all of the highest 15 case rates are in states with mask wearing percents below the U.S. value and that most of the other states have mask wearing percents about the same (error bar touches the U.S. line) or slightly above the U.S. value.
 
-In the next figure, the maps are moved to the right side of the plot by reordering the specified glyphs in `type` and the dot with error bar is changed to a horizontal bar (`bar`). Note that this requires a change in the order of values in all of the parameter lines. In addition, a second line of column labels is added (`lab2`) and the colors\index{Colors!micromapST options} are changed from the default colors to predefined shades of gray. We recommend using the default colors but sometimes publishers are unable to print color. The gray scale available for optional area and glyph shading is the recommended set of shades that maximizes readability and distinctions among the areas when colors are not available [@BHH2003; @BP2002]. The user can also specify a different color set by the `colors` parameter, defining the colors by their names or hexadecimal definitions. The only palette name recognized is `grays`. See the package documentation for details. 
+In the next figure (Figure \@ref(fig:Ch3-LMMcolorsbar)), the maps are moved to the right side of the plot by reordering the specified glyphs in `type` and the dot with error bar is changed to a horizontal bar (`bar`). Note that this requires a change in the order of values in all of the parameter lines. In addition, a second line of column labels is added (`lab2`) and the colors\index{Colors!micromapST options} are changed from the default colors to predefined shades of gray. We recommend using the default colors but sometimes publishers are unable to print color. The gray scale available for optional area and glyph shading is the recommended set of shades that maximizes readability and distinctions among the areas when colors are not available [@BHH2003; @BP2002]. The user can also specify a different color set by the `colors` parameter, defining the colors by their names or hexadecimal definitions. The only palette name recognized is `grays`. See the package documentation for details. 
 
 There are 12 default colors\index{Colors!micromapST options} used:
 
@@ -234,7 +231,7 @@ micromapST(
 # Note 2 character strings for 2 lines of the long title
 ```
 
-This plot shows the expected negative correlation between college education and income – counties with more college-educated residents tend to have a lower instance of poverty. The maps show a cluster of the highest education/lowest poverty in the DC suburbs plus Talbot County on the Eastern Shore, followed by a cluster of the Baltimore suburbs plus two more Eastern Shore counties. The cumulative shading through the first three maps defines a contiguous block of 14 counties in central Maryland with higher income and lower poverty than in the other 10 counties, which are located in western Maryland, the lower Eastern Shore, Cecil County in the northeast corner and Charles County in the southwest corner of the state. 
+This plot (Figure \@ref(fig:Ch3-LMMMDpoved)) shows the expected negative correlation between college education and income – counties with more college-educated residents tend to have a lower instance of poverty. The maps show a cluster of the highest education/lowest poverty in the DC suburbs plus Talbot County on the Eastern Shore, followed by a cluster of the Baltimore suburbs plus two more Eastern Shore counties. The cumulative shading through the first three maps defines a contiguous block of 14 counties in central Maryland with higher income and lower poverty than in the other 10 counties, which are located in western Maryland, the lower Eastern Shore, Cecil County in the northeast corner and Charles County in the southwest corner of the state. 
 
 The 24 counties on this plot were split into the default perceptual group\index{Perceptual group} size of five counties each from the bottom and top, with the remaining four counties shown in the middle group. Perhaps the geospatial patterns would be clearer by using smaller groups so that there were fewer than four counties in the middle group. Using the same design specified by `panel_desc_MD`, the revised perceptual grouping is specified by `grpPattern = c(5, 4, 3, 3, 4, 5)` from top to bottom [@SC2008]. Note that the panel height is determined by the map size and so is not affected by the number of areas in each panel.
 \index{Datasets!MDPovEd}
@@ -255,7 +252,7 @@ micromapST(
 )
 ```
 
-Since the default grouping led to a fairly clear clustering of counties within Maryland, this revised grouping is only slightly better. 
+Since the default grouping led to a fairly clear clustering of counties within Maryland, this revised grouping (Figure \@ref(fig:Ch3-LMMMDpercap)) is only slightly better. 
 
 
 ## Summary and Further Reading {#Ch3-Summary}
@@ -268,6 +265,3 @@ The precursor to **micromapST**, written in JAVA, was implemented on the Nationa
 Version 1.0 of **micromapST** was released in 2013, with the R code and resulting examples further described in a 2015 paper [@PPC2015JSS]. This version of the package was used for data visualization classes at George Mason University in Fairfax, Virginia. Student feedback led to additional options and built-in geographic boundaries beyond U.S. states (version 1.1). Later versions added the ability to import the user's own boundary file (version 2.0) and a rewrite of code to avoid dependence on several retiring R packages (version 3.0).
 
 The advantages of building many functions and datasets into the package include ease of use by those not familiar with R coding, freeing the user to focus on the task of examining patterns in the data. The package **micromap** uses a different approach, requiring the user to know enough about R coding to take advantage of that package's greater flexibility in plot design. Because **micromapST** draws the linked micromap using the `polygon` function in base R, with no need to call another drawing package, execution is very fast. Thus linked micromaps with different variables and display options can be quickly generated to identify the best plot to use for the purpose at hand. The disadvantage of this approach is that the user has less control of display features, although we have attempted to create publication-ready output without user modification and to offer many optional display modifications through parameter choices. The ease of use combined with speed of execution makes this an excellent tool for teaching, exploring and communicating spatial patterns and generating hypotheses for further analysis. 
-
-
-The package **micromap** uses a different approach, requiring the user to know enough about R coding to take advantage of that package's greater flexibility in plot design.
