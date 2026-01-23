@@ -125,6 +125,21 @@ Most of the time, we will need to smooth our shapefile to some extent so that it
 
 The starting point in building a border group is to construct its Name Table. This table can be constructed as a CSV text file or an Excel spreadsheet. Each column provides information to help `BuildBorderGroup` build the internal Name Table for the border group. The Name Table provides the location IDs supported in the border group and a linkage to the collection of polygons for each area in the shapefile in order for **micromapST** to draw the associated areas.  The Name Table will provide the full name, the most common abbreviation and numerical identifier for each area. These columns must be named "Name", "Abbr" and "ID", respectively, in the Name Table. No duplicates are allowed in any location ID column. Each row in the Name Table represents one area, in this example a state. The `rowNames` call parameter specifies which location ID will be used in the statistical data when calling **micromapST**. Puerto Rico was excluded from our Name Table, so it will be excluded from the resulting map when the `BuildBorderGroup` function links the Name Table with the shapefile polygons. Table \@ref(tab:Ch4b-USbasictable) shows the basic Name Table for the first 15 of the 50 U.S. states.
 
+
+```{r Ch4b-USbasictable, echo = FALSE}
+library(kableExtra)
+
+US_name_table <- read.csv("data/Ch4b/USNameTable.csv")
+knitr::kable(
+  head(US_name_table[, 1:3], n = 15L),
+  booktabs = TRUE,
+  caption = "Miminum information needed in the Name Table: First 15 U.S. states."
+) %>%
+  kable_styling(
+    latex_options = "striped"
+  )
+```
+
 U.S. states have standardized names, abbreviations (postal codes), and numeric identifiers (Federal Information Processing Standard (FIPS) codes [@USCensus2022ANSI]). However, this is not always the case for other countries or for non-standard U.S. geographies, so **micromapST** allows the user to specify the primary abbreviation “Abbr” and an alternate abbreviation “Alt_Abbr” for the areas if there are two sets of commonly-acceptable abbreviations. 
 
 A more complicated issue is when the user only has a string name to identify each area, e.g., names of NCI cancer registries. In this case, **micromapST** can perform a wildcard match of a field in the Name Table, provided in the optional "Alias" column, against the user-provided area name. The user can request the wildcard matching by specifying `rowNames = ”alias”`. The Alias column must be in the initial Name Table and must link to a single valid area. This is a very unusual situation and the authors do not expect it to be used by average users. 
@@ -182,8 +197,6 @@ knitr::kable(
 
 ```{r Ch4b-USFinalTable, echo = FALSE}
 library(kableExtra)
-
-US_name_table <- read.csv("data/Ch4b/USNameTable.csv")
 
 landscape(
   knitr::kable(

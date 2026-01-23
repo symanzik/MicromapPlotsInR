@@ -252,7 +252,7 @@ micromapST(
 )
 ```
 
-Since the default grouping led to a fairly clear clustering of counties within Maryland, this revised grouping (Figure \@ref(fig:Ch3-LMMMDpercap)) is only slightly better. 
+Since the default grouping led to a fairly clear clustering of counties within Maryland, this revised grouping (Figure \@ref(fig:Ch3-LMMMDpercep)) is only slightly better. 
 
 
 ## Summary and Further Reading {#Ch3-Summary}
