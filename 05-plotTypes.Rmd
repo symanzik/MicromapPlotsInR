@@ -906,7 +906,7 @@ See here for further discussion of the error and possible fixes
   https://github.com/tidyverse/ggplot2/issues/6507
 
 
-```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9,eval=FALSE}
+```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9}
 ### load packages
 library(micromap)
 library(ggplot2)
@@ -1076,7 +1076,7 @@ scatdot_att <- function(show = FALSE) {
     panel.header.size = as.numeric(1),
     panel.header.color = "black",
     panel.header.face = "plain",
-    panel.header.font = NA,
+    panel.header.font = "",
     panel.header.lineheight = as.numeric(1),
     panel.width = as.numeric(1),
     panel.bgcolor = NA,
@@ -1104,7 +1104,7 @@ scatdot_att <- function(show = FALSE) {
     xaxis.title.size = as.numeric(1),
     xaxis.title.color = "black",
     xaxis.title.face = "plain",
-    xaxis.title.font = NA,
+    xaxis.title.font = "",
     xaxis.title.lineheight = as.numeric(1),
     yaxis.title = "",
     yaxis.ticks = NA,
@@ -1119,7 +1119,7 @@ scatdot_att <- function(show = FALSE) {
     yaxis.title.size = as.numeric(1),
     yaxis.title.color = "black",
     yaxis.title.face = "plain",
-    yaxis.title.font = NA,
+    yaxis.title.font = "",
     yaxis.title.lineheight = as.numeric(1),
     panel.margins = c(1, -0.25, 1, 1.5),
     point.size = as.numeric(2),
@@ -1603,10 +1603,6 @@ ChinaShapefileThin <- sf::st_read("data/China_Shapefiles/export.shp") %>%
 # gIsValid(ChinaShape, byid = TRUE, reason = TRUE)
 ChinaPolys <- create_map_table(ChinaShapefileThin, "ename")
 
-
-# Error: <ggplot2::element_text> object properties are invalid:
-# - @family must be <NULL> or <character>, not <logical>
-
 # mmplot(
 #   stat.data = religion,
 #   map.data = ChinaPolys,
@@ -1794,7 +1790,7 @@ mmplot(
       point.type = 20,
       # point.size = 3,
       point.alpha = 0.95,
-      point.border = FALSE,
+#      point.border = FALSE,
       left.margin = 1.5,
       # panel.width = 1.5,
       xaxis.title = "Christianity, in thousands",
@@ -1812,7 +1808,7 @@ mmplot(
       point.type = 20,
       # point.size = 3,
       point.alpha = 0.95,
-      point.border = FALSE,
+ #     point.border = FALSE,
       left.margin = 1.5,
       # panel.width = 1.5,
       xaxis.title = "Daoism, in thousands",
@@ -1894,11 +1890,11 @@ mmplot(
       xaxis.labels = Daoism.tick
     ),
     list(4,
-      header = "Christianity vs.Buddhism",
+      header = "Christianity vs. Buddhism",
       point.type = 20,
       # point.size = 2.5,
       point.alpha = 0.8,
-      point.border = FALSE,
+ #     point.border = FALSE,
       left.margin = 1.6,
       # panel.width = 1.5,
       xaxis.title = "Christianity, in thousands",
