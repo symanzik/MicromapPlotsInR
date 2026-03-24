@@ -287,7 +287,7 @@ originally.
 ## Example 1: Adding Vignette Example {#Ch5-Example1}
 
 
-```{r Ch5-vignettechart, fig.cap = 'Arrow plot from vignette.', fig.width = 7, fig.height = 9}
+```{r Ch5-vignettechart-setup1}
 library(micromap)
 library(ggplot2)
 library(grid)
@@ -324,7 +324,10 @@ ggplot(myNewStats) +
     values = c("red", "orange", "green", "blue", "purple"),
     guide = "none"
   )
+```
 
+
+```{r Ch5-vignettechart-setup2}
 myAtts <- sample_att()
 myNumber <- 1
 myAtts$colors <- c("red", "orange", "green", "blue", "purple")
@@ -357,7 +360,10 @@ myPanel <- ggplot(myNewStats) +
     guide = "none"
   )
 myPanel
+```
 
+
+```{r Ch5-vignettechart-setup3}
 assimilatePlot(myPanel, myNumber, myAtts)
 
 arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
@@ -365,6 +371,7 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myColumns <- myAtts[[myNumber]]$panel.data
   myNewStats$data1 <- myNewStats[, myColumns[1]]
   myNewStats$data2 <- myNewStats[, myColumns[2]]
+
   myPanel <- ggplot(myNewStats) +
     geom_segment(
       aes(
@@ -384,13 +391,17 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 myPanel
+```
 
+
+```{r Ch5-vignettechart-setup4}
 arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myColors <- myAtts$colors
   myColumns <- myAtts[[myNumber]]$panel.data
   myNewStats$data1 <- myNewStats[, myColumns[1]]
   myNewStats$data2 <- myNewStats[, myColumns[2]]
   myNewStats <- alterForMedian(myNewStats, myAtts)
+
   myPanel <- ggplot(myNewStats) +
     geom_segment(
       aes(
@@ -413,8 +424,10 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 myPanel
+```
 
 
+```{r Ch5-vignettechart-setup5}
 # print(myAtts)
 
 myPanelAtts <- standard_att()
@@ -441,6 +454,7 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myNewStats$data1 <- myNewStats[, myColumns[1]]
   myNewStats$data2 <- myNewStats[, myColumns[2]]
   myNewStats <- alterForMedian(myNewStats, myAtts)
+
   myPanel <- ggplot(myNewStats) +
     geom_segment(
       aes(
@@ -464,8 +478,10 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 myPanel
+```
 
 
+```{r Ch5-vignettechart1, fig.cap = 'Arrow plot 1 from vignette.', fig.width = 7, fig.height = 9}
 mmplot(
   stat.data = myStats,
   map.data = statePolys,
@@ -483,10 +499,12 @@ mmplot(
       )
     )
 )
+```
 
+
+```{r Ch5-vignettechart2, fig.cap = 'Arrow plot 2 from vignette.', fig.width = 7, fig.height = 9}
 data(lungMort)
 myStats <- lungMort
-
 
 mmplot(
   stat.data = myStats,
@@ -554,7 +572,7 @@ mmplot(
 ## Example 2: Adding Bar Charts as a New Plot Type {#Ch5-Example2}
 
 
-```{r Ch5-barchartArgentina, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
+```{r Ch5-barchartArgentina-setup1}
 ArgShapefile <- as_Spatial(st_read("data/ARG_adm/ARG_adm1.shp"))
 
 names(ArgShapefile)
@@ -606,6 +624,7 @@ myAtts[[myNumber]]$panel.data <- "change"
 myColors <- myAtts$colors
 myColumns <- myAtts[[myNumber]]$panel.data
 myTable$data1 <- myTable[, myColumns]
+
 myPanel <- ggplot(myTable) +
   geom_segment(aes(
     x = 0, y = -pGrpOrd, xend = data1, yend = -pGrpOrd,
@@ -617,7 +636,10 @@ myPanel <- ggplot(myTable) +
     guide = "none"
   )
 assimilatePlot(myPanel, myNumber, myAtts)
+```
 
+
+```{r Ch5-barchartArgentina-setup2}
 myPanelAtts <- standard_att()
 myPanelAtts <- append(myPanelAtts, list(line.width = 4))
 
@@ -632,6 +654,7 @@ bar_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myLineWidth <- myAtts[[myNumber]]$line.width
   myTipLength <- myAtts[[myNumber]]$tip.length
   myTable$data1 <- myNewStats[, myColumns]
+
   myPanel <- ggplot(myTable) +
     geom_segment(
       aes(
@@ -643,11 +666,15 @@ bar_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
     ) +
     facet_grid(pGrp ~ ., space = "free", scales = "free_y") +
     scale_colour_manual(values = myColors, guide = "none")
+
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 
 Argtable$ProvinceTemp <- as.character(Argtable$provinces)
+```
 
+
+```{r Ch5-barchartArgentina, fig.cap = 'Bar chart.', fig.width = 7, fig.height = 9}
 # arg1_2 - Figure 3
 mmplot(
   stat.data = Argtable,
@@ -723,7 +750,7 @@ mmplot(
 ## Example 3: Adding Arrow Plots for Differences as a New Plot Type {#Ch5-Example3}
 
 
-```{r Ch5-arrowplotBrazil, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9}
+```{r Ch5-arrowplotBrazil-setup1}
 library(micromap)
 library(ggplot2)
 library(XML)
@@ -793,11 +820,13 @@ myColors <- myAtts$colors
 myColumns <- myAtts[[myNumber]]$panel.data
 myTable$data1 <- myTable[, myColumns[1]]
 myTable$data2 <- myTable[, myColumns[2]]
+
 myPanel <- ggplot(myTable) +
   geom_segment(
     aes(
       x = data1, y = -pGrpOrd,
-      xend = data2, yend = -pGrpOrd, colour = factor(color)
+      xend = data2, yend = -pGrpOrd,
+      colour = factor(color)
     ),
     arrow = arrow(length = unit(0.1, "cm"))
   ) +
@@ -805,6 +834,10 @@ myPanel <- ggplot(myTable) +
   scale_colour_manual(values = myColors, guide = "none")
 
 assimilatePlot(myPanel, myNumber, myAtts)
+```
+
+
+```{r Ch5-arrowplotBrazil-setup2}
 myPanelAtts <- standard_att()
 myPanelAtts <- append(
   myPanelAtts,
@@ -826,6 +859,7 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
   myTipLength <- myAtts[[myNumber]]$tip.length
   myTable$data1 <- myNewStats[, myColumns[1]]
   myTable$data2 <- myNewStats[, myColumns[2]]
+
   myPanel <- ggplot(myTable) +
     geom_segment(
       aes(
@@ -838,11 +872,15 @@ arrow_plot_build <- function(myPanel, myNumber, myNewStats, myAtts) {
     ) +
     facet_grid(pGrp ~ ., space = "free", scales = "free_y") +
     scale_colour_manual(values = myColors, guide = "none")
+
   myPanel <- assimilatePlot(myPanel, myNumber, myAtts)
 }
 
 Bratable2$StateMod <- as.character(Bratable2$states)
+```
 
+
+```{r Ch5-arrowplotBrazil, fig.cap = 'Arrow plot for differences.', fig.width = 7, fig.height = 9}
 mmplot(
   stat.data = Bratable2,
   map.data = BrazilPolys,
@@ -901,12 +939,8 @@ mmplot(
 
 ## Example 4: Adding Scatterplots as a New Plot Type {#Ch5-Example4}
 
-NOTE: Error in this code chunk after upgrade to ggplot2 4.0.0
-See here for further discussion of the error and possible fixes
-  https://github.com/tidyverse/ggplot2/issues/6507
 
-
-```{r Ch5-scatterplot, fig.cap = 'Scatterplot.', fig.width = 7, fig.height = 9}
+```{r Ch5-scatdot-build}
 ### load packages
 library(micromap)
 library(ggplot2)
@@ -1067,7 +1101,10 @@ scatdot_build <- function(pl, p, DF, att) {
   )
   pl
 }
+```
 
+
+```{r Ch5-scatdot-attr}
 # source("scatdot_att.R")
 
 scatdot_att <- function(show = FALSE) {
@@ -1144,7 +1181,10 @@ scatdot_att <- function(show = FALSE) {
     invisible(tmp.att)
   }
 }
+```
 
+
+```{r Ch5-scatdot-axis-opts-grid}
 # source("axis_opts_grid.R")
 
 axis_opts_grid <- function(i, pl, a,
@@ -1312,7 +1352,6 @@ axis_opts_grid <- function(i, pl, a,
   }
 
 
-
   ### --------------------------------------------------------- ###
   ### scale_x_continuous
   ### --------------------------------------------------------- ###
@@ -1333,8 +1372,6 @@ axis_opts_grid <- function(i, pl, a,
   xstr <- paste(xstr, ")")
 
   pl <- pl + eval(parse(text = xstr))
-
-
 
 
   ### --------------------------------------------------------- ###
@@ -1430,7 +1467,6 @@ axis_opts_grid <- function(i, pl, a,
   ### y-axis text display & text, labels, ticks
   ### --------------------------------------------------------- ###
 
-
   if (!any(all_attsb(a, "yaxis.text.display"))) {
     pl <- pl + theme(axis.text.y = element_blank())
   } else if (!a[[i]]$yaxis.text.display) {
@@ -1484,7 +1520,6 @@ axis_opts_grid <- function(i, pl, a,
     !is.na(unlist(a[[i]]$yaxis.ticks)[1])) {
     print("Warning: both axis labels AND tick location must be specified")
   }
-
 
 
   ### --------------------------------------------------------- ###
@@ -1579,7 +1614,10 @@ axis_opts_grid <- function(i, pl, a,
 
   pl
 }
+```
 
+
+```{r Ch5-scatterplot1, fig.cap = 'Scatterplot 1.', fig.width = 7, fig.height = 9}
 ### read in the statistical data
 # religion <- read.csv("Main Document-ReligionData.csv",
 #                     header = TRUE)
@@ -1589,7 +1627,7 @@ religion <- read.csv(
   header = TRUE
 )
 
-### read in the map dta
+### read in the map data
 # ChinaShape <- readOGR("China_Provinces_Thinned",
 #                       "ChinaThinned",
 #                       verbose = TRUE)
@@ -1695,7 +1733,7 @@ mmplot(
     ),
     list(
       4,
-      header = "Christianity vs.Buddhism",
+      header = "Christianity vs. Buddhism",
       point.type = 20,
       point.alpha = 0.8,
       left.margin = 1.6,
@@ -1717,8 +1755,10 @@ mmplot(
     )
   )
 )
+```
 
 
+```{r Ch5-scatterplot2, fig.cap = 'Scatterplot 2.', fig.width = 7, fig.height = 9}
 Paired5 <- brewer.pal(5, "Paired")[5:1]
 Paired6 <- brewer.pal(6, "Paired")[6:1]
 Divergent5 <- brewer.pal(5, "RdYlBu")
@@ -1764,18 +1804,21 @@ mmplot(
   plot.panel.spacing = 0,
   plot.pGrp.spacing = 2,
   panel.att = list(
-    list(1,
+    list(
+      1,
       header = "Provinces",
       panel.width = .5,
       align = "right",
       text.size = 1
     ),
-    list(2,
+    list(
+      2,
       header = "",
       point.type = 20,
       point.size = 2
     ),
-    list(3,
+    list(
+      3,
       header = "Total",
       panel.width = 0.75,
       point.type = 20,
@@ -1785,12 +1828,13 @@ mmplot(
       xaxis.ticks = Total.tick.less,
       xaxis.labels = Total.tick.less / 1000
     ),
-    list(4,
+    list(
+      4,
       header = "Christianity vs. Buddhism",
       point.type = 20,
       # point.size = 3,
       point.alpha = 0.95,
-#      point.border = FALSE,
+      #      point.border = FALSE,
       left.margin = 1.5,
       # panel.width = 1.5,
       xaxis.title = "Christianity, in thousands",
@@ -1803,12 +1847,13 @@ mmplot(
       graph.grid.minor.col = "dark gray",
       graph.margin = 0.5
     ),
-    list(5,
+    list(
+      5,
       header = "Daoism vs. Islam",
       point.type = 20,
       # point.size = 3,
       point.alpha = 0.95,
- #     point.border = FALSE,
+      #     point.border = FALSE,
       left.margin = 1.5,
       # panel.width = 1.5,
       xaxis.title = "Daoism, in thousands",
@@ -1821,7 +1866,8 @@ mmplot(
       graph.grid.minor.col = "dark gray",
       graph.margin = 0.5
     ),
-    list(6,
+    list(
+      6,
       header = "Two-ended\nCumulative Maps",
       inactive.border.color = gray(.7),
       inactive.border.size = 1,
@@ -1829,8 +1875,10 @@ mmplot(
     )
   )
 )
+```
 
 
+```{r Ch5-scatterplot3, fig.cap = 'Scatterplot 3.', fig.width = 7, fig.height = 9}
 ### ======================================================================== ###
 ### Create a plot WITH a median row
 ### ======================================================================== ###
@@ -1869,18 +1917,21 @@ mmplot(
   plot.panel.spacing = 0,
   plot.pGrp.spacing = 2,
   panel.att = list(
-    list(1,
+    list(
+      1,
       header = "Provinces",
       panel.width = .5,
       align = "right",
       text.size = 1
     ),
-    list(2,
+    list(
+      2,
       header = "",
       point.type = 20,
       point.size = 2
     ),
-    list(3,
+    list(
+      3,
       header = "Daoism",
       point.type = 20,
       point.size = 2,
@@ -1889,12 +1940,13 @@ mmplot(
       xaxis.ticks = Daoism.tick,
       xaxis.labels = Daoism.tick
     ),
-    list(4,
+    list(
+      4,
       header = "Christianity vs. Buddhism",
       point.type = 20,
       # point.size = 2.5,
       point.alpha = 0.8,
- #     point.border = FALSE,
+      #     point.border = FALSE,
       left.margin = 1.6,
       # panel.width = 1.5,
       xaxis.title = "Christianity, in thousands",
@@ -1908,7 +1960,8 @@ mmplot(
       graph.margin = 0.5,
       border = TRUE
     ),
-    list(5,
+    list(
+      5,
       header = "Two-ended\nCumulative Maps",
       inactive.border.color = gray(.7),
       inactive.border.size = 1,
@@ -1917,7 +1970,6 @@ mmplot(
   )
 )
 ```
-
 
 
 ## Main {#Ch5-Main}
