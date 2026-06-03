@@ -5,6 +5,7 @@ author: "J&uuml;rgen Symanzik"
 date: "`r Sys.Date()`"
 output:
   pdf_book:
+    fig_crop: false
     keep_tex: yes
     latex_engine: xelatex
   pdf_document: default
@@ -53,16 +54,26 @@ header-includes:
 # see https://github.com/haozhu233/kableExtra/issues/750
 
 options(
-  htmltools.dir.version = FALSE, formatR.indent = 2, width = 80, digits = 4
+  htmltools.dir.version = FALSE,
+  formatR.indent = 2,
+  width = 80,
+  digits = 4
 )
 
 # install the packages needed by this book; you fill out c(), e.g. c('ggplot2', 'dplyr')
-lapply(c('xfun'), function(pkg) {
-  if (system.file(package = pkg) == '') install.packages(pkg)
+lapply(c("xfun"), function(pkg) {
+  if (system.file(package = pkg) == "") install.packages(pkg)
 })
 
-# hide messages and warnings from all code chunks and cache results and figures
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, cache = TRUE)
+# hide messages and warnings from all code chunks
+# cache results and figures
+# do not crop any figures
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  cache = TRUE,
+  crop = NULL
+)
 ```
 
 
@@ -113,4 +124,3 @@ A lot of people helped me when I was writing the book. More to come later.
 J&uuml;rgen Symanzik  
 Logan, Utah, USA
 ```
-

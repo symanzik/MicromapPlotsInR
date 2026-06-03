@@ -305,6 +305,7 @@ BuildBorderGroup(
   ReducePC = 0.1, # reduce vertices to 0.1% of original number
   debug = 640 # generate 4 intermediate PNG map plots
 )
+file.rename(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"), paste0(output_dir_US, "/USst_FP_Final_areaVisBorders_main.png"))
 ```
 
 After some trial and error, we chose to reduce the polygon vertices to 0.1% of the original number. Including the `debug = 640` option within `BuildBorderGroup` generates intermediate map files in PNG format as the multiple steps of simplification are applied. These are shown in the next figure, omitting the original raw image.
@@ -314,6 +315,7 @@ After some trial and error, we chose to reduce the polygon vertices to 0.1% of t
 # https://stackoverflow.com/questions/65456227/include-multiple-figures-with-knitrinclude-graphics-in-a-single-chunk-an-eac
 
 library(cowplot)
+library(magick)
 library(ggplot2)
 
 par(mar = c(0, 0, 0, 0))
@@ -328,7 +330,7 @@ fig2 <- ggdraw() +
     scale = scaling
   )
 fig3 <- ggdraw() +
-  draw_image(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders.png"),
+  draw_image(paste0(output_dir_US, "/USst_FP_Final_areaVisBorders_main.png"),
     scale = scaling
   )
 fig4 <- ggdraw() +

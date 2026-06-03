@@ -169,6 +169,7 @@ to the 21 counties in New Jersey.
 ```{r Ch1-NJ-Layout1, fig.cap = 'Mock-up linked micromap plot\\index{Linked micromap plot}, based on the 21 counties of New Jersey. `StatVar1` is used as the sorting variable.', fig.width = 7, fig.height = 6, echo = FALSE}
 library(micromap)
 library(raster)
+library(magrittr)
 
 nj_shapefile <- raster::shapefile(
   x = "data/NJ_Shapefiles/co34_d00.shp",

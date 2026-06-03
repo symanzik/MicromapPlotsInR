@@ -102,6 +102,9 @@ in Section \@ref(Ch2-SummaryFurtherReading).
 
 ```{r Ch2-flowchart, fig.cap = 'Workflow to create a linked micromap plot with the **micromap**\\index{R Packages!micromap} R package (Diagram created with the **DiagrammeR**\\index{R Packages!DiagrammeR} R package [@Iannone2022]).', fig.width = 5, fig.height = 5, echo = FALSE}
 library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
+library(magrittr)
 
 DiagrammeR::grViz(
   diagram = "digraph flowchart {
@@ -119,7 +122,19 @@ DiagrammeR::grViz(
   [3]: '3. Creating a Draft Linked Micromap Plot'
   [4]: '4. Refining the Linked Micromap Plot'
 "
-)
+) %>%
+  DiagrammeRsvg::export_svg() %>%
+  charToRaw() -> micromapFlowchart
+
+if (knitr::is_latex_output()) {
+  rsvg::rsvg_pdf(svg = micromapFlowchart, file = "img/Ch2-flowchart.pdf")
+
+  knitr::include_graphics("img/Ch2-flowchart.pdf")
+} else {
+  rsvg::rsvg_png(svg = micromapFlowchart, file = "img/Ch2-flowchart.png")
+
+  knitr::include_graphics("img/Ch2-flowchart.png")
+}
 ```
 
 
