@@ -5,7 +5,6 @@ author: "J&uuml;rgen Symanzik"
 date: "`r Sys.Date()`"
 output:
   pdf_book:
-    fig_crop: false
     keep_tex: yes
     latex_engine: xelatex
   pdf_document: default

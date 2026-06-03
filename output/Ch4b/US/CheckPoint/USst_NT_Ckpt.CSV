@@ -1,16 +1,16 @@
 "Abbr","Name","ID","L2_ID","L2_ID_Name","regID","regName","Xoffset","Yoffset","Scale","Rotate","Alt_Abbr","Alias","Key","DoAdj","MapL","MapX","MapY","CCode"
 "AL","ALABAMA","01","2","South","2","South",0,0,NA,NA,"AL","ALABAMA","AL",FALSE,NA,NA,NA,3
-"AK","ALASKA","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","ALASKA","AK",TRUE,"AK",-1500088.38403907,-1309076.01282187,1
+"AK","ALASKA","02","0","Offshore","0","Offshore",36.5,-36,0.3,0,"AK","ALASKA","AK",TRUE,"AK",-1507092.19605028,-1306811.42486912,1
 "AZ","ARIZONA","04","4","West","4","West",0,0,NA,NA,"AZ","ARIZONA","AZ",FALSE,NA,NA,NA,3
 "AR","ARKANSAS","05","2","South","2","South",0,0,NA,NA,"AR","ARKANSAS","AR",FALSE,NA,NA,NA,3
 "CA","CALIFORNIA","06","4","West","4","West",0,0,NA,NA,"CA","CALIFORNIA","CA",FALSE,NA,NA,NA,1
 "CO","COLORADO","08","4","West","4","West",0,0,NA,NA,"CO","COLORADO","CO",FALSE,NA,NA,NA,1
 "CT","CONNECTICUT","09","1","Northeast","1","Northeast",0,0,NA,NA,"CT","CONNECTICUT","CT",FALSE,NA,NA,NA,3
 "DE","DELAWARE","10","2","South","2","South",0,0,NA,NA,"DE","DELAWARE","DE",FALSE,NA,NA,NA,1
-"DC","DISTRICT OF COLUMBIA","11","2","South","2","South",3.8,-2.15,4,0,"DC","DISTRICT OF COLUMBIA","DC",TRUE,"DC",2530575.16170391,726.526251603837,1
+"DC","DISTRICT OF COLUMBIA","11","2","South","2","South",3.8,-2.15,4,0,"DC","DISTRICT OF COLUMBIA","DC",TRUE,"DC",2523532.76557944,-207.088148218266,1
 "FL","FLORIDA","12","2","South","2","South",0,0,NA,NA,"FL","FLORIDA","FL",FALSE,NA,NA,NA,2
 "GA","GEORGIA","13","2","South","2","South",0,0,NA,NA,"GA","GEORGIA","GA",FALSE,NA,NA,NA,1
-"HI","HAWAII","15","0","Offshore","0","Offshore",52,6,1,0,"HI","HAWAII","HI",TRUE,"HI",-126032.79134396,-1483299.32236866,2
+"HI","HAWAII","15","0","Offshore","0","Offshore",52,6,1,0,"HI","HAWAII","HI",TRUE,"HI",-133564.136363611,-1482055.8733139,2
 "ID","IDAHO","16","4","West","4","West",0,0,NA,NA,"ID","IDAHO","ID",FALSE,NA,NA,NA,1
 "IL","ILLINOIS","17","3","Midwest","3","Midwest",0,0,NA,NA,"IL","ILLINOIS","IL",FALSE,NA,NA,NA,2
 "IN","INDIANA","18","3","Midwest","3","Midwest",0,0,NA,NA,"IN","INDIANA","IN",FALSE,NA,NA,NA,4
